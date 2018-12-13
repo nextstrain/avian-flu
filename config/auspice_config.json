@@ -1,0 +1,53 @@
+{
+  "title": "Real-time tracking of H5N1 virus evolution",
+  "color_options": {
+    "gt": {
+      "menuItem": "genotype",
+      "legendTitle": "Genotype",
+      "type": "discrete",
+      "key": "genotype"
+    },
+    "num_date": {
+      "menuItem": "date",
+      "legendTitle": "Sampling date",
+      "type": "continuous",
+      "key": "num_date"
+    },
+    "country": {
+      "key":"country",
+      "legendTitle":"country",
+      "menuItem":"country",
+      "type":"discrete"
+    },
+    "region": {
+    },
+    "host_category": {
+      "key":"host_category",
+      "legendTitle":"host type",
+      "menuItem":"host type",
+      "type":"discrete"
+    },
+    "H5_clade": {
+      "key":"H5_clade",
+      "legendTitle":"clade",
+      "menuItem":"clade",
+      "type":"discrete"
+    }
+  },
+  "geo": [
+    "country",
+    "region"
+  ],
+  "defaults": {
+    "mapTriplicate": true
+  },
+  "maintainer": [
+    "Louise Moncla",
+    "http://bedford.io/team/louise-moncla/"
+  ],
+  "filters": [
+    "country",
+    "region",
+    "host_category"
+  ]
+}

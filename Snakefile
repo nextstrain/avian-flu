@@ -1,20 +1,25 @@
-SEGMENTS = ["pb2", "pb1","pa","ha","np","na","mp","ns"]
+SEGMENTS = ["pb2","pb1","pa","ha","np","na","mp","ns"]
 
 rule all:
     input:
-        auspice_tree = expand("auspice/h5n1_{segment}_tree.json", segment=SEGMENTS),
-        auspice_meta = expand("auspice/h5n1_{segment}_meta.json", segment=SEGMENTS)
+        auspice_tree = expand("auspice/flu_avian_h5n1_{segment}_tree.json", segment=SEGMENTS),
+        auspice_meta = expand("auspice/flu_avian_h5n1_{segment}_meta.json", segment=SEGMENTS)
 
 rule files:
     params:
         input_fasta = "data/h5n1_{segment}.fasta",
-        input_metadata = "data/h5n1_{segment}.metadata2.tsv",
+        input_metadata = "data/h5n1_{segment}.metadata.tsv",
         dropped_strains = "config/dropped_strains.txt",
-        reference = "config/h5n1_{segment}.gb",
+        reference = "config/h5n1_{segment}.ref.gb",
         colors = "config/colors.tsv",
         auspice_config = "config/auspice_config.json"
 
 files = rules.files.params
+
+def _get_min_length_by_wildcards(wildcards):
+    len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400,"na":1270,"mp":900, "ns":800}
+    length = len_dict[wildcards.segment]
+    return(length)
 
 rule filter:
     message:
@@ -32,6 +37,10 @@ rule filter:
     params:
         group_by = "country year month",
         sequences_per_group = 5,
+        min_date = 1996,
+        min_length = _get_min_length_by_wildcards,
+        exclude_where = "host_species=Ferret"
+
     shell:
         """
         augur filter \
@@ -40,7 +49,10 @@ rule filter:
             --exclude {input.exclude} \
             --output {output.sequences} \
             --group-by {params.group_by} \
-            --sequences-per-group {params.sequences_per_group}
+            --sequences-per-group {params.sequences_per_group} \
+            --min-date {params.min_date} \
+            --exclude-where {params.exclude_where} \
+            --min-length {params.min_length}
         """
 
 rule align:
@@ -97,6 +109,7 @@ rule refine:
     params:
         coalescent = "opt",
         date_inference = "marginal",
+        clock_filter_iqd = 4
     shell:
         """
         augur refine \
@@ -108,7 +121,8 @@ rule refine:
             --timetree \
             --coalescent {params.coalescent} \
             --date-confidence \
-            --date-inference {params.date_inference}
+            --date-inference {params.date_inference} \
+            --clock-filter-iqd {params.clock_filter_iqd}
         """
 
 rule ancestral:
@@ -129,6 +143,15 @@ rule ancestral:
             --inference {params.inference}
         """
 
+def _get_genes_by_wildcards(wildcards):
+    if wildcards.segment == "ns":
+        genes = ["NS1", "NS2"]
+    elif wildcards.segment == "mp":
+        genes = ["M1","M2"]
+    else:
+        genes = [wildcards.segment.upper()]
+    return(genes)
+
 rule translate:
     message: "Translating amino acid sequences"
     input:
@@ -137,13 +160,16 @@ rule translate:
         reference = files.reference
     output:
         node_data = "results/aa_muts_{segment}.json"
+    params:
+        genes = _get_genes_by_wildcards 
     shell:
         """
         augur translate \
             --tree {input.tree} \
             --ancestral-sequences {input.node_data} \
             --reference-sequence {input.reference} \
-            --output {output.node_data}
+            --output {output.node_data} \
+            --genes {params.genes} \
         """
 
 rule traits:
@@ -154,7 +180,7 @@ rule traits:
     output:
         node_data = "results/traits_{segment}.json",
     params:
-        columns = "country host_category"
+        columns = "country"
     shell:
         """
         augur traits \
@@ -177,8 +203,8 @@ rule export:
         colors = files.colors,
         auspice_config = files.auspice_config
     output:
-        auspice_tree = "auspice/h5n1_{segment}_tree.json",
-        auspice_meta = "auspice/h5n1_{segment}_meta.json"
+        auspice_tree = "auspice/flu_avian_h5n1_{segment}_tree.json",
+        auspice_meta = "auspice/flu_avian_h5n1_{segment}_meta.json"
     shell:
         """
         augur export \

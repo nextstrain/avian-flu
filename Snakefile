@@ -9,10 +9,10 @@ rule all:
 
 rule files:
     params:
-        dropped_strains = "config/dropped_strains.txt",
-        reference = "config/h5n1_{segment}.ref.gb",
-        colors = "config/colors.tsv",
-        auspice_config = "config/auspice_config.json"
+        dropped_strains = "config/dropped_strains_h5n1.txt",
+        reference = "config/reference_h5n1_{segment}.gb",
+        colors = "config/colors_h5n1.tsv",
+        auspice_config = "config/auspice_config_h5n1.json"
 
 files = rules.files.params
 

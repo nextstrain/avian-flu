@@ -1,0 +1,42 @@
+A/Americangreen-wingedteal/Idaho/AH0006121/2015 # not part of epi clade
+A/blue-wingedteal/Louisiana/UGAI15-1367/2015 # travel case. throws off map
+A/blue-wingedteal/Louisiana/UGAI15-1692/2015 # travel case. throws off map
+A/British Columbia/1/2015 # travel case. throws off map
+A/BritishColumbia/1/2015 # travel case. throws off map
+A/chicken/Alabama/17-008899-10/2017 # not part of epi clade
+A/chicken/Alabama/17-008899-11/2017 # not part of epi clade
+A/chicken/Alabama/17-008901-1/2017 # not part of epi clade
+A/Chicken/Netherlands/1600 # not part of epi clade
+A/Chicken/Netherlands/16007311-037041/2016 # not part of epi clade
+A/chicken/Tennessee/17-007147-1/2017 # not part of epi clade
+A/chicken/Tennessee/17-007147-3/2017 # not part of epi clade
+A/chicken/Tennessee/17-007147-4/2017 # not part of epi clade
+A/chicken/Tennessee/17-007147-5/2017 # not part of epi clade
+A/chicken/Tennessee/17-007147-6/2017 # not part of epi clade
+A/chicken/Tennessee/17-007147-7/2017 # not part of epi clade
+A/chicken/Tennessee/17-007429-3/2017 # not part of epi clade
+A/chicken/Tennessee/17-007429-7/2017 # not part of epi clade
+A/chicken/Tennessee/17-008152-1/2017 # not part of epi clade
+A/chicken/Tennessee/17-008279-2/2017 # not part of epi clade
+A/chicken/Tennessee/17-008279-5/2017 # not part of epi clade
+A/chicken/Tennessee/17-008279-6/2017 # not part of epi clade
+A/cinnamonteal/California/AH0079011/2016 # not part of epi clade
+A/duck/Alabama/17-008643-2/2017 # not part of epi clade
+A/Duck/Bangladesh/2698 # not part of epi clade
+A/Duck/Bangladesh/2699 # not part of epi clade
+A/Duck/Bangladesh/2704 # clock is off
+A/duck/Fujian/S4170/2014 # not part of epi clade
+A/duck/Guangxi/SDY129/2014 # not part of epi clade
+A/duck/Hunan/S11682/2015 # not part of epi clade
+A/duck/Japan/AQ-HE29-52/2017 # not part of epi clade
+A/duck/Shanghai/SD015/2015 # not part of epi clade
+A/duck/Shanghai/SD016/2015 # not part of epi clade
+A/duck/Zhejiang/LS02/2014 # not part of epi clade
+A/duck/Zhejiang/S4488/2014 # not part of epi clade
+A/Environment/Guangdong/GZ636/2017 # bad bases
+A/environment/Hunan/SD009/2015 # not part of epi clade
+A/guineafowl/Alabama/17-008645-2/2017 # not part of epi clade
+A/guineafowl/Alabama/17-008646-1/2017 # not part of epi clade
+A/Malaysia/228/2014 # travel case. throws off map
+A/northernshoveler/California/AH0076755/2016 # not part of epi clade
+A/nothernshoveler/California/AH0079371/2016 # not part of epi clade

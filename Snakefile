@@ -1,41 +1,57 @@
-SEGMENTS = ["pb2","pb1","pa","ha","np","na","mp","ns"]
+SUBTYPES = ["h5n1", "h7n9"]
+SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
 
 rule all:
     input:
-        auspice_tree = expand("auspice/flu_avian_h5n1_{segment}_tree.json", segment=SEGMENTS),
-        auspice_meta = expand("auspice/flu_avian_h5n1_{segment}_meta.json", segment=SEGMENTS)
+        auspice_tree = expand("auspice/flu_avian_{subtype}_{segment}_tree.json", subtype=SUBTYPES, segment=SEGMENTS),
+        auspice_meta = expand("auspice/flu_avian_{subtype}_{segment}_meta.json", subtype=SUBTYPES, segment=SEGMENTS)
 
 rule files:
     params:
-        dropped_strains = "config/dropped_strains_h5n1.txt",
-        reference = "config/reference_h5n1_{segment}.gb",
-        colors = "config/colors_h5n1.tsv",
-        auspice_config = "config/auspice_config_h5n1.json"
+        dropped_strains = "config/dropped_strains_{subtype}.txt",
+        reference = "config/reference_{subtype}_{segment}.gb",
+        colors = "config/colors_{subtype}.tsv",
+        lat_longs = "config/lat_longs_{subtype}.tsv",
+        auspice_config = "config/auspice_config_{subtype}.json"
 
 files = rules.files.params
 
-def _get_min_length_by_wildcards(wildcards):
-    len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400,"na":1270,"mp":900, "ns":800}
-    length = len_dict[wildcards.segment]
+def min_length(w):
+    len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400, "na":1270, "mp":900, "ns":800}
+    length = len_dict[w.segment]
     return(length)
+
+def min_date(w):
+    date = {
+        'h5n1': '1996',
+        'h7n9': '2013'
+    }
+    return date[w.subtype]
+
+def traits_columns(w):
+    traits = {
+        'h5n1': 'region country',
+        'h7n9': 'country division'
+    }
+    return traits[w.subtype]
 
 rule download:
     message: "Downloading sequences from fauna"
     output:
-        sequences = "data/h5n1_{segment}.fasta"
+        sequences = "data/{subtype}_{segment}.fasta"
     params:
-        fasta_fields = "strain virus accession collection_date region country division location passage_category submitting_lab age gender"
+        fasta_fields = "strain virus accession collection_date region country division location host submitting_lab"
     shell:
         """
         python3 {path_to_fauna}/vdb/download.py \
             --database vdb \
             --virus avian_flu \
             --fasta_fields {params.fasta_fields} \
-            --select locus:{wildcards.segment} subtype:h5n1 \
+            --select  subtype:{wildcards.subtype} locus:{wildcards.segment} \
             --path data \
-            --fstem h5n1_{wildcards.segment}
+            --fstem {wildcards.subtype}_{wildcards.segment}
         """
 
 rule parse:
@@ -43,10 +59,10 @@ rule parse:
     input:
         sequences = rules.download.output.sequences
     output:
-        sequences = "results/sequences_h5n1_{segment}.fasta",
-        metadata = "results/metadata_h5n1_{segment}.tsv"
+        sequences = "results/sequences_{subtype}_{segment}.fasta",
+        metadata = "results/metadata_{subtype}_{segment}.tsv"
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location passage authors age gender"
+        fasta_fields =  "strain virus isolate_id date region country division location host authors"
     shell:
         """
         augur parse \
@@ -63,19 +79,20 @@ rule filter:
           - {params.sequences_per_group} sequence(s) per {params.group_by!s}
           - excluding strains in {input.exclude}
           - samples with missing region and country metadata
+          - excluding strains prior to {params.min_date}
         """
     input:
         sequences = rules.parse.output.sequences,
         metadata = rules.parse.output.metadata,
         exclude = files.dropped_strains
     output:
-        sequences = "results/filtered_{segment}.fasta"
+        sequences = "results/filtered_{subtype}_{segment}.fasta"
     params:
         group_by = "country year month",
-        sequences_per_group = 5,
-        min_date = 1996,
-        min_length = _get_min_length_by_wildcards,
-        exclude_where = "host_species=Ferret country=? region=?"
+        sequences_per_group = 30,
+        min_date = min_date,
+        min_length = min_length,
+        exclude_where = "host=laboratoryderived host=ferret country=? region=?"
 
     shell:
         """
@@ -101,7 +118,7 @@ rule align:
         sequences = rules.filter.output.sequences,
         reference = files.reference
     output:
-        alignment = "results/aligned_{segment}.fasta"
+        alignment = "results/aligned_{subtype}_{segment}.fasta"
     shell:
         """
         augur align \
@@ -116,7 +133,7 @@ rule tree:
     input:
         alignment = rules.align.output.alignment
     output:
-        tree = "results/tree-raw_{segment}.nwk"
+        tree = "results/tree-raw_{subtype}_{segment}.nwk"
     params:
         method = "iqtree"
     shell:
@@ -140,8 +157,8 @@ rule refine:
         alignment = rules.align.output,
         metadata = rules.parse.output.metadata
     output:
-        tree = "results/tree_{segment}.nwk",
-        node_data = "results/branch_lengths_{segment}.json"
+        tree = "results/tree_{subtype}_{segment}.nwk",
+        node_data = "results/branch-lengths_{subtype}_{segment}.json"
     params:
         coalescent = "const",
         date_inference = "marginal",
@@ -167,7 +184,7 @@ rule ancestral:
         tree = rules.refine.output.tree,
         alignment = rules.align.output
     output:
-        node_data = "results/nt_muts_{segment}.json"
+        node_data = "results/nt-muts_{subtype}_{segment}.json"
     params:
         inference = "joint"
     shell:
@@ -195,7 +212,7 @@ rule translate:
         node_data = rules.ancestral.output.node_data,
         reference = files.reference
     output:
-        node_data = "results/aa_muts_{segment}.json"
+        node_data = "results/aa-muts_{subtype}_{segment}.json"
     params:
         genes = _get_genes_by_wildcards
     shell:
@@ -205,7 +222,7 @@ rule translate:
             --ancestral-sequences {input.node_data} \
             --reference-sequence {input.reference} \
             --output {output.node_data} \
-            --genes {params.genes} \
+            --genes {params.genes}
         """
 
 rule traits:
@@ -214,9 +231,9 @@ rule traits:
         tree = rules.refine.output.tree,
         metadata = rules.parse.output.metadata
     output:
-        node_data = "results/traits_{segment}.json",
+        node_data = "results/traits_{subtype}_{segment}.json",
     params:
-        columns = "country"
+        columns = traits_columns,
     shell:
         """
         augur traits \
@@ -237,10 +254,11 @@ rule export:
         nt_muts = rules.ancestral.output.node_data,
         aa_muts = rules.translate.output.node_data,
         colors = files.colors,
+        lat_longs = files.lat_longs,
         auspice_config = files.auspice_config
     output:
-        auspice_tree = "auspice/flu_avian_h5n1_{segment}_tree.json",
-        auspice_meta = "auspice/flu_avian_h5n1_{segment}_meta.json"
+        auspice_tree = "auspice/flu_avian_{subtype}_{segment}_tree.json",
+        auspice_meta = "auspice/flu_avian_{subtype}_{segment}_meta.json"
     shell:
         """
         augur export \
@@ -248,6 +266,7 @@ rule export:
             --metadata {input.metadata} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
             --colors {input.colors} \
+            --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \
             --output-tree {output.auspice_tree} \
             --output-meta {output.auspice_meta}

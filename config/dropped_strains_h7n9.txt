@@ -33,6 +33,7 @@ A/duck/Shanghai/SD015/2015 # not part of epi clade
 A/duck/Shanghai/SD016/2015 # not part of epi clade
 A/duck/Zhejiang/LS02/2014 # not part of epi clade
 A/duck/Zhejiang/S4488/2014 # not part of epi clade
+A/duck/Zhejiang/S4489/2014 # not part of epi clade
 A/Environment/Guangdong/GZ636/2017 # bad bases
 A/environment/Hunan/SD009/2015 # not part of epi clade
 A/guineafowl/Alabama/17-008645-2/2017 # not part of epi clade
@@ -40,3 +41,4 @@ A/guineafowl/Alabama/17-008646-1/2017 # not part of epi clade
 A/Malaysia/228/2014 # travel case. throws off map
 A/northernshoveler/California/AH0076755/2016 # not part of epi clade
 A/nothernshoveler/California/AH0079371/2016 # not part of epi clade
+A/Quail/Guangdong/KP14232/2014 # bad host data

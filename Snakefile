@@ -89,7 +89,7 @@ rule filter:
         sequences = "results/filtered_{subtype}_{segment}.fasta"
     params:
         group_by = "country year month",
-        sequences_per_group = 30,
+        sequences_per_group = 50,
         min_date = min_date,
         min_length = min_length,
         exclude_where = "host=laboratoryderived host=ferret country=? region=?"

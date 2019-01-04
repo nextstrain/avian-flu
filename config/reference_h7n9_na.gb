@@ -62,11 +62,9 @@ FEATURES             Location/Qualifiers
                      /note="passage details: E1"
      gene            1..1398
                      /gene="NA"
-                     /locus_tag="TS66_s6gp1"
                      /db_xref="GeneID:23104238"
      CDS             1..1398
                      /gene="NA"
-                     /locus_tag="TS66_s6gp1"
                      /codon_start=1
                      /product="neuraminidase"
                      /protein_id="YP_009118481.1"

@@ -63,11 +63,9 @@ FEATURES             Location/Qualifiers
                      /note="passage details: E1"
      gene            1..2151
                      /gene="PA"
-                     /locus_tag="TS66_s3gp1"
                      /db_xref="GeneID:23104225"
      CDS             1..2151
                      /gene="PA"
-                     /locus_tag="TS66_s3gp1"
                      /codon_start=1
                      /product="polymerase PA"
                      /protein_id="YP_009118473.1"
@@ -85,23 +83,7 @@ FEATURES             Location/Qualifiers
                      TNGTSKIKMKWGMEMRRCLLQSLQQIESMIEAESSVKEKDLTKEFFENKSETWPIGES
                      PKGVEEGSIGKVCRTLLAKSVFNSLYASPQLEGFSAESRKLLLIVQALRDNLEPGTFD
                      LEGLYEAIEECLINDPWVLLNASWFNSFLTHALR"
-     gene            1..760
-                     /gene="PA-X"
-                     /locus_tag="TS66_s3gp2"
-                     /db_xref="GeneID:23104224"
-     CDS             join(1..570,572..760)
-                     /gene="PA-X"
-                     /locus_tag="TS66_s3gp2"
-                     /ribosomal_slippage
-                     /codon_start=1
-                     /product="PA-X protein"
-                     /protein_id="YP_009118474.1"
-                     /db_xref="GeneID:23104224"
-                     /translation="MEDFVRQCFNPMIVELAEKAMKEYGEDPKIETNKFASICTHLEV
-                     CFMYSDFHFIDERGESTIIESGDPNALLKHRFEIIEGRDRTMAWTVVNSICNTTGAEK
-                     PKFLPDLYDYKENRFIEIGVTRREVHIYYLEKANKIKSEKTHIHIFSFTGEEMATKAD
-                     YTLDEESRARIKTRLFTIRQEMASRGLWDSFVSLKEAKKQLKKDLKSQEPCAGLPTKV
-                     SHRTSPALKTLEPMWMDSNRTAALRASFLRCQKK"
+
 ORIGIN
         1 atggaagact ttgtgcgaca gtgcttcaat ccaatgatcg tcgagcttgc ggaaaaggca
        61 atgaaagaat atggggaaga tccgaaaatc gaaacaaaca aattcgcatc aatatgcaca

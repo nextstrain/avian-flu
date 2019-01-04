@@ -63,14 +63,10 @@ FEATURES             Location/Qualifiers
                      /collection_date="05-Mar-2013"
                      /note="passage details: E1"
      gene            1..838
-                     /gene="NEP"
-                     /locus_tag="TS66_s8gp1"
-                     /gene_synonym="NS2"
+                     /gene="NS2"
                      /db_xref="GeneID:23104236"
      CDS             join(1..30,503..838)
-                     /gene="NEP"
-                     /locus_tag="TS66_s8gp1"
-                     /gene_synonym="NS2"
+                     /gene="NS2"
                      /note="nonstructural protein 2"
                      /codon_start=1
                      /product="nuclear export protein"
@@ -81,11 +77,9 @@ FEATURES             Location/Qualifiers
                      LQLLLEVEQEIRTFSFQLI"
      gene            1..654
                      /gene="NS1"
-                     /locus_tag="TS66_s8gp2"
                      /db_xref="GeneID:23104235"
      CDS             1..654
                      /gene="NS1"
-                     /locus_tag="TS66_s8gp2"
                      /codon_start=1
                      /product="nonstructural protein 1"
                      /protein_id="YP_009118480.1"

@@ -196,15 +196,6 @@ rule ancestral:
             --inference {params.inference}
         """
 
-def _get_genes_by_wildcards(wildcards):
-    if wildcards.segment == "ns":
-        genes = ["NS1", "NS2"]
-    elif wildcards.segment == "mp":
-        genes = ["M1","M2"]
-    else:
-        genes = [wildcards.segment.upper()]
-    return(genes)
-
 rule translate:
     message: "Translating amino acid sequences"
     input:
@@ -213,16 +204,13 @@ rule translate:
         reference = files.reference
     output:
         node_data = "results/aa-muts_{subtype}_{segment}.json"
-    params:
-        genes = _get_genes_by_wildcards
     shell:
         """
         augur translate \
             --tree {input.tree} \
             --ancestral-sequences {input.node_data} \
             --reference-sequence {input.reference} \
-            --output {output.node_data} \
-            --genes {params.genes}
+            --output {output.node_data}
         """
 
 rule traits:

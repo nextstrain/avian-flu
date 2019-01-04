@@ -63,11 +63,9 @@ FEATURES             Location/Qualifiers
                      /note="passage details: E1"
      gene            1..1497
                      /gene="NP"
-                     /locus_tag="TS66_s5gp1"
                      /db_xref="GeneID:23104229"
      CDS             1..1497
                      /gene="NP"
-                     /locus_tag="TS66_s5gp1"
                      /codon_start=1
                      /product="nucleocapsid protein"
                      /protein_id="YP_009118476.1"

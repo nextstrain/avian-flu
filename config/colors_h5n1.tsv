@@ -37,9 +37,10 @@ H5_clade	7	#3E59CF
 H5_clade	7.1	#4169CF
 H5_clade	7.2	#4379CD
 H5_clade	9	#4886C6
-H5_clade	Am Nongsgd	#4D92BE
-H5_clade	Ea Nongsgd	#539CB4
+H5_clade	Am_Nongsgd	#4D92BE
+H5_clade	Ea_Nongsgd	#539CB4
 H5_clade	Outgroup	#5AA5A8
 host	avian	#4066CF
 host	environment	#77B67F
+host	nonhuman_mammal	#CEB541
 host	human	#DC2F24

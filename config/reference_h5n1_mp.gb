@@ -37,7 +37,7 @@ FEATURES             Location/Qualifiers
      gene            26..1007
                      /gene="M"
      CDS             join(26..51,740..1007)
-                     /gene="M"
+                     /gene="M2"
                      /note="M2"
                      /codon_start=1
                      /product="matrix protein 2"
@@ -45,7 +45,7 @@ FEATURES             Location/Qualifiers
                      /translation="MSLLTEVETPTKNEWECKCSDSSDPLVVAASIIGILHLILWILD
                      RLFFKCIYRRLKYGLKRGPSTEGVPESMREEYRQEQQSAVDVDDGHFVNIELE"
      CDS             26..784
-                     /gene="M"
+                     /gene="M1"
                      /note="M1"
                      /codon_start=1
                      /product="matrix protein 1"

@@ -1,1 +1,2 @@
 A/chicken/Scotland/1959
+A/mallard/Poland/141/2015 # overly divergent

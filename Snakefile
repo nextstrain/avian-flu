@@ -18,23 +18,25 @@ rule files:
 
 files = rules.files.params
 
+def group_by(w):
+    gb = {'h5n1': 'country year', 'h7n9': 'division year'}
+    return gb[w.subtype]
+
+def sequences_per_group(w):
+    spg = {'h5n1': '10', 'h7n9': '70'}
+    return spg[w.subtype]
+
 def min_length(w):
     len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400, "na":1270, "mp":900, "ns":800}
     length = len_dict[w.segment]
     return(length)
 
 def min_date(w):
-    date = {
-        'h5n1': '1996',
-        'h7n9': '2013'
-    }
+    date = {'h5n1': '1996', 'h7n9': '2013'}
     return date[w.subtype]
 
 def traits_columns(w):
-    traits = {
-        'h5n1': 'region country',
-        'h7n9': 'country division'
-    }
+    traits = {'h5n1': 'region country', 'h7n9': 'country division'}
     return traits[w.subtype]
 
 rule download:
@@ -88,11 +90,11 @@ rule filter:
     output:
         sequences = "results/filtered_{subtype}_{segment}.fasta"
     params:
-        group_by = "country year month",
-        sequences_per_group = 50,
+        group_by = group_by,
+        sequences_per_group = sequences_per_group,
         min_date = min_date,
         min_length = min_length,
-        exclude_where = "host=laboratoryderived host=ferret country=? region=?"
+        exclude_where = "host=laboratoryderived host=ferret host=unknown host=other country=? region=?"
 
     shell:
         """
@@ -126,7 +128,8 @@ rule align:
             --reference-sequence {input.reference} \
             --output {output.alignment} \
             --fill-gaps \
-            --remove-reference
+            --remove-reference \
+            --nthreads auto
         """
 
 rule tree:
@@ -142,7 +145,8 @@ rule tree:
         augur tree \
             --alignment {input.alignment} \
             --output {output.tree} \
-            --method {params.method}
+            --method {params.method} \
+            --nthreads auto
         """
 
 rule refine:

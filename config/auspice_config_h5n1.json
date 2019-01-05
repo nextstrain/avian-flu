@@ -21,32 +21,28 @@
     },
     "region": {
     },
-    "host_category": {
+    "host": {
       "key":"host",
       "legendTitle":"Host",
       "menuItem":"host",
       "type":"discrete"
-    },
-    "H5_clade": {
-      "key":"H5_clade",
-      "legendTitle":"Clade",
-      "menuItem":"clade",
-      "type":"discrete"
     }
   },
   "geo": [
+    "region",
     "country"
   ],
   "defaults": {
-    "mapTriplicate": true
+    "mapTriplicate": true,
+    "colorBy": "region"
   },
   "maintainer": [
     "Louise Moncla",
     "http://bedford.io/team/louise-moncla/"
   ],
   "filters": [
-    "host",    
-    "country",
-    "region"
+    "host",   
+    "region",     
+    "country"
   ]
 }

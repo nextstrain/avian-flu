@@ -32,7 +32,7 @@ FEATURES             Location/Qualifiers
      gene            15..852
                      /gene="NS"
      CDS             join(15..44,517..852)
-                     /gene="NS"
+                     /gene="NS2"
                      /note="NS2"
                      /codon_start=1
                      /product="nonstructural protein 2"
@@ -41,7 +41,7 @@ FEATURES             Location/Qualifiers
                      LGESMMRMGDLHSLQNRNATWRNELSQKFEEIRWLIAECRNILTKTENSFEQITFLQA
                      LQLLLEVESEIRTFSFQLI"
      CDS             15..707
-                     /gene="NS"
+                     /gene="NS1"
                      /note="NS1"
                      /codon_start=1
                      /product="nonstructural protein 1"

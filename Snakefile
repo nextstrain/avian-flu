@@ -107,7 +107,8 @@ rule filter:
             --sequences-per-group {params.sequences_per_group} \
             --min-date {params.min_date} \
             --exclude-where {params.exclude_where} \
-            --min-length {params.min_length}
+            --min-length {params.min_length} \
+            --non-nucleotide
         """
 
 rule align:

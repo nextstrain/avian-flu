@@ -130,7 +130,7 @@ rule align:
             --output {output.alignment} \
             --fill-gaps \
             --remove-reference \
-            --nthreads auto
+            --nthreads 1
         """
 
 rule tree:
@@ -147,7 +147,7 @@ rule tree:
             --alignment {input.alignment} \
             --output {output.tree} \
             --method {params.method} \
-            --nthreads auto
+            --nthreads 1
         """
 
 rule refine:

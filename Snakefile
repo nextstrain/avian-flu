@@ -1,5 +1,5 @@
-SUBTYPES = ["h5n1", "h7n9"]
-SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
+SUBTYPES = ["h5n1", "h7n9"]  #
+SEGMENTS = ["pb2"] #, "pb1", "pa", "ha", "np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
 
@@ -237,6 +237,69 @@ rule traits:
             --confidence
         """
 
+rule reconstruct_translations:
+    message: "Reconstructing translations for DMS data view"
+    input:
+        tree = rules.refine.output.tree,
+        node_data = "results/aa-muts_{subtype}_{segment}.json",
+    output:
+        aa_alignment = "results/aa-alignment_{subtype}_{segment}.fasta"
+    shell:
+        """
+        augur reconstruct-sequences \
+            --tree {input.tree} \
+            --mutations {input.node_data} \
+            --gene PB2 \
+            --output {output.aa_alignment} \
+            --internal-nodes
+        """
+
+rule distances:
+    input:
+        tree = rules.refine.output.tree,
+        alignment = rules.reconstruct_translations.output.aa_alignment,
+        distance_maps = "config/DMS_prefs_{subtype}_{segment}.json"
+    params:
+        genes = "PB2",
+        comparisons = "root",
+        attribute_names = "DMS_preferences"
+    output:
+        distances = "results/distances_DMS_prefs_{subtype}_{segment}.json"
+    shell:
+        """
+        augur distance \
+            --tree {input.tree} \
+            --alignment {input.alignment} \
+            --gene-names {params.genes} \
+            --compare-to {params.comparisons} \
+            --attribute-name {params.attribute_names} \
+            --map {input.distance_maps} \
+            --output {output}
+        """
+
+rule distances2:
+    input:
+        tree = rules.refine.output.tree,
+        alignment = rules.reconstruct_translations.output.aa_alignment,
+        distance_maps = "config/DMS_counts_{subtype}_{segment}.json"
+    params:
+        genes = "PB2",
+        comparisons = "root",
+        attribute_names = "DMS_counts"
+    output:
+        counts = "results/distances_DMS_counts_{subtype}_{segment}.json"
+    shell:
+        """
+        augur distance \
+            --tree {input.tree} \
+            --alignment {input.alignment} \
+            --gene-names {params.genes} \
+            --compare-to {params.comparisons} \
+            --attribute-name {params.attribute_names} \
+            --map {input.distance_maps} \
+            --output {output}
+        """
+
 rule export:
     message: "Exporting data files for for auspice"
     input:
@@ -246,6 +309,9 @@ rule export:
         traits = rules.traits.output.node_data,
         nt_muts = rules.ancestral.output.node_data,
         aa_muts = rules.translate.output.node_data,
+        distances = rules.distances.output.distances,
+        distances2 = rules.distances2.output.counts,
+        distances3 = "config/DMS_prefs_branch_{subtype}_{segment}.json",
         colors = files.colors,
         lat_longs = files.lat_longs,
         auspice_config = files.auspice_config
@@ -257,7 +323,7 @@ rule export:
         augur export \
             --tree {input.tree} \
             --metadata {input.metadata} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
+            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} {input.distances} {input.distances2} {input.distances3}\
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \

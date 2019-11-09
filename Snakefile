@@ -255,7 +255,7 @@ rule export:
         auspice_meta = "auspice/flu_avian_{subtype}_{segment}_meta.json"
     shell:
         """
-        augur export \
+        augur export v1 \
             --tree {input.tree} \
             --metadata {input.metadata} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \

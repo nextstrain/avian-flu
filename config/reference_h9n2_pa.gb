@@ -1,0 +1,99 @@
+LOCUS       CY087829                2208 bp    cRNA    linear   VRL 24-MAR-2011
+DEFINITION  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2)) polymerase PA
+            (PA) gene, complete cds.
+ACCESSION   CY087829
+VERSION     CY087829.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+  ORGANISM  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 2208)
+  AUTHORS   Spiro,D., Halpin,R., Boyne,A., Bera,J., Ghedin,E., Hostetler,J.,
+            Fedorova,N., Kim,M., Zaborsky,J., Overton,L., Djuric,K.,
+            Sarmiento,M., Sitz,J., Katzel,D., Brown,E.G., Keleta,L., Bao,Y.,
+            Sanders,R., Dernovoy,D., Kiryutin,B., Lipman,D.J. and Tatusova,T.
+  TITLE     The NIAID Influenza Genome Sequencing Project
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 2208)
+  CONSRTM   The NIAID Influenza Genome Sequencing Consortium
+  TITLE     Direct Submission
+  JOURNAL   Submitted (24-MAR-2011) on behalf of JCVI/University of
+            Ottawa/NCBI, National Center for Biotechnology Information, NIH,
+            Bethesda, MD 20894, USA
+COMMENT     This work was supported by the National Institute of Allergy and
+            Infectious Diseases (NIAID), Genome Sequencing Centers for
+            Infectious Diseases (GSCID) program.
+FEATURES             Location/Qualifiers
+     source          1..2208
+                     /organism="Influenza A virus
+                     (A/turkey/Wisconsin/1/1966(H9N2))"
+                     /mol_type="viral cRNA"
+                     /strain="A/turkey/Wisconsin/1/1966"
+                     /serotype="H9N2"
+                     /host="turkey"
+                     /db_xref="taxon:385620"
+                     /segment="3"
+                     /lab_host="E 2 passage(s)"
+                     /country="USA: Wisconsin"
+                     /collection_date="11-Jun-1966"
+     gene            13..2163
+                     /gene="PA"
+     CDS             13..2163
+                     /gene="PA"
+                     /codon_start=1
+                     /product="polymerase PA"
+                     /protein_id="AEA04415.1"
+                     /translation="MEDFVRQCFNPMIVELAEKAMKEYGEDPKIETNKFAAICTHLEV
+                     CFMYSDFHFIDERGESIIVESGDPNALLKHRFEIIEGRDRTMAWTVVNSICNTTGVEK
+                     PKFLPDLYDYKENRFIEIGVTRREVHIYYLEKANKVKSEKTHIHIFSFTGEEMATKAD
+                     YTLDEESRARIKTRLFTIRQEMASRGLWDSFRQSERGEETIEERFEITGTMRRLADQS
+                     LPPNFSSLENFRAYVDGFEPNGCIEGKLSQMSKEVNARIEPFLKTTPRPLKLPDGPPC
+                     SQRSKFLLMDALKLSIEDPSHEGEGIPLYDAIKCMKTFFGWKEPNVVKPHEKGINPNY
+                     LLAWKQVLAELQDIENEEKIPKTKNMKKTSQLKWALGENMAPEKVDFEDCKDVSDLKQ
+                     YDSDEPEPRSLASWIQSEFNKACELTDSSWMELDEIGEDVAPIEHIASMRRNYFTAEV
+                     SHCRATEYIMKGVYINTALLNASCAAMDDFQLIPMISKCRTKEGRRKTNLYGFIIKGR
+                     SHLRNDTDVVNFVSMEFSLTDPRLEPHKWEKYCVLEIGDMLLRTAIGQVSRPMFLYVR
+                     TNGTSKIKMKWGMEMRRCLLQSLQQIESMIEAESSVKEKDMTKEFFENKSETWPIGES
+                     PKGVEEGSIGKVCRTLLAKSVFNSLYASPQLEGFSAESRKLLLIVQALRDKLEPGTFD
+                     LGGLYEAIEECLINDPWVLLNASWFNSFLTHALR"
+ORIGIN      
+        1 tactgattca aaatggaaga ctttgtgcga caatgcttca atccaatgat tgtcgagctt
+       61 gcggaaaagg caatgaaaga atatggagag gacccgaaaa tcgagacaaa caaatttgca
+      121 gcaatatgca ctcacttgga agtatgtttc atgtattcag actttcactt catcgatgag
+      181 cgaggagaat caataatcgt agaatctgga gacccgaatg ccctcttaaa gcacagattt
+      241 gaaataattg agggaagaga ccgcacaatg gcctggacag tggtaaacag catttgtaac
+      301 actacaggag ttgagaaacc gaagtttctc ccagatctat atgactacaa ggaaaacaga
+      361 ttcattgaga ttggagtgac aaggagagaa gtccacatat attacctgga gaaggccaac
+      421 aaagtaaagt ctgagaagac acatatccac atcttctcat tcacgggaga ggaaatggcc
+      481 acaaaggctg actacaccct cgatgaagaa agtagggcca gaatcaaaac tagactattc
+      541 accataagac aagaaatggc cagcagaggt ctctgggatt cctttcgtca gtccgagaga
+      601 ggcgaagaga caattgaaga aagatttgaa atcacaggaa caatgcgcag gcttgccgac
+      661 caaagtctcc caccgaactt ctccagcctt gaaaacttta gagcctatgt ggatggattc
+      721 gaaccgaacg gctgcattga gggcaagctt tctcaaatgt ccaaagaagt gaatgcaaga
+      781 attgaaccct ttttgaagac aacaccacgc ccacttaagc taccggatgg gcctccctgc
+      841 tctcaacggt ccaaattcct gctgatggac gctttgaaat taagcattga ggacccaagt
+      901 catgaaggag agggaatacc gctgtatgat gcaatcaaat gcatgaaaac attttttggg
+      961 tggaaagaac ccaatgttgt caaaccacat gaaaaaggga taaatccgaa ctatctcttg
+     1021 gcatggaaac aagtactagc agaactacag gatattgaaa atgaggagaa aattccaaag
+     1081 actaaaaaca tgaagaaaac aagccagtta aagtgggcac ttggtgaaaa tatggcacca
+     1141 gaaaaagtgg attttgaaga ctgcaaggat gtcagtgatc taaaacaata tgacagtgat
+     1201 gaaccggagc cgagatcgct tgcaagctgg attcaaagtg agttcaataa ggcgtgtgaa
+     1261 ctgactgatt caagctggat ggagcttgat gagattggag aagatgttgc cccaattgag
+     1321 cacattgcaa gcatgaggag gaattatttc acagcggagg tgtctcattg cagggccaca
+     1381 gaatacataa tgaaaggggt gtacatcaat actgcattgc tcaatgcgtc ctgtgcggct
+     1441 atggatgatt ttcaactgat tccaatgatc agcaagtgta gaactaagga gggaagaaga
+     1501 aagacaaatt tgtacggttt catcataaaa gggaggtccc acctgaggaa tgacaccgat
+     1561 gtggtaaact ttgtgagcat ggagttttcc ctcactgatc cgaggcttga accgcacaaa
+     1621 tgggagaagt actgtgttct tgaaataggg gacatgcttc taagaactgc cataggccaa
+     1681 gtttcaaggc ccatgttcct gtatgtgaga acgaatggga cctccaaaat caaaatgaaa
+     1741 tggggaatgg aaatgagacg ctgtcttctc cagtccctcc aacaaatcga gagtatgatt
+     1801 gaagccgagt cctctgtcaa agagaaggac atgaccaaag aattctttga aaacaaatca
+     1861 gaaacatggc ccattgggga gtcccctaag ggagtagagg aaggatccat tggaaaggtc
+     1921 tgtagaactc tgttggcaaa atctgtattc aacagcttgt acgcatctcc acagctagaa
+     1981 ggtttctcag ctgaatcaag gaaactgctt cttatcgttc aggctcttag ggacaaactg
+     2041 gaacctggaa cctttgacct tggaggatta tatgaagcaa ttgaggagtg cctgattaat
+     2101 gatccctggg ttttgcttaa tgcatcttgg ttcaactcct tcctcacaca tgcactgaga
+     2161 tagttgtggc aatgctacta tttgctatcc atactgtcca aaaaagta
+//
+

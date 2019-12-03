@@ -47,3 +47,4 @@ A/Duck/Guangdong/GZ15567/2015 # non-HA segments highly divergent
 A/Environment/Fujian/4084 # non-HA segments highly divergent
 A/Environment/Fujian/4363 # non-HA segments highly divergent
 A/Environment/Fujian/4079 # non-HA segments highly divergent
+A/teal/Egypt/MB-D-621C/2016 # not part of epi clade 

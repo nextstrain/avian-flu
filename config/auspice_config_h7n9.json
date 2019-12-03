@@ -13,24 +13,6 @@
       "type": "continuous",
       "key": "num_date"
     },
-    "DMS_preferences": {
-      "menuItem": "mutation differential selection",
-      "legendTitle": "DMS preferences",
-      "type": "continuous",
-      "key": "mutation differential selection"
-    },
-    "DMS_counts": {
-      "menuItem": "human-adaptive mutations",
-      "legendTitle": "human-adaptive mutations",
-      "type": "continuous",
-      "key": "human-adaptive mutations"
-    },
-    "DMS_prefs_branch": {
-      "menuItem": "DMS_prefs_branch",
-      "legendTitle": "DMS_prefs_branch",
-      "type": "continuous",
-      "key": "DMS_prefs_branch"
-    },
     "country": {
       "key":"country",
       "legendTitle":"Country",

@@ -1,4 +1,4 @@
-SUBTYPES = ["h9n2"]  #"h5n1", "h7n9",
+SUBTYPES = ["h5n1", "h7n9", "h9n2"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
@@ -19,11 +19,11 @@ rule files:
 files = rules.files.params
 
 def group_by(w):
-    gb = {'h5n1': 'country year', 'h7n9': 'division year', 'h9n2': 'region year'}
+    gb = {'h5n1': 'country year', 'h7n9': 'division year', 'h9n2': 'country year'}
     return gb[w.subtype]
 
 def sequences_per_group(w):
-    spg = {'h5n1': '10', 'h7n9': '70', 'h9n2': '30'}
+    spg = {'h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
     return spg[w.subtype]
 
 def min_length(w):
@@ -48,7 +48,7 @@ rule download:
     shell:
         """
         python3 {path_to_fauna}/vdb/download.py \
-            --database test_vdb \
+            --database vdb \
             --virus avian_flu \
             --fasta_fields {params.fasta_fields} \
             --select  subtype:{wildcards.subtype} locus:{wildcards.segment} \

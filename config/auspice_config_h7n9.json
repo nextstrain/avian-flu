@@ -1,53 +1,59 @@
 {
   "title": "Real-time tracking of influenza A/H7N9 evolution",
-  "color_options": {
-    "gt": {
-      "menuItem": "genotype",
-      "legendTitle": "Genotype",
-      "type": "discrete",
-      "key": "genotype"
+  "maintainers": [
+    {"name": "Louise Moncla", "url": "http://bedford.io/team/louise-moncla/"}
+  ],
+  "build_url": "https://github.com/nextstrain/avian-flu",  
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Genotype",
+      "type": "categorical"
     },
-    "num_date": {
-      "menuItem": "date",
-      "legendTitle": "Sampling date",
-      "type": "continuous",
-      "key": "num_date"
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
     },
-    "country": {
-      "key":"country",
-      "legendTitle":"Country",
-      "menuItem":"country",
-      "type":"discrete"
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
     },
-    "division": {
-      "key":"division",
-      "legendTitle":"Division",
-      "menuItem":"division",
-      "type":"discrete"
+    {
+      "key": "division",
+      "title": "Division",
+      "type": "categorical"
     },
-    "host": {
-      "key":"host",
-      "legendTitle":"Host",
-      "menuItem":"host",
-      "type":"discrete"
+    {
+      "key": "host",
+      "title": "Host",
+      "type": "categorical"
+    },
+    {
+      "key": "submitting_lab",
+      "title": "Submitting lab",
+      "type": "categorical"
+    },
+    {
+      "key": "originating_lab",
+      "title": "Originating lab",
+      "type": "categorical"
     }
-  },
-  "geo": [
+  ],
+  "geo_resolutions": [
     "country",
     "division"
   ],
-  "defaults": {
-    "mapTriplicate": true,
-    "colorBy": "division",
-    "geoResolution": "division"
+  "display_defaults": {
+    "map_triplicate": true,
+    "color_by": "division",
+    "geo_resolution": "division"
   },
-  "maintainer": [
-    "Louise Moncla",
-    "http://bedford.io/team/louise-moncla/"
-  ],
   "filters": [
     "host",
     "country",
-    "division"
+    "division",
+    "submitting_lab"
   ]
 }

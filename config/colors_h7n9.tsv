@@ -13,6 +13,7 @@ division	shaanxi	#5AA5A8
 division	ningxia	#62AB9B
 division	gansu	#6BB18E
 division	qinghai	#75B581
+division	tibet	#7AB77B
 division	xinjiang	#7FB975
 division	jiangsu	#8BBB6A
 division	anhui	#96BD5F
@@ -26,12 +27,12 @@ division	hunan	#DFA63B
 division	fujian	#E39B39
 division	taiwan	#E68D36
 division	guangdong	#E67D33
-division	hong_kong	#E56B2F
+division	hong kong	#E56B2F
 division	guangxi	#E2572B
 division	guizhou	#DF4328
 division	yunnan	#DC2F24
 division	china	#CCCCCC
 host	avian	#4066CF
 host	environment	#77B67F
-host	nonhuman_mammal	#CEB541
+host	nonhuman mammal	#CEB541
 host	human	#DC2F24

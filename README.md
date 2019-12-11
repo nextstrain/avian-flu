@@ -9,3 +9,4 @@ Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about 
 All 24 builds (3 subtypes x 8 segments) can be build by running `snakemake`. For rapid AWS rebuild run as:
 
     nextstrain build --aws-batch --aws-batch-cpus 16 --aws-batch-memory 28800 . --jobs 16
+Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.

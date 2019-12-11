@@ -1,0 +1,2854 @@
+{
+    "nodes": {
+        "A/Azerbaijan/8-208/2006": {
+            "DMS_prefs_branch": 0.3322996383123965
+        },
+        "A/Bangladesh/207095/2008": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Bangladesh/5487/2011": {
+            "DMS_prefs_branch": -0.22447924622220494
+        },
+        "A/Beijing/1/2009": {
+            "DMS_prefs_branch": 1.4157386281794464
+        },
+        "A/Cambodia/408008/2005": {
+            "DMS_prefs_branch": 0.08217317074974229
+        },
+        "A/Cambodia/P0322095/2005": {
+            "DMS_prefs_branch": 2.0066714100674705
+        },
+        "A/Cambodia/Q0321176/2006": {
+            "DMS_prefs_branch": 2.0419741173903367
+        },
+        "A/Cambodia/S1211394/2008": {
+            "DMS_prefs_branch": 2.62709400499676
+        },
+        "A/Cambodia/U0417030/2010": {
+            "DMS_prefs_branch": 0.5505585599542651
+        },
+        "A/Cambodia/V0401301/2011": {
+            "DMS_prefs_branch": 0.04235838889747556
+        },
+        "A/Cambodia/W0112303/2012": {
+            "DMS_prefs_branch": 3.126952781235568
+        },
+        "A/Cambodia/X0817302/2013": {
+            "DMS_prefs_branch": 1.1176266497644884
+        },
+        "A/Cambodia/X0828324/2013": {
+            "DMS_prefs_branch": 1.5337647490565691
+        },
+        "A/Cambodia/Y0208301/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Cambodia/Y0304301/2014": {
+            "DMS_prefs_branch": -0.6737529749690861
+        },
+        "A/Cambodia/Y0305306/2014": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "A/Cambodia/Y0307302/2014": {
+            "DMS_prefs_branch": -1.0008976307120285
+        },
+        "A/Cambodia/Y0314301/2014": {
+            "DMS_prefs_branch": 0.6917842430962713
+        },
+        "A/Canada_goose/DelawareBay/601/2016": {
+            "DMS_prefs_branch": 0.3987013386177565
+        },
+        "A/Chicken/Anhui/39/2004": {
+            "DMS_prefs_branch": 2.7000748748724366
+        },
+        "A/Chicken/Ayutthaya/Thailand/CU-23/2004": {
+            "DMS_prefs_branch": -0.5506296706910462
+        },
+        "A/Chicken/Guangdong/174/2004": {
+            "DMS_prefs_branch": 0.3015636331989499
+        },
+        "A/Chicken/Henan/12/2004": {
+            "DMS_prefs_branch": -0.08221611610205946
+        },
+        "A/Chicken/HongKong/8221/2001": {
+            "DMS_prefs_branch": -1.7707394097165783
+        },
+        "A/Chicken/HongKong/FY150/2001": {
+            "DMS_prefs_branch": 0.025111791363840563
+        },
+        "A/Chicken/HongKong/YU8222/2001": {
+            "DMS_prefs_branch": -0.08221611610205946
+        },
+        "A/Chicken/Indore/India/18760/2006": {
+            "DMS_prefs_branch": 1.0786288763546266
+        },
+        "A/Chicken/Legok/2003": {
+            "DMS_prefs_branch": 0.019453105066627174
+        },
+        "A/Chicken/Shandong/J02/2009": {
+            "DMS_prefs_branch": -0.9658594673888278
+        },
+        "A/Chicken/Shandong/J06/2009": {
+            "DMS_prefs_branch": 0.19423675172588828
+        },
+        "A/Chicken/Surat/India/9256/2006": {
+            "DMS_prefs_branch": -1.301408601986716
+        },
+        "A/Chicken/Thane/India/15053/2006": {
+            "DMS_prefs_branch": 0.2158869823971813
+        },
+        "A/Chicken/Turkey-Batman/09rs2841-71/2006": {
+            "DMS_prefs_branch": -1.0439499149973637
+        },
+        "A/Chicken/Turkey-Batman/09rs2842-92/2007": {
+            "DMS_prefs_branch": -0.2826537850629668
+        },
+        "A/Chicken/Turkey-Bitlis/09rs2841-93/2006": {
+            "DMS_prefs_branch": 0.8049271678885714
+        },
+        "A/Chicken/Turkey-Edirne/09rs2843-5/2008": {
+            "DMS_prefs_branch": -0.8890668978580637
+        },
+        "A/Chicken/Turkey-Isparta/09rs2841-37/2006": {
+            "DMS_prefs_branch": -0.7789913486085267
+        },
+        "A/Ck/HongKong/374/2002": {
+            "DMS_prefs_branch": 1.3167593867401968
+        },
+        "A/Cygnus_olor/Astrakhan/Ast05_2_4/2005": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Cygnus_olor/Astrakhan/Ast05_2_7/2005": {
+            "DMS_prefs_branch": -0.419293836867344
+        },
+        "A/Cygnuscygnus/Krasnodar/329/2007": {
+            "DMS_prefs_branch": -0.2036765823782853
+        },
+        "A/Duck/Anyang/AVL-1/2001": {
+            "DMS_prefs_branch": -1.5517013750211277
+        },
+        "A/Duck/HongKong/29861/2000": {
+            "DMS_prefs_branch": -0.9636929482082872
+        },
+        "A/Egypt/1980-NAMRU3/2008": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "A/Egypt/3228-NAMRU3/2009": {
+            "DMS_prefs_branch": 2.589377320422129
+        },
+        "A/Egypt/3450-NAMRU3/2009": {
+            "DMS_prefs_branch": 2.8611320759279892
+        },
+        "A/Egypt/4082-NAMRU3/2007": {
+            "DMS_prefs_branch": 0.08362124983687902
+        },
+        "A/Egypt/4979-NAMRU3/2009": {
+            "DMS_prefs_branch": -0.23686755486928718
+        },
+        "A/Egypt/682/2015": {
+            "DMS_prefs_branch": 0.4547202550828309
+        },
+        "A/Egypt/902-NAMRU3/2007": {
+            "DMS_prefs_branch": -1.5766442359034842
+        },
+        "A/Egypt/902786/2006": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "A/Egypt/MOH_NRC_8434/2014": {
+            "DMS_prefs_branch": -0.2261057036426209
+        },
+        "A/Egypt/N02127/2010": {
+            "DMS_prefs_branch": -0.9370127506841348
+        },
+        "A/Egypt/N0423/2011": {
+            "DMS_prefs_branch": -1.494842295422485
+        },
+        "A/Egypt/N10621/2011": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Egypt/N14976/2011": {
+            "DMS_prefs_branch": -2.2603399964400763
+        },
+        "A/Egypt/N6774/2011": {
+            "DMS_prefs_branch": -2.195809335674687
+        },
+        "A/Environment/Guangxi/14313/2013": {
+            "DMS_prefs_branch": -0.01511247605343271
+        },
+        "A/Environment/Hunan/18459/2014": {
+            "DMS_prefs_branch": 0.1419001672314336
+        },
+        "A/Environment/Hunan/28147/2014": {
+            "DMS_prefs_branch": -0.1637386119338341
+        },
+        "A/Gf/HongKong/38/2002": {
+            "DMS_prefs_branch": 0.07063213491731446
+        },
+        "A/Goose/HongKong/30145/2000": {
+            "DMS_prefs_branch": -0.9666119853282868
+        },
+        "A/Goose/HongKong/30148/2000": {
+            "DMS_prefs_branch": -0.6593608582512522
+        },
+        "A/Goose/HongKong/ww26/2000": {
+            "DMS_prefs_branch": -1.140745466901798
+        },
+        "A/Guangdong/1/2008": {
+            "DMS_prefs_branch": -0.5436293795843454
+        },
+        "A/Guangxi/1/2008": {
+            "DMS_prefs_branch": -0.565612466610581
+        },
+        "A/Guizhou/1/2009": {
+            "DMS_prefs_branch": 1.6245850712248784
+        },
+        "A/HongKong/212/2003": {
+            "DMS_prefs_branch": 1.1176266497644884
+        },
+        "A/HongKong/213/2003": {
+            "DMS_prefs_branch": -1.0754467136712524
+        },
+        "A/HongKong/3781/2001": {
+            "DMS_prefs_branch": -0.27254266437793984
+        },
+        "A/HongKong/5923/2012": {
+            "DMS_prefs_branch": 0.7246095369015342
+        },
+        "A/Hoodedvulture/BurkinaFaso/2/2006": {
+            "DMS_prefs_branch": 0.06624636213934765
+        },
+        "A/Hunan/1/2008": {
+            "DMS_prefs_branch": 2.6331376933362263
+        },
+        "A/Hunan/1/2009": {
+            "DMS_prefs_branch": 1.1761976359331767
+        },
+        "A/Indonesia/5/2005": {
+            "DMS_prefs_branch": 3.1741649020582683
+        },
+        "A/Indonesia/546H/2006": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Indonesia/7261/2008": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Indonesia/8228/2008": {
+            "DMS_prefs_branch": 0.2526488611419703
+        },
+        "A/Indonesia/CDC1031/2007": {
+            "DMS_prefs_branch": 2.6793817425863633
+        },
+        "A/Indonesia/CDC1032T/2007": {
+            "DMS_prefs_branch": -1.2943882540851241
+        },
+        "A/Indonesia/CDC1046/2007": {
+            "DMS_prefs_branch": 0.025701386881186526
+        },
+        "A/Indonesia/CDC292T/2005": {
+            "DMS_prefs_branch": -0.9113833273362065
+        },
+        "A/Indonesia/CDC370T/2006": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Indonesia/CDC699/2006": {
+            "DMS_prefs_branch": 2.6052563064888155
+        },
+        "A/Indonesia/CDC739/2006": {
+            "DMS_prefs_branch": 1.6411767742748269
+        },
+        "A/Indonesia/NIHRD10364/2010": {
+            "DMS_prefs_branch": -0.33231791823436724
+        },
+        "A/Indonesia/NIHRD11046/2011": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Indonesia/NIHRD7988/2008": {
+            "DMS_prefs_branch": 0.17362838127979913
+        },
+        "A/Indonesia/NIHRD9340/2009": {
+            "DMS_prefs_branch": -0.44876739851085334
+        },
+        "A/Iraq/755/2006": {
+            "DMS_prefs_branch": -0.3019925963251133
+        },
+        "A/Kalijpheasant/Thailand/vsmu-1/2008": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Mallardduck/Korea/W401/2011": {
+            "DMS_prefs_branch": 1.1176266497644884
+        },
+        "A/Muscovyduck/HaiDuong/46/2007": {
+            "DMS_prefs_branch": -0.8891053715431702
+        },
+        "A/Muscovyduck/Vietnam/1455/2006": {
+            "DMS_prefs_branch": 0.4285436063791602
+        },
+        "A/Muscovyduck/Vietnam/NCVD-22/2007": {
+            "DMS_prefs_branch": 1.430111546842804
+        },
+        "A/Pekingduck/Germany/R1959/2007": {
+            "DMS_prefs_branch": 0.20095590021292065
+        },
+        "A/Pheasant/HongKong/FY155/2001": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "A/SCk/HongKong/YU100/2002": {
+            "DMS_prefs_branch": -0.1971851451176473
+        },
+        "A/Shanghai/1/2006": {
+            "DMS_prefs_branch": 0.13494255614697506
+        },
+        "A/Swine/Fujian/2001": {
+            "DMS_prefs_branch": -1.6116614465099
+        },
+        "A/Thailand/5/2004": {
+            "DMS_prefs_branch": -0.06160336236577457
+        },
+        "A/Thailand/NK165/2005": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Turkey/65596/2006": {
+            "DMS_prefs_branch": -1.150738749792384
+        },
+        "A/Vietnam/14012902/2014": {
+            "DMS_prefs_branch": -0.057187380118889124
+        },
+        "A/Vietnam/CL26/2004": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Vietnam/HN31413/2008": {
+            "DMS_prefs_branch": -1.5628384510253124
+        },
+        "A/Vietnam/HN31432M/2008": {
+            "DMS_prefs_branch": 0.8927156936958329
+        },
+        "A/Vietnam/HN31641/2009": {
+            "DMS_prefs_branch": 0.4183724396240479
+        },
+        "A/Vietnam/UT3030/2003": {
+            "DMS_prefs_branch": 2.0840422995809007
+        },
+        "A/Vietnam/UT3035/2003": {
+            "DMS_prefs_branch": 4.609869745817195
+        },
+        "A/Vietnam/UT36236/2010": {
+            "DMS_prefs_branch": 0.6563670433271063
+        },
+        "A/Vietnam/VP39/2013": {
+            "DMS_prefs_branch": -1.2501408400478244
+        },
+        "A/avian/Vietnam/NCVD-124/2008": {
+            "DMS_prefs_branch": -0.433752882111538
+        },
+        "A/baikalteal/Korea/Q524/2010": {
+            "DMS_prefs_branch": 0.2316171599019623
+        },
+        "A/bar_headed_goose/Qinghai/1_HVRI/2006": {
+            "DMS_prefs_branch": -0.2688432845592872
+        },
+        "A/black-headedgull/Qinghai/1/2005": {
+            "DMS_prefs_branch": -0.5277264493637563
+        },
+        "A/chicken/Aichi/2/2011": {
+            "DMS_prefs_branch": -1.6380553253246513
+        },
+        "A/chicken/AnNing/1/2014": {
+            "DMS_prefs_branch": -2.5080528960882345
+        },
+        "A/chicken/Assam/140203/2008": {
+            "DMS_prefs_branch": -0.5866680351771767
+        },
+        "A/chicken/BacLieu/1214/2007": {
+            "DMS_prefs_branch": 0.4028171402988964
+        },
+        "A/chicken/Bali/U8661/2009": {
+            "DMS_prefs_branch": 0.3232233727873475
+        },
+        "A/chicken/Bangladesh/0912/2010": {
+            "DMS_prefs_branch": -0.4616406096764287
+        },
+        "A/chicken/Bangladesh/1151-10/2010": {
+            "DMS_prefs_branch": 0.26540352567645353
+        },
+        "A/chicken/Bangladesh/1151-9/2010": {
+            "DMS_prefs_branch": -2.4880354358764976
+        },
+        "A/chicken/Bangladesh/12VIR-7140-1/2011": {
+            "DMS_prefs_branch": -0.09542325369859672
+        },
+        "A/chicken/Bangladesh/12VIR-7140-14/2012": {
+            "DMS_prefs_branch": -0.7937740542957167
+        },
+        "A/chicken/Bangladesh/12VIR-7140-18/2012": {
+            "DMS_prefs_branch": 2.0140015197462455
+        },
+        "A/chicken/Bangladesh/12VIR-7140-3/2012": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Bangladesh/12VIR-7140-6/2012": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "A/chicken/Bangladesh/24944/2015": {
+            "DMS_prefs_branch": -0.1498271541416584
+        },
+        "A/chicken/Bangladesh/30065/2016": {
+            "DMS_prefs_branch": -0.41205188820932176
+        },
+        "A/chicken/Bangladesh/3012/2011": {
+            "DMS_prefs_branch": -0.13050876730762645
+        },
+        "A/chicken/Bangladesh/31289-1/2011": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Bangladesh/32806/2017": {
+            "DMS_prefs_branch": -0.16780164208988266
+        },
+        "A/chicken/Bangladesh/42010/2012": {
+            "DMS_prefs_branch": 0.9950782164517163
+        },
+        "A/chicken/Bangladesh/9636/2010": {
+            "DMS_prefs_branch": -0.03367235395572166
+        },
+        "A/chicken/Bangladesh/BL-4/2007": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "A/chicken/Bangladesh/BL-470/2010": {
+            "DMS_prefs_branch": 1.0552748098657603
+        },
+        "A/chicken/Bhutan/248009/2010": {
+            "DMS_prefs_branch": 0.36295783582206304
+        },
+        "A/chicken/Bhutan/359/2012": {
+            "DMS_prefs_branch": 0.20433255626024635
+        },
+        "A/chicken/BurkinaFaso/1347-16/2006": {
+            "DMS_prefs_branch": 0.08777677369349852
+        },
+        "A/chicken/CaMau/1180/2006": {
+            "DMS_prefs_branch": -0.4639581092326712
+        },
+        "A/chicken/Cambodia/LC3AL/2007": {
+            "DMS_prefs_branch": 0.3723041483597854
+        },
+        "A/chicken/Cambodia/TKCMB5T/2010": {
+            "DMS_prefs_branch": -0.1278536941048201
+        },
+        "A/chicken/Cambodia/TLC1/2009": {
+            "DMS_prefs_branch": 1.4219562844616416
+        },
+        "A/chicken/Cambodia/X0815301/2013": {
+            "DMS_prefs_branch": -0.2602182452220809
+        },
+        "A/chicken/Cambodia/Z207W17M1/2015": {
+            "DMS_prefs_branch": 0.17019263990839953
+        },
+        "A/chicken/Cambodia/Z850W49M1/2015": {
+            "DMS_prefs_branch": -1.0397147838647274
+        },
+        "A/chicken/Crimea/08/2005": {
+            "DMS_prefs_branch": -0.08501370504203082
+        },
+        "A/chicken/DaLi/302/2014": {
+            "DMS_prefs_branch": -2.1723042912320984
+        },
+        "A/chicken/EastJava/UT1006/2003": {
+            "DMS_prefs_branch": 1.402515672877847
+        },
+        "A/chicken/EastJava/UT6031/2007": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "A/chicken/EastKalimantan/UT1035/2004": {
+            "DMS_prefs_branch": -2.740128476115219
+        },
+        "A/chicken/EasternChina/ZG16/2010": {
+            "DMS_prefs_branch": -1.9195832797541876
+        },
+        "A/chicken/Egypt/0813_NLQP/2008": {
+            "DMS_prefs_branch": -2.983128229906517
+        },
+        "A/chicken/Egypt/096L-NLQP/2009": {
+            "DMS_prefs_branch": -2.173248344515625
+        },
+        "A/chicken/Egypt/1/2009": {
+            "DMS_prefs_branch": -2.044667919777474
+        },
+        "A/chicken/Egypt/102d/2010": {
+            "DMS_prefs_branch": 0.44849918252399146
+        },
+        "A/chicken/Egypt/13VIR-2962-24/2013": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Egypt/1553-28/2010": {
+            "DMS_prefs_branch": -1.1965350885966561
+        },
+        "A/chicken/Egypt/5169-2/2007": {
+            "DMS_prefs_branch": -1.4965997783089862
+        },
+        "A/chicken/Egypt/C3Br212/2007": {
+            "DMS_prefs_branch": -0.8139750875676932
+        },
+        "A/chicken/Egypt/NLQP20SL-AR751/2013": {
+            "DMS_prefs_branch": -1.143754571308253
+        },
+        "A/chicken/Egypt/NLQP2AL-AR749/2013": {
+            "DMS_prefs_branch": 0.10641790347177993
+        },
+        "A/chicken/Egypt/NLQP33SD-AR748/2013": {
+            "DMS_prefs_branch": 0.15375480563043295
+        },
+        "A/chicken/Egypt/Q2247A/2010": {
+            "DMS_prefs_branch": 0.5156361346960795
+        },
+        "A/chicken/Egypt/Q5283C/2012": {
+            "DMS_prefs_branch": 0.6829169227363886
+        },
+        "A/chicken/Fujian/10039/2005": {
+            "DMS_prefs_branch": -0.47078340691626847
+        },
+        "A/chicken/Ghana/2534/2007": {
+            "DMS_prefs_branch": 2.6571746471510167
+        },
+        "A/chicken/Giza/CAI23/2008": {
+            "DMS_prefs_branch": -0.4196975933302189
+        },
+        "A/chicken/Giza/CAI6/2008": {
+            "DMS_prefs_branch": -0.6852039749154218
+        },
+        "A/chicken/Hebei/108/2002": {
+            "DMS_prefs_branch": -0.4483224465807819
+        },
+        "A/chicken/Henan/1362/2006": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Henan/wu/2004": {
+            "DMS_prefs_branch": -4.10769718671311
+        },
+        "A/chicken/HongKong/947/2006": {
+            "DMS_prefs_branch": -0.6797964620755819
+        },
+        "A/chicken/Hubei/wm/1997": {
+            "DMS_prefs_branch": 0.27572567854149327
+        },
+        "A/chicken/India/01CA06/2012": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "A/chicken/India/01CA09/2012": {
+            "DMS_prefs_branch": 0.593592639139927
+        },
+        "A/chicken/India/03CA03/2012": {
+            "DMS_prefs_branch": -0.9057819320052901
+        },
+        "A/chicken/India/04CA17/2015": {
+            "DMS_prefs_branch": -1.4899046588484555
+        },
+        "A/chicken/India/12CA01/2013": {
+            "DMS_prefs_branch": -0.08024202709022643
+        },
+        "A/chicken/India/12CL2168/2013": {
+            "DMS_prefs_branch": -0.6923411470289726
+        },
+        "A/chicken/India/241272/2010": {
+            "DMS_prefs_branch": 1.0169042233232604
+        },
+        "A/chicken/India/81890/2008": {
+            "DMS_prefs_branch": -0.7835990231638975
+        },
+        "A/chicken/India/82616/2008": {
+            "DMS_prefs_branch": -0.7862782640217412
+        },
+        "A/chicken/India/96880/2008": {
+            "DMS_prefs_branch": 1.1979344214396044
+        },
+        "A/chicken/India/CA0303/2011": {
+            "DMS_prefs_branch": 2.0844711436173142
+        },
+        "A/chicken/Indonesia/11/2003": {
+            "DMS_prefs_branch": -1.0439499149973637
+        },
+        "A/chicken/Iran/53-3/2008": {
+            "DMS_prefs_branch": -0.24939402143250144
+        },
+        "A/chicken/Ismailia/144CA/2014": {
+            "DMS_prefs_branch": -0.6887198602666266
+        },
+        "A/chicken/Israel/1055/2008": {
+            "DMS_prefs_branch": 0.20019617114998126
+        },
+        "A/chicken/Jalgaon/12419/2006": {
+            "DMS_prefs_branch": 0.9701014654947968
+        },
+        "A/chicken/Jalgaon/13735/2006": {
+            "DMS_prefs_branch": 1.4734047262890386
+        },
+        "A/chicken/Jiangsu/k0402/2010": {
+            "DMS_prefs_branch": -1.1145157248321385
+        },
+        "A/chicken/Jilin/he/2002": {
+            "DMS_prefs_branch": 0.8143051528216518
+        },
+        "A/chicken/Jilin/ho/2003": {
+            "DMS_prefs_branch": -8.489091576570184
+        },
+        "A/chicken/Jilin/hp/2003": {
+            "DMS_prefs_branch": -0.7485733374502912
+        },
+        "A/chicken/Jilin/hq/2003": {
+            "DMS_prefs_branch": -1.3649804683546072
+        },
+        "A/chicken/Kediri/04160512/2016": {
+            "DMS_prefs_branch": -0.5805384899828081
+        },
+        "A/chicken/Korea/ES/2003": {
+            "DMS_prefs_branch": 0.6132931389906101
+        },
+        "A/chicken/Korea/IS3/2006": {
+            "DMS_prefs_branch": -0.2487105196272975
+        },
+        "A/chicken/Korea/ISQ250/2008": {
+            "DMS_prefs_branch": -0.1971851451176473
+        },
+        "A/chicken/Korea/Iksan/2010": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "A/chicken/Korea/SJ378/2011": {
+            "DMS_prefs_branch": -0.4180747363807679
+        },
+        "A/chicken/Krasnodar/2/2007": {
+            "DMS_prefs_branch": -0.9541887758431858
+        },
+        "A/chicken/KulonProgo/BBVet-XII-2/2004": {
+            "DMS_prefs_branch": -1.4567631593754702
+        },
+        "A/chicken/Kuningan/08160178-003/2016": {
+            "DMS_prefs_branch": -1.861613735133063
+        },
+        "A/chicken/Kuwait/KISR3/2007": {
+            "DMS_prefs_branch": 0.19311889650612687
+        },
+        "A/chicken/Kyoto/4/2004": {
+            "DMS_prefs_branch": -0.17101336770238046
+        },
+        "A/chicken/Lao/37/2008": {
+            "DMS_prefs_branch": -0.5558411781901602
+        },
+        "A/chicken/Lao/LH1/2010": {
+            "DMS_prefs_branch": -2.0259773203421223
+        },
+        "A/chicken/Lao/P0020/2007": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Lao/P0169/2007": {
+            "DMS_prefs_branch": -0.9813863274769841
+        },
+        "A/chicken/Majalengka/08160070-001/2016": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Mangarai-NTT/BPPV6/2004": {
+            "DMS_prefs_branch": -0.6607936348477814
+        },
+        "A/chicken/Manipur/NIV9743/2007": {
+            "DMS_prefs_branch": -1.8336886051294288
+        },
+        "A/chicken/Miyazaki/N7/2011": {
+            "DMS_prefs_branch": -1.1074306479752505
+        },
+        "A/chicken/Nandurbar/7979/2006": {
+            "DMS_prefs_branch": -0.2036765823782853
+        },
+        "A/chicken/Nepal/08TI86/2013": {
+            "DMS_prefs_branch": 0.0018021579825463765
+        },
+        "A/chicken/Nepal/08TI87/2013": {
+            "DMS_prefs_branch": 0.46568008569662056
+        },
+        "A/chicken/NewJersey/15-002659-2/2015": {
+            "DMS_prefs_branch": -1.0071534870483787
+        },
+        "A/chicken/Niger/2130-7/2006": {
+            "DMS_prefs_branch": -1.8387875842745292
+        },
+        "A/chicken/Nigeria/08RS848-111/2007": {
+            "DMS_prefs_branch": -0.45819663041459335
+        },
+        "A/chicken/Nigeria/08RS848-121/2007": {
+            "DMS_prefs_branch": 0.11988882755083227
+        },
+        "A/chicken/Nigeria/08RS848-17/2006": {
+            "DMS_prefs_branch": 0.00032973636059824285
+        },
+        "A/chicken/Nigeria/08RS848-59/2007": {
+            "DMS_prefs_branch": -2.069290357223483
+        },
+        "A/chicken/Nigeria/08VIR4337-438/2006": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "A/chicken/Nigeria/1071-23/2007": {
+            "DMS_prefs_branch": -1.4149987557745922
+        },
+        "A/chicken/Nigeria/1071-7/2007": {
+            "DMS_prefs_branch": -0.16662372304103926
+        },
+        "A/chicken/Ningxia/222/2012": {
+            "DMS_prefs_branch": 0.7275433137427179
+        },
+        "A/chicken/NorthChina/k0604/2010": {
+            "DMS_prefs_branch": 0.01066305889143726
+        },
+        "A/chicken/Pekalongan/BBVW/2007": {
+            "DMS_prefs_branch": -0.2998593895756554
+        },
+        "A/chicken/Poland/R3248/2007": {
+            "DMS_prefs_branch": -0.9770980882035596
+        },
+        "A/chicken/Purworejo/BBVW/2005": {
+            "DMS_prefs_branch": -1.324634220479902
+        },
+        "A/chicken/Pyigyitagon/204/2006": {
+            "DMS_prefs_branch": -1.128685461493515
+        },
+        "A/chicken/Sagaing/295/2010": {
+            "DMS_prefs_branch": -0.5055596588303811
+        },
+        "A/chicken/SaudiArabia/6732-13/2007": {
+            "DMS_prefs_branch": -0.8985878392317379
+        },
+        "A/chicken/SaudiArabia/6732-4/2007": {
+            "DMS_prefs_branch": -0.2259907696725627
+        },
+        "A/chicken/Scotland/532/2016": {
+            "DMS_prefs_branch": 0.30212718138758565
+        },
+        "A/chicken/Shandong/A-5/2006": {
+            "DMS_prefs_branch": -5.694954700144351
+        },
+        "A/chicken/Shantou/2535/2001": {
+            "DMS_prefs_branch": 0.773934540589118
+        },
+        "A/chicken/Sikkim/151464/2009": {
+            "DMS_prefs_branch": 0.5994327867986899
+        },
+        "A/chicken/Sleman/04141596/2014": {
+            "DMS_prefs_branch": -0.15423284168667523
+        },
+        "A/chicken/Sleman/04160326/2016": {
+            "DMS_prefs_branch": -0.8286823730928672
+        },
+        "A/chicken/Subang/08160018-002/2016": {
+            "DMS_prefs_branch": -0.4650238501216195
+        },
+        "A/chicken/SulawesiSelatan/UT2093/2005": {
+            "DMS_prefs_branch": -0.39877748798227186
+        },
+        "A/chicken/Thailand/ICRC-213/2007": {
+            "DMS_prefs_branch": -1.0696606170188632
+        },
+        "A/chicken/Thailand/ICRC-618/2008": {
+            "DMS_prefs_branch": -1.5253903727595843
+        },
+        "A/chicken/Thailand/ICRC-V143/2007": {
+            "DMS_prefs_branch": -0.8712285346965509
+        },
+        "A/chicken/Thailand/ICRC_V586/2008": {
+            "DMS_prefs_branch": 1.5354766794065797
+        },
+        "A/chicken/Thailand/NP-172/2006": {
+            "DMS_prefs_branch": -1.819112460482322
+        },
+        "A/chicken/Thailand/NS-339/2008": {
+            "DMS_prefs_branch": -1.758087913738273
+        },
+        "A/chicken/Thailand/NS-341/2008": {
+            "DMS_prefs_branch": -0.6368108110831838
+        },
+        "A/chicken/Thailand/PC-170/2006": {
+            "DMS_prefs_branch": 0.052271099061322684
+        },
+        "A/chicken/Thailand/PC-340/2008": {
+            "DMS_prefs_branch": -0.810923128401873
+        },
+        "A/chicken/Tibet/6/2008": {
+            "DMS_prefs_branch": 0.7537776216991063
+        },
+        "A/chicken/Uthaithani/NIAH115067/2008": {
+            "DMS_prefs_branch": -2.1140759262894164
+        },
+        "A/chicken/Vietnam/10/2005": {
+            "DMS_prefs_branch": -1.7772201191298578
+        },
+        "A/chicken/Vietnam/HU3_1518/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Vietnam/LD-080/2004": {
+            "DMS_prefs_branch": 1.132211920280898
+        },
+        "A/chicken/Vietnam/NCVD-005/2008": {
+            "DMS_prefs_branch": -0.7013378334813126
+        },
+        "A/chicken/Vietnam/NCVD-0308/2008": {
+            "DMS_prefs_branch": 4.074944347773862
+        },
+        "A/chicken/Vietnam/NCVD-185/2008": {
+            "DMS_prefs_branch": 0.9470489122596812
+        },
+        "A/chicken/Vietnam/NCVD-2750/2013": {
+            "DMS_prefs_branch": -0.2445366924145771
+        },
+        "A/chicken/Vietnam/NCVD-279/2009": {
+            "DMS_prefs_branch": 0.014029140643180005
+        },
+        "A/chicken/Vietnam/NCVD-281/2009": {
+            "DMS_prefs_branch": -0.486083925936845
+        },
+        "A/chicken/Vietnam/NCVD-2816/2013": {
+            "DMS_prefs_branch": -1.142006204717711
+        },
+        "A/chicken/Vietnam/NCVD-296/2009": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "A/chicken/Vietnam/NCVD-392/2009": {
+            "DMS_prefs_branch": -1.3025384309882917
+        },
+        "A/chicken/Vietnam/NCVD-395/2010": {
+            "DMS_prefs_branch": -0.5474058413719052
+        },
+        "A/chicken/Vietnam/NCVD-412/2010": {
+            "DMS_prefs_branch": 1.7530021856091722
+        },
+        "A/chicken/Vietnam/NCVD-427/2010": {
+            "DMS_prefs_branch": -0.9138171339357284
+        },
+        "A/chicken/Vietnam/NCVD-775/2011": {
+            "DMS_prefs_branch": -0.7300980791487971
+        },
+        "A/chicken/Vietnam/NCVD-779/2011": {
+            "DMS_prefs_branch": -0.5500743516877135
+        },
+        "A/chicken/Vietnam/NCVD-878/2011": {
+            "DMS_prefs_branch": -0.9815705983394241
+        },
+        "A/chicken/Vietnam/NCVD-swab276/2008": {
+            "DMS_prefs_branch": 0.059531234249928844
+        },
+        "A/chicken/Vietnam/NCVD14-A501/2014": {
+            "DMS_prefs_branch": -0.9231179802088664
+        },
+        "A/chicken/Vietnam/NCVD14_A461/2014": {
+            "DMS_prefs_branch": 1.0491349991489596
+        },
+        "A/chicken/WestBengal/142121/2008": {
+            "DMS_prefs_branch": -0.4394333556270814
+        },
+        "A/chicken/WestBengal/155505/2009": {
+            "DMS_prefs_branch": 0.5911587355642808
+        },
+        "A/chicken/WestBengal/162642/2009": {
+            "DMS_prefs_branch": 0.031106482075248576
+        },
+        "A/chicken/WestBengal/80995/2008": {
+            "DMS_prefs_branch": -0.7862782640217412
+        },
+        "A/chicken/WestJava/TASIKO_B/2006": {
+            "DMS_prefs_branch": 0.5709575261382849
+        },
+        "A/chicken/WestJava/UT1001/2003": {
+            "DMS_prefs_branch": -0.2242609176990692
+        },
+        "A/chicken/Yangon/182/2010": {
+            "DMS_prefs_branch": -0.16780164208988266
+        },
+        "A/chicken/Yangon/254/2010": {
+            "DMS_prefs_branch": 3.4096481518673976
+        },
+        "A/chicken/Yunnan/1/2014": {
+            "DMS_prefs_branch": 2.07264116320385
+        },
+        "A/chicken/Yunnan/6885/2003": {
+            "DMS_prefs_branch": 0.8909667839403056
+        },
+        "A/commonbuzzard/Bulgaria/38WB/2010": {
+            "DMS_prefs_branch": -1.012887010600829
+        },
+        "A/commonmagpie/HongKong/645/2006": {
+            "DMS_prefs_branch": 0.4278576188349478
+        },
+        "A/crow/Bangladesh/1054/2011": {
+            "DMS_prefs_branch": 1.0312305349330446
+        },
+        "A/crow/Bangladesh/1058/2011": {
+            "DMS_prefs_branch": -1.657061424577446
+        },
+        "A/crow/Bangladesh/1061/2011": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/crow/India/01CA02/2014": {
+            "DMS_prefs_branch": -1.2392122048224046
+        },
+        "A/crow/India/02CA03/2012": {
+            "DMS_prefs_branch": 0.07936442519814894
+        },
+        "A/crow/India/02CA07/2012": {
+            "DMS_prefs_branch": 0.4300424792258527
+        },
+        "A/crow/India/11CL01/2011": {
+            "DMS_prefs_branch": -1.3850012765721695
+        },
+        "A/crow/India/11TI16/2011": {
+            "DMS_prefs_branch": 0.8425006501448656
+        },
+        "A/crow/Kyoto/907/2004": {
+            "DMS_prefs_branch": -1.3515726063993798
+        },
+        "A/crow/Osaka/1660/2004": {
+            "DMS_prefs_branch": 0.4186383202101684
+        },
+        "A/cygnusolor/Italy/742/2006": {
+            "DMS_prefs_branch": -1.3664391584436584
+        },
+        "A/domestic_duck/Germany/R2048/2007": {
+            "DMS_prefs_branch": 1.1979166208397352
+        },
+        "A/domesticduck/Germany/R1400/2007": {
+            "DMS_prefs_branch": 0.6416720603407717
+        },
+        "A/domesticduck/VinhLong/0186/2013": {
+            "DMS_prefs_branch": 0.5136255982504773
+        },
+        "A/domesticgoose/Pavlodar/1/2005": {
+            "DMS_prefs_branch": 0.35427246541168245
+        },
+        "A/duck/Bangladesh/17D1012/2018": {
+            "DMS_prefs_branch": -3.760527888645889
+        },
+        "A/duck/Bangladesh/18949/2013": {
+            "DMS_prefs_branch": 0.4752946051915872
+        },
+        "A/duck/Bangladesh/19097/2013": {
+            "DMS_prefs_branch": -1.7085784625300804
+        },
+        "A/duck/Bangladesh/19099/2013": {
+            "DMS_prefs_branch": 0.768873413169442
+        },
+        "A/duck/Bangladesh/20399/2013": {
+            "DMS_prefs_branch": -1.853686730900057
+        },
+        "A/duck/Bangladesh/21980/2014": {
+            "DMS_prefs_branch": -0.5561215037475598
+        },
+        "A/duck/Bangladesh/22806/2014": {
+            "DMS_prefs_branch": 2.2400768320771043
+        },
+        "A/duck/Bangladesh/22811/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/duck/Bangladesh/22996/2014": {
+            "DMS_prefs_branch": 0.1499289884386204
+        },
+        "A/duck/Bangladesh/23858/2014": {
+            "DMS_prefs_branch": -0.6140546187157958
+        },
+        "A/duck/Bangladesh/24044/2014": {
+            "DMS_prefs_branch": -2.170767377079869
+        },
+        "A/duck/Bangladesh/24483/2015": {
+            "DMS_prefs_branch": -2.458429297718048
+        },
+        "A/duck/Bangladesh/24958/2015": {
+            "DMS_prefs_branch": -0.8400997562519945
+        },
+        "A/duck/Bangladesh/25683/2015": {
+            "DMS_prefs_branch": -1.6361522378887732
+        },
+        "A/duck/Bangladesh/25890/2015": {
+            "DMS_prefs_branch": 0.38093659604659114
+        },
+        "A/duck/Bangladesh/26251/2015": {
+            "DMS_prefs_branch": 0.013822628602627266
+        },
+        "A/duck/Bangladesh/27820/2015": {
+            "DMS_prefs_branch": 0.019941499731007728
+        },
+        "A/duck/Bangladesh/31103/2016": {
+            "DMS_prefs_branch": -2.4466624310875678
+        },
+        "A/duck/Bangladesh/31993/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/duck/Bangladesh/32247/2017": {
+            "DMS_prefs_branch": -0.8821152422557271
+        },
+        "A/duck/Bangladesh/34102/2017": {
+            "DMS_prefs_branch": -0.5183669404196565
+        },
+        "A/duck/Bangladesh/34590/2018": {
+            "DMS_prefs_branch": 0.48814672410853455
+        },
+        "A/duck/Bangladesh/4117T/2011": {
+            "DMS_prefs_branch": 0.8168903198552795
+        },
+        "A/duck/Bhutan/01TR03/2013": {
+            "DMS_prefs_branch": 0.5016851074470793
+        },
+        "A/duck/Cairo/1578CA/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/duck/Cambodia/D14AL/2006": {
+            "DMS_prefs_branch": -0.8296236162172402
+        },
+        "A/duck/Cambodia/PV027D1/2010": {
+            "DMS_prefs_branch": -2.1278313227409984
+        },
+        "A/duck/Cambodia/TK05D8T/2010": {
+            "DMS_prefs_branch": -0.4061931982343969
+        },
+        "A/duck/Cambodia/Z564W35M1/2015": {
+            "DMS_prefs_branch": -0.6741773508266812
+        },
+        "A/duck/China/E53/2012": {
+            "DMS_prefs_branch": 0.1491131868835326
+        },
+        "A/duck/EastJava/UT1046/2004": {
+            "DMS_prefs_branch": -0.9138171339357284
+        },
+        "A/duck/EasternChina/108/2008": {
+            "DMS_prefs_branch": -0.2148099464082122
+        },
+        "A/duck/Egypt/13VIR-2962-195/2013": {
+            "DMS_prefs_branch": -0.5066027332938495
+        },
+        "A/duck/Egypt/3982-12/2010": {
+            "DMS_prefs_branch": 0.5495329050458002
+        },
+        "A/duck/Egypt/D2Br212/2007": {
+            "DMS_prefs_branch": -0.37123997251110175
+        },
+        "A/duck/Egypt/Q2645C/2010": {
+            "DMS_prefs_branch": 0.1001798989599827
+        },
+        "A/duck/France/150253/2015": {
+            "DMS_prefs_branch": 0.3366232046033593
+        },
+        "A/duck/Fujian/13/2002": {
+            "DMS_prefs_branch": -0.9507061868311314
+        },
+        "A/duck/Fujian/17/2001": {
+            "DMS_prefs_branch": -2.150972083543746
+        },
+        "A/duck/Guangdong/07/2000": {
+            "DMS_prefs_branch": 0.22288854447316608
+        },
+        "A/duck/Guangdong/12/2000": {
+            "DMS_prefs_branch": -2.6579127059785685
+        },
+        "A/duck/Guangdong/40/2000": {
+            "DMS_prefs_branch": -0.6074165389212358
+        },
+        "A/duck/Guangxi/07/1999": {
+            "DMS_prefs_branch": -0.9819129739591763
+        },
+        "A/duck/Guangxi/13/2004": {
+            "DMS_prefs_branch": -1.84987088937744
+        },
+        "A/duck/Guangxi/1311/2004": {
+            "DMS_prefs_branch": -0.6026477056409758
+        },
+        "A/duck/Guangxi/1378/2004": {
+            "DMS_prefs_branch": -1.5418024340095826
+        },
+        "A/duck/Guangxi/22/2001": {
+            "DMS_prefs_branch": -0.9042175920015721
+        },
+        "A/duck/Guangxi/4016/2005": {
+            "DMS_prefs_branch": -0.766531546608957
+        },
+        "A/duck/Guangxi/793/2005": {
+            "DMS_prefs_branch": -0.9119838216421068
+        },
+        "A/duck/Guangxi/xa/2001": {
+            "DMS_prefs_branch": -1.5921931670795928
+        },
+        "A/duck/Hokkaido/WZ83/2010": {
+            "DMS_prefs_branch": 1.9053662144643464
+        },
+        "A/duck/HongKong/821/2002": {
+            "DMS_prefs_branch": -0.8832942854389458
+        },
+        "A/duck/Hunan/1207YYGK44-P/2013_Mixed": {
+            "DMS_prefs_branch": 0.04799654760550978
+        },
+        "A/duck/Hunan/1930/2007": {
+            "DMS_prefs_branch": -0.7348552367128107
+        },
+        "A/duck/Hunan/378/2003": {
+            "DMS_prefs_branch": 1.42171553275093
+        },
+        "A/duck/Hunan/S4030/2011": {
+            "DMS_prefs_branch": -0.41011859262534095
+        },
+        "A/duck/Hunan/S4150/2011": {
+            "DMS_prefs_branch": -0.7152450368985364
+        },
+        "A/duck/India/01CA01/2012": {
+            "DMS_prefs_branch": 0.3062021025596661
+        },
+        "A/duck/Klaten/04160386/2016": {
+            "DMS_prefs_branch": -2.0564259215886502
+        },
+        "A/duck/Korea/AS117/2011": {
+            "DMS_prefs_branch": 0.9141138044975304
+        },
+        "A/duck/Korea/Cheonan/2010": {
+            "DMS_prefs_branch": -0.6064388458441881
+        },
+        "A/duck/Korea/IC360/2011": {
+            "DMS_prefs_branch": 0.8035954954850495
+        },
+        "A/duck/Korea/JEQ149/2008": {
+            "DMS_prefs_branch": -0.15353726951934313
+        },
+        "A/duck/Korea/NSQ263/2008": {
+            "DMS_prefs_branch": -1.8673825524465197
+        },
+        "A/duck/Lao/19/2010": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "A/duck/Lao/3295/2006": {
+            "DMS_prefs_branch": -2.432026684776302
+        },
+        "A/duck/Lao/567/2010": {
+            "DMS_prefs_branch": -0.6438835916680999
+        },
+        "A/duck/Lao/A0301/2007": {
+            "DMS_prefs_branch": -0.16866284520536445
+        },
+        "A/duck/Lao/A0503/2007": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "A/duck/Lao/NCVD-35/2007": {
+            "DMS_prefs_branch": -0.5410090276941271
+        },
+        "A/duck/Lao/P0106/2007": {
+            "DMS_prefs_branch": -0.01821910088555589
+        },
+        "A/duck/Lao/P0117/2007": {
+            "DMS_prefs_branch": -0.9138171339357284
+        },
+        "A/duck/Niger/2090/2006": {
+            "DMS_prefs_branch": 0.043161862281859316
+        },
+        "A/duck/Nigeria/3724-2/2008": {
+            "DMS_prefs_branch": 0.18107002548381101
+        },
+        "A/duck/Novosibirsk/02/2005": {
+            "DMS_prefs_branch": -0.5747751882908669
+        },
+        "A/duck/Omsk/1822/2006": {
+            "DMS_prefs_branch": 1.661126257839074
+        },
+        "A/duck/Parepare/BBVM/2005": {
+            "DMS_prefs_branch": -0.28530315511623794
+        },
+        "A/duck/PhuTho/07-48/2007": {
+            "DMS_prefs_branch": -1.1934863213751294
+        },
+        "A/duck/SaudiArabia/6732-7/2007": {
+            "DMS_prefs_branch": -0.19245672612922515
+        },
+        "A/duck/Shanghai/38/2001": {
+            "DMS_prefs_branch": 0.2804352974344785
+        },
+        "A/duck/Shantou/1101/2001": {
+            "DMS_prefs_branch": -0.8494426430321793
+        },
+        "A/duck/Shantou/700/2002": {
+            "DMS_prefs_branch": -0.8168014951133467
+        },
+        "A/duck/Sukoharjo/BBVW-1428-9/2012": {
+            "DMS_prefs_branch": -0.2015574403936847
+        },
+        "A/duck/Thailand/CU-328/2007": {
+            "DMS_prefs_branch": -0.5579048896267178
+        },
+        "A/duck/Vietnam/NCVD-1/2003": {
+            "DMS_prefs_branch": -0.44776227956220305
+        },
+        "A/duck/Vietnam/NCVD-101/2008": {
+            "DMS_prefs_branch": 0.2502586968405285
+        },
+        "A/duck/Vietnam/NCVD-1463/2012": {
+            "DMS_prefs_branch": -0.7157420365652061
+        },
+        "A/duck/Vietnam/NCVD-1497/2012": {
+            "DMS_prefs_branch": -0.4135097105134268
+        },
+        "A/duck/Vietnam/NCVD-2805/2013": {
+            "DMS_prefs_branch": 0.2100424014000048
+        },
+        "A/duck/Vietnam/NCVD-31/2007": {
+            "DMS_prefs_branch": 0.24434552265664544
+        },
+        "A/duck/Vietnam/NCVD-370/2009": {
+            "DMS_prefs_branch": -2.546789802266203
+        },
+        "A/duck/Vietnam/NCVD-379/2009": {
+            "DMS_prefs_branch": 0.22712773582317522
+        },
+        "A/duck/Vietnam/NCVD-6137/2013": {
+            "DMS_prefs_branch": -2.2651758165172375
+        },
+        "A/duck/Vietnam/NCVD-645/2010": {
+            "DMS_prefs_branch": -0.4650238501216195
+        },
+        "A/duck/Vietnam/NCVD-669/2011": {
+            "DMS_prefs_branch": 1.0340956547712892
+        },
+        "A/duck/Vietnam/NCVD-68/2007": {
+            "DMS_prefs_branch": 0.5990927834656787
+        },
+        "A/duck/Vietnam/NCVD-920/2011": {
+            "DMS_prefs_branch": -0.8240928505729398
+        },
+        "A/duck/Vietnam/NCVD01/2005": {
+            "DMS_prefs_branch": -0.09322251902520673
+        },
+        "A/duck/Vietnam/NCVD14_A389/2014": {
+            "DMS_prefs_branch": -1.5726035599042103
+        },
+        "A/duck/Vietnam/NCVD14_A502/2014": {
+            "DMS_prefs_branch": -1.1426830349031765
+        },
+        "A/duck/Vietnam/NCVD3-8/2011": {
+            "DMS_prefs_branch": -0.7906658960126725
+        },
+        "A/duck/Vietnam/NCVDCDC9/2005": {
+            "DMS_prefs_branch": -1.0043762660315148
+        },
+        "A/duck/Vietnam/NCVD_01_146/2013": {
+            "DMS_prefs_branch": -1.8649609168844647
+        },
+        "A/duck/Vietnam/NCVD_15A60/2015": {
+            "DMS_prefs_branch": 0.7622068961864995
+        },
+        "A/duck/Vietnam/QT1456-3/2012": {
+            "DMS_prefs_branch": -0.4710602643358874
+        },
+        "A/duck/Vietnam/ST1551-3/2012": {
+            "DMS_prefs_branch": 0.43990949106371935
+        },
+        "A/duck/VinhLong/07-26/2007": {
+            "DMS_prefs_branch": -0.8668651817698101
+        },
+        "A/duck/Yunnan/971/2002": {
+            "DMS_prefs_branch": -0.2757192666969035
+        },
+        "A/duck/Zhejiang/224/2011": {
+            "DMS_prefs_branch": 1.1505250816435966
+        },
+        "A/duck/Zhejiang/52/2000": {
+            "DMS_prefs_branch": -1.716919979553731
+        },
+        "A/environment/Bangladesh/1018/2011": {
+            "DMS_prefs_branch": -0.6607936348477814
+        },
+        "A/environment/Bangladesh/15147/2012": {
+            "DMS_prefs_branch": 0.24130548860383355
+        },
+        "A/environment/Bangladesh/18984/2013": {
+            "DMS_prefs_branch": 0.8308636758397947
+        },
+        "A/environment/Cambodia/E1396W44M1/2013": {
+            "DMS_prefs_branch": -2.3853011599447362
+        },
+        "A/environment/Cambodia/Z2EP1e3W7M1/2015": {
+            "DMS_prefs_branch": 0.30787749280471016
+        },
+        "A/environment/Guangxi/03235/2012": {
+            "DMS_prefs_branch": -0.5794870427488384
+        },
+        "A/environment/Guizhou/00320/2013": {
+            "DMS_prefs_branch": 1.6411767742748269
+        },
+        "A/environment/Hubei/950/2013": {
+            "DMS_prefs_branch": -0.1092863475936554
+        },
+        "A/environment/Hunan/2_1/2007": {
+            "DMS_prefs_branch": -0.011449666566149486
+        },
+        "A/environment/Hunan/5_32/2007": {
+            "DMS_prefs_branch": -2.947431906732197
+        },
+        "A/environment/Hunan/6-45/2008": {
+            "DMS_prefs_branch": 0.10873194610016951
+        },
+        "A/environment/Maryland/06OS1181/2006": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "A/environment/Maryland/06OS1187/2006": {
+            "DMS_prefs_branch": -1.4859995287124843
+        },
+        "A/environment/Maryland/1158/2006": {
+            "DMS_prefs_branch": -0.5506489071056908
+        },
+        "A/environment/Thailand/ICRC-6670/2010": {
+            "DMS_prefs_branch": 2.514710647079943
+        },
+        "A/environment/WestJava/Bksi37/2013": {
+            "DMS_prefs_branch": -1.7212519288092225
+        },
+        "A/environment/Xinjiang/6/2009": {
+            "DMS_prefs_branch": 0.1303433517908742
+        },
+        "A/falcon/SaudiArabia/D1795/2005": {
+            "DMS_prefs_branch": -1.7576041732022152
+        },
+        "A/falcon/SaudiArabia/D1936/2007": {
+            "DMS_prefs_branch": 0.1876215215173085
+        },
+        "A/goosander/Sweden/V539/2006": {
+            "DMS_prefs_branch": 0.8915413942325806
+        },
+        "A/goose/EasternChina/223/2008": {
+            "DMS_prefs_branch": -0.4616406096764287
+        },
+        "A/goose/Egypt/M2794E/2011": {
+            "DMS_prefs_branch": -0.2374682860677022
+        },
+        "A/goose/Guangdong/3/1997": {
+            "DMS_prefs_branch": -1.038903259271285
+        },
+        "A/goose/Guangdong/SH7/2013": {
+            "DMS_prefs_branch": -0.112956814494196
+        },
+        "A/goose/Guangxi/3714/2005": {
+            "DMS_prefs_branch": -1.8851983124645368
+        },
+        "A/goose/Guiyang/337/2006": {
+            "DMS_prefs_branch": -1.1768778568831855
+        },
+        "A/goose/HongKong/6681/2001": {
+            "DMS_prefs_branch": -0.5445758135314599
+        },
+        "A/goose/Jiangsu/k0403/2010": {
+            "DMS_prefs_branch": 2.0909586599059047
+        },
+        "A/goose/Shantou/2216/2005": {
+            "DMS_prefs_branch": -0.16300333495391328
+        },
+        "A/goose/Shantou/753/2002": {
+            "DMS_prefs_branch": -1.0172941150298338
+        },
+        "A/goose/Tripura/103596/2008": {
+            "DMS_prefs_branch": -2.309471337457119
+        },
+        "A/goose/Vietnam/HU8-1596/2017": {
+            "DMS_prefs_branch": 0.16598668469146155
+        },
+        "A/goose/Yunnan/5141/2006": {
+            "DMS_prefs_branch": -0.7925599974694415
+        },
+        "A/greatcrestedgrebe/Sevastopol/11-173/2008": {
+            "DMS_prefs_branch": -0.5369255477833296
+        },
+        "A/grebe/Tyva/3/2009": {
+            "DMS_prefs_branch": -1.107778042244278
+        },
+        "A/guineafowl/France/160009/2016": {
+            "DMS_prefs_branch": -0.7412461625102426
+        },
+        "A/herringgull/Mongolia/616T2/2009": {
+            "DMS_prefs_branch": -0.2261057036426209
+        },
+        "A/herringgull/Mongolia/833T2/2009": {
+            "DMS_prefs_branch": -1.7369140748832441
+        },
+        "A/mallard/California/2531V/2011": {
+            "DMS_prefs_branch": -0.2468030868021152
+        },
+        "A/mallard/California/2542V/2011": {
+            "DMS_prefs_branch": 0.30393252533248344
+        },
+        "A/mallard/Illinois/12OS5080/2012": {
+            "DMS_prefs_branch": 0.8635129049718457
+        },
+        "A/mallard/Korea/1195/2010": {
+            "DMS_prefs_branch": 0.3665702258447017
+        },
+        "A/mallard/Manitoba/458/2005": {
+            "DMS_prefs_branch": -0.06384805486326117
+        },
+        "A/mallard/Maryland/802/2007": {
+            "DMS_prefs_branch": 0.11725855202291269
+        },
+        "A/mallard/Minnesota/24/2000": {
+            "DMS_prefs_branch": -0.6238872733776389
+        },
+        "A/mallard/NorthDakota/16_036222_1/2016": {
+            "DMS_prefs_branch": -0.787676893269704
+        },
+        "A/mallard/Ohio/11OS2216/2011": {
+            "DMS_prefs_branch": -1.1609640487997808
+        },
+        "A/mallard/Ontario/26078/2007": {
+            "DMS_prefs_branch": -1.5365888363811488
+        },
+        "A/mallard/Wisconsin/10OS2672/2010": {
+            "DMS_prefs_branch": -0.9294980606812144
+        },
+        "A/mallard/Wisconsin/2576/2009": {
+            "DMS_prefs_branch": -0.16461604902270327
+        },
+        "A/muscovy_duck/Vietnam/LBM670/2014": {
+            "DMS_prefs_branch": -2.182942712559824
+        },
+        "A/muscovyduck/Pekalongan/04160460/2016": {
+            "DMS_prefs_branch": 0.0419257194642782
+        },
+        "A/muscovyduck/SonLa/07-85/2007": {
+            "DMS_prefs_branch": -3.2334439719543826
+        },
+        "A/muscovyduck/Vietnam/NCVD-384/2009": {
+            "DMS_prefs_branch": -1.7567337441710262
+        },
+        "A/muscovyduck/Vietnam/NCVD-401/2010": {
+            "DMS_prefs_branch": -0.34908728095793945
+        },
+        "A/muscovyduck/Vietnam/NCVD-67/2007": {
+            "DMS_prefs_branch": 0.17921808801536446
+        },
+        "A/ngan/Vietnam/NCVD-420/2010": {
+            "DMS_prefs_branch": 0.8004594739749574
+        },
+        "A/open_bill_stork/Thailand/VSMU_15_ATG/2005": {
+            "DMS_prefs_branch": -1.2464203801745504
+        },
+        "A/open_billed_stork/Nakhonsawan/BBA2911M/2005": {
+            "DMS_prefs_branch": -1.0409476822383212
+        },
+        "A/open_billed_stork/Nakhonsawan/BBD0404F/2004": {
+            "DMS_prefs_branch": -2.174778281985203
+        },
+        "A/open_billed_stork/Nakhonsawan/BBD3309M/2005": {
+            "DMS_prefs_branch": 0.0362502395335258
+        },
+        "A/openbillstork/Thailand/VSMU-12-BKK/2003": {
+            "DMS_prefs_branch": 0.44178628128068115
+        },
+        "A/openbillstork/Thailand/VSMU-4-NSN/2004": {
+            "DMS_prefs_branch": -1.024146082562866
+        },
+        "A/openbillstork/Thailand/VSMU-8-BKK/2004": {
+            "DMS_prefs_branch": 0.4035884997584286
+        },
+        "A/ostrich/Suzhou/097/2003": {
+            "DMS_prefs_branch": 0.8393045346123966
+        },
+        "A/partridge/Shantou/1075/2002": {
+            "DMS_prefs_branch": -1.1831378439064508
+        },
+        "A/peregrine/Denmark/6632/2006": {
+            "DMS_prefs_branch": -0.006956323167548573
+        },
+        "A/peregrine_falcon/Aomori/7/2011": {
+            "DMS_prefs_branch": -0.44022776871457253
+        },
+        "A/peregrinefalcon/HongKong/5211/2006": {
+            "DMS_prefs_branch": 0.08238464072028184
+        },
+        "A/peregrinefalcon/HongKong/D0028/2004": {
+            "DMS_prefs_branch": -1.8889478783752192
+        },
+        "A/pheasant/Shantou/2239/2006": {
+            "DMS_prefs_branch": -0.8429924192836319
+        },
+        "A/pheasant/TienGiang/0022/2013": {
+            "DMS_prefs_branch": -0.09303063605127826
+        },
+        "A/pigeon/Hubei/RP25/2012": {
+            "DMS_prefs_branch": -1.6787510935839316
+        },
+        "A/pigeon/Thailand/VSMU_11_KRI/2005": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "A/pika/Qinghai/BI/2007": {
+            "DMS_prefs_branch": -2.468266759491077
+        },
+        "A/pika/Qinghai/HMH/2007": {
+            "DMS_prefs_branch": -1.1594029546163338
+        },
+        "A/plateaupika/Qinghai/04/2007": {
+            "DMS_prefs_branch": 1.0164326906570604
+        },
+        "A/quail/Guangxi/13/2002": {
+            "DMS_prefs_branch": -0.13366914563734278
+        },
+        "A/quail/Sukoharjo/04152003/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/quail/Thailand/CU-330/2006": {
+            "DMS_prefs_branch": -1.4872912524998905
+        },
+        "A/quail/Thanatpin/2283/2007": {
+            "DMS_prefs_branch": -1.512353848667904
+        },
+        "A/quail/Yogjakarta/BBVet-IX/2004": {
+            "DMS_prefs_branch": 0.2760027773814462
+        },
+        "A/raccoon_dog/Shandong/sd1/2005": {
+            "DMS_prefs_branch": -0.8109617282273073
+        },
+        "A/ruddyturnstone/DelawareBay/317/2016": {
+            "DMS_prefs_branch": -0.4534369215082899
+        },
+        "A/scaly-breastedmunia/HongKong/2433/2007": {
+            "DMS_prefs_branch": -2.106373961120255
+        },
+        "A/shorebird/Delaware/472/2007": {
+            "DMS_prefs_branch": 0.6464586059385672
+        },
+        "A/shrike/Tibet/13/2006": {
+            "DMS_prefs_branch": 0.4905894869527636
+        },
+        "A/swan/Germany/R65/2006": {
+            "DMS_prefs_branch": -0.3065265546777152
+        },
+        "A/swan/Poland/1242-139V08/2006": {
+            "DMS_prefs_branch": 0.23139954109413768
+        },
+        "A/swan/Poland/305-135V08/2006": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "A/swan/Shanghai/10/2009": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/swine/EastJava/UT6005/2006": {
+            "DMS_prefs_branch": 2.503745581961856
+        },
+        "A/swine/Guangxi/592/2011": {
+            "DMS_prefs_branch": 0.14515276868430904
+        },
+        "A/swine/Jiangsu/1/2008": {
+            "DMS_prefs_branch": 3.064669031756247
+        },
+        "A/treesparrow/Jiangsu/1/2008": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "A/tuftedduck/Denmark/6431/2006": {
+            "DMS_prefs_branch": -0.33808516997598875
+        },
+        "A/tuftedduck/Denmark/6540/2006": {
+            "DMS_prefs_branch": -0.486083925936845
+        },
+        "A/tuftedduck/Sweden/V526/2006": {
+            "DMS_prefs_branch": 0.11752574530791272
+        },
+        "A/turkey/Egypt/7/2007": {
+            "DMS_prefs_branch": -1.6024716610148328
+        },
+        "A/turkey/India/10CA04/2012": {
+            "DMS_prefs_branch": -1.5152478921244659
+        },
+        "A/turkey/Israel/446/2006": {
+            "DMS_prefs_branch": -0.31898381601744435
+        },
+        "A/turkey/Missouri/16-014037-7/2016": {
+            "DMS_prefs_branch": -0.5224196860784891
+        },
+        "A/turkey/Suzdalka/12/2005": {
+            "DMS_prefs_branch": -0.2881158771346613
+        },
+        "A/turkey/Virginia/505477_18/2007": {
+            "DMS_prefs_branch": 2.634305006828383
+        },
+        "A/waterfowl/HongKong/3785/2001": {
+            "DMS_prefs_branch": -0.3678854316564618
+        },
+        "A/whooper_swan/Mongolia/244/2005": {
+            "DMS_prefs_branch": 0.08055515094923013
+        },
+        "A/whooperswan/Denmark/7275/2006": {
+            "DMS_prefs_branch": -0.2261057036426209
+        },
+        "A/whooperswan/Scotland/1430/2006": {
+            "DMS_prefs_branch": -1.6562202013761065
+        },
+        "A/wild_bird/Bhutan/325/2012": {
+            "DMS_prefs_branch": -0.0078923107107505
+        },
+        "A/wild_bird/Bhutan/327/2012": {
+            "DMS_prefs_branch": -0.5146138923257322
+        },
+        "A/wild_duck/Fujian/1/2011": {
+            "DMS_prefs_branch": 2.7485054131310864
+        },
+        "A/wild_duck/Fujian/2/2011": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/wild_duck/Liaoning/8/2006": {
+            "DMS_prefs_branch": -0.511681864921637
+        },
+        "A/wild_duck/Shandong/1/2011": {
+            "DMS_prefs_branch": 0.052271099061322684
+        },
+        "A/wildduck/Shandong/2/2011": {
+            "DMS_prefs_branch": -0.7956856806194177
+        },
+        "NODE_0000000": {
+            "DMS_prefs_branch": 0.48919977372723006
+        },
+        "NODE_0000001": {
+            "DMS_prefs_branch": -0.5618265635714144
+        },
+        "NODE_0000002": {
+            "DMS_prefs_branch": -4.054590882463975
+        },
+        "NODE_0000003": {
+            "DMS_prefs_branch": 0.8637582001451312
+        },
+        "NODE_0000006": {
+            "DMS_prefs_branch": -1.6840846428786116
+        },
+        "NODE_0000010": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000013": {
+            "DMS_prefs_branch": -0.5044852673080947
+        },
+        "NODE_0000019": {
+            "DMS_prefs_branch": -0.8111439718150927
+        },
+        "NODE_0000028": {
+            "DMS_prefs_branch": 0.3636732721170444
+        },
+        "NODE_0000034": {
+            "DMS_prefs_branch": 0.052271099061322684
+        },
+        "NODE_0000048": {
+            "DMS_prefs_branch": -0.9519063067237084
+        },
+        "NODE_0000049": {
+            "DMS_prefs_branch": 0.08870876134423326
+        },
+        "NODE_0000050": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "NODE_0000051": {
+            "DMS_prefs_branch": 0.1419001672314336
+        },
+        "NODE_0000055": {
+            "DMS_prefs_branch": -1.1633674906783236
+        },
+        "NODE_0000059": {
+            "DMS_prefs_branch": 0.0362502395335258
+        },
+        "NODE_0000064": {
+            "DMS_prefs_branch": -0.9265808683402814
+        },
+        "NODE_0000068": {
+            "DMS_prefs_branch": -0.8052462874599714
+        },
+        "NODE_0000073": {
+            "DMS_prefs_branch": 0.2324565992628197
+        },
+        "NODE_0000075": {
+            "DMS_prefs_branch": 0.6263708995722177
+        },
+        "NODE_0000080": {
+            "DMS_prefs_branch": -0.8177939046816606
+        },
+        "NODE_0000083": {
+            "DMS_prefs_branch": -1.1386288979435784
+        },
+        "NODE_0000088": {
+            "DMS_prefs_branch": 0.4956522773929684
+        },
+        "NODE_0000097": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "NODE_0000102": {
+            "DMS_prefs_branch": -0.00884355555572939
+        },
+        "NODE_0000104": {
+            "DMS_prefs_branch": -1.977771989074316
+        },
+        "NODE_0000105": {
+            "DMS_prefs_branch": -0.4650238501216195
+        },
+        "NODE_0000108": {
+            "DMS_prefs_branch": 0.5955392769764322
+        },
+        "NODE_0000110": {
+            "DMS_prefs_branch": -1.2501408400478244
+        },
+        "NODE_0000114": {
+            "DMS_prefs_branch": -0.38964513935409056
+        },
+        "NODE_0000124": {
+            "DMS_prefs_branch": 0.8321672338301435
+        },
+        "NODE_0000125": {
+            "DMS_prefs_branch": 0.4689929979521164
+        },
+        "NODE_0000130": {
+            "DMS_prefs_branch": 0.3832781882714318
+        },
+        "NODE_0000133": {
+            "DMS_prefs_branch": -0.4647090750735553
+        },
+        "NODE_0000140": {
+            "DMS_prefs_branch": 0.4186383202101684
+        },
+        "NODE_0000145": {
+            "DMS_prefs_branch": 0.6556183392236348
+        },
+        "NODE_0000149": {
+            "DMS_prefs_branch": 0.35427246541168245
+        },
+        "NODE_0000152": {
+            "DMS_prefs_branch": -1.8016549556164647
+        },
+        "NODE_0000154": {
+            "DMS_prefs_branch": -0.5109874830452816
+        },
+        "NODE_0000160": {
+            "DMS_prefs_branch": 0.49025887412919616
+        },
+        "NODE_0000163": {
+            "DMS_prefs_branch": 0.19311889650612687
+        },
+        "NODE_0000166": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000168": {
+            "DMS_prefs_branch": -0.4951255663227966
+        },
+        "NODE_0000170": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000185": {
+            "DMS_prefs_branch": -0.3837632087845191
+        },
+        "NODE_0000197": {
+            "DMS_prefs_branch": 0.6517330311815466
+        },
+        "NODE_0000199": {
+            "DMS_prefs_branch": -1.1481369664829257
+        },
+        "NODE_0000201": {
+            "DMS_prefs_branch": -0.3940141665229099
+        },
+        "NODE_0000208": {
+            "DMS_prefs_branch": 1.559324277017998
+        },
+        "NODE_0000211": {
+            "DMS_prefs_branch": 2.579554919607629
+        },
+        "NODE_0000212": {
+            "DMS_prefs_branch": 0.02871811419539105
+        },
+        "NODE_0000213": {
+            "DMS_prefs_branch": -0.2993041938727652
+        },
+        "NODE_0000215": {
+            "DMS_prefs_branch": -1.2539229879163023
+        },
+        "NODE_0000217": {
+            "DMS_prefs_branch": -2.652385652795382
+        },
+        "NODE_0000218": {
+            "DMS_prefs_branch": 1.132211920280898
+        },
+        "NODE_0000219": {
+            "DMS_prefs_branch": -0.4344557791105705
+        },
+        "NODE_0000221": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0000229": {
+            "DMS_prefs_branch": -1.4997235761059389
+        },
+        "NODE_0000230": {
+            "DMS_prefs_branch": -1.0071897052202918
+        },
+        "NODE_0000231": {
+            "DMS_prefs_branch": -0.8687290187440295
+        },
+        "NODE_0000233": {
+            "DMS_prefs_branch": 0.21563838510811129
+        },
+        "NODE_0000243": {
+            "DMS_prefs_branch": 0.6058569835852694
+        },
+        "NODE_0000246": {
+            "DMS_prefs_branch": -2.0964479599995203
+        },
+        "NODE_0000250": {
+            "DMS_prefs_branch": -0.12056327605991884
+        },
+        "NODE_0000251": {
+            "DMS_prefs_branch": -0.160260062631275
+        },
+        "NODE_0000252": {
+            "DMS_prefs_branch": -0.5132195673912925
+        },
+        "NODE_0000253": {
+            "DMS_prefs_branch": 0.630101046772845
+        },
+        "NODE_0000261": {
+            "DMS_prefs_branch": 1.1176266497644884
+        },
+        "NODE_0000271": {
+            "DMS_prefs_branch": 1.132211920280898
+        },
+        "NODE_0000278": {
+            "DMS_prefs_branch": -0.01511247605343271
+        },
+        "NODE_0000284": {
+            "DMS_prefs_branch": -0.9141609619976656
+        },
+        "NODE_0000286": {
+            "DMS_prefs_branch": -0.17450288155764704
+        },
+        "NODE_0000289": {
+            "DMS_prefs_branch": 1.3670968718056131
+        },
+        "NODE_0000304": {
+            "DMS_prefs_branch": -2.0092170345379494
+        },
+        "NODE_0000305": {
+            "DMS_prefs_branch": -0.21156072209587096
+        },
+        "NODE_0000310": {
+            "DMS_prefs_branch": -0.09290903066767146
+        },
+        "NODE_0000311": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0000314": {
+            "DMS_prefs_branch": -1.4870664330331085
+        },
+        "NODE_0000315": {
+            "DMS_prefs_branch": 0.35427246541168245
+        },
+        "NODE_0000317": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0000322": {
+            "DMS_prefs_branch": 0.1794281237980606
+        },
+        "NODE_0000326": {
+            "DMS_prefs_branch": -0.05646378671671304
+        },
+        "NODE_0000327": {
+            "DMS_prefs_branch": -0.5070240673320173
+        },
+        "NODE_0000334": {
+            "DMS_prefs_branch": 0.6432034936347534
+        },
+        "NODE_0000336": {
+            "DMS_prefs_branch": -0.07991577503891939
+        },
+        "NODE_0000337": {
+            "DMS_prefs_branch": 3.278657035616887
+        },
+        "NODE_0000342": {
+            "DMS_prefs_branch": -1.0669629635640336
+        },
+        "NODE_0000344": {
+            "DMS_prefs_branch": -1.476273383136442
+        },
+        "NODE_0000345": {
+            "DMS_prefs_branch": -0.6989308966206481
+        },
+        "NODE_0000348": {
+            "DMS_prefs_branch": -0.7691584277615311
+        },
+        "NODE_0000350": {
+            "DMS_prefs_branch": -0.8480549554288587
+        },
+        "NODE_0000352": {
+            "DMS_prefs_branch": 1.132211920280898
+        },
+        "NODE_0000359": {
+            "DMS_prefs_branch": -0.8891730000570102
+        },
+        "NODE_0000367": {
+            "DMS_prefs_branch": -1.0505699611410733
+        },
+        "NODE_0000368": {
+            "DMS_prefs_branch": 1.0165673427099777
+        },
+        "NODE_0000369": {
+            "DMS_prefs_branch": -1.107778042244278
+        },
+        "NODE_0000370": {
+            "DMS_prefs_branch": 0.9619895433600936
+        },
+        "NODE_0000371": {
+            "DMS_prefs_branch": 0.5345603394447391
+        },
+        "NODE_0000372": {
+            "DMS_prefs_branch": -0.21993813990782407
+        },
+        "NODE_0000374": {
+            "DMS_prefs_branch": 0.052271099061322684
+        },
+        "NODE_0000376": {
+            "DMS_prefs_branch": -0.8465372371317094
+        },
+        "NODE_0000380": {
+            "DMS_prefs_branch": -0.5183669404196565
+        },
+        "NODE_0000383": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0000393": {
+            "DMS_prefs_branch": -1.2377982285124702
+        },
+        "NODE_0000398": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000400": {
+            "DMS_prefs_branch": -0.9723044364755408
+        },
+        "NODE_0000401": {
+            "DMS_prefs_branch": -0.2717868116898671
+        },
+        "NODE_0000403": {
+            "DMS_prefs_branch": 0.016529467574452283
+        },
+        "NODE_0000405": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000410": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000411": {
+            "DMS_prefs_branch": 0.4538298065828944
+        },
+        "NODE_0000412": {
+            "DMS_prefs_branch": 0.04584059361822065
+        },
+        "NODE_0000413": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000416": {
+            "DMS_prefs_branch": -0.112956814494196
+        },
+        "NODE_0000417": {
+            "DMS_prefs_branch": -0.20269318330070807
+        },
+        "NODE_0000418": {
+            "DMS_prefs_branch": -0.112956814494196
+        },
+        "NODE_0000422": {
+            "DMS_prefs_branch": -0.6797964620755819
+        },
+        "NODE_0000423": {
+            "DMS_prefs_branch": 0.14329167528454986
+        },
+        "NODE_0000424": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0000427": {
+            "DMS_prefs_branch": -0.8177939046816606
+        },
+        "NODE_0000429": {
+            "DMS_prefs_branch": -0.6079881423097628
+        },
+        "NODE_0000434": {
+            "DMS_prefs_branch": -0.2998593895756554
+        },
+        "NODE_0000437": {
+            "DMS_prefs_branch": -1.017147983923964
+        },
+        "NODE_0000439": {
+            "DMS_prefs_branch": -1.219822246272075
+        },
+        "NODE_0000442": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000444": {
+            "DMS_prefs_branch": 2.733916762507002
+        },
+        "NODE_0000445": {
+            "DMS_prefs_branch": -0.19245672612922515
+        },
+        "NODE_0000446": {
+            "DMS_prefs_branch": 1.0095639080028125
+        },
+        "NODE_0000454": {
+            "DMS_prefs_branch": 0.7027462158140312
+        },
+        "NODE_0000455": {
+            "DMS_prefs_branch": 0.18107002548381101
+        },
+        "NODE_0000457": {
+            "DMS_prefs_branch": -0.5618265635714144
+        },
+        "NODE_0000459": {
+            "DMS_prefs_branch": 0.5267878308837871
+        },
+        "NODE_0000463": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "NODE_0000466": {
+            "DMS_prefs_branch": -0.2998593895756554
+        },
+        "NODE_0000467": {
+            "DMS_prefs_branch": 0.4464284033835806
+        },
+        "NODE_0000469": {
+            "DMS_prefs_branch": -0.6641747931583589
+        },
+        "NODE_0000473": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "NODE_0000477": {
+            "DMS_prefs_branch": -0.8257613587597772
+        },
+        "NODE_0000478": {
+            "DMS_prefs_branch": -0.9605142732261505
+        },
+        "NODE_0000482": {
+            "DMS_prefs_branch": -0.4616406096764287
+        },
+        "NODE_0000486": {
+            "DMS_prefs_branch": -0.7691584277615311
+        },
+        "NODE_0000487": {
+            "DMS_prefs_branch": 0.3797856229827392
+        },
+        "NODE_0000490": {
+            "DMS_prefs_branch": -0.17240134558646322
+        },
+        "NODE_0000491": {
+            "DMS_prefs_branch": -0.2717868116898671
+        },
+        "NODE_0000493": {
+            "DMS_prefs_branch": 0.6366342247247161
+        },
+        "NODE_0000495": {
+            "DMS_prefs_branch": -0.9805821972508557
+        },
+        "NODE_0000498": {
+            "DMS_prefs_branch": 0.4852026841682768
+        },
+        "NODE_0000502": {
+            "DMS_prefs_branch": -0.8220077583803614
+        },
+        "NODE_0000513": {
+            "DMS_prefs_branch": -0.41205188820932176
+        },
+        "NODE_0000515": {
+            "DMS_prefs_branch": -0.5044852673080947
+        },
+        "NODE_0000519": {
+            "DMS_prefs_branch": -0.17212295223891702
+        },
+        "NODE_0000523": {
+            "DMS_prefs_branch": 1.4873848479453151
+        },
+        "NODE_0000526": {
+            "DMS_prefs_branch": 0.2074285102096877
+        },
+        "NODE_0000528": {
+            "DMS_prefs_branch": -0.21993813990782407
+        },
+        "NODE_0000529": {
+            "DMS_prefs_branch": -0.6539898465676753
+        },
+        "NODE_0000530": {
+            "DMS_prefs_branch": -0.9141609619976656
+        },
+        "NODE_0000532": {
+            "DMS_prefs_branch": -0.2468030868021152
+        },
+        "NODE_0000536": {
+            "DMS_prefs_branch": 0.944817125724522
+        },
+        "NODE_0000538": {
+            "DMS_prefs_branch": 0.2725568249906706
+        },
+        "NODE_0000540": {
+            "DMS_prefs_branch": 0.19586163390882572
+        },
+        "NODE_0000541": {
+            "DMS_prefs_branch": 1.1122573352258103
+        },
+        "NODE_0000542": {
+            "DMS_prefs_branch": 0.03824686841100753
+        },
+        "NODE_0000543": {
+            "DMS_prefs_branch": -0.2998593895756554
+        },
+        "NODE_0000544": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000547": {
+            "DMS_prefs_branch": -3.9655676403366904
+        },
+        "NODE_0000548": {
+            "DMS_prefs_branch": -0.17520145491238337
+        },
+        "NODE_0000558": {
+            "DMS_prefs_branch": 0.6416720603407717
+        },
+        "NODE_0000560": {
+            "DMS_prefs_branch": 0.1794281237980606
+        },
+        "NODE_0000563": {
+            "DMS_prefs_branch": 1.1659313581670316
+        },
+        "NODE_0000572": {
+            "DMS_prefs_branch": -0.6438165381793715
+        },
+        "NODE_0000573": {
+            "DMS_prefs_branch": 0.1834576323664272
+        },
+        "NODE_0000574": {
+            "DMS_prefs_branch": 0.37841303589825964
+        },
+        "NODE_0000577": {
+            "DMS_prefs_branch": -0.3394905036457954
+        },
+        "NODE_0000578": {
+            "DMS_prefs_branch": 0.03487384107672925
+        },
+        "NODE_0000581": {
+            "DMS_prefs_branch": -0.8832942854389458
+        },
+        "NODE_0000587": {
+            "DMS_prefs_branch": -0.28551532040112193
+        },
+        "NODE_0000588": {
+            "DMS_prefs_branch": 0.18715464402650125
+        },
+        "NODE_0000594": {
+            "DMS_prefs_branch": 0.2882752098730283
+        },
+        "NODE_0000595": {
+            "DMS_prefs_branch": -0.4650238501216195
+        },
+        "NODE_0000596": {
+            "DMS_prefs_branch": -0.057187380118889124
+        },
+        "NODE_0000599": {
+            "DMS_prefs_branch": 0.7665436986419923
+        },
+        "NODE_0000603": {
+            "DMS_prefs_branch": -0.39095150761020453
+        },
+        "NODE_0000605": {
+            "DMS_prefs_branch": 0.9163569942549303
+        },
+        "NODE_0000606": {
+            "DMS_prefs_branch": 0.655950424396055
+        },
+        "NODE_0000607": {
+            "DMS_prefs_branch": 0.149474282481716
+        },
+        "NODE_0000608": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "NODE_0000611": {
+            "DMS_prefs_branch": -0.9101895104043992
+        },
+        "NODE_0000619": {
+            "DMS_prefs_branch": -0.9051003550482348
+        },
+        "NODE_0000623": {
+            "DMS_prefs_branch": -0.5107683733327368
+        },
+        "NODE_0000624": {
+            "DMS_prefs_branch": -0.5805384899828081
+        },
+        "NODE_0000633": {
+            "DMS_prefs_branch": -0.4650238501216195
+        },
+        "NODE_0000637": {
+            "DMS_prefs_branch": -0.2603986974770985
+        },
+        "NODE_0000639": {
+            "DMS_prefs_branch": -0.9723044364755408
+        },
+        "NODE_0000645": {
+            "DMS_prefs_branch": -2.2603399964400763
+        },
+        "NODE_0000646": {
+            "DMS_prefs_branch": 1.6233825265030488
+        },
+        "NODE_0000648": {
+            "DMS_prefs_branch": 0.815383587353264
+        },
+        "NODE_0000649": {
+            "DMS_prefs_branch": 0.11003617337709803
+        },
+        "NODE_0000656": {
+            "DMS_prefs_branch": 0.5437554420141048
+        },
+        "NODE_0000657": {
+            "DMS_prefs_branch": 0.05339362009219274
+        },
+        "NODE_0000660": {
+            "DMS_prefs_branch": -0.37123997251110175
+        },
+        "NODE_0000664": {
+            "DMS_prefs_branch": 0.2882752098730283
+        },
+        "NODE_0000669": {
+            "DMS_prefs_branch": 0.3528209345837991
+        },
+        "NODE_0000673": {
+            "DMS_prefs_branch": 2.706558419197004
+        },
+        "NODE_0000680": {
+            "DMS_prefs_branch": -0.9723044364755408
+        },
+        "NODE_0000681": {
+            "DMS_prefs_branch": -0.5946174165446791
+        },
+        "NODE_0000683": {
+            "DMS_prefs_branch": 0.5323078442544881
+        },
+        "NODE_0000686": {
+            "DMS_prefs_branch": 0.7749221582851304
+        },
+        "NODE_0000687": {
+            "DMS_prefs_branch": -0.022222076467631156
+        },
+        "NODE_0000696": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0000697": {
+            "DMS_prefs_branch": 0.4852026841682768
+        },
+        "NODE_0000708": {
+            "DMS_prefs_branch": 0.27929368241246194
+        },
+        "NODE_0000715": {
+            "DMS_prefs_branch": -0.1971851451176473
+        },
+        "NODE_0000717": {
+            "DMS_prefs_branch": 0.5709575261382849
+        },
+        "NODE_0000718": {
+            "DMS_prefs_branch": 0.7838208647489031
+        },
+        "NODE_0000719": {
+            "DMS_prefs_branch": 0.2895639372070099
+        },
+        "NODE_0000722": {
+            "DMS_prefs_branch": -0.6570124213454598
+        },
+        "NODE_0000729": {
+            "DMS_prefs_branch": 0.3062021025596661
+        },
+        "NODE_0000731": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000739": {
+            "DMS_prefs_branch": 0.20394006443261528
+        },
+        "NODE_0000741": {
+            "DMS_prefs_branch": -0.23142338932329842
+        },
+        "NODE_0000745": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000747": {
+            "DMS_prefs_branch": -2.629574525477146
+        },
+        "NODE_0000748": {
+            "DMS_prefs_branch": 0.2563665874635901
+        },
+        "NODE_0000751": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000760": {
+            "DMS_prefs_branch": 1.2448430919847144
+        },
+        "NODE_0000762": {
+            "DMS_prefs_branch": 3.1789093075634627
+        },
+        "NODE_0000763": {
+            "DMS_prefs_branch": -0.2468030868021152
+        },
+        "NODE_0000764": {
+            "DMS_prefs_branch": 0.1794281237980606
+        },
+        "NODE_0000766": {
+            "DMS_prefs_branch": 1.9988890436928128
+        },
+        "NODE_0000771": {
+            "DMS_prefs_branch": 0.8689022666308285
+        },
+        "NODE_0000774": {
+            "DMS_prefs_branch": 0.18107002548381101
+        },
+        "NODE_0000781": {
+            "DMS_prefs_branch": 0.019517633151885816
+        },
+        "NODE_0000784": {
+            "DMS_prefs_branch": -0.8220077583803614
+        },
+        "NODE_0000785": {
+            "DMS_prefs_branch": -0.4537442748986531
+        },
+        "NODE_0000790": {
+            "DMS_prefs_branch": 0.20380685787301928
+        },
+        "NODE_0000791": {
+            "DMS_prefs_branch": -1.1179528342149314
+        },
+        "NODE_0000792": {
+            "DMS_prefs_branch": -0.2468030868021152
+        },
+        "NODE_0000793": {
+            "DMS_prefs_branch": -0.13694813448073806
+        },
+        "NODE_0000795": {
+            "DMS_prefs_branch": -0.2982622557850055
+        },
+        "NODE_0000797": {
+            "DMS_prefs_branch": -0.050188595574662855
+        },
+        "NODE_0000798": {
+            "DMS_prefs_branch": 0.5191863799780204
+        },
+        "NODE_0000800": {
+            "DMS_prefs_branch": -0.23758557563516403
+        },
+        "NODE_0000802": {
+            "DMS_prefs_branch": -0.9048802295539029
+        },
+        "NODE_0000803": {
+            "DMS_prefs_branch": 0.15586925602387258
+        },
+        "NODE_0000804": {
+            "DMS_prefs_branch": 0.4186383202101684
+        },
+        "NODE_0000805": {
+            "DMS_prefs_branch": 1.1875317828037715
+        },
+        "NODE_0000806": {
+            "DMS_prefs_branch": 1.343020387180007
+        },
+        "NODE_0000808": {
+            "DMS_prefs_branch": -0.19245672612922515
+        },
+        "NODE_0000810": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000820": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "NODE_0000827": {
+            "DMS_prefs_branch": 0.9682243649341244
+        },
+        "NODE_0000828": {
+            "DMS_prefs_branch": -1.3653730172481515
+        },
+        "NODE_0000832": {
+            "DMS_prefs_branch": -0.9644466672362175
+        },
+        "NODE_0000833": {
+            "DMS_prefs_branch": 1.1926190823441098
+        },
+        "NODE_0000834": {
+            "DMS_prefs_branch": -1.1179528342149314
+        },
+        "NODE_0000837": {
+            "DMS_prefs_branch": -1.0394372910139356
+        },
+        "NODE_0000838": {
+            "DMS_prefs_branch": 0.10224133985592104
+        },
+        "NODE_0000839": {
+            "DMS_prefs_branch": 1.8244919660738792
+        },
+        "NODE_0000842": {
+            "DMS_prefs_branch": -1.2416451484772888
+        },
+        "NODE_0000843": {
+            "DMS_prefs_branch": 1.2750997793846188
+        },
+        "NODE_0000844": {
+            "DMS_prefs_branch": -0.49101181403973015
+        },
+        "NODE_0000848": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "NODE_0000849": {
+            "DMS_prefs_branch": -1.148643523150786
+        },
+        "NODE_0000850": {
+            "DMS_prefs_branch": -0.33808516997598875
+        },
+        "NODE_0000852": {
+            "DMS_prefs_branch": -0.6797964620755819
+        },
+        "NODE_0000853": {
+            "DMS_prefs_branch": -0.2892926248841516
+        },
+        "NODE_0000857": {
+            "DMS_prefs_branch": -0.1587236619929645
+        },
+        "NODE_0000861": {
+            "DMS_prefs_branch": -1.1179528342149314
+        },
+        "NODE_0000865": {
+            "DMS_prefs_branch": 0.5555077507389632
+        },
+        "NODE_0000867": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "NODE_0000869": {
+            "DMS_prefs_branch": 0.3037902173009457
+        },
+        "NODE_0000870": {
+            "DMS_prefs_branch": 0.02871811419539105
+        },
+        "NODE_0000871": {
+            "DMS_prefs_branch": -0.9547817483711156
+        },
+        "NODE_0000872": {
+            "DMS_prefs_branch": 0.2074285102096877
+        },
+        "NODE_0000873": {
+            "DMS_prefs_branch": 0.29671206293635943
+        },
+        "NODE_0000877": {
+            "DMS_prefs_branch": -0.08152259157377355
+        },
+        "NODE_0000878": {
+            "DMS_prefs_branch": 1.0750245401620089
+        },
+        "NODE_0000879": {
+            "DMS_prefs_branch": -2.1106082992571844
+        },
+        "NODE_0000881": {
+            "DMS_prefs_branch": 1.0984031166580606
+        },
+        "NODE_0000882": {
+            "DMS_prefs_branch": 0.6132931389906101
+        },
+        "NODE_0000883": {
+            "DMS_prefs_branch": -0.7412461625102426
+        },
+        "NODE_0000884": {
+            "DMS_prefs_branch": -0.7758229807094428
+        },
+        "NODE_0000889": {
+            "DMS_prefs_branch": -1.2073118672549783
+        },
+        "NODE_0000891": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000892": {
+            "DMS_prefs_branch": 1.1014359705924326
+        },
+        "NODE_0000893": {
+            "DMS_prefs_branch": 0.29658341481680245
+        },
+        "NODE_0000894": {
+            "DMS_prefs_branch": -0.12056327605991884
+        },
+        "NODE_0000896": {
+            "DMS_prefs_branch": -3.3264482336068886
+        },
+        "NODE_0000899": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000900": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "NODE_0000901": {
+            "DMS_prefs_branch": 0.32937365655534395
+        },
+        "NODE_0000902": {
+            "DMS_prefs_branch": 1.1513060711768106
+        },
+        "NODE_0000903": {
+            "DMS_prefs_branch": 0.33982302569630035
+        },
+        "NODE_0000904": {
+            "DMS_prefs_branch": 0.4851831412659015
+        },
+        "NODE_0000905": {
+            "DMS_prefs_branch": -0.8757649210047191
+        },
+        "NODE_0000907": {
+            "DMS_prefs_branch": 0.015645991834126516
+        },
+        "NODE_0000911": {
+            "DMS_prefs_branch": 0.5495329050458002
+        },
+        "NODE_0000915": {
+            "DMS_prefs_branch": -0.330105041263036
+        },
+        "NODE_0000922": {
+            "DMS_prefs_branch": 1.6694956192139485
+        },
+        "NODE_0000924": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000927": {
+            "DMS_prefs_branch": -0.2445366924145771
+        },
+        "NODE_0000929": {
+            "DMS_prefs_branch": -2.222126353884292
+        },
+        "NODE_0000942": {
+            "DMS_prefs_branch": -0.06754124353038232
+        },
+        "NODE_0000943": {
+            "DMS_prefs_branch": 2.1332504626039497
+        },
+        "NODE_0000944": {
+            "DMS_prefs_branch": -1.0439499149973637
+        },
+        "NODE_0000945": {
+            "DMS_prefs_branch": -2.1687064304050216
+        },
+        "NODE_0000946": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000948": {
+            "DMS_prefs_branch": -1.1327535208414985
+        },
+        "NODE_0000949": {
+            "DMS_prefs_branch": 1.1605490107463667
+        },
+        "NODE_0000950": {
+            "DMS_prefs_branch": -0.37591276357093495
+        },
+        "NODE_0000964": {
+            "DMS_prefs_branch": -0.08590873329931559
+        },
+        "NODE_0000969": {
+            "DMS_prefs_branch": 1.3102109010750695
+        },
+        "NODE_0000971": {
+            "DMS_prefs_branch": 0.7622068961864995
+        },
+        "NODE_0000973": {
+            "DMS_prefs_branch": 0.0362502395335258
+        },
+        "NODE_0000975": {
+            "DMS_prefs_branch": 0.24413868365730018
+        },
+        "NODE_0000976": {
+            "DMS_prefs_branch": -0.049715813586590996
+        },
+        "NODE_0000978": {
+            "DMS_prefs_branch": 2.5517794693162483
+        },
+        "NODE_0000981": {
+            "DMS_prefs_branch": -0.07177906897673975
+        },
+        "NODE_0000989": {
+            "DMS_prefs_branch": -0.4537442748986531
+        },
+        "NODE_0000992": {
+            "DMS_prefs_branch": -1.870724526514995
+        },
+        "NODE_0000995": {
+            "DMS_prefs_branch": -0.6989308966206481
+        },
+        "NODE_0001001": {
+            "DMS_prefs_branch": -0.6252208064943541
+        },
+        "NODE_0001003": {
+            "DMS_prefs_branch": -2.304419282830125
+        },
+        "NODE_0001004": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "NODE_0001006": {
+            "DMS_prefs_branch": 0.5172976510635201
+        },
+        "NODE_0001007": {
+            "DMS_prefs_branch": -0.06756811246788708
+        },
+        "NODE_0001008": {
+            "DMS_prefs_branch": -2.264915145632266
+        },
+        "NODE_0001009": {
+            "DMS_prefs_branch": 0.7838208647489031
+        },
+        "NODE_0001014": {
+            "DMS_prefs_branch": -0.16359458342446617
+        },
+        "NODE_0001015": {
+            "DMS_prefs_branch": -2.4515369440463433
+        },
+        "NODE_0001024": {
+            "DMS_prefs_branch": -0.4650238501216195
+        },
+        "NODE_0001026": {
+            "DMS_prefs_branch": -0.47026303106414047
+        },
+        "NODE_0001027": {
+            "DMS_prefs_branch": -0.5020553124902762
+        },
+        "NODE_0001028": {
+            "DMS_prefs_branch": 0.10399178137459847
+        },
+        "NODE_0001031": {
+            "DMS_prefs_branch": 2.579554919607629
+        },
+        "NODE_0001033": {
+            "DMS_prefs_branch": 1.2310825134848749
+        },
+        "NODE_0001035": {
+            "DMS_prefs_branch": 0.4897142234888544
+        },
+        "NODE_0001037": {
+            "DMS_prefs_branch": -1.114633767317158
+        },
+        "NODE_0001041": {
+            "DMS_prefs_branch": -1.2679782701237008
+        },
+        "NODE_0001043": {
+            "DMS_prefs_branch": 0.02871811419539105
+        },
+        "NODE_0001050": {
+            "DMS_prefs_branch": -0.8097511502678811
+        },
+        "NODE_0001052": {
+            "DMS_prefs_branch": 0.4091142246230073
+        },
+        "NODE_0001053": {
+            "DMS_prefs_branch": -0.8850545525468506
+        },
+        "NODE_0001055": {
+            "DMS_prefs_branch": -0.5391869663584533
+        },
+        "NODE_0001058": {
+            "DMS_prefs_branch": 0.630101046772845
+        },
+        "NODE_0001065": {
+            "DMS_prefs_branch": 0.5495329050458002
+        },
+        "NODE_0001067": {
+            "DMS_prefs_branch": -2.363924044266252
+        },
+        "NODE_0001068": {
+            "DMS_prefs_branch": 0.6264513405636866
+        },
+        "NODE_0001071": {
+            "DMS_prefs_branch": 1.9133123226961257
+        },
+        "NODE_0001072": {
+            "DMS_prefs_branch": 0.6824329893831838
+        },
+        "NODE_0001074": {
+            "DMS_prefs_branch": -0.4586273212188968
+        },
+        "NODE_0001077": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0001083": {
+            "DMS_prefs_branch": 0.4697355444294125
+        },
+        "NODE_0001084": {
+            "DMS_prefs_branch": 3.5269402974629376
+        },
+        "NODE_0001086": {
+            "DMS_prefs_branch": -0.6221366876074034
+        },
+        "NODE_0001087": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001089": {
+            "DMS_prefs_branch": -0.193902461646817
+        },
+        "NODE_0001090": {
+            "DMS_prefs_branch": -1.017950383197732
+        },
+        "NODE_0001094": {
+            "DMS_prefs_branch": -0.6124934039470447
+        },
+        "NODE_0001096": {
+            "DMS_prefs_branch": 0.4711044396740886
+        },
+        "NODE_0001098": {
+            "DMS_prefs_branch": 2.5694445180242003
+        },
+        "NODE_0001099": {
+            "DMS_prefs_branch": -0.00884355555572939
+        },
+        "NODE_0001100": {
+            "DMS_prefs_branch": -1.2770151145130084
+        },
+        "NODE_0001102": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001104": {
+            "DMS_prefs_branch": -1.5448347756694636
+        },
+        "NODE_0001105": {
+            "DMS_prefs_branch": -0.913532846791236
+        },
+        "NODE_0001106": {
+            "DMS_prefs_branch": -1.6429844457068352
+        },
+        "NODE_0001108": {
+            "DMS_prefs_branch": 1.2885161672290815
+        },
+        "NODE_0001111": {
+            "DMS_prefs_branch": -0.8698875122099915
+        },
+        "NODE_0001114": {
+            "DMS_prefs_branch": -0.5240840646807663
+        },
+        "NODE_0001115": {
+            "DMS_prefs_branch": -0.2826537850629668
+        },
+        "NODE_0001116": {
+            "DMS_prefs_branch": -0.7898498108336233
+        },
+        "NODE_0001118": {
+            "DMS_prefs_branch": -0.7300980791487971
+        },
+        "NODE_0001120": {
+            "DMS_prefs_branch": 0.6147151665180646
+        },
+        "NODE_0001122": {
+            "DMS_prefs_branch": -0.8177939046816606
+        },
+        "NODE_0001124": {
+            "DMS_prefs_branch": 0.1794281237980606
+        },
+        "NODE_0001125": {
+            "DMS_prefs_branch": 1.078050708276465
+        },
+        "NODE_0001127": {
+            "DMS_prefs_branch": -1.062571751655889
+        },
+        "NODE_0001134": {
+            "DMS_prefs_branch": -0.4348185080838896
+        },
+        "NODE_0001137": {
+            "DMS_prefs_branch": 0.8217654884028928
+        },
+        "NODE_0001140": {
+            "DMS_prefs_branch": 0.4799519587010469
+        },
+        "NODE_0001141": {
+            "DMS_prefs_branch": 0.8927156936958329
+        },
+        "NODE_0001145": {
+            "DMS_prefs_branch": -0.11790294911570315
+        },
+        "NODE_0001146": {
+            "DMS_prefs_branch": -0.18873615053282433
+        },
+        "NODE_0001147": {
+            "DMS_prefs_branch": -1.7768592107341312
+        },
+        "NODE_0001149": {
+            "DMS_prefs_branch": 0.08345988816197912
+        },
+        "NODE_0001154": {
+            "DMS_prefs_branch": -1.3033679776913227
+        },
+        "NODE_0001155": {
+            "DMS_prefs_branch": -0.33808516997598875
+        },
+        "NODE_0001164": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001167": {
+            "DMS_prefs_branch": -0.4560972484525056
+        },
+        "NODE_0001170": {
+            "DMS_prefs_branch": -1.6748844295423397
+        },
+        "NODE_0001178": {
+            "DMS_prefs_branch": -0.6011880557071919
+        },
+        "NODE_0001180": {
+            "DMS_prefs_branch": -3.2256576188503687
+        },
+        "NODE_0001181": {
+            "DMS_prefs_branch": -0.9927412667356103
+        },
+        "NODE_0001185": {
+            "DMS_prefs_branch": -0.0868062086227554
+        },
+        "NODE_0001190": {
+            "DMS_prefs_branch": 0.7751479064138879
+        },
+        "NODE_0001191": {
+            "DMS_prefs_branch": -0.15253685183534793
+        },
+        "NODE_0001194": {
+            "DMS_prefs_branch": -0.2468030868021152
+        },
+        "NODE_0001195": {
+            "DMS_prefs_branch": -0.9586947252567348
+        },
+        "NODE_0001196": {
+            "DMS_prefs_branch": -0.3022968162878812
+        },
+        "NODE_0001198": {
+            "DMS_prefs_branch": -0.33553397239258675
+        },
+        "NODE_0001199": {
+            "DMS_prefs_branch": -1.5155938112626928
+        },
+        "NODE_0001200": {
+            "DMS_prefs_branch": 0.18739567069229024
+        },
+        "NODE_0001201": {
+            "DMS_prefs_branch": -0.112956814494196
+        },
+        "NODE_0001208": {
+            "DMS_prefs_branch": -0.5945927015053489
+        },
+        "NODE_0001252": {
+            "DMS_prefs_branch": -0.19245672612922515
+        },
+        "NODE_0001254": {
+            "DMS_prefs_branch": 0.10289797708584777
+        },
+        "NODE_0001256": {
+            "DMS_prefs_branch": -0.5020553124902762
+        },
+        "NODE_0001263": {
+            "DMS_prefs_branch": 0.6177321610606528
+        },
+        "NODE_0001265": {
+            "DMS_prefs_branch": 0.1156057034299085
+        },
+        "NODE_0001266": {
+            "DMS_prefs_branch": 1.4578181223089755
+        },
+        "NODE_0001267": {
+            "DMS_prefs_branch": 0.434132979954663
+        },
+        "NODE_0001275": {
+            "DMS_prefs_branch": 0.21871081066186
+        },
+        "NODE_0001276": {
+            "DMS_prefs_branch": 0.9814158540875488
+        },
+        "NODE_0001279": {
+            "DMS_prefs_branch": -2.4333997759336725
+        },
+        "NODE_0001280": {
+            "DMS_prefs_branch": -1.0433862735817234
+        },
+        "NODE_0001287": {
+            "DMS_prefs_branch": 0.396632938070707
+        },
+        "NODE_0001288": {
+            "DMS_prefs_branch": -0.6455247313779282
+        },
+        "NODE_0001289": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0001291": {
+            "DMS_prefs_branch": 0.3528209345837991
+        }
+    }
+}

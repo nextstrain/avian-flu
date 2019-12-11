@@ -1,0 +1,2683 @@
+{
+    "nodes": {
+        "A/Anhui/1-YK_RG137/2013": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "A/Anhui/13434/2017": {
+            "DMS_prefs_branch": -0.0610800332261093
+        },
+        "A/Anhui/13443/2017": {
+            "DMS_prefs_branch": 1.8252354616426176
+        },
+        "A/Anhui/13446/2017": {
+            "DMS_prefs_branch": -0.7412461625102426
+        },
+        "A/Anhui/13447/2017": {
+            "DMS_prefs_branch": -0.651465557076388
+        },
+        "A/Anhui/1876/2014": {
+            "DMS_prefs_branch": -0.14649938186263967
+        },
+        "A/Anhui/1882/2014": {
+            "DMS_prefs_branch": 0.3058289916259655
+        },
+        "A/Anhui/1887/2014": {
+            "DMS_prefs_branch": 0.915586839651218
+        },
+        "A/Anhui/26836/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Anhui/26837/2016": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Anhui/29170/2017": {
+            "DMS_prefs_branch": 1.7292046044232539
+        },
+        "A/Anhui/29173/2017": {
+            "DMS_prefs_branch": 0.13422128563432148
+        },
+        "A/Anhui/29174/2017": {
+            "DMS_prefs_branch": -0.7268159404904359
+        },
+        "A/Anhui/29176/2017": {
+            "DMS_prefs_branch": -0.105214229957144
+        },
+        "A/Anhui/29177/2017": {
+            "DMS_prefs_branch": 2.422981002750503
+        },
+        "A/Anhui/33224/2015": {
+            "DMS_prefs_branch": 0.3528209345837991
+        },
+        "A/Anhui/33228/2015": {
+            "DMS_prefs_branch": 0.8335098529927172
+        },
+        "A/Anhui/40094/2015": {
+            "DMS_prefs_branch": -0.7444910525918086
+        },
+        "A/Anhui/40095/2015": {
+            "DMS_prefs_branch": 0.2849287012550899
+        },
+        "A/Anhui/42444/2015": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Anhui/45322/2016": {
+            "DMS_prefs_branch": 2.1504132521232036
+        },
+        "A/Anhui/60925/2016": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Anhui/60927/2016": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Beijing/1-A/2013": {
+            "DMS_prefs_branch": 0.1676178662787802
+        },
+        "A/Beijing/10934/2017": {
+            "DMS_prefs_branch": -1.1230726116957543
+        },
+        "A/Beijing/19067/2017": {
+            "DMS_prefs_branch": -0.6011880557071919
+        },
+        "A/Beijing/19957/2017": {
+            "DMS_prefs_branch": 1.2770263287951351
+        },
+        "A/Beijing/2/2013": {
+            "DMS_prefs_branch": 0.9112520519765074
+        },
+        "A/Beijing/25687/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Beijing/28244/2017": {
+            "DMS_prefs_branch": -0.5043945953332993
+        },
+        "A/Beijing/39450/2016": {
+            "DMS_prefs_branch": 0.3314892181091072
+        },
+        "A/Beijing/9149/2014": {
+            "DMS_prefs_branch": 0.15375480563043295
+        },
+        "A/Changzhou/416/2014": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Chicken/Dongguan/1075": {
+            "DMS_prefs_branch": 0.5267878308837871
+        },
+        "A/Chicken/Dongguan/1393": {
+            "DMS_prefs_branch": 0.7624686516734481
+        },
+        "A/Chicken/Dongguan/1527": {
+            "DMS_prefs_branch": 0.14147452571300848
+        },
+        "A/Chicken/Dongguan/1619": {
+            "DMS_prefs_branch": 2.0671352612485325
+        },
+        "A/Chicken/Dongguan/1673": {
+            "DMS_prefs_branch": 0.2485065817077897
+        },
+        "A/Chicken/Dongguan/3464": {
+            "DMS_prefs_branch": 0.26285762066380763
+        },
+        "A/Chicken/Dongguan/3487": {
+            "DMS_prefs_branch": -1.4689556715083076
+        },
+        "A/Chicken/Dongguan/3563": {
+            "DMS_prefs_branch": -0.7523218962397435
+        },
+        "A/Chicken/Dongguan/3935": {
+            "DMS_prefs_branch": -0.1030404670656816
+        },
+        "A/Chicken/Dongguan/4040": {
+            "DMS_prefs_branch": 0.4257644818106113
+        },
+        "A/Chicken/Dongguan/4102": {
+            "DMS_prefs_branch": -0.1178653653113263
+        },
+        "A/Chicken/Dongguan/DG16447/2016": {
+            "DMS_prefs_branch": -0.07016404473256638
+        },
+        "A/Chicken/Guangdong/108": {
+            "DMS_prefs_branch": 1.184111792836977
+        },
+        "A/Chicken/Guangdong/1130": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Chicken/Guangdong/422": {
+            "DMS_prefs_branch": -0.2668984973325884
+        },
+        "A/Chicken/Guangdong/CZ9/2016": {
+            "DMS_prefs_branch": -0.4537442748986531
+        },
+        "A/Chicken/Guangdong/DG0164/2017": {
+            "DMS_prefs_branch": -1.0452435637573398
+        },
+        "A/Chicken/Guangdong/DG042/2017": {
+            "DMS_prefs_branch": -2.016510059514462
+        },
+        "A/Chicken/Guangdong/DG120/2015": {
+            "DMS_prefs_branch": 0.5214521137349647
+        },
+        "A/Chicken/Guangdong/DG15166/2015": {
+            "DMS_prefs_branch": -1.0409476822383212
+        },
+        "A/Chicken/Guangdong/DG15287/2015": {
+            "DMS_prefs_branch": -0.15068204647833733
+        },
+        "A/Chicken/Guangdong/DG15565/2015": {
+            "DMS_prefs_branch": 0.07913171631549355
+        },
+        "A/Chicken/Guangdong/DG15718/2015": {
+            "DMS_prefs_branch": -0.08185603785089147
+        },
+        "A/Chicken/Guangdong/DG16058/2015": {
+            "DMS_prefs_branch": 1.025887909294648
+        },
+        "A/Chicken/Guangdong/DG16061/2015": {
+            "DMS_prefs_branch": -1.0889111234992583
+        },
+        "A/Chicken/Guangdong/DG16303/2016": {
+            "DMS_prefs_branch": 0.19588819615087863
+        },
+        "A/Chicken/Guangdong/DG16411/2016": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Chicken/Guangdong/DG16419/2016": {
+            "DMS_prefs_branch": 0.508790874311029
+        },
+        "A/Chicken/Guangdong/DG16437/2016": {
+            "DMS_prefs_branch": 0.06125773917664595
+        },
+        "A/Chicken/Guangdong/DG16550/2016": {
+            "DMS_prefs_branch": 0.2613617026599377
+        },
+        "A/Chicken/Guangdong/DG16604/2016": {
+            "DMS_prefs_branch": -0.35012589626284696
+        },
+        "A/Chicken/Guangdong/DG16624/2016": {
+            "DMS_prefs_branch": -0.5460623591037453
+        },
+        "A/Chicken/Guangdong/DG16800/2016": {
+            "DMS_prefs_branch": -0.3649158293491974
+        },
+        "A/Chicken/Guangdong/KP14218/2014": {
+            "DMS_prefs_branch": -0.25183742593012837
+        },
+        "A/Chicken/Guangdong/ZH14123/2014": {
+            "DMS_prefs_branch": 2.1332504626039497
+        },
+        "A/Chicken/Guangxi/1404": {
+            "DMS_prefs_branch": 1.306431507777476
+        },
+        "A/Chicken/Heyuan/1687": {
+            "DMS_prefs_branch": -0.8890075026702549
+        },
+        "A/Chicken/HuZhou/3802": {
+            "DMS_prefs_branch": 0.2799688860274427
+        },
+        "A/Chicken/HuZhou/4045": {
+            "DMS_prefs_branch": -1.1694400233139666
+        },
+        "A/Chicken/HuZhou/4076": {
+            "DMS_prefs_branch": -0.36838236988243583
+        },
+        "A/Chicken/HuZhou/4141": {
+            "DMS_prefs_branch": -0.2605154279820124
+        },
+        "A/Chicken/HuZhou/4169": {
+            "DMS_prefs_branch": -0.4145285483123639
+        },
+        "A/Chicken/HuZhou/HZBL/2017": {
+            "DMS_prefs_branch": 0.5579363625178471
+        },
+        "A/Chicken/Hubei/306": {
+            "DMS_prefs_branch": -0.5595734274190419
+        },
+        "A/Chicken/Hunan/207": {
+            "DMS_prefs_branch": -0.09574750968974766
+        },
+        "A/Chicken/Jiangsu/116": {
+            "DMS_prefs_branch": 0.7752912094776234
+        },
+        "A/Chicken/Jiangsu/120": {
+            "DMS_prefs_branch": -0.28702862888486913
+        },
+        "A/Chicken/Jiangsu/1403": {
+            "DMS_prefs_branch": 0.1475348172929582
+        },
+        "A/Chicken/Jiangsu/1404": {
+            "DMS_prefs_branch": 0.48604030621364075
+        },
+        "A/Chicken/Jiangsu/502": {
+            "DMS_prefs_branch": 0.6731518810882262
+        },
+        "A/Chicken/Jiangxi/1055": {
+            "DMS_prefs_branch": -0.5902207119985086
+        },
+        "A/Chicken/Jiangxi/1254": {
+            "DMS_prefs_branch": -1.0545804434057895
+        },
+        "A/Chicken/Jiangxi/1255": {
+            "DMS_prefs_branch": 0.006117554976146615
+        },
+        "A/Chicken/Jiangxi/1355": {
+            "DMS_prefs_branch": 0.3913394204989933
+        },
+        "A/Chicken/Jiangxi/1402": {
+            "DMS_prefs_branch": 0.9950782164517163
+        },
+        "A/Chicken/Jiangxi/1455": {
+            "DMS_prefs_branch": 1.1979166208397352
+        },
+        "A/Chicken/Jiangxi/1800": {
+            "DMS_prefs_branch": 0.298111978414958
+        },
+        "A/Chicken/Jiangxi/216": {
+            "DMS_prefs_branch": -0.19220790554439904
+        },
+        "A/Chicken/Jiangxi/217": {
+            "DMS_prefs_branch": -1.3944712268917445
+        },
+        "A/Chicken/Jiaxing/4490": {
+            "DMS_prefs_branch": 2.1332504626039497
+        },
+        "A/Chicken/Jilin/05/2014": {
+            "DMS_prefs_branch": 0.434132979954663
+        },
+        "A/Chicken/Jilin/1318": {
+            "DMS_prefs_branch": -0.35345795394515195
+        },
+        "A/Chicken/Nanjing/761/2013": {
+            "DMS_prefs_branch": -1.0976119776665794
+        },
+        "A/Chicken/Shandong/210": {
+            "DMS_prefs_branch": 0.7884808127503442
+        },
+        "A/Chicken/Shantou/2537": {
+            "DMS_prefs_branch": -0.06384805486326117
+        },
+        "A/Chicken/Shantou/4824": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Chicken/Shaoxing/5146": {
+            "DMS_prefs_branch": 0.3913394204989933
+        },
+        "A/Chicken/Shaoxing/5479": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "A/Chicken/Shenzhen/3780": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Chicken/Wuxi/403": {
+            "DMS_prefs_branch": 0.6165680101012757
+        },
+        "A/Chicken/Wuxi/405": {
+            "DMS_prefs_branch": 0.03824686841100753
+        },
+        "A/Chicken/Wuxi/5852": {
+            "DMS_prefs_branch": 0.5788234347277589
+        },
+        "A/Chicken/Wuxi/8048": {
+            "DMS_prefs_branch": 0.6263708995722177
+        },
+        "A/Chicken/Zhejiang/1215": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Chicken/Zhejiang/2/2013": {
+            "DMS_prefs_branch": 1.2680908437306049
+        },
+        "A/Chicken/Zhejiang/2/2014": {
+            "DMS_prefs_branch": -0.2998593895756554
+        },
+        "A/Chicken/Zhejiang/3/2013": {
+            "DMS_prefs_branch": 0.9441867808157864
+        },
+        "A/Chicken/Zhongshan/ZS/2017": {
+            "DMS_prefs_branch": -0.04031812016796682
+        },
+        "A/Chongqing-Shapingba/62/2017": {
+            "DMS_prefs_branch": 1.1162027590650816
+        },
+        "A/Chongqing-dianjiang/61/2017": {
+            "DMS_prefs_branch": -0.4639581092326712
+        },
+        "A/Chongqing-shapingba/61/2017": {
+            "DMS_prefs_branch": -1.2608858221461454
+        },
+        "A/Duck/Guangdong/DG16807/2016": {
+            "DMS_prefs_branch": 0.5917985642385639
+        },
+        "A/Duck/Hunan/414": {
+            "DMS_prefs_branch": 0.2287303735157431
+        },
+        "A/Duck/Jiangxi/216": {
+            "DMS_prefs_branch": 0.006117554976146615
+        },
+        "A/Duck/Sunan/408": {
+            "DMS_prefs_branch": -0.193902461646817
+        },
+        "A/EV/SDYT/02/2016": {
+            "DMS_prefs_branch": 1.0559515429995832
+        },
+        "A/Enviroment/Xuzhou/4030": {
+            "DMS_prefs_branch": -0.779231100761246
+        },
+        "A/Environment/1-1/Zhejiang/2013": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "A/Environment/Anhui/3325": {
+            "DMS_prefs_branch": -1.803110153203969
+        },
+        "A/Environment/Changzhou/022/2018": {
+            "DMS_prefs_branch": 0.6608131708451923
+        },
+        "A/Environment/Fujian/3699": {
+            "DMS_prefs_branch": 1.5662028221455628
+        },
+        "A/Environment/GD-YJ_25003/2013": {
+            "DMS_prefs_branch": 3.477146159950837
+        },
+        "A/Environment/GD-ZS_21/2014": {
+            "DMS_prefs_branch": 0.2894420083064996
+        },
+        "A/Environment/Guangdong/1660": {
+            "DMS_prefs_branch": 0.298111978414958
+        },
+        "A/Environment/Guangdong/1666": {
+            "DMS_prefs_branch": -0.38549947887213587
+        },
+        "A/Environment/Guangdong/4396": {
+            "DMS_prefs_branch": -0.29558385943548937
+        },
+        "A/Environment/Guangdong/712": {
+            "DMS_prefs_branch": -0.504820060972301
+        },
+        "A/Environment/Guangdong/C13281025/2013": {
+            "DMS_prefs_branch": 0.8699413362880234
+        },
+        "A/Environment/Guangdong/C16283222/2016": {
+            "DMS_prefs_branch": 1.0312305349330446
+        },
+        "A/Environment/Guangxi/689": {
+            "DMS_prefs_branch": 0.4579704374126144
+        },
+        "A/Environment/Guangzhou/4188": {
+            "DMS_prefs_branch": 0.6340352142803242
+        },
+        "A/Environment/Guangzhou/K4756-K4776/2017": {
+            "DMS_prefs_branch": -1.720687099629572
+        },
+        "A/Environment/Hebei/2205": {
+            "DMS_prefs_branch": 1.3800343227976781
+        },
+        "A/Environment/Hebei/2534": {
+            "DMS_prefs_branch": -1.4652645162864395
+        },
+        "A/Environment/Hubei/1049": {
+            "DMS_prefs_branch": -1.4872912524998905
+        },
+        "A/Environment/Hubei/1081": {
+            "DMS_prefs_branch": -0.5044852673080947
+        },
+        "A/Environment/Hubei/1216": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Environment/Hubei/1217": {
+            "DMS_prefs_branch": -0.8710207699820359
+        },
+        "A/Environment/Hunan/1012": {
+            "DMS_prefs_branch": -1.5804848336524222
+        },
+        "A/Environment/Hunan/3971": {
+            "DMS_prefs_branch": 0.7703657754919017
+        },
+        "A/Environment/Hunan/762": {
+            "DMS_prefs_branch": 0.8224748871280401
+        },
+        "A/Environment/Jiangsu/1209": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Environment/Jiangsu/1210": {
+            "DMS_prefs_branch": -0.06642168610574439
+        },
+        "A/Environment/Jiangsu/666": {
+            "DMS_prefs_branch": 1.5667980807379067
+        },
+        "A/Environment/Jiangsu/669": {
+            "DMS_prefs_branch": 0.434132979954663
+        },
+        "A/Environment/Jiangsu/9833": {
+            "DMS_prefs_branch": -0.11531151593164513
+        },
+        "A/Environment/Jiangxi/114": {
+            "DMS_prefs_branch": 1.7720828243991562
+        },
+        "A/Environment/Shaanxi/2941": {
+            "DMS_prefs_branch": -0.21993813990782407
+        },
+        "A/Environment/Shandong-Qingdao/13/2017": {
+            "DMS_prefs_branch": 1.0137740829705273
+        },
+        "A/Environment/Shandong-Qingdao/26/2017": {
+            "DMS_prefs_branch": 2.0473729037389123
+        },
+        "A/Environment/Shandong-Rizhao/06/2017": {
+            "DMS_prefs_branch": -0.8861333643404644
+        },
+        "A/Environment/Shandong-Zaozhuang/32/2017": {
+            "DMS_prefs_branch": -2.0113721761443872
+        },
+        "A/Environment/Shandong-Zaozhuang/33/2017": {
+            "DMS_prefs_branch": -0.3181730714282265
+        },
+        "A/Environment/Shandong/YT009/2014": {
+            "DMS_prefs_branch": 0.6701601991264978
+        },
+        "A/Environment/Suzhou/sz21/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Environment/Xinjiang/2273": {
+            "DMS_prefs_branch": 0.4561268578181796
+        },
+        "A/Environment/Xinjiang/3232": {
+            "DMS_prefs_branch": 0.7775703640039843
+        },
+        "A/Environment/Xinjiang/34": {
+            "DMS_prefs_branch": -1.1211838682698283
+        },
+        "A/Environment/Yunnan/315": {
+            "DMS_prefs_branch": -0.35345795394515195
+        },
+        "A/Fujian/1/2015": {
+            "DMS_prefs_branch": -0.3681369717578895
+        },
+        "A/Fujian/10953/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Fujian/11/2015": {
+            "DMS_prefs_branch": 1.2770263287951351
+        },
+        "A/Fujian/11/2017": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "A/Fujian/12/2017": {
+            "DMS_prefs_branch": 0.6132931389906101
+        },
+        "A/Fujian/14/2015": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Fujian/14/2017": {
+            "DMS_prefs_branch": -1.155648648767797
+        },
+        "A/Fujian/15/2014": {
+            "DMS_prefs_branch": -0.7925599974694415
+        },
+        "A/Fujian/16/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Fujian/17/2014": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Fujian/18/2015": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "A/Fujian/19/2015": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Fujian/2/2014": {
+            "DMS_prefs_branch": -3.3464570767066313
+        },
+        "A/Fujian/2/2015": {
+            "DMS_prefs_branch": -0.1092863475936554
+        },
+        "A/Fujian/20/2014": {
+            "DMS_prefs_branch": -0.4038277148388588
+        },
+        "A/Fujian/20/2015": {
+            "DMS_prefs_branch": 0.41970549731388895
+        },
+        "A/Fujian/21/2014": {
+            "DMS_prefs_branch": -1.0730882075031933
+        },
+        "A/Fujian/2150/2016": {
+            "DMS_prefs_branch": 1.0418700661270837
+        },
+        "A/Fujian/2151/2017": {
+            "DMS_prefs_branch": 0.1250982450924744
+        },
+        "A/Fujian/22/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Fujian/22/2015": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Fujian/23/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Fujian/27/2015": {
+            "DMS_prefs_branch": 1.5667980807379067
+        },
+        "A/Fujian/28/2015": {
+            "DMS_prefs_branch": 1.757561171972569
+        },
+        "A/Fujian/30766/2016": {
+            "DMS_prefs_branch": -0.9227641455528968
+        },
+        "A/Fujian/30767/2016": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Fujian/4/2015": {
+            "DMS_prefs_branch": -0.038505801501905565
+        },
+        "A/Fujian/45970/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Fujian/5/2014": {
+            "DMS_prefs_branch": 0.47040429878580287
+        },
+        "A/Fujian/6/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Fujian/7/2015": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "A/Fujian/8/2015": {
+            "DMS_prefs_branch": 1.2248980166108725
+        },
+        "A/Fujian/8/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Fujian/9/2015": {
+            "DMS_prefs_branch": -3.2478367834413038
+        },
+        "A/Fujian/9273/2015": {
+            "DMS_prefs_branch": -1.0968531657244216
+        },
+        "A/Fujian/QZ-Th002/2017": {
+            "DMS_prefs_branch": -1.1968895459584714
+        },
+        "A/Gansu/19545/2017": {
+            "DMS_prefs_branch": 0.49594268440775063
+        },
+        "A/Gd-120/2015/2015-03-10": {
+            "DMS_prefs_branch": -0.3837632087845191
+        },
+        "A/Gd-124/2014/2014-03-06": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Gd-124/2015/2015-02-26": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Gd-51/2015/2015-01-30": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Gd-57/2015/2015-02-03": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Gd-69/2015/2015-02-04": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Gd-76/2015/2015-02-10": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Guangdong-Guangzhou/XN00509/2014": {
+            "DMS_prefs_branch": -1.0968531657244216
+        },
+        "A/Guangdong-Guangzhou/XN06839/2014": {
+            "DMS_prefs_branch": 1.2770263287951351
+        },
+        "A/Guangdong-Guangzhou/XN08664/2014": {
+            "DMS_prefs_branch": -0.01511247605343271
+        },
+        "A/Guangdong-Guangzhou/XN13392/2014": {
+            "DMS_prefs_branch": -0.5224196860784891
+        },
+        "A/Guangdong/15SF010/2015": {
+            "DMS_prefs_branch": 0.2389107760913647
+        },
+        "A/Guangdong/15SF055/2015": {
+            "DMS_prefs_branch": -0.12671752039953074
+        },
+        "A/Guangdong/15SF057/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Guangdong/15SF082/2015": {
+            "DMS_prefs_branch": -1.1369556971507238
+        },
+        "A/Guangdong/16SF203/2016": {
+            "DMS_prefs_branch": -0.6968404650765392
+        },
+        "A/Guangdong/17SF003/2016": {
+            "DMS_prefs_branch": 0.09721241144908564
+        },
+        "A/Guangdong/17SF004/2017": {
+            "DMS_prefs_branch": -1.1074306479752505
+        },
+        "A/Guangdong/17SF009/2017": {
+            "DMS_prefs_branch": 0.9824701612834288
+        },
+        "A/Guangdong/17SF010/2017": {
+            "DMS_prefs_branch": 1.1833562779393454
+        },
+        "A/Guangdong/17SF011/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Guangdong/17SF017/2017": {
+            "DMS_prefs_branch": -0.09971271516168426
+        },
+        "A/Guangdong/17SF027/2017": {
+            "DMS_prefs_branch": -0.7975082424674123
+        },
+        "A/Guangdong/17SF028/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Guangdong/17SF030/2017": {
+            "DMS_prefs_branch": -0.19075878818353376
+        },
+        "A/Guangdong/17SF031/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Guangdong/17SF036/2017": {
+            "DMS_prefs_branch": 0.8498561585287636
+        },
+        "A/Guangdong/17SF037/2017": {
+            "DMS_prefs_branch": 1.268228971976116
+        },
+        "A/Guangdong/17SF060/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Guangdong/17SF061/2017": {
+            "DMS_prefs_branch": -0.5224196860784891
+        },
+        "A/Guangdong/17SF062/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Guangdong/29/2014": {
+            "DMS_prefs_branch": -0.3764870210112822
+        },
+        "A/Guangdong/35/2014": {
+            "DMS_prefs_branch": 2.5829274637209023
+        },
+        "A/Guangdong/60060/2016": {
+            "DMS_prefs_branch": 0.6839091384875031
+        },
+        "A/Guangdong/60061/2016": {
+            "DMS_prefs_branch": -0.2772838223334262
+        },
+        "A/Guangdong/60923/2016": {
+            "DMS_prefs_branch": 0.0190941508959126
+        },
+        "A/Guangdong/65/2014": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Guangdong/CHN/023/2016": {
+            "DMS_prefs_branch": -1.946613271016975
+        },
+        "A/Guangdong/CHN/ST021/2016": {
+            "DMS_prefs_branch": 0.5807410934025546
+        },
+        "A/Guangdong/GZ8H002/2017": {
+            "DMS_prefs_branch": 0.9470489122596812
+        },
+        "A/Guangdong/MZ828/2015": {
+            "DMS_prefs_branch": -0.029184275263148596
+        },
+        "A/Guangdong/Th005/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Guangxi/18892/2017": {
+            "DMS_prefs_branch": -1.1038576772227255
+        },
+        "A/Guangxi/18895/2017": {
+            "DMS_prefs_branch": -0.23986508211272828
+        },
+        "A/Guangxi/18906/2017": {
+            "DMS_prefs_branch": -2.0092170345379494
+        },
+        "A/Guangxi/2/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Guangxi/6/2017": {
+            "DMS_prefs_branch": -1.4068396071665346
+        },
+        "A/Guangxi/8309/2014": {
+            "DMS_prefs_branch": -0.3394905036457954
+        },
+        "A/Guizhou/1502/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Guizhou/18973/2017": {
+            "DMS_prefs_branch": 0.6829169227363886
+        },
+        "A/Guizhou/18978/2017": {
+            "DMS_prefs_branch": -1.2291400306594675
+        },
+        "A/Guizhou/18980/2017": {
+            "DMS_prefs_branch": -0.3596991908628873
+        },
+        "A/Guizhou/21078/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Hangzhou/1/2013": {
+            "DMS_prefs_branch": 1.1860348557192746
+        },
+        "A/Hangzhou/118/2014": {
+            "DMS_prefs_branch": 0.4639461311500344
+        },
+        "A/Hangzhou/19/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Hangzhou/2/2013": {
+            "DMS_prefs_branch": 1.3697833670672395
+        },
+        "A/Hebei/1/2013": {
+            "DMS_prefs_branch": -0.33808516997598875
+        },
+        "A/Hebei/22044/2017": {
+            "DMS_prefs_branch": -0.940137017380514
+        },
+        "A/Hebei/22045/2017": {
+            "DMS_prefs_branch": -0.5989144954953431
+        },
+        "A/Hebei/27400/2017": {
+            "DMS_prefs_branch": 2.520153177231184
+        },
+        "A/Hebei/27402/2017": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "A/Hebei/27407/2017": {
+            "DMS_prefs_branch": -0.8435573461593802
+        },
+        "A/Hebei/38604/2016": {
+            "DMS_prefs_branch": 0.5917985642385639
+        },
+        "A/Henan/11156/2017": {
+            "DMS_prefs_branch": -1.3516424453824134
+        },
+        "A/Henan/14905/2017": {
+            "DMS_prefs_branch": -0.5763066006343336
+        },
+        "A/Henan/15338/2017": {
+            "DMS_prefs_branch": -1.4872912524998905
+        },
+        "A/Henan/17867/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Henan/2/2013": {
+            "DMS_prefs_branch": -0.0051511791006828185
+        },
+        "A/Henan/22190/2017": {
+            "DMS_prefs_branch": 0.298111978414958
+        },
+        "A/Henan/29263/2017": {
+            "DMS_prefs_branch": 0.35427246541168245
+        },
+        "A/Henan/32240/2017": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "A/HongKong/2212982/2014": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/HongKong/5581/2014": {
+            "DMS_prefs_branch": 3.2545165067067288
+        },
+        "A/HongKong/5731/2014": {
+            "DMS_prefs_branch": 1.2273105152085442
+        },
+        "A/HongKong/734/2014": {
+            "DMS_prefs_branch": -1.4389036389526952
+        },
+        "A/HongKong/8113530/2014": {
+            "DMS_prefs_branch": 0.34136185954974096
+        },
+        "A/HongKong/8122430/2014": {
+            "DMS_prefs_branch": 0.49594268440775063
+        },
+        "A/HongKong/8130773/2015": {
+            "DMS_prefs_branch": -0.49350669501283606
+        },
+        "A/HongKong/8194273/2014": {
+            "DMS_prefs_branch": 0.4240226844267168
+        },
+        "A/HongKong/VB16021618/2016": {
+            "DMS_prefs_branch": 0.48505124675630423
+        },
+        "A/HongKong/VB16049808/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/HongKong/VB16064646/2016": {
+            "DMS_prefs_branch": -1.500295290871315
+        },
+        "A/HongKong/VB16184091/2016": {
+            "DMS_prefs_branch": 0.2377372114502772
+        },
+        "A/HongKong/VB17037915/2017": {
+            "DMS_prefs_branch": -0.09574750968974766
+        },
+        "A/Hubei/1/2016": {
+            "DMS_prefs_branch": -0.8698875122099915
+        },
+        "A/Hubei/34007/2015": {
+            "DMS_prefs_branch": 2.0285834402398093
+        },
+        "A/Hubei/9909/2017": {
+            "DMS_prefs_branch": 0.2716974517592445
+        },
+        "A/Hubei/9910/2017": {
+            "DMS_prefs_branch": -0.315735509384411
+        },
+        "A/Hunan/1/2016": {
+            "DMS_prefs_branch": 0.4186383202101684
+        },
+        "A/Hunan/17872/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Hunan/17874/2017": {
+            "DMS_prefs_branch": -0.5563020989425322
+        },
+        "A/Hunan/17875/2017": {
+            "DMS_prefs_branch": -0.3676858539533149
+        },
+        "A/Hunan/2285/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Hunan/25350/2017": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "A/Hunan/25351/2017": {
+            "DMS_prefs_branch": 1.3774701423280076
+        },
+        "A/Hunan/25353/2017": {
+            "DMS_prefs_branch": 0.24880708854599676
+        },
+        "A/Hunan/25356/2017": {
+            "DMS_prefs_branch": 1.9162329076785698
+        },
+        "A/Hunan/2650/2016": {
+            "DMS_prefs_branch": -0.737032539660685
+        },
+        "A/Hunan/4137/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Hunan/6197/2016": {
+            "DMS_prefs_branch": 0.6753971049429855
+        },
+        "A/Hunan/9917/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Hunan/9920/2017": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "A/Hunan/9921/2017": {
+            "DMS_prefs_branch": 0.08619937971639313
+        },
+        "A/Jiangsu/11550/2017": {
+            "DMS_prefs_branch": 1.3096934758574608
+        },
+        "A/Jiangsu/11554/2017": {
+            "DMS_prefs_branch": 1.0355453440132607
+        },
+        "A/Jiangsu/11557/2017": {
+            "DMS_prefs_branch": 0.8864169797844438
+        },
+        "A/Jiangsu/11588/2017": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "A/Jiangsu/11590/2017": {
+            "DMS_prefs_branch": 0.13281069024751616
+        },
+        "A/Jiangsu/15026/2016": {
+            "DMS_prefs_branch": -1.1046324195409083
+        },
+        "A/Jiangsu/15028/2016": {
+            "DMS_prefs_branch": 1.1379298442209773
+        },
+        "A/Jiangsu/18828/2014": {
+            "DMS_prefs_branch": 0.40263358310764297
+        },
+        "A/Jiangsu/22184/2015": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Jiangsu/24147/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Jiangsu/24149/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Jiangsu/24150/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Jiangsu/24159/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Jiangsu/33446/2015": {
+            "DMS_prefs_branch": -1.860082377134093
+        },
+        "A/Jiangsu/60454/2016": {
+            "DMS_prefs_branch": -0.21838695389368257
+        },
+        "A/Jiangsu/60457/2016": {
+            "DMS_prefs_branch": -0.160260062631275
+        },
+        "A/Jiangsu/60459/2016": {
+            "DMS_prefs_branch": 0.8864169797844438
+        },
+        "A/Jiangsu/60465/2016": {
+            "DMS_prefs_branch": -0.3910464465532117
+        },
+        "A/Jiangsu/60466/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Jiangsu/6306/2014": {
+            "DMS_prefs_branch": 0.5495329050458002
+        },
+        "A/Jiangsu/6462/2017": {
+            "DMS_prefs_branch": 1.1057416008478855
+        },
+        "A/Jiangsu/6464/2017": {
+            "DMS_prefs_branch": -0.23121436117096275
+        },
+        "A/Jiangsu/8/2013": {
+            "DMS_prefs_branch": 1.4352895139911528
+        },
+        "A/Jiangsu/8187/2016": {
+            "DMS_prefs_branch": -0.3496380749657657
+        },
+        "A/Jiangsu/8190/2017": {
+            "DMS_prefs_branch": 3.4119021135085457
+        },
+        "A/Jiangsu/8196/2017": {
+            "DMS_prefs_branch": 0.7775703640039843
+        },
+        "A/Jiangsu/8201/2017": {
+            "DMS_prefs_branch": 0.16782773451369404
+        },
+        "A/Jiangsu/8204/2016": {
+            "DMS_prefs_branch": 0.10399178137459847
+        },
+        "A/Jiangsu/8207/2016": {
+            "DMS_prefs_branch": 0.8159036520122827
+        },
+        "A/Jiangsu/9041/2014": {
+            "DMS_prefs_branch": -0.2036765823782853
+        },
+        "A/Jiangsu/98342/2014": {
+            "DMS_prefs_branch": -0.5846445728377433
+        },
+        "A/Jiangsu/FF16068/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Jiangsu/HM16001/2016": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Jiangsu/JT530/2016": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Jiangsu/YY201602/2016": {
+            "DMS_prefs_branch": 0.2377372114502772
+        },
+        "A/Jiangxi/10668/2017": {
+            "DMS_prefs_branch": -0.7379010078767613
+        },
+        "A/Jiangxi/10672/2017": {
+            "DMS_prefs_branch": 2.109104602148067
+        },
+        "A/Jiangxi/10673/2017": {
+            "DMS_prefs_branch": -0.928705383242962
+        },
+        "A/Jiangxi/10675/2017": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "A/Jiangxi/10679/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Jiangxi/10680/2017": {
+            "DMS_prefs_branch": -1.8257909199565332
+        },
+        "A/Jiangxi/27569/2014": {
+            "DMS_prefs_branch": -0.49043281608185585
+        },
+        "A/Jiaxing/20/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Jilin/10117/2014": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Liaoning/44068/2016": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Sdyt/1/2016": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Sdyt/2/2016": {
+            "DMS_prefs_branch": -0.33553397239258675
+        },
+        "A/Shaanxi/29410/2017": {
+            "DMS_prefs_branch": 0.8217654884028928
+        },
+        "A/Shaanxi/32282/2017": {
+            "DMS_prefs_branch": -0.24808557796161199
+        },
+        "A/Shaanxi/32287/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Shandong-Rizhao/4/2017": {
+            "DMS_prefs_branch": 0.3922114462402613
+        },
+        "A/Shandong-Taian/1/2015": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Shandong/1/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Shandong/68A/2013": {
+            "DMS_prefs_branch": -2.433289699958846
+        },
+        "A/Shanghai/11/2013": {
+            "DMS_prefs_branch": -0.5189058358133006
+        },
+        "A/Shanghai/13/2013": {
+            "DMS_prefs_branch": 0.21059730758982675
+        },
+        "A/Shanghai/2/2013": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Shanghai/6-A/2013": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "A/Shanghai/7/2013": {
+            "DMS_prefs_branch": 1.2248980166108725
+        },
+        "A/Shanghai/9/2013": {
+            "DMS_prefs_branch": -0.5369255477833296
+        },
+        "A/Shanghai/BS01/2015": {
+            "DMS_prefs_branch": -2.245683646330397
+        },
+        "A/Shanghai/JS03/2015": {
+            "DMS_prefs_branch": -0.8463325954534455
+        },
+        "A/Shanghai/PD-01/2014": {
+            "DMS_prefs_branch": -1.068907595169892
+        },
+        "A/Shanghai/PD-02/2014": {
+            "DMS_prefs_branch": 0.6634482172220739
+        },
+        "A/Shanghai/PD04/2015": {
+            "DMS_prefs_branch": -1.103179966177996
+        },
+        "A/Shantou/1002/2014": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Shanxi/26570/2017": {
+            "DMS_prefs_branch": 0.1689118746899344
+        },
+        "A/Shenzhen/1/2013": {
+            "DMS_prefs_branch": 0.041736684649114175
+        },
+        "A/Shenzhen/4/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Shenzhen/SP118/2014": {
+            "DMS_prefs_branch": -0.4454275927174633
+        },
+        "A/Shenzhen/SP139/2014": {
+            "DMS_prefs_branch": -1.1179528342149314
+        },
+        "A/Shenzhen/SP16/2014": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Shenzhen/Th002/2016": {
+            "DMS_prefs_branch": -0.8682450681854871
+        },
+        "A/Shenzhen/Th003/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Shenzhen/Th006/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Shenzhen/Th008/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Sichuan/11021/2017": {
+            "DMS_prefs_branch": -0.2422662402582504
+        },
+        "A/Sichuan/24976/2017": {
+            "DMS_prefs_branch": 1.2770263287951351
+        },
+        "A/Sichuan/24977/2017": {
+            "DMS_prefs_branch": 0.5917985642385639
+        },
+        "A/Sichuan/24981/2017": {
+            "DMS_prefs_branch": -2.379425478284105
+        },
+        "A/Sichuan/24984/2017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "A/Sichuan/24985/2017": {
+            "DMS_prefs_branch": 0.06624636213934765
+        },
+        "A/Sichuan/24987/2017": {
+            "DMS_prefs_branch": 0.5335134775885777
+        },
+        "A/Sichuan/24989/2017": {
+            "DMS_prefs_branch": 3.1651216546926166
+        },
+        "A/Sichuan/27180/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Sichuan/27181/2017": {
+            "DMS_prefs_branch": 3.1651216546926166
+        },
+        "A/Sichuan/27182/2017": {
+            "DMS_prefs_branch": 1.6356016097121928
+        },
+        "A/Sichuan/27183/2017": {
+            "DMS_prefs_branch": -0.6252208064943541
+        },
+        "A/Sichuan/27184/2017": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "A/Sichuan/27872/2017": {
+            "DMS_prefs_branch": 0.7865003910440039
+        },
+        "A/Sichuan/27873/2017": {
+            "DMS_prefs_branch": 0.6770870089016113
+        },
+        "A/Sichuan/29763/2017": {
+            "DMS_prefs_branch": -1.1513770185518974
+        },
+        "A/Sichuan/8606/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Sichuan/9679/2017": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Sichuan/9680/2017": {
+            "DMS_prefs_branch": -0.6560247283178366
+        },
+        "A/Silkiechicken/Dongguan/3520": {
+            "DMS_prefs_branch": -0.8052462874599714
+        },
+        "A/Silkiechicken/Jiangxi/9472": {
+            "DMS_prefs_branch": -0.21993813990782407
+        },
+        "A/Taiwan/1/2014": {
+            "DMS_prefs_branch": 1.577361814915458
+        },
+        "A/Taiwan/1/2017": {
+            "DMS_prefs_branch": 0.7108604512622735
+        },
+        "A/Taiwan/S02076/2013": {
+            "DMS_prefs_branch": 1.1817596232399306
+        },
+        "A/Xinjiang/4062/2018": {
+            "DMS_prefs_branch": -0.2876551404313725
+        },
+        "A/Xinjiang/73030/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Xinjiang/75802/2014": {
+            "DMS_prefs_branch": 1.0587677389405348
+        },
+        "A/XinjiangBintuan/99117/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/XinjiangBintuan/99118/2014": {
+            "DMS_prefs_branch": -0.5442779214143233
+        },
+        "A/Yancheng/1121/2014": {
+            "DMS_prefs_branch": -0.038505801501905565
+        },
+        "A/Yunnan/32294/2017": {
+            "DMS_prefs_branch": -0.9129654978174494
+        },
+        "A/Zhejiang/1/2016": {
+            "DMS_prefs_branch": 1.1260784784249387
+        },
+        "A/Zhejiang/12/2016": {
+            "DMS_prefs_branch": -0.6560247283178366
+        },
+        "A/Zhejiang/13/2016": {
+            "DMS_prefs_branch": 1.6719171362163476
+        },
+        "A/Zhejiang/14/2016": {
+            "DMS_prefs_branch": 1.0931631843298977
+        },
+        "A/Zhejiang/15/2014": {
+            "DMS_prefs_branch": -0.112956814494196
+        },
+        "A/Zhejiang/15/2016": {
+            "DMS_prefs_branch": -0.2266160418426825
+        },
+        "A/Zhejiang/17/2014": {
+            "DMS_prefs_branch": 2.0671352612485325
+        },
+        "A/Zhejiang/18/2016": {
+            "DMS_prefs_branch": -0.5961688179548565
+        },
+        "A/Zhejiang/19/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Zhejiang/19/2016": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Zhejiang/2/2017": {
+            "DMS_prefs_branch": 1.4134180878875349
+        },
+        "A/Zhejiang/20/2016": {
+            "DMS_prefs_branch": 0.4503934640939639
+        },
+        "A/Zhejiang/22/2017": {
+            "DMS_prefs_branch": 1.766445820879551
+        },
+        "A/Zhejiang/23/2013": {
+            "DMS_prefs_branch": 1.0896308880569991
+        },
+        "A/Zhejiang/24/2014": {
+            "DMS_prefs_branch": -0.27254266437793984
+        },
+        "A/Zhejiang/25/2013": {
+            "DMS_prefs_branch": -0.2826537850629668
+        },
+        "A/Zhejiang/26/2017": {
+            "DMS_prefs_branch": -0.9832819048019455
+        },
+        "A/Zhejiang/27/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Zhejiang/28/2017": {
+            "DMS_prefs_branch": -0.06870917239602903
+        },
+        "A/Zhejiang/3/2013": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Zhejiang/32/2017": {
+            "DMS_prefs_branch": -0.752812160533793
+        },
+        "A/Zhejiang/33/2014": {
+            "DMS_prefs_branch": -0.18068466050802234
+        },
+        "A/Zhejiang/33/2017": {
+            "DMS_prefs_branch": 0.052271099061322684
+        },
+        "A/Zhejiang/34/2014": {
+            "DMS_prefs_branch": 0.9981479827834076
+        },
+        "A/Zhejiang/34/2017": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/Zhejiang/35/2014": {
+            "DMS_prefs_branch": 1.2000045091330207
+        },
+        "A/Zhejiang/36/2014": {
+            "DMS_prefs_branch": 0.45622305683788633
+        },
+        "A/Zhejiang/36/2017": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "A/Zhejiang/37/2017": {
+            "DMS_prefs_branch": 1.1854454643224928
+        },
+        "A/Zhejiang/4/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Zhejiang/4/2017": {
+            "DMS_prefs_branch": -0.5558411781901602
+        },
+        "A/Zhejiang/6/2014": {
+            "DMS_prefs_branch": -0.1092863475936554
+        },
+        "A/Zhejiang/6/2015": {
+            "DMS_prefs_branch": 0.2604779220029214
+        },
+        "A/Zhejiang/6/2016": {
+            "DMS_prefs_branch": -2.421547706687105
+        },
+        "A/Zhejiang/7/2016": {
+            "DMS_prefs_branch": 0.13586353674996812
+        },
+        "A/Zhejiang/8/2013": {
+            "DMS_prefs_branch": 0.15375480563043295
+        },
+        "A/Zhejiang/8/2015": {
+            "DMS_prefs_branch": 0.5216847879078328
+        },
+        "A/Zhejiang/9-2/2014": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Zhejiang/9/2016": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Zhejiang/DTID-ZJU01/2013": {
+            "DMS_prefs_branch": 0.048158547856911434
+        },
+        "A/Zhejiang/DTID-ZJU02K/2013": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "A/Zhejiang/DTID-ZJU10/2013": {
+            "DMS_prefs_branch": -0.2986270205454646
+        },
+        "A/Zhejiang/LS01/2014": {
+            "DMS_prefs_branch": -1.7101974068819097
+        },
+        "A/chicken/Anhui-Chuzhou/01/2013": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Anhui/AH272/2015": {
+            "DMS_prefs_branch": 0.416657390329036
+        },
+        "A/chicken/Anhui/AH275/2015": {
+            "DMS_prefs_branch": -0.0610800332261093
+        },
+        "A/chicken/Anhui/AH284/2015": {
+            "DMS_prefs_branch": 0.2431961274453796
+        },
+        "A/chicken/Dongguan/169/2014": {
+            "DMS_prefs_branch": -3.0639017351235953
+        },
+        "A/chicken/Dongguan/695/2014": {
+            "DMS_prefs_branch": -1.1028060825337462
+        },
+        "A/chicken/Fujian/S1017/2014": {
+            "DMS_prefs_branch": -0.5460623591037453
+        },
+        "A/chicken/Fujian/SD005/2015": {
+            "DMS_prefs_branch": 0.3797856229827392
+        },
+        "A/chicken/Guangdong/30/2017": {
+            "DMS_prefs_branch": -1.4003441996803936
+        },
+        "A/chicken/Guangdong/J1/2017": {
+            "DMS_prefs_branch": -1.941870313250888
+        },
+        "A/chicken/Guangdong/J2/2017": {
+            "DMS_prefs_branch": -1.6175120365329827
+        },
+        "A/chicken/Guangdong/S1200/2015": {
+            "DMS_prefs_branch": -1.603355399664912
+        },
+        "A/chicken/Guangdong/SD007/2015": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Guangdong/SD015/2013": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Guangdong/SD023/2014": {
+            "DMS_prefs_branch": -0.4242357439893751
+        },
+        "A/chicken/Guangdong/SD027/2017": {
+            "DMS_prefs_branch": 0.1542867192983147
+        },
+        "A/chicken/Guangdong/SD028/2017": {
+            "DMS_prefs_branch": -1.627061056049198
+        },
+        "A/chicken/Guangdong/SD031/2017": {
+            "DMS_prefs_branch": -1.7017799287502104
+        },
+        "A/chicken/Guangdong/SD034/2017": {
+            "DMS_prefs_branch": 0.7589743668816274
+        },
+        "A/chicken/Guangdong/SD1433/2016": {
+            "DMS_prefs_branch": -0.5748245798973152
+        },
+        "A/chicken/Guangdong/SD641/2013": {
+            "DMS_prefs_branch": -0.09290903066767146
+        },
+        "A/chicken/Hangzhou/174/2013": {
+            "DMS_prefs_branch": -0.6120331680237352
+        },
+        "A/chicken/Hebei/S1257/2016": {
+            "DMS_prefs_branch": -3.0731655384594267
+        },
+        "A/chicken/Heilongjiang/BQC01/2017": {
+            "DMS_prefs_branch": -0.372605654581326
+        },
+        "A/chicken/Heinan/ZZ01/2017": {
+            "DMS_prefs_branch": -1.0258825136023562
+        },
+        "A/chicken/Henan/100/2013": {
+            "DMS_prefs_branch": -0.6066796848974021
+        },
+        "A/chicken/Henan/103/2013": {
+            "DMS_prefs_branch": 0.052271099061322684
+        },
+        "A/chicken/Henan/106/2013": {
+            "DMS_prefs_branch": -3.57917561999161
+        },
+        "A/chicken/Henan/109/2013": {
+            "DMS_prefs_branch": -0.5597731697872876
+        },
+        "A/chicken/Henan/112/2013": {
+            "DMS_prefs_branch": -1.620487929588185
+        },
+        "A/chicken/Henan/114/2013": {
+            "DMS_prefs_branch": -2.3650542264879344
+        },
+        "A/chicken/Henan/115/2013": {
+            "DMS_prefs_branch": 0.40000063878057496
+        },
+        "A/chicken/Henan/120/2013": {
+            "DMS_prefs_branch": 0.4213814248606944
+        },
+        "A/chicken/Henan/141/2013": {
+            "DMS_prefs_branch": -0.08702672866413146
+        },
+        "A/chicken/Henan/96/2013": {
+            "DMS_prefs_branch": -0.8078976561521521
+        },
+        "A/chicken/Henan/97/2013": {
+            "DMS_prefs_branch": -1.1531284853923776
+        },
+        "A/chicken/Henan/99/2013": {
+            "DMS_prefs_branch": 0.2924448612489518
+        },
+        "A/chicken/Henan/F246/2013": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "A/chicken/Henan/F248/2013": {
+            "DMS_prefs_branch": 3.1651216546926166
+        },
+        "A/chicken/Henan/S1425/2014": {
+            "DMS_prefs_branch": -0.6879350384156258
+        },
+        "A/chicken/Hunan/S12753/2016": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/chicken/Hunan/SD017/2014": {
+            "DMS_prefs_branch": 1.9599193226336047
+        },
+        "A/chicken/Hunan/SD019/2014": {
+            "DMS_prefs_branch": -1.5002312989478133
+        },
+        "A/chicken/Jiangsu/LY79/2015": {
+            "DMS_prefs_branch": -2.356693200973002
+        },
+        "A/chicken/Jiangsu/RG126/2015": {
+            "DMS_prefs_branch": 0.506307964817588
+        },
+        "A/chicken/Jiangsu/S1045/2016": {
+            "DMS_prefs_branch": -2.1474567887087783
+        },
+        "A/chicken/Jiangsu/S1361/2015": {
+            "DMS_prefs_branch": -0.06654244997641656
+        },
+        "A/chicken/Jiangxi/S10017/2015": {
+            "DMS_prefs_branch": -0.4571465103859527
+        },
+        "A/chicken/Jiangxi/S10844/2015": {
+            "DMS_prefs_branch": 0.8863720965236929
+        },
+        "A/chicken/Jiangxi/S11228/2015": {
+            "DMS_prefs_branch": 1.751887188509862
+        },
+        "A/chicken/Jiangxi/S40993/2015": {
+            "DMS_prefs_branch": -0.6741773508266812
+        },
+        "A/chicken/Jiangxi/SD001/2013": {
+            "DMS_prefs_branch": 1.017969839069581
+        },
+        "A/chicken/Jilin/SD009/2016": {
+            "DMS_prefs_branch": 1.3287599464709496
+        },
+        "A/chicken/Rizhao/515/2013": {
+            "DMS_prefs_branch": -0.193902461646817
+        },
+        "A/chicken/Rizhao/875/2013": {
+            "DMS_prefs_branch": 0.2873785730103037
+        },
+        "A/chicken/Shandong/SD216/2016": {
+            "DMS_prefs_branch": 0.4903827828051885
+        },
+        "A/chicken/Shanghai/017/2013": {
+            "DMS_prefs_branch": -2.232353309835195
+        },
+        "A/chicken/Shanghai/019/2013": {
+            "DMS_prefs_branch": 0.5434996080745856
+        },
+        "A/chicken/Shanghai/MH02/2015": {
+            "DMS_prefs_branch": 1.2990988244421469
+        },
+        "A/chicken/Shanghai/PD-CN-02/2014": {
+            "DMS_prefs_branch": 0.2377372114502772
+        },
+        "A/chicken/Shanghai/QP01/2015": {
+            "DMS_prefs_branch": -0.8118998166643293
+        },
+        "A/chicken/Shanghai/S1078/2013": {
+            "DMS_prefs_branch": -0.5460623591037453
+        },
+        "A/chicken/Shanghai/S1080/2013": {
+            "DMS_prefs_branch": -0.6570202163414703
+        },
+        "A/chicken/Shanghai/S1410/2013": {
+            "DMS_prefs_branch": -0.01511247605343271
+        },
+        "A/chicken/Shanghai/S4100/2015": {
+            "DMS_prefs_branch": 0.731723678207735
+        },
+        "A/chicken/Wuxi/WX5/2014": {
+            "DMS_prefs_branch": 0.5846317527274743
+        },
+        "A/chicken/Xinjiang/SD033/2014": {
+            "DMS_prefs_branch": 0.8805484884547072
+        },
+        "A/chicken/Zhejiang/C481/2013": {
+            "DMS_prefs_branch": -0.9947764558563562
+        },
+        "A/chicken/Zhejiang/DTID-ZJU06/2013": {
+            "DMS_prefs_branch": 1.5837496881814046
+        },
+        "A/chicken/Zhejiang/S1074/2016": {
+            "DMS_prefs_branch": -0.16285677085981956
+        },
+        "A/chicken/Zhejiang/S1190/2015": {
+            "DMS_prefs_branch": 0.2563665874635901
+        },
+        "A/chicken/Zhejiang/S4008/2013": {
+            "DMS_prefs_branch": 0.043161862281859316
+        },
+        "A/chicken/Zhejiang/S4017/2013": {
+            "DMS_prefs_branch": -0.9931647814316086
+        },
+        "A/chicken/Zhejiang/S4071/2013": {
+            "DMS_prefs_branch": 0.7454693971325619
+        },
+        "A/chicken/Zhejiang/SD001/2016": {
+            "DMS_prefs_branch": 1.9972349404404786
+        },
+        "A/chicken/Zhejiang/SD033/2013": {
+            "DMS_prefs_branch": 0.0
+        },
+        "A/duck/Hunan/S40506/2015": {
+            "DMS_prefs_branch": -0.028622633319205382
+        },
+        "A/duck/Jiangsu/S1220/2016": {
+            "DMS_prefs_branch": -0.06895347682815489
+        },
+        "A/duck/Jiangsu/S1700/2016": {
+            "DMS_prefs_branch": -0.01511247605343271
+        },
+        "A/environment/Hunan/S40858/2015": {
+            "DMS_prefs_branch": -0.5685689666726983
+        },
+        "A/environment/Shandong/SD038/2013": {
+            "DMS_prefs_branch": 0.3180082055295475
+        },
+        "A/environment/Shanghai/CM01/2015": {
+            "DMS_prefs_branch": 0.29272523149968643
+        },
+        "A/environment/Shanghai/CM02/2015": {
+            "DMS_prefs_branch": -0.13173242107105315
+        },
+        "A/environment/Shanghai/CM03/2015": {
+            "DMS_prefs_branch": -1.496570490000996
+        },
+        "A/environment/Shanghai/S1436/2013": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "A/environment/Shanghai/S1438/2013": {
+            "DMS_prefs_branch": 0.4894194920844158
+        },
+        "A/environment/Shenzhen/01/2013": {
+            "DMS_prefs_branch": -2.0661420003749376
+        },
+        "A/environment/Shenzhen/2/2013": {
+            "DMS_prefs_branch": 0.8728558643361922
+        },
+        "A/environment/Wuxi/1/2013": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "NODE_0000000": {
+            "DMS_prefs_branch": -0.2259907696725627
+        },
+        "NODE_0000002": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000006": {
+            "DMS_prefs_branch": -0.4203740710098315
+        },
+        "NODE_0000017": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000021": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000024": {
+            "DMS_prefs_branch": 0.6757960301747122
+        },
+        "NODE_0000029": {
+            "DMS_prefs_branch": -0.651465557076388
+        },
+        "NODE_0000033": {
+            "DMS_prefs_branch": -2.3572674793791104
+        },
+        "NODE_0000038": {
+            "DMS_prefs_branch": -1.1038576772227255
+        },
+        "NODE_0000040": {
+            "DMS_prefs_branch": 0.9081748910490843
+        },
+        "NODE_0000043": {
+            "DMS_prefs_branch": 1.5667980807379067
+        },
+        "NODE_0000045": {
+            "DMS_prefs_branch": 1.299140090642699
+        },
+        "NODE_0000047": {
+            "DMS_prefs_branch": 0.3797856229827392
+        },
+        "NODE_0000055": {
+            "DMS_prefs_branch": -0.14649938186263967
+        },
+        "NODE_0000058": {
+            "DMS_prefs_branch": -0.33808516997598875
+        },
+        "NODE_0000059": {
+            "DMS_prefs_branch": 0.434132979954663
+        },
+        "NODE_0000076": {
+            "DMS_prefs_branch": -1.9529799885609336
+        },
+        "NODE_0000078": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000084": {
+            "DMS_prefs_branch": -0.09247729985361686
+        },
+        "NODE_0000085": {
+            "DMS_prefs_branch": 0.5960375918808806
+        },
+        "NODE_0000087": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000088": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000094": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000095": {
+            "DMS_prefs_branch": -0.11901529281145802
+        },
+        "NODE_0000097": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000100": {
+            "DMS_prefs_branch": 0.2882752098730283
+        },
+        "NODE_0000112": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000121": {
+            "DMS_prefs_branch": -0.2167709826945731
+        },
+        "NODE_0000128": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000131": {
+            "DMS_prefs_branch": 0.9112520519765074
+        },
+        "NODE_0000141": {
+            "DMS_prefs_branch": -0.050188595574662855
+        },
+        "NODE_0000147": {
+            "DMS_prefs_branch": 0.8864169797844438
+        },
+        "NODE_0000148": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000157": {
+            "DMS_prefs_branch": -0.028622633319205382
+        },
+        "NODE_0000162": {
+            "DMS_prefs_branch": -0.10003749753791313
+        },
+        "NODE_0000163": {
+            "DMS_prefs_branch": -0.12056327605991884
+        },
+        "NODE_0000165": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "NODE_0000170": {
+            "DMS_prefs_branch": 1.057520885159603
+        },
+        "NODE_0000171": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "NODE_0000173": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "NODE_0000177": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000179": {
+            "DMS_prefs_branch": -0.13907269493300833
+        },
+        "NODE_0000195": {
+            "DMS_prefs_branch": -0.9793421528289813
+        },
+        "NODE_0000198": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000218": {
+            "DMS_prefs_branch": 0.8732250444220736
+        },
+        "NODE_0000220": {
+            "DMS_prefs_branch": -1.7052276438966143
+        },
+        "NODE_0000226": {
+            "DMS_prefs_branch": 0.1250982450924744
+        },
+        "NODE_0000227": {
+            "DMS_prefs_branch": 0.2377372114502772
+        },
+        "NODE_0000235": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000241": {
+            "DMS_prefs_branch": -0.09290903066767146
+        },
+        "NODE_0000242": {
+            "DMS_prefs_branch": -1.0452435637573398
+        },
+        "NODE_0000245": {
+            "DMS_prefs_branch": 0.9786268001199342
+        },
+        "NODE_0000257": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000260": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000269": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "NODE_0000273": {
+            "DMS_prefs_branch": -0.18651048599961367
+        },
+        "NODE_0000274": {
+            "DMS_prefs_branch": -0.4038277148388588
+        },
+        "NODE_0000284": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000288": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "NODE_0000290": {
+            "DMS_prefs_branch": -0.7318457116987007
+        },
+        "NODE_0000298": {
+            "DMS_prefs_branch": -0.8237203500864947
+        },
+        "NODE_0000301": {
+            "DMS_prefs_branch": -0.8832942854389458
+        },
+        "NODE_0000304": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000305": {
+            "DMS_prefs_branch": 0.5255662124891561
+        },
+        "NODE_0000311": {
+            "DMS_prefs_branch": 1.4418280759993238
+        },
+        "NODE_0000315": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000321": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000324": {
+            "DMS_prefs_branch": 0.2016254374149614
+        },
+        "NODE_0000341": {
+            "DMS_prefs_branch": -0.05891807854188257
+        },
+        "NODE_0000342": {
+            "DMS_prefs_branch": -1.3809431383307027
+        },
+        "NODE_0000343": {
+            "DMS_prefs_branch": 0.16388981544320014
+        },
+        "NODE_0000344": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000346": {
+            "DMS_prefs_branch": -0.07218033132470572
+        },
+        "NODE_0000360": {
+            "DMS_prefs_branch": -0.9931647814316086
+        },
+        "NODE_0000361": {
+            "DMS_prefs_branch": 0.5133407330749352
+        },
+        "NODE_0000362": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000367": {
+            "DMS_prefs_branch": 1.9053662144643464
+        },
+        "NODE_0000369": {
+            "DMS_prefs_branch": -2.725363846561696
+        },
+        "NODE_0000370": {
+            "DMS_prefs_branch": 0.3797856229827392
+        },
+        "NODE_0000371": {
+            "DMS_prefs_branch": 0.6829169227363886
+        },
+        "NODE_0000373": {
+            "DMS_prefs_branch": 0.4091142246230073
+        },
+        "NODE_0000376": {
+            "DMS_prefs_branch": -0.6260260685066452
+        },
+        "NODE_0000379": {
+            "DMS_prefs_branch": 0.5156361346960795
+        },
+        "NODE_0000380": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000386": {
+            "DMS_prefs_branch": 0.6243051184895475
+        },
+        "NODE_0000390": {
+            "DMS_prefs_branch": -0.050188595574662855
+        },
+        "NODE_0000397": {
+            "DMS_prefs_branch": -1.032485104541384
+        },
+        "NODE_0000398": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000403": {
+            "DMS_prefs_branch": -0.5163021311023425
+        },
+        "NODE_0000404": {
+            "DMS_prefs_branch": -1.0251844273677955
+        },
+        "NODE_0000412": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000415": {
+            "DMS_prefs_branch": -0.27254266437793984
+        },
+        "NODE_0000416": {
+            "DMS_prefs_branch": 0.08320850337764904
+        },
+        "NODE_0000418": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000421": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000435": {
+            "DMS_prefs_branch": -0.4566214509417917
+        },
+        "NODE_0000455": {
+            "DMS_prefs_branch": 0.593592639139927
+        },
+        "NODE_0000457": {
+            "DMS_prefs_branch": -1.6175097186584617
+        },
+        "NODE_0000458": {
+            "DMS_prefs_branch": 0.6264513405636866
+        },
+        "NODE_0000459": {
+            "DMS_prefs_branch": -0.5240840646807663
+        },
+        "NODE_0000468": {
+            "DMS_prefs_branch": 0.3062021025596661
+        },
+        "NODE_0000481": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000483": {
+            "DMS_prefs_branch": 0.3062021025596661
+        },
+        "NODE_0000497": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "NODE_0000499": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000517": {
+            "DMS_prefs_branch": -0.1092863475936554
+        },
+        "NODE_0000519": {
+            "DMS_prefs_branch": -0.5369255477833296
+        },
+        "NODE_0000520": {
+            "DMS_prefs_branch": -0.9723044364755408
+        },
+        "NODE_0000522": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000529": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000530": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000537": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000539": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000560": {
+            "DMS_prefs_branch": -0.19493331661241928
+        },
+        "NODE_0000562": {
+            "DMS_prefs_branch": -1.0332313176474917
+        },
+        "NODE_0000563": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000565": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000569": {
+            "DMS_prefs_branch": -0.26901415505870385
+        },
+        "NODE_0000571": {
+            "DMS_prefs_branch": 0.5434996080745856
+        },
+        "NODE_0000575": {
+            "DMS_prefs_branch": -1.5482483386185286
+        },
+        "NODE_0000578": {
+            "DMS_prefs_branch": 0.049982236126174515
+        },
+        "NODE_0000579": {
+            "DMS_prefs_branch": 1.036514062787602
+        },
+        "NODE_0000585": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000598": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000607": {
+            "DMS_prefs_branch": 0.8943373499084506
+        },
+        "NODE_0000608": {
+            "DMS_prefs_branch": -0.1952622898250408
+        },
+        "NODE_0000613": {
+            "DMS_prefs_branch": -1.2751847805198682
+        },
+        "NODE_0000620": {
+            "DMS_prefs_branch": 0.2882752098730283
+        },
+        "NODE_0000622": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000625": {
+            "DMS_prefs_branch": -1.249576255897174
+        },
+        "NODE_0000627": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "NODE_0000631": {
+            "DMS_prefs_branch": -0.9931647814316086
+        },
+        "NODE_0000633": {
+            "DMS_prefs_branch": 1.0355453440132607
+        },
+        "NODE_0000635": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000649": {
+            "DMS_prefs_branch": -0.6682169585788383
+        },
+        "NODE_0000652": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000653": {
+            "DMS_prefs_branch": -0.2931509052573126
+        },
+        "NODE_0000657": {
+            "DMS_prefs_branch": 0.7433723298813959
+        },
+        "NODE_0000661": {
+            "DMS_prefs_branch": -0.4639581092326712
+        },
+        "NODE_0000663": {
+            "DMS_prefs_branch": 1.4062967352966231
+        },
+        "NODE_0000664": {
+            "DMS_prefs_branch": 2.8377529235335577
+        },
+        "NODE_0000669": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000671": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000673": {
+            "DMS_prefs_branch": -1.9427038589436276
+        },
+        "NODE_0000677": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000681": {
+            "DMS_prefs_branch": -0.3673644853507248
+        },
+        "NODE_0000682": {
+            "DMS_prefs_branch": 0.5126364589581213
+        },
+        "NODE_0000694": {
+            "DMS_prefs_branch": -1.7017799287502104
+        },
+        "NODE_0000696": {
+            "DMS_prefs_branch": -1.2731022024635408
+        },
+        "NODE_0000697": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000698": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000741": {
+            "DMS_prefs_branch": 0.2799688860274427
+        },
+        "NODE_0000744": {
+            "DMS_prefs_branch": -0.699314514004763
+        },
+        "NODE_0000752": {
+            "DMS_prefs_branch": 0.08391116130908598
+        },
+        "NODE_0000753": {
+            "DMS_prefs_branch": 0.010287533051544506
+        },
+        "NODE_0000754": {
+            "DMS_prefs_branch": 0.6264513405636866
+        },
+        "NODE_0000756": {
+            "DMS_prefs_branch": -0.11211777575258319
+        },
+        "NODE_0000761": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000762": {
+            "DMS_prefs_branch": 0.2377372114502772
+        },
+        "NODE_0000764": {
+            "DMS_prefs_branch": -0.5460623591037453
+        },
+        "NODE_0000769": {
+            "DMS_prefs_branch": 1.4667941553428108
+        },
+        "NODE_0000770": {
+            "DMS_prefs_branch": 0.7930646635224988
+        },
+        "NODE_0000773": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000778": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000779": {
+            "DMS_prefs_branch": 0.298111978414958
+        },
+        "NODE_0000793": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000819": {
+            "DMS_prefs_branch": 0.013145086261859285
+        },
+        "NODE_0000825": {
+            "DMS_prefs_branch": -0.5460623591037453
+        },
+        "NODE_0000831": {
+            "DMS_prefs_branch": -0.4537442748986531
+        },
+        "NODE_0000832": {
+            "DMS_prefs_branch": 0.41970549731388895
+        },
+        "NODE_0000833": {
+            "DMS_prefs_branch": -0.30135915488105325
+        },
+        "NODE_0000834": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000844": {
+            "DMS_prefs_branch": -0.4976488528917569
+        },
+        "NODE_0000845": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "NODE_0000848": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000851": {
+            "DMS_prefs_branch": -0.1891066769672773
+        },
+        "NODE_0000853": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "NODE_0000854": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "NODE_0000856": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0000864": {
+            "DMS_prefs_branch": -0.07582537384055338
+        },
+        "NODE_0000885": {
+            "DMS_prefs_branch": -0.1278536941048201
+        },
+        "NODE_0000889": {
+            "DMS_prefs_branch": 0.4852026841682768
+        },
+        "NODE_0000895": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000900": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000902": {
+            "DMS_prefs_branch": -0.7250118847213116
+        },
+        "NODE_0000903": {
+            "DMS_prefs_branch": -0.6607936348477814
+        },
+        "NODE_0000904": {
+            "DMS_prefs_branch": 1.0931631843298977
+        },
+        "NODE_0000905": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000911": {
+            "DMS_prefs_branch": -0.875345153265441
+        },
+        "NODE_0000912": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0000921": {
+            "DMS_prefs_branch": 3.009670915332837
+        },
+        "NODE_0000924": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0000946": {
+            "DMS_prefs_branch": -0.5109874830452816
+        },
+        "NODE_0000954": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "NODE_0000968": {
+            "DMS_prefs_branch": -0.11996256093136265
+        },
+        "NODE_0000971": {
+            "DMS_prefs_branch": -0.00884355555572939
+        },
+        "NODE_0000984": {
+            "DMS_prefs_branch": -0.19493331661241928
+        },
+        "NODE_0001037": {
+            "DMS_prefs_branch": 0.7220976919937024
+        },
+        "NODE_0001038": {
+            "DMS_prefs_branch": -0.11790294911570315
+        },
+        "NODE_0001041": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001042": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0001043": {
+            "DMS_prefs_branch": 0.2983789353180941
+        },
+        "NODE_0001046": {
+            "DMS_prefs_branch": -0.3837632087845191
+        },
+        "NODE_0001053": {
+            "DMS_prefs_branch": -0.016255906625886718
+        },
+        "NODE_0001056": {
+            "DMS_prefs_branch": 0.9341105128388805
+        },
+        "NODE_0001057": {
+            "DMS_prefs_branch": 0.5917985642385639
+        },
+        "NODE_0001060": {
+            "DMS_prefs_branch": -0.08751795796650491
+        },
+        "NODE_0001064": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001065": {
+            "DMS_prefs_branch": -0.4166059428345277
+        },
+        "NODE_0001067": {
+            "DMS_prefs_branch": -0.8911970066147467
+        },
+        "NODE_0001068": {
+            "DMS_prefs_branch": 1.4490916339848725
+        },
+        "NODE_0001072": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001073": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0001074": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001075": {
+            "DMS_prefs_branch": -0.8979896646266662
+        },
+        "NODE_0001078": {
+            "DMS_prefs_branch": 0.35427246541168245
+        },
+        "NODE_0001079": {
+            "DMS_prefs_branch": -0.6650172803510502
+        },
+        "NODE_0001081": {
+            "DMS_prefs_branch": 0.4186383202101684
+        },
+        "NODE_0001085": {
+            "DMS_prefs_branch": 2.4245029859133402
+        },
+        "NODE_0001090": {
+            "DMS_prefs_branch": -0.4206241605422835
+        },
+        "NODE_0001091": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0001092": {
+            "DMS_prefs_branch": 0.5267878308837871
+        },
+        "NODE_0001099": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001100": {
+            "DMS_prefs_branch": 0.34961913664233163
+        },
+        "NODE_0001103": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001104": {
+            "DMS_prefs_branch": -0.2881158771346613
+        },
+        "NODE_0001105": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0001109": {
+            "DMS_prefs_branch": 0.18580260523943767
+        },
+        "NODE_0001110": {
+            "DMS_prefs_branch": 0.2261328336450638
+        },
+        "NODE_0001111": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001113": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001114": {
+            "DMS_prefs_branch": 2.375690278747591
+        },
+        "NODE_0001121": {
+            "DMS_prefs_branch": 1.0931631843298977
+        },
+        "NODE_0001122": {
+            "DMS_prefs_branch": 0.9105906691695219
+        },
+        "NODE_0001124": {
+            "DMS_prefs_branch": 1.2770263287951351
+        },
+        "NODE_0001127": {
+            "DMS_prefs_branch": 0.4894194920844158
+        },
+        "NODE_0001136": {
+            "DMS_prefs_branch": 0.593592639139927
+        },
+        "NODE_0001137": {
+            "DMS_prefs_branch": -0.8465372371317094
+        },
+        "NODE_0001146": {
+            "DMS_prefs_branch": 0.5434996080745856
+        },
+        "NODE_0001147": {
+            "DMS_prefs_branch": -0.9243468815805316
+        },
+        "NODE_0001152": {
+            "DMS_prefs_branch": 0.7624686516734481
+        },
+        "NODE_0001154": {
+            "DMS_prefs_branch": 0.5612780316635987
+        },
+        "NODE_0001157": {
+            "DMS_prefs_branch": -0.4193371074385876
+        },
+        "NODE_0001159": {
+            "DMS_prefs_branch": 0.5807410934025546
+        },
+        "NODE_0001161": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001168": {
+            "DMS_prefs_branch": 0.5807410934025546
+        },
+        "NODE_0001170": {
+            "DMS_prefs_branch": -1.160959964758801
+        },
+        "NODE_0001175": {
+            "DMS_prefs_branch": 1.4944984502381957
+        },
+        "NODE_0001180": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001183": {
+            "DMS_prefs_branch": 0.298111978414958
+        },
+        "NODE_0001187": {
+            "DMS_prefs_branch": -0.38964513935409056
+        },
+        "NODE_0001190": {
+            "DMS_prefs_branch": -0.17101336770238046
+        },
+        "NODE_0001195": {
+            "DMS_prefs_branch": 0.500384857148595
+        },
+        "NODE_0001206": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001212": {
+            "DMS_prefs_branch": 1.032489636380558
+        },
+        "NODE_0001219": {
+            "DMS_prefs_branch": 1.4246492898552479
+        },
+        "NODE_0001225": {
+            "DMS_prefs_branch": -1.3696091094898544
+        },
+        "NODE_0001228": {
+            "DMS_prefs_branch": 1.2389822739085918
+        },
+        "NODE_0001229": {
+            "DMS_prefs_branch": 1.0931631843298977
+        },
+        "NODE_0001232": {
+            "DMS_prefs_branch": -0.053502039128553926
+        },
+        "NODE_0001235": {
+            "DMS_prefs_branch": -0.8639633061779192
+        },
+        "NODE_0001238": {
+            "DMS_prefs_branch": -0.16787121581590458
+        },
+        "NODE_0001240": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001244": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0001245": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001248": {
+            "DMS_prefs_branch": -0.7379010078767613
+        },
+        "NODE_0001249": {
+            "DMS_prefs_branch": 0.6195282609297231
+        },
+        "NODE_0001268": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001274": {
+            "DMS_prefs_branch": -0.09574750968974766
+        },
+        "NODE_0001277": {
+            "DMS_prefs_branch": 0.6195282609297231
+        },
+        "NODE_0001282": {
+            "DMS_prefs_branch": 0.9307032205014658
+        },
+        "NODE_0001287": {
+            "DMS_prefs_branch": -0.4791319590328713
+        },
+        "NODE_0001288": {
+            "DMS_prefs_branch": 0.5371299439853048
+        },
+        "NODE_0001296": {
+            "DMS_prefs_branch": -1.6622698029393221
+        },
+        "NODE_0001300": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001303": {
+            "DMS_prefs_branch": 0.858081859983743
+        },
+        "NODE_0001304": {
+            "DMS_prefs_branch": 0.5917985642385639
+        },
+        "NODE_0001305": {
+            "DMS_prefs_branch": 1.0312305349330446
+        },
+        "NODE_0001306": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001307": {
+            "DMS_prefs_branch": -0.19493331661241928
+        },
+        "NODE_0001311": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001317": {
+            "DMS_prefs_branch": 0.5434996080745856
+        },
+        "NODE_0001318": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001320": {
+            "DMS_prefs_branch": 0.006117554976146615
+        },
+        "NODE_0001322": {
+            "DMS_prefs_branch": 1.9162844619660424
+        },
+        "NODE_0001326": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001333": {
+            "DMS_prefs_branch": -0.6607346318922717
+        },
+        "NODE_0001336": {
+            "DMS_prefs_branch": 0.1689118746899344
+        },
+        "NODE_0001339": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001341": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001348": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001352": {
+            "DMS_prefs_branch": -0.20065540865494774
+        },
+        "NODE_0001353": {
+            "DMS_prefs_branch": 0.3015945875678364
+        },
+        "NODE_0001354": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0001362": {
+            "DMS_prefs_branch": 0.1250982450924744
+        },
+        "NODE_0001363": {
+            "DMS_prefs_branch": 0.29864765898125134
+        },
+        "NODE_0001367": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001368": {
+            "DMS_prefs_branch": 0.2882752098730283
+        },
+        "NODE_0001371": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001372": {
+            "DMS_prefs_branch": -0.7317834529006146
+        },
+        "NODE_0001373": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001380": {
+            "DMS_prefs_branch": 3.1651216546926166
+        },
+        "NODE_0001382": {
+            "DMS_prefs_branch": 1.2770263287951351
+        },
+        "NODE_0001393": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001398": {
+            "DMS_prefs_branch": 0.593592639139927
+        },
+        "NODE_0001400": {
+            "DMS_prefs_branch": -0.8224333134556407
+        },
+        "NODE_0001402": {
+            "DMS_prefs_branch": -0.2242609176990692
+        },
+        "NODE_0001403": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001412": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "NODE_0001415": {
+            "DMS_prefs_branch": -0.1278536941048201
+        },
+        "NODE_0001416": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001424": {
+            "DMS_prefs_branch": 1.9053662144643464
+        },
+        "NODE_0001427": {
+            "DMS_prefs_branch": 2.0367961837384887
+        },
+        "NODE_0001429": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001433": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001435": {
+            "DMS_prefs_branch": 0.13586353674996812
+        },
+        "NODE_0001441": {
+            "DMS_prefs_branch": -0.10813625451579177
+        },
+        "NODE_0001444": {
+            "DMS_prefs_branch": 0.9799770592831332
+        },
+        "NODE_0001447": {
+            "DMS_prefs_branch": 0.1977632417639203
+        },
+        "NODE_0001448": {
+            "DMS_prefs_branch": -0.20493938170677134
+        },
+        "NODE_0001449": {
+            "DMS_prefs_branch": -0.4009880389633511
+        },
+        "NODE_0001450": {
+            "DMS_prefs_branch": 0.8503715642242426
+        },
+        "NODE_0001453": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001456": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001462": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001463": {
+            "DMS_prefs_branch": 0.20625584610851075
+        },
+        "NODE_0001467": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001472": {
+            "DMS_prefs_branch": -0.9723044364755408
+        },
+        "NODE_0001498": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001506": {
+            "DMS_prefs_branch": 2.240535801451124
+        },
+        "NODE_0001515": {
+            "DMS_prefs_branch": 0.3145822519091574
+        },
+        "NODE_0001519": {
+            "DMS_prefs_branch": -0.17101336770238046
+        },
+        "NODE_0001530": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001539": {
+            "DMS_prefs_branch": 0.7624686516734481
+        },
+        "NODE_0001544": {
+            "DMS_prefs_branch": -0.4107951443469695
+        },
+        "NODE_0001551": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001558": {
+            "DMS_prefs_branch": -0.3496380749657657
+        },
+        "NODE_0001560": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001561": {
+            "DMS_prefs_branch": 0.8864169797844438
+        },
+        "NODE_0001571": {
+            "DMS_prefs_branch": -0.09574750968974766
+        },
+        "NODE_0001572": {
+            "DMS_prefs_branch": -0.8675189536689153
+        },
+        "NODE_0001578": {
+            "DMS_prefs_branch": 0.0
+        },
+        "NODE_0001581": {
+            "DMS_prefs_branch": -1.160959964758801
+        },
+        "NODE_0001584": {
+            "DMS_prefs_branch": 0.048158547856911434
+        },
+        "NODE_0001593": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001596": {
+            "DMS_prefs_branch": 0.6770714414645864
+        },
+        "NODE_0001605": {
+            "DMS_prefs_branch": -0.33808516997598875
+        },
+        "NODE_0001606": {
+            "DMS_prefs_branch": -0.27254266437793984
+        },
+        "NODE_0001831": {
+            "DMS_prefs_branch": 0.3797856229827392
+        },
+        "NODE_0001908": {
+            "DMS_prefs_branch": 0.5461312799824135
+        },
+        "NODE_0001930": {
+            "DMS_prefs_branch": 0.5461312799824135
+        }
+    }
+}

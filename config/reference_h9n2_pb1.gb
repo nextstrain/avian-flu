@@ -1,0 +1,111 @@
+LOCUS       CY087830                2316 bp    cRNA    linear   VRL 24-MAR-2011
+DEFINITION  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2)) polymerase PB1
+            (PB1) and PB1-F2 protein (PB1-F2) genes, complete cds.
+ACCESSION   CY087830
+VERSION     CY087830.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+  ORGANISM  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 2316)
+  AUTHORS   Spiro,D., Halpin,R., Boyne,A., Bera,J., Ghedin,E., Hostetler,J.,
+            Fedorova,N., Kim,M., Zaborsky,J., Overton,L., Djuric,K.,
+            Sarmiento,M., Sitz,J., Katzel,D., Brown,E.G., Keleta,L., Bao,Y.,
+            Sanders,R., Dernovoy,D., Kiryutin,B., Lipman,D.J. and Tatusova,T.
+  TITLE     The NIAID Influenza Genome Sequencing Project
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 2316)
+  CONSRTM   The NIAID Influenza Genome Sequencing Consortium
+  TITLE     Direct Submission
+  JOURNAL   Submitted (24-MAR-2011) on behalf of JCVI/University of
+            Ottawa/NCBI, National Center for Biotechnology Information, NIH,
+            Bethesda, MD 20894, USA
+COMMENT     This work was supported by the National Institute of Allergy and
+            Infectious Diseases (NIAID), Genome Sequencing Centers for
+            Infectious Diseases (GSCID) program.
+FEATURES             Location/Qualifiers
+     source          1..2316
+                     /organism="Influenza A virus
+                     (A/turkey/Wisconsin/1/1966(H9N2))"
+                     /mol_type="viral cRNA"
+                     /strain="A/turkey/Wisconsin/1/1966"
+                     /serotype="H9N2"
+                     /host="turkey"
+                     /db_xref="taxon:385620"
+                     /segment="2"
+                     /lab_host="E 2 passage(s)"
+                     /country="USA: Wisconsin"
+                     /collection_date="11-Jun-1966"
+     gene            13..2286
+                     /gene="PB1"
+     CDS             13..2286
+                     /gene="PB1"
+                     /codon_start=1
+                     /product="polymerase PB1"
+                     /protein_id="AEA04416.1"
+                     /translation="MDVNPTLLFLKVPAQNAISTTFPYTGDPPYSHGTGTGYTMDTVN
+                     RTHQYSEKGKWTTNTETGAPQLNPIDGPLPEDNEPSGYAQTDCVLEAMAFLEESHPGI
+                     FENSCLETMEVVQQTRVDKLTQGRQTYDWTLNRNQPAATALANTIEVFRSNGLTANES
+                     GRLIDFLKDVMESMDKEEMEITTHFQRKRRVRDNMTKKMVTQRTIGKKKQRLNKRSYL
+                     IRALTLNTMTKDAERGKLKRRAIATPGMQIRGFVYFVETLARSICEKLEQSGLPVGGN
+                     EKKAKLANVVRKMMTNSQDTELSFTITGDNTKWNENQNPRMFLAMITYITRNQPEWFR
+                     NVLSIAPIMFSNKMARLGKGYMFESKSMKLRTQIPTEMLASIDLKYFNEPTRKKIEKI
+                     RPLLIDGTASLSPGMMMGMFNMLSTVLGVSILNLGQKRYTKTTYWWDGLQSSDDFALI
+                     VNAPDHEGIQAGVDRFYRTCKLVGINMSKKKSYINRTGTFEFTSFFYRYGFVANFSME
+                     LPSFGVSGINESADMSIGVTVIKNNMINNDLGPATAQMALQLFIKDYRYTYRCHRGDT
+                     QIQTRRSFELKKLWEQTRSKAGLLVSDGGPNLYNIRNLHIPEVCLKWELMDEDYQGRL
+                     CNPLNPFVSHKEIESVNNAVVMPAHGPAKSMEYDAVATTHSWIPKRNRSILNTSQRGI
+                     LEDEQMYQKCCNLFEKFFPSSSYRRPVGISSMVEAMVSRARIDARIDFESGRIKKEEF
+                     AEIMKICSTIEELRRQK"
+     gene            107..379
+                     /gene="PB1-F2"
+     CDS             107..379
+                     /gene="PB1-F2"
+                     /codon_start=1
+                     /product="PB1-F2 protein"
+                     /protein_id="AEA04417.1"
+                     /translation="MEQGQDTPWTQSTEHINIQKRGNGQQTQKLGRPNLTQLMDHYLR
+                     IMNQVDMHKQTASWKQWLSLKNPTQESLKTRVLKRWKLSNKQGWTN"
+ORIGIN      
+        1 caaaccattt gaatggatgt caatccgact ttacttttct tgaaagttcc agcgcaaaat
+       61 gccataagca ctacattccc ttatactgga gatcctccat acagtcatgg aacagggaca
+      121 ggatacacca tggacacagt caacagaaca catcaatatt cagaaaaggg gaaatggaca
+      181 acaaacacag aaactggggc gccccaactt aacccaattg atggaccact acctgaggat
+      241 aatgaaccaa gtggatatgc acaaacagac tgcgtcctgg aagcaatggc tttccttgaa
+      301 gaatcccacc caggaatctt tgaaaactcg tgtcttgaaa cgatggaagt tgtccaacaa
+      361 acaagggtgg acaaactgac ccaaggtcgt cagacctatg actggacatt aaacaggaat
+      421 cagccggctg caactgcatt agctaatacc atagaggtct tcagatcgaa tggtctgaca
+      481 gctaatgaat cgggaaggct aatagacttc ctcaaggatg tgatggaatc aatggataaa
+      541 gaggagatgg aaataacaac acacttccaa aggaaaagaa gagtaaggga caacatgacc
+      601 aagaaaatgg tcacacaaag aacaatagga aaaaagaagc agagattaaa caagagaagc
+      661 tatctaataa gagcattgac attgaacaca atgacaaaag atgcggaaag aggcaagttg
+      721 aagagaagag caattgcaac acccgggatg cagatcagag gattcgtgta ttttgtcgaa
+      781 acactagcga ggagcatttg tgagaagctc gaacagtctg gacttccagt tggaggcaat
+      841 gaaaagaagg ctaaactggc aaatgttgtg agaaagatga tgactaattc acaagacaca
+      901 gagctctctt tcacaattac tggagacaac accaaatgga atgaaaacca aaacccccgg
+      961 atgttcctgg caatgataac atacatcaca agaaatcaac ctgaatggtt tagaaacgtc
+     1021 ttgagcatcg cacctataat gttctcgaat aaaatggcaa gactaggaaa aggatacatg
+     1081 ttcgaaagta agagcatgaa gctccgaaca caaataccaa cagaaatgct agcaagtatt
+     1141 gacctgaaat acttcaatga accaacaaga aagaaaatcg aaaaaataag gcctcttcta
+     1201 atagatggta ccgcttcatt gagccctgga atgatgatgg gcatgttcaa catgctaagc
+     1261 acagtcttag gagtctcaat cctgaatcta ggacaaaaga ggtacaccaa aacaacatac
+     1321 tggtgggatg gactccaatc ctctgatgac tttgctctca tagtgaatgc accggatcat
+     1381 gagggaatac aagcaggggt agatagattc tacagaacct gcaagctggt cgggatcaat
+     1441 atgagcaaaa agaagtccta tataaatagg acagggacat ttgaattcac aagctttttc
+     1501 tatcgctatg ggtttgtagc caattttagc atggagctgc ccagctttgg agtgtctggg
+     1561 attaatgaat cagctgacat gagcattgga gtaacagtga taaagaacaa catgataaac
+     1621 aatgaccttg gaccagcaac agcccaaatg gctcttcagc tattcatcaa ggactataga
+     1681 tatacgtatc ggtgccacag gggggacaca caaattcaga cgaggagatc attcgagcta
+     1741 aagaaactgt gggagcaaac ccgctcaaag gcaggactgt tggtttcaga tggaggacca
+     1801 aacttataca atatccggaa tctccacatt cccgaagtct gcttgaaatg ggagctaatg
+     1861 gacgaagact atcagggaag gctttgtaat cccctgaacc catttgtcag tcataaggag
+     1921 atagagtcag taaacaatgc tgtggtaatg ccagctcatg gtccagccaa gagcatggaa
+     1981 tatgatgctg ttgctactac acactcctgg atccctaaga ggaaccgctc catcctcaac
+     2041 acaagccaaa ggggaattct tgaggatgaa cagatgtatc agaagtgttg caatctattc
+     2101 gagaaattct tccctagcag ttcatacagg agaccggttg gaatttccag catggtggag
+     2161 gccatggtgt ctagggcccg gatcgatgcg cggattgact tcgagtctgg acggattaag
+     2221 aaagaggagt tcgctgagat catgaagatc tgttccacca ttgaagagct cagacggcaa
+     2281 aaatagtgaa tttagcttgt ccttcatgaa aaaatg
+//
+

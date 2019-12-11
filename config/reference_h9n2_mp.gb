@@ -1,0 +1,80 @@
+LOCUS       CY087825                1002 bp    cRNA    linear   VRL 24-MAR-2011
+DEFINITION  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2)) matrix protein
+            2 (M2) and matrix protein 1 (M1) genes, complete cds.
+ACCESSION   CY087825
+VERSION     CY087825.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+  ORGANISM  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 1002)
+  AUTHORS   Spiro,D., Halpin,R., Boyne,A., Bera,J., Ghedin,E., Hostetler,J.,
+            Fedorova,N., Kim,M., Zaborsky,J., Overton,L., Djuric,K.,
+            Sarmiento,M., Sitz,J., Katzel,D., Brown,E.G., Keleta,L., Bao,Y.,
+            Sanders,R., Dernovoy,D., Kiryutin,B., Lipman,D.J. and Tatusova,T.
+  TITLE     The NIAID Influenza Genome Sequencing Project
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1002)
+  CONSRTM   The NIAID Influenza Genome Sequencing Consortium
+  TITLE     Direct Submission
+  JOURNAL   Submitted (24-MAR-2011) on behalf of JCVI/University of
+            Ottawa/NCBI, National Center for Biotechnology Information, NIH,
+            Bethesda, MD 20894, USA
+COMMENT     This work was supported by the National Institute of Allergy and
+            Infectious Diseases (NIAID), Genome Sequencing Centers for
+            Infectious Diseases (GSCID) program.
+FEATURES             Location/Qualifiers
+     source          1..1002
+                     /organism="Influenza A virus
+                     (A/turkey/Wisconsin/1/1966(H9N2))"
+                     /mol_type="viral cRNA"
+                     /strain="A/turkey/Wisconsin/1/1966"
+                     /serotype="H9N2"
+                     /host="turkey"
+                     /db_xref="taxon:385620"
+                     /segment="7"
+                     /lab_host="E 2 passage(s)"
+                     /country="USA: Wisconsin"
+                     /collection_date="11-Jun-1966"
+     gene            14..995
+                     /gene="M2"
+     CDS             join(14..39,728..995)
+                     /gene="M2"
+                     /codon_start=1
+                     /product="matrix protein 2"
+                     /protein_id="AEA04410.1"
+                     /translation="MSLLTEVETPTRNGWECKCSDSSDPLVIAASIIGILHLILWILD
+                     RLFFKCIYRRIKYGLKRGPSTEGVPESMREEYRQEQQSAVDVDDGHFVNIELE"
+     gene            14..772
+                     /gene="M1"
+     CDS             14..772
+                     /gene="M1"
+                     /codon_start=1
+                     /product="matrix protein 1"
+                     /protein_id="AEA04409.1"
+                     /translation="MSLLTEVETYVLSIVPSGPLKAEIAQRLEDVFAGKNTDLEALME
+                     WLKTRPILSPLTKGILGFVFTLTVPSERGLQRRRFVQNALNGNGDPNNMDRAVKLYRK
+                     LKREITFHGAKEVALSYSTGALASCMGLIYNRMGTVTTEVAFGLVCATCEQIADSQHR
+                     SHRQMVTTTNPLIRHENRMVLASTTAKAMEQMAGSSEQAAEAMEVASQARQMVQAMRT
+                     IGTHPSSSAGLKDDLLENLQAYQKRMGVQMQRFK"
+ORIGIN      
+        1 tagatattga aagatgagtc ttctaaccga ggtcgaaacg tacgttctct ctattgtccc
+       61 gtcaggcccc ctcaaagccg agatcgcgca gagacttgaa gatgtctttg cagggaagaa
+      121 caccgatctt gaggcactca tggaatggct aaagacaaga ccaatcctgt cacctctgac
+      181 taaggggatt ttaggatttg tgttcacgct caccgtgccc agtgagcgag gactgcagcg
+      241 tagacgcttt gtccaaaatg ccctcaatgg gaatggagat ccaaacaaca tggacagagc
+      301 agtcaagctg tacagaaagc ttaaaaggga aataacattc catggggcca aagaggtagc
+      361 actcagttat tccactggtg cacttgccag ttgcatgggc cttatataca acaggatggg
+      421 gactgtgacc actgaagtgg catttggcct ggtatgcgcc acatgtgagc agattgctga
+      481 ttctcagcat cggtctcaca ggcagatggt gacaacaacc aacccactga tcagacatga
+      541 gaacagaatg gtgctagcca gcactacagc taaagccatg gagcagatgg cagggtcaag
+      601 tgagcaggca gcagaggcca tggaagttgc tagtcaggct agacagatgg tgcaggcaat
+      661 gaggaccatt gggactcatc ctagctccag tgctggtcta aaagatgatc ttcttgaaaa
+      721 tttgcaggcc taccagaaac ggatgggagt gcaaatgcag cgattcaagt gatcctctcg
+      781 ttattgccgc aagtatcatt gggatcttgc acttgatatt gtggattctt gatcgtcttt
+      841 tcttcaaatg tatttatcgt cgcattaaat acggtttgaa aagagggcct tctacggaag
+      901 gagtgcctga gtctatgagg gaagaatatc ggcaggaaca gcagagtgct gtggatgttg
+      961 acgatggtca ttttgtcaac atagagctgg agtaaaaaac ta
+//
+

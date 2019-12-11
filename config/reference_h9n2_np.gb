@@ -1,0 +1,84 @@
+LOCUS       CY087827                1540 bp    cRNA    linear   VRL 24-MAR-2011
+DEFINITION  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2)) nucleocapsid
+            protein (NP) gene, complete cds.
+ACCESSION   CY087827
+VERSION     CY087827.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+  ORGANISM  Influenza A virus (A/turkey/Wisconsin/1/1966(H9N2))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 1540)
+  AUTHORS   Spiro,D., Halpin,R., Boyne,A., Bera,J., Ghedin,E., Hostetler,J.,
+            Fedorova,N., Kim,M., Zaborsky,J., Overton,L., Djuric,K.,
+            Sarmiento,M., Sitz,J., Katzel,D., Brown,E.G., Keleta,L., Bao,Y.,
+            Sanders,R., Dernovoy,D., Kiryutin,B., Lipman,D.J. and Tatusova,T.
+  TITLE     The NIAID Influenza Genome Sequencing Project
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1540)
+  CONSRTM   The NIAID Influenza Genome Sequencing Consortium
+  TITLE     Direct Submission
+  JOURNAL   Submitted (24-MAR-2011) on behalf of JCVI/University of
+            Ottawa/NCBI, National Center for Biotechnology Information, NIH,
+            Bethesda, MD 20894, USA
+COMMENT     This work was supported by the National Institute of Allergy and
+            Infectious Diseases (NIAID), Genome Sequencing Centers for
+            Infectious Diseases (GSCID) program.
+FEATURES             Location/Qualifiers
+     source          1..1540
+                     /organism="Influenza A virus
+                     (A/turkey/Wisconsin/1/1966(H9N2))"
+                     /mol_type="viral cRNA"
+                     /strain="A/turkey/Wisconsin/1/1966"
+                     /serotype="H9N2"
+                     /host="turkey"
+                     /db_xref="taxon:385620"
+                     /segment="5"
+                     /lab_host="E 2 passage(s)"
+                     /country="USA: Wisconsin"
+                     /collection_date="11-Jun-1966"
+     gene            34..1530
+                     /gene="NP"
+     CDS             34..1530
+                     /gene="NP"
+                     /codon_start=1
+                     /product="nucleocapsid protein"
+                     /protein_id="AEA04412.1"
+                     /translation="MASQGTKRSYEQMETGGERQNATEIRASVGRMVGGIGRFYIQMC
+                     TELKLSDYEGRLIQNSITIERMVLSAFDERRNKYLEEHPSAGKDPKKTGGPIYRRRDG
+                     KWIRELILYDKEEIRRIWRQANNGEDATAGLTHLMIWHSNLNDATYQRTRALVRTGMD
+                     PRMCSLMQGSTLPRRSGAAGAAVKGVGTMVMELIRMIKRGINDRNFWRGENGRRTRIA
+                     YERMCNILKGKFQTAAQRAMMDQVRESRNPGNAEIEDLIFLARSALILRGSVAHKSCL
+                     PACVYGLAVASGYDFEREGYSLVGIDPFRLLQNSQVFSLIRPNENPAHKSQLVWMACH
+                     SAAFEDLRVSSFIRGTRVVPRGQLSTRGVQIASNENMETMDSSTLELRSRYWAIRTRS
+                     GGNTNQQRASAGQISVQPTFSVQRNLPFERATIMAAFTGNTEGRTSDMRTEIIRMMEN
+                     ARPEDVSFQGRGVFELSDEKATNPIVPSFDMSNEGSYFFGDNAEEYDN"
+ORIGIN      
+        1 gtagataatc actcactgag tgacatccac atcatggcgt ctcaaggcac caaacgatcc
+       61 tatgagcaga tggaaactgg tggggaacgc cagaatgcca cagaaatcag agcatctgtt
+      121 ggaagaatgg ttggtggaat cgggagattc tacatacaaa tgtgcactga gctcaaactc
+      181 agtgactatg aagggaggct gattcagaac agcatcacaa tagagagaat ggtcctctcg
+      241 gcatttgatg aaaggagaaa caaatacctg gaagagcatc ccagtgctgg gaaggaccct
+      301 aagaaaactg gaggtccaat ctacaggagg agagatggaa aatggataag agaactgatc
+      361 ctgtatgaca aagaggagat cagaaggatt tggcgccaag cgaataacgg agaagacgca
+      421 actgctggtc tcacccattt gatgatctgg cattccaatc tgaatgatgc cacttaccag
+      481 agaacaaggg ctcttgtgcg tactgggatg gacccccgga tgtgctctct gatgcaaggc
+      541 tcaactcttc caaggagatc tggagctgct ggagcagcag tgaaaggagt cgggacaatg
+      601 gtgatggaat tgattcgaat gataaaacga ggaatcaatg atcggaactt ctggaggggt
+      661 gaaaatggac ggaggacaag aattgcatat gaaagaatgt gcaacatact caaagggaaa
+      721 ttccaaacag cagcacaacg agcaatgatg gatcaagtgc gggaaagccg aaatcctggg
+      781 aatgcagaaa ttgaagacct catctttctt gcacgatctg ctctcattct gaggggatca
+      841 gtggctcata agtcttgcct gcctgcttgc gtatatggac ttgctgtggc cagcggatac
+      901 gactttgaga gggagggata ctctctagtt ggaatagacc ctttccgtct actccaaaac
+      961 agccaagtct tcagtcttat cagaccaaac gaaaatccag cacacaaaag ccagctggta
+     1021 tggatggcat gccactctgc agcatttgaa gatctgagag tatcaagctt catcagagga
+     1081 acaagagtgg tcccaagagg acaactatcc accagagggg ttcagattgc ttcaaatgaa
+     1141 aacatggaaa caatggactc cagtactctt gaattgagaa gcagatactg ggctataagg
+     1201 accagaagcg gagggaacac caatcagcag agagcatctg cagggcagat cagcgtacag
+     1261 cccacattct ctgtacagag aaatcttcca ttcgagagag caaccattat ggcggcattc
+     1321 acaggaaata ctgaaggcag aacttcagac atgagaactg aaatcataag aatgatggag
+     1381 aatgccaggc ctgaagatgt gtccttccag gggcggggag tcttcgagct ctcggacgaa
+     1441 aaggcaacga acccgatcgt gccttccttt gacatgagta acgagggatc ttatttcttc
+     1501 ggagacaatg cagaggagta tgacaattaa agaaaaatac
+//
+

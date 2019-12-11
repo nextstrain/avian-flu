@@ -1,0 +1,48 @@
+{
+  "title": "Real-time tracking of influenza A/H9N2 virus evolution",
+  "color_options": {
+    "gt": {
+      "menuItem": "genotype",
+      "legendTitle": "Genotype",
+      "type": "discrete",
+      "key": "genotype"
+    },
+    "num_date": {
+      "menuItem": "date",
+      "legendTitle": "Sampling date",
+      "type": "continuous",
+      "key": "num_date"
+    },
+    "country": {
+      "key":"country",
+      "legendTitle":"Country",
+      "menuItem":"country",
+      "type":"discrete"
+    },
+    "region": {
+    },
+    "host": {
+      "key":"host",
+      "legendTitle":"Host",
+      "menuItem":"host",
+      "type":"discrete"
+    }
+  },
+  "geo": [
+    "region",
+    "country"
+  ],
+  "defaults": {
+    "mapTriplicate": true,
+    "colorBy": "region"
+  },
+  "maintainer": [
+    "Louise Moncla",
+    "http://bedford.io/team/louise-moncla/"
+  ],
+  "filters": [
+    "host",
+    "region",
+    "country"
+  ]
+}

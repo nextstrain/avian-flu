@@ -5,8 +5,7 @@ path_to_fauna = '../fauna'
 
 rule all:
     input:
-        auspice_tree = expand("auspice/flu_avian_{subtype}_{segment}_tree.json", subtype=SUBTYPES, segment=SEGMENTS),
-        auspice_meta = expand("auspice/flu_avian_{subtype}_{segment}_meta.json", subtype=SUBTYPES, segment=SEGMENTS)
+        auspice_json = expand("auspice/flu_avian_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
 
 rule files:
     params:
@@ -44,7 +43,7 @@ rule download:
     output:
         sequences = "data/{subtype}_{segment}.fasta"
     params:
-        fasta_fields = "strain virus accession collection_date region country division location host submitting_lab"
+        fasta_fields = "strain virus accession collection_date region country division location host originating_lab submitting_lab"
     shell:
         """
         python3 {path_to_fauna}/vdb/download.py \
@@ -64,14 +63,16 @@ rule parse:
         sequences = "results/sequences_{subtype}_{segment}.fasta",
         metadata = "results/metadata_{subtype}_{segment}.tsv"
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location host authors"
+        fasta_fields =  "strain virus isolate_id date region country division location host originating_lab submitting_lab",
+        prettify_fields = "region country division location host originating_lab submitting_lab"
     shell:
         """
         augur parse \
             --sequences {input.sequences} \
             --output-sequences {output.sequences} \
             --output-metadata {output.metadata} \
-            --fields {params.fasta_fields}
+            --fields {params.fasta_fields} \
+            --prettify-fields {params.prettify_fields}
         """
 
 rule filter:
@@ -268,19 +269,17 @@ rule export:
         lat_longs = files.lat_longs,
         auspice_config = files.auspice_config
     output:
-        auspice_tree = "auspice/flu_avian_{subtype}_{segment}_tree.json",
-        auspice_meta = "auspice/flu_avian_{subtype}_{segment}_meta.json"
+        auspice_json = "auspice/flu_avian_{subtype}_{segment}.json"
     shell:
         """
-        augur export v1 \
+        augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts}\
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \
-            --output-tree {output.auspice_tree} \
-            --output-meta {output.auspice_meta}
+            --output {output.auspice_json}
         """
 
 rule clean:

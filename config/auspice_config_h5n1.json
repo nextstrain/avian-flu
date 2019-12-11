@@ -41,8 +41,8 @@
     "http://bedford.io/team/louise-moncla/"
   ],
   "filters": [
-    "host",   
-    "region",     
+    "host",
+    "region",
     "country"
   ]
 }

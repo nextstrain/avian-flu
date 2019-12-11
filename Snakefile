@@ -1,4 +1,4 @@
-SUBTYPES = ["h5n1", "h7n9"]
+SUBTYPES = ["h5n1", "h7n9", "h9n2"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
@@ -19,11 +19,11 @@ rule files:
 files = rules.files.params
 
 def group_by(w):
-    gb = {'h5n1': 'country year', 'h7n9': 'division year'}
+    gb = {'h5n1': 'country year', 'h7n9': 'division year', 'h9n2': 'country year'}
     return gb[w.subtype]
 
 def sequences_per_group(w):
-    spg = {'h5n1': '10', 'h7n9': '70'}
+    spg = {'h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
     return spg[w.subtype]
 
 def min_length(w):
@@ -32,11 +32,11 @@ def min_length(w):
     return(length)
 
 def min_date(w):
-    date = {'h5n1': '1996', 'h7n9': '2013'}
+    date = {'h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
     return date[w.subtype]
 
 def traits_columns(w):
-    traits = {'h5n1': 'region country', 'h7n9': 'country division'}
+    traits = {'h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
     return traits[w.subtype]
 
 rule download:
@@ -238,6 +238,23 @@ rule traits:
             --confidence
         """
 
+rule reconstruct_translations:
+    message: "Reconstructing translations for DMS data view"
+    input:
+        tree = rules.refine.output.tree,
+        node_data = "results/aa-muts_{subtype}_{segment}.json",
+    output:
+        aa_alignment = "results/aa-alignment_{subtype}_{segment}.fasta"
+    shell:
+        """
+        augur reconstruct-sequences \
+            --tree {input.tree} \
+            --mutations {input.node_data} \
+            --gene PB2 \
+            --output {output.aa_alignment} \
+            --internal-nodes
+        """
+
 rule export:
     message: "Exporting data files for for auspice"
     input:
@@ -258,7 +275,7 @@ rule export:
         augur export v1 \
             --tree {input.tree} \
             --metadata {input.metadata} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
+            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts}\
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \

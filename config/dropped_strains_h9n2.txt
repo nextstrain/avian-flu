@@ -1,0 +1,3 @@
+A/Senegal/243/2019   # doesn't align well, has lots of Ns, has way too many mutations
+A/chicken/Korea/162  # this has a lot of mutations in MP
+A/Bat/Egypt/381OP/2017  # this is annotated as an H9N2 on gisaid, but it is very divergent

@@ -1,4 +1,4 @@
-SUBTYPES = ["h5n1", "h7n9", "h9n2"]
+SUBTYPES = ["h5nx"] #,"h5n1", "h7n9", "h9n2"
 SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
@@ -17,12 +17,16 @@ rule files:
 
 files = rules.files.params
 
+def download_by(w):
+    db = {'h5nx': '', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
+    return(db[w.subtype])
+
 def group_by(w):
-    gb = {'h5n1': 'country year', 'h7n9': 'division year', 'h9n2': 'country year'}
+    gb = {'h5nx': 'subtype country year','h5n1': 'country year', 'h7n9': 'division year', 'h9n2': 'country year'}
     return gb[w.subtype]
 
 def sequences_per_group(w):
-    spg = {'h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
+    spg = {'h5nx':20,'h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
     return spg[w.subtype]
 
 def min_length(w):
@@ -31,11 +35,11 @@ def min_length(w):
     return(length)
 
 def min_date(w):
-    date = {'h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
+    date = {'h5nx':'1996','h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
     return date[w.subtype]
 
 def traits_columns(w):
-    traits = {'h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
+    traits = {'h5nx':'region country','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
     return traits[w.subtype]
 
 rule download:
@@ -43,14 +47,15 @@ rule download:
     output:
         sequences = "data/{subtype}_{segment}.fasta"
     params:
-        fasta_fields = "strain virus accession collection_date region country division location host originating_lab submitting_lab"
+        fasta_fields = "strain virus accession collection_date region country division location host subtype originating_lab submitting_lab",
+        download_by = download_by
     shell:
         """
         python3 {path_to_fauna}/vdb/download.py \
-            --database vdb \
+            --database test_vdb \
             --virus avian_flu \
             --fasta_fields {params.fasta_fields} \
-            --select  subtype:{wildcards.subtype} locus:{wildcards.segment} \
+            --select  {params.download_by} locus:{wildcards.segment} \
             --path data \
             --fstem {wildcards.subtype}_{wildcards.segment}
         """
@@ -63,7 +68,7 @@ rule parse:
         sequences = "results/sequences_{subtype}_{segment}.fasta",
         metadata = "results/metadata_{subtype}_{segment}.tsv"
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location host originating_lab submitting_lab",
+        fasta_fields =  "strain virus isolate_id date region country division location host subtype originating_lab submitting_lab",
         prettify_fields = "region country division location host originating_lab submitting_lab"
     shell:
         """

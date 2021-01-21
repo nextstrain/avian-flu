@@ -31,13 +31,13 @@
       "type": "categorical"
     },
     {
-      "key": "submitting_lab",
-      "title": "Submitting lab",
+      "key": "h5_label_clade",
+      "title": "H5 clade",
       "type": "categorical"
     },
     {
-      "key": "originating_lab",
-      "title": "Originating lab",
+      "key": "submitting_lab",
+      "title": "Submitting lab",
       "type": "categorical"
     }
   ],

@@ -36,8 +36,8 @@
       "type": "categorical"
     },
     {
-      "key": "submitting_lab",
-      "title": "Submitting lab",
+      "key": "h5_label_clade",
+      "title": "H5 clade",
       "type": "categorical"
     },
     {

@@ -1,5 +1,5 @@
-SUBTYPES = ["h5nx"] #,"h5n1", "h7n9", "h9n2"
-SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
+SUBTYPES = ["h5n1","h5nx","h7n9","h9n2"]
+SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
 
@@ -13,20 +13,25 @@ rule files:
         reference = "config/reference_{subtype}_{segment}.gb",
         colors = "config/colors_{subtype}.tsv",
         lat_longs = "config/lat_longs_{subtype}.tsv",
-        auspice_config = "config/auspice_config_{subtype}.json"
+        auspice_config = "config/auspice_config_{subtype}.json",
+        clades_file = "clade-labeling/{subtype}-clades.tsv"
 
 files = rules.files.params
 
 def download_by(w):
-    db = {'h5nx': '', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
+    db = {'h5nx': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
     return(db[w.subtype])
 
+def metadata_by_wildcards(w):
+    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
+    return(md[w.subtype])
+
 def group_by(w):
-    gb = {'h5nx': 'subtype country year','h5n1': 'country year', 'h7n9': 'division year', 'h9n2': 'country year'}
+    gb = {'h5nx': 'subtype country year','h5n1': 'region country year', 'h7n9': 'division year', 'h9n2': 'country year'}
     return gb[w.subtype]
 
 def sequences_per_group(w):
-    spg = {'h5nx':20,'h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
+    spg = {'h5nx': '5','h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
     return spg[w.subtype]
 
 def min_length(w):
@@ -39,7 +44,7 @@ def min_date(w):
     return date[w.subtype]
 
 def traits_columns(w):
-    traits = {'h5nx':'region country','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
+    traits = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
     return traits[w.subtype]
 
 rule download:
@@ -47,12 +52,12 @@ rule download:
     output:
         sequences = "data/{subtype}_{segment}.fasta"
     params:
-        fasta_fields = "strain virus accession collection_date region country division location host subtype originating_lab submitting_lab",
+        fasta_fields = "strain virus accession collection_date region country division location host subtype originating_lab submitting_lab h5_clade",
         download_by = download_by
     shell:
         """
         python3 {path_to_fauna}/vdb/download.py \
-            --database test_vdb \
+            --database vdb \
             --virus avian_flu \
             --fasta_fields {params.fasta_fields} \
             --select  {params.download_by} locus:{wildcards.segment} \
@@ -68,7 +73,7 @@ rule parse:
         sequences = "results/sequences_{subtype}_{segment}.fasta",
         metadata = "results/metadata_{subtype}_{segment}.tsv"
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location host subtype originating_lab submitting_lab",
+        fasta_fields =  "strain virus isolate_id date region country division location host subtype originating_lab submitting_lab h5_clade",
         prettify_fields = "region country division location host originating_lab submitting_lab"
     shell:
         """
@@ -78,6 +83,21 @@ rule parse:
             --output-metadata {output.metadata} \
             --fields {params.fasta_fields} \
             --prettify-fields {params.prettify_fields}
+        """
+
+rule add_h5_clade:
+    message: "Adding in a column for h5 clade numbering"
+    input:
+        metadata = rules.parse.output.metadata,
+        clades_file = files.clades_file
+    output:
+        metadata= "results/metadata-with-clade_{subtype}_{segment}.tsv"
+    shell:
+        """
+        python clade-labeling/add-clades.py \
+            --metadata {input.metadata} \
+            --output {output.metadata} \
+            --clades {input.clades_file}
         """
 
 rule filter:
@@ -91,7 +111,7 @@ rule filter:
         """
     input:
         sequences = rules.parse.output.sequences,
-        metadata = rules.parse.output.metadata,
+        metadata = metadata_by_wildcards,
         exclude = files.dropped_strains
     output:
         sequences = "results/filtered_{subtype}_{segment}.fasta"
@@ -265,7 +285,7 @@ rule export:
     message: "Exporting data files for for auspice"
     input:
         tree = rules.refine.output.tree,
-        metadata = rules.parse.output.metadata,
+        metadata = metadata_by_wildcards,
         branch_lengths = rules.refine.output.node_data,
         traits = rules.traits.output.node_data,
         nt_muts = rules.ancestral.output.node_data,

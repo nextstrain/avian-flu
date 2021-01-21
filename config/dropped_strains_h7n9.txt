@@ -48,7 +48,7 @@ A/Environment/Fujian/4084 # non-HA segments highly divergent
 A/Environment/Fujian/4363 # non-HA segments highly divergent
 A/Environment/Fujian/4079 # non-HA segments highly divergent
 A/teal/Egypt/MB-D-621C/2016 # not part of epi clade
-
+A/Shenzhen/1/2015   # very divergent
 A/Duck/Sichuan/408 # the M gene looks divergent, and on gisaid this is annotated as "mixed", which makes me think it is potentially a coinfection
 A/Duck/Jiangxi/216  #also divergent and marked as "mixed" on gisaid
 A/duck/Japan/AQHE2952/2017	# very divergent
@@ -56,3 +56,4 @@ A/environment/Fujian/SD213/2017   # very divergent
 A/duck/Fujian/SD208/2017  # very divergent
 A/duck/Fujian/SD001/2018  # divergent
 A/environment/Fujian/S10058/2017   # divergent
+A/Environment/InnerMongolia/23278/2019

@@ -41,6 +41,11 @@
       "type": "categorical"
     },
     {
+      "key": "submitting_lab",
+      "title": "Submitting lab",
+      "type": "categorical"
+    },
+    {
       "key": "originating_lab",
       "title": "Originating lab",
       "type": "categorical"

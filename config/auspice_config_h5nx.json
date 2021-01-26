@@ -52,13 +52,14 @@
   ],
   "display_defaults": {
     "map_triplicate": true,
-    "color_by": "region"
+    "color_by": "subtype"
   },
   "filters": [
     "host",
     "region",
     "country",
     "submitting_lab",
-    "subtype"
+    "subtype",
+    "h5_label_clade"
   ]
 }

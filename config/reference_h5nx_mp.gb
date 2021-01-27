@@ -1,0 +1,78 @@
+LOCUS       AF144306                1027 bp    cRNA    linear   VRL 10-JUL-2007
+DEFINITION  Influenza A virus (A/Goose/Guangdong/1/96(H5N1)) matrix proteins M1
+            and M2 (M) gene, alternatively spliced products, complete cds.
+ACCESSION   AF144306
+VERSION     AF144306.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+  ORGANISM  Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 1027)
+  AUTHORS   Xu,X., Subbarao, Cox,N.J. and Guo,Y.
+  TITLE     Genetic characterization of the pathogenic influenza
+            A/Goose/Guangdong/1/96 (H5N1) virus: similarity of its
+            hemagglutinin gene to those of H5N1 viruses from the 1997 outbreaks
+            in Hong Kong
+  JOURNAL   Virology 261 (1), 15-19 (1999)
+   PUBMED   10484749
+REFERENCE   2  (bases 1 to 1027)
+  CONSRTM   World Health Organization Global Influenza Program Surveillance
+            Network
+  TITLE     Evolution of H5N1 avian influenza viruses in Asia
+  JOURNAL   Emerging Infect. Dis. 11 (10), 1515-1521 (2005)
+   PUBMED   16318689
+REFERENCE   3  (bases 1 to 1027)
+  AUTHORS   Xu,X., Subbarao,K., Cox,N.J. and Guo,Y.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (20-APR-1999) Influenza Branch, Center for Diseases
+            Control and Prevention, 1600 Clifton Road, Atlanta, GA 30333, USA
+FEATURES             Location/Qualifiers
+     source          1..1027
+                     /organism="Influenza A virus
+                     (A/goose/Guangdong/1/1996(H5N1))"
+                     /mol_type="viral cRNA"
+                     /strain="A/Goose/Guangdong/1/96(H5N1)"
+                     /db_xref="taxon:93838"
+     gene            26..1007
+                     /gene="M"
+     CDS             join(26..51,740..1007)
+                     /gene="M2"
+                     /note="M2"
+                     /codon_start=1
+                     /product="matrix protein 2"
+                     /protein_id="AAD51929.1"
+                     /translation="MSLLTEVETPTKNEWECKCSDSSDPLVVAASIIGILHLILWILD
+                     RLFFKCIYRRLKYGLKRGPSTEGVPESMREEYRQEQQSAVDVDDGHFVNIELE"
+     CDS             26..784
+                     /gene="M1"
+                     /note="M1"
+                     /codon_start=1
+                     /product="matrix protein 1"
+                     /protein_id="AAD51928.1"
+                     /translation="MSLLTEVETYVLSIVPSGPLKAEIAQRLEDVFAGKNTDLEALME
+                     WLKTRPILSPLTKGILGFVFTLTVPSERGLQRRRFVQNALNGNGDPNNMDRAVKLYKK
+                     LKREITFHGAKEVALSYSTGALASCMGLIYNRMGTVTTEVAFGLVCATCEQIADSQHR
+                     SHRQMATTTNPLIRHENRMVLASTTAKAMEQMAGSSEQAAEAMEVASQARQMVQAMRT
+                     IGTHPSSSAGLKDNLLENLQAYQKRMGVQMQRFK"
+ORIGIN      
+        1 agcaaaagca ggtagatatt gaaaaatgag tcttctaacc gaggtcgaaa cgtacgttct
+       61 ctctatcgtc ccgtcaggcc ccctcaaagc cgagatcgcg cagagacttg aggatgtctt
+      121 tgcaggaaag aacaccgatc tcgaggctct catggaatgg ctaaagacaa gaccaatcct
+      181 gtcacctctg actaaaggga ttttaggatt tgtgttcacg ctcaccgtgc ccagtgagcg
+      241 aggactgcag cgtagacgct ttgtccagaa tgccttaaat ggaaatggag atccaaacaa
+      301 tatggatagg gcagttaagc tatacaagaa gctgaaaaga gaaataacat tccatggggc
+      361 taaggaggtc gcactcagct actcaaccgg tgcacttgcc agttgtatgg gtctcatata
+      421 caacaggatg ggaacggtga ccacagaagt ggcttttggc ctagtgtgtg ccacttgtga
+      481 gcagattgca gattcacagc atcggtctca cagacagatg gcaactacca ccaacccact
+      541 aatcaggcat gagaacagaa tggtgctggc cagcactaca gctaaggcta tggagcagat
+      601 ggctggatcg agtgagcagg cagcggaagc catggaggtt gctagtcagg ctaggcagat
+      661 ggtgcaggca atgaggacaa ttgggactca tcctagctcc agtgccggtc tgaaagataa
+      721 tcttcttgaa aatttgcagg cctaccaaaa acgaatggga gtgcaaatgc agcgattcaa
+      781 gtgatcctct tgttgttgcc gcaagtatca ttgggatact gcacttgata ttgtggattc
+      841 ttgatcgtct tttcttcaaa tgcatttatc gtcgccttaa atacggtttg aaaagagggc
+      901 cttctacgga aggggtacct gagtctatga gggaagagta tcggcaggaa cagcagagtg
+      961 ctgtggatgt tgacgatggt cattttgtca acatagagct ggagtaaaaa actaccttgt
+     1021 ttctact
+//
+

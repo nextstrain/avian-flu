@@ -1,3 +1,12 @@
+subtype	h5n1	#4274CE
+subtype	h5n2	#E39B39
+subtype	h5n3	#4042C7
+subtype	h5n4	#E56C2F
+subtype	h5n5	#88BB6C
+subtype	h5n6	#CEB541
+subtype	h5n7	#ADBD51
+subtype	h5n8	#69B091
+subtype	h5n9	#DC2F24
 host	avian	#4066CF
 host	environment	#77B67F
 host	nonhuman mammal	#CEB541
@@ -54,3 +63,4 @@ h5_label_clade	8-9-like	#E04D29
 h5_label_clade	9	#DF4127
 h5_label_clade	EA-nonGsGD	#DD3425
 h5_label_clade	Am-nonGsGD	#891916
+

@@ -1,5 +1,5 @@
 {
-  "title": "Real-time tracking of influenza A/H5N1 virus evolution",
+  "title": "Real-time tracking of influenza A/H5NX virus evolution",
   "maintainers": [
     {"name": "Louise Moncla", "url": "http://bedford.io/team/louise-moncla/"}
   ],
@@ -31,6 +31,11 @@
       "type": "categorical"
     },
     {
+      "key": "subtype",
+      "title": "Subtype",
+      "type": "categorical"
+    },
+    {
       "key": "h5_label_clade",
       "title": "H5 clade",
       "type": "categorical"
@@ -38,6 +43,11 @@
     {
       "key": "submitting_lab",
       "title": "Submitting lab",
+      "type": "categorical"
+    },
+    {
+      "key": "originating_lab",
+      "title": "Originating lab",
       "type": "categorical"
     }
   ],
@@ -47,12 +57,14 @@
   ],
   "display_defaults": {
     "map_triplicate": true,
-    "color_by": "region"
+    "color_by": "subtype"
   },
   "filters": [
     "host",
     "region",
     "country",
-    "submitting_lab"
+    "submitting_lab",
+    "subtype",
+    "h5_label_clade"
   ]
 }

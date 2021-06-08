@@ -55,5 +55,5 @@ A/duck/Japan/AQHE2952/2017	# very divergent
 A/environment/Fujian/SD213/2017   # very divergent
 A/duck/Fujian/SD208/2017  # very divergent
 A/duck/Fujian/SD001/2018  # divergent
-A/environment/Fujian/S10058/2017   # divergent
+A/environment/Fujian/S10058/2017   # divergent strain
 A/Environment/InnerMongolia/23278/2019

@@ -19,19 +19,13 @@ parser.add_argument('--clades_file', type=str, help='a tab-delimited text file c
 parser.add_argument('--metadata_file', type=str, help='metadata file output from augur parse')
 parser.add_argument('--sequences', type=str, help='path to fasta file from rule download')
 parser.add_argument('--subtype', type=str, help='avian flu subtype, either h5nx or h5n1')
-# parser.add_argument('--new_clades_file', type=str, help='path to the clades file for the newly annotated strainns')
-# parser.add_argument('--label_output', type=str, help='an arbitrary value to pass to LABEL so that it can make an output folder')
 
 
 args = parser.parse_args()
-#subtype = args.subtype
 metadata_file = args.metadata_file
 clades_file = args.clades_file
 sequences = args.sequences
 subtype = args.subtype
-# new_clades_file = args.new_clades_file
-# label_output = args.label_output
-
 
 def find_new_strains(clades_file, new_strains):
     old_strains = pd.read_csv(clades_file, sep="\t")['name']

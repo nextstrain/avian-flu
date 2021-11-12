@@ -1,4 +1,4 @@
-SUBTYPES = ["h5n1","h5nx","h7n9","h9n2"]
+SUBTYPES = ["h5nx","h5n1","h9n2","h7n9"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'

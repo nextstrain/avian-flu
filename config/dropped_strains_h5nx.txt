@@ -15,3 +15,5 @@ A/laughinggull/DelawareBay/486/2018
 A/goose/Fujian/1123FZHX0009O/2017
 A/duck/EasternChina/S0131/2014
 A/duck/China/E26/2012
+A/chicken/Zhejiang/217/2016
+A/duck/Hunan/1207YYGK111P/2013

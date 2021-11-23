@@ -36,6 +36,16 @@
       "type": "categorical"
     },
     {
+      "key": "furin_cleavage_motif",
+      "title": "furin cleavage motif",
+      "type": "categorical"
+    },
+    {
+      "key": "cleavage_site_sequence",
+      "title": "cleavage site sequence",
+      "type": "categorical"
+    },
+    {
       "key": "submitting_lab",
       "title": "Submitting lab",
       "type": "categorical"

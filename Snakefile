@@ -154,10 +154,10 @@ rule align:
             --sequences {input.sequences} \
             --reference-sequence {input.reference} \
             --output {output.alignment} \
-            --fill-gaps \
             --remove-reference \
             --nthreads 1
         """
+
 
 rule tree:
     message: "Building tree"
@@ -225,7 +225,8 @@ rule ancestral:
             --tree {input.tree} \
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
-            --inference {params.inference}
+            --inference {params.inference}\
+            --keep-ambiguous
         """
 
 rule translate:
@@ -264,21 +265,19 @@ rule traits:
             --confidence
         """
 
-rule reconstruct_translations:
-    message: "Reconstructing translations for DMS data view"
+rule cleavage_site:
+    message: "determining sequences that harbor furin cleavage sites"
     input:
-        tree = rules.refine.output.tree,
-        node_data = "results/aa-muts_{subtype}_{segment}.json",
+        alignment = "results/aligned_{subtype}_ha.fasta"
     output:
-        aa_alignment = "results/aa-alignment_{subtype}_{segment}.fasta"
+        cleavage_site_annotations = "results/cleavage-site_{subtype}_ha.json",
+        cleavage_site_sequences = "results/cleavage-site-sequences_{subtype}_ha.json"
     shell:
         """
-        augur reconstruct-sequences \
-            --tree {input.tree} \
-            --mutations {input.node_data} \
-            --gene PB2 \
-            --output {output.aa_alignment} \
-            --internal-nodes
+        python scripts/annotate-ha-cleavage-site.py \
+            --alignment {input.alignment} \
+            --furin_site_motif {output.cleavage_site_annotations} \
+            --cleavage_site_sequence {output.cleavage_site_sequences}
         """
 
 rule export:
@@ -290,6 +289,8 @@ rule export:
         traits = rules.traits.output.node_data,
         nt_muts = rules.ancestral.output.node_data,
         aa_muts = rules.translate.output.node_data,
+        fcs = rules.cleavage_site.output.cleavage_site_annotations,
+        cleavage_site_sequences = rules.cleavage_site.output.cleavage_site_sequences,
         colors = files.colors,
         lat_longs = files.lat_longs,
         auspice_config = files.auspice_config
@@ -300,7 +301,7 @@ rule export:
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts}\
+            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} {input.fcs} {input.cleavage_site_sequences}\
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \

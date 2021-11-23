@@ -12,7 +12,7 @@ All 32 builds (4 subtypes x 8 segments) can be build by running `snakemake`. For
 
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
 
-# Features unique to avian flu builds
+## Features unique to avian flu builds
 
 ### cleavage site annotations 
 Influenza virus HA is translated as a single peptide (HA0) that is cleaved to form the mature, functional form (HA1 and HA2). In all human strains and many avian strains, the cleavage site is composed of a single, basic amino acid residue. However, some avian influenza subtypes, particularly H5s, have acquired additional basic residues immediately preceding the HA cleavage site. In some cases, this results in addition of a furin cleavage motif, allowing HA to be cleaved by furin, which is ubiquitously expressed, and allows for viral replication across a range of tissues. The addition of this "polybasic cleavage site" is one of the prime determinants of avian influenza virulence. In these builds, we have annotated whether strains contain a furin cleavage motif, defined here as the sequence `R-X-K/R-R` immediately preceding the start of HA2, where `X` can be any amino acid. We have also added a color by for the cleavage site sequence, which we define here as the 4 bases preceding HA2. 
@@ -32,7 +32,7 @@ To string these together and update the `clades.tsv` file for new sequences and 
 
 `snakemake -s -p Snakefile.clades --cores 1 && snakemake -p --cores 1`
 
-# To make your own, custom build
+## To make your own, custom build
 You are welcome to clone this repo and use it as a starting point for running your own, local builds if you'd like. The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. This build is slightly more complicated than other builds, and has a few custom functions in it to accommodate all the features on [nextstrain.org](https://nextstrain.org/flu/avian), and makes use of wildcards for both subtypes and gene segments. I originally used the [Lassa virus build](https://github.com/nextstrain/lassa) as a template for this one, because lassa also has a segmented genome. So if you'd like a simpler example, I would recommend looking through that build, then building up in complexity to the wildcard structure here. If you'd like to adapt the pipeline here to your own data, you would need to make a few changes and additions:
 
 #### 1. fauna / RethinkDB credentials

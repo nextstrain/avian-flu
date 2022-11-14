@@ -17,3 +17,6 @@ A/duck/EasternChina/S0131/2014
 A/duck/China/E26/2012
 A/chicken/Zhejiang/217/2016
 A/duck/Hunan/1207YYGK111P/2013
+A/chicken/Dakahlia/110/2007 # divergent
+A/chicken/Pessel/BPPVRII/2007 # divergent
+A/duck/China/E26/2012 # divergent

@@ -83,12 +83,15 @@ separate_new_strains(new_strains, sequences, new_strains_fasta)
 
 
 """run label and reformat the output"""
-os.system('../flu-amd/LABEL -D {new_strains_fasta} {label_output} H5v2015'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
+print("\nrunning LABEL to assign clades to", len(new_strains), "new strains of", subtype)
+os.system('flu-amd/LABEL -D {new_strains_fasta} {label_output} H5v2015'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
 os.system('python clade-labeling/check-LABEL-annotations.py --label_output {label_output}_final.txt --output {new_clades_file}'.format(new_clades_file=new_clades_file, label_output=label_output))
 
 
 """append the new strains and clades to the master clades file"""
 append_new_clades(new_clades_file, clades_file)
 
-"""remove intermediate files"""
+"""remove intermediate files. You must also remove the LABEL folder otherwise it will throw an error next time about the
+project being in use"""
 os.system('rm {label_output}_final.txt {label_output}.zip {new_strains_fasta} {new_clades_file}'.format(new_strains_fasta=new_strains_fasta, label_output=label_output, new_clades_file=new_clades_file))
+os.system('rm -r flu-amd/LABEL_RES/test_data/{label_output}'.format(label_output=label_output))

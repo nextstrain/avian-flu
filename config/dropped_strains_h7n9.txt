@@ -58,3 +58,6 @@ A/duck/Fujian/SD001/2018  # divergent
 A/environment/Fujian/S10058/2017   # divergent strain
 A/Environment/InnerMongolia/23278/2019
 A/environment/Kagoshima/KUH4/2018
+A/Environment/InnerMongolia/23285/2019  # divergent
+A/Camel/Neimenggu/XL/2020	# divergent
+A/environment/Shenzhen/4/2013	# divergent

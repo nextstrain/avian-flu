@@ -13,27 +13,61 @@ These builds are small and based completely off data from Genbank, allowing us t
 
 
 ## To make your own, custom build
-The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. Once you have those tools installed, do the following: 
+The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. There are multiple ways to install and run Nextstrain. Assuming you have successfully installed the nextstrain CLI and runtime environmental via docker or conda, do the following: 
 
 1. clone the `avian-flu` repo: 
 
 `git clone https://github.com/nextstrain/avian-flu.git`
 
-2. Navigate to the quickstart: 
+2. Navigate to the avian-flu directory: 
+
+`cd avian-flu`
+
+3. Open the `Snakefile` in a text editor, and read through the format and comments. 
+
+4. Test that the build works with the example data. Perform a dry run to check that the Snakefile will run properly:
+
+`nextstrain build quickstart-build/ --dry-run`
+
+The output should list all the steps that will be performed and the last bit printed out should look like this: 
+
+
+5. Run the build: 
+
+`nextstrain build quickstart-build/`
+
+6. Visualize the output:
+
+`nextstrain view quickstart-build/auspice`
+
+
+
+#### Ambient runtime environment instructions
+If you installed the Nextstrain runtime environment using the ambient conda environment, do the following: 
+
+1. clone the `avian-flu` repo: 
+
+`git clone https://github.com/nextstrain/avian-flu.git`
+
+2. Navigate to the quickstart directory: 
 
 `cd avian-flu/quickstart-build/`
 
 3. Open the `Snakefile` in a text editor, and read through the format and comments. 
 
-4. Test that the build works with the example data:
+4. Test that the build works with the example data. Perform a dry run to check that the Snakefile will run properly:
 
 `conda activate nextstrain`
 
+`snakemake -p --cores 1 --preview`
+
+5. Run the build: 
+
 `snakemake -p --cores 1`
 
-5. Replace the example data with your own data, and rerun: 
-
-`snakemake -p --cores 1`
+6. Visualize the output:
+ 
+`nextstrain view auspice`
 
 
 #### A note on metadata customization

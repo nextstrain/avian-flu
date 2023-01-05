@@ -30,7 +30,7 @@ The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fa
 `nextstrain build quickstart-build/ --dry-run`
 
 The output should list all the steps that will be performed and the last bit printed out should look like this: 
-
+![Alt text](https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/check-setup-output.png)
 
 5. Run the build: 
 

@@ -31,7 +31,7 @@ The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fa
 
 The output should list all the steps that will be performed and the last bit printed out should look like this:
  
-<img src="https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/check-setup-output.png" alt="drawing" width="400"/>
+<img src="https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/check-setup-output.png" alt="drawing" width="600"/>
 
 5. Run the build: 
 

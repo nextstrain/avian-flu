@@ -41,7 +41,7 @@ The output should list all the steps that will be performed and the last bit pri
 
 `nextstrain view quickstart-build/auspice`
 
-<img src="https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/build-results.png" alt="drawing" width="1000"/>
+<img src="https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/build-results.png" alt="drawing" width="700"/>
 
 
 #### Ambient runtime environment instructions

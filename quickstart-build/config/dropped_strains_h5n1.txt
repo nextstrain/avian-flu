@@ -1,0 +1,7 @@
+A/chicken/Scotland/1959
+A/mallard/Poland/141/2015 # overly divergent
+A/Chicken/Egypt/AR528/2017
+A/mink/EasternChina/0712/2018 # divergent
+A/chicken/Dakahlia/110/2007 # divergent
+A/chicken/Pessel/BPPVRII/2007 # divergent
+A/duck/China/E26/2012 # divergent

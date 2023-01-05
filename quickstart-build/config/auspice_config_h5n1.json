@@ -1,0 +1,68 @@
+{
+  "title": "Real-time tracking of influenza A/H5N1 virus evolution",
+  "maintainers": [
+    {"name": "Louise Moncla", "url": "http://bedford.io/team/louise-moncla/"}
+  ],
+  "build_url": "https://github.com/nextstrain/avian-flu",
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Genotype",
+      "type": "categorical"
+    },
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
+    },
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
+    },
+    {
+      "key": "region",
+      "title": "Region",
+      "type": "categorical"
+    },
+    {
+      "key": "host",
+      "title": "Host",
+      "type": "categorical"
+    },
+    {
+      "key": "h5_label_clade",
+      "title": "H5 clade",
+      "type": "categorical"
+    },
+    {
+      "key": "furin_cleavage_motif",
+      "title": "furin cleavage motif",
+      "type": "categorical"
+    },
+    {
+      "key": "cleavage_site_sequence",
+      "title": "cleavage site sequence",
+      "type": "categorical"
+    },
+    {
+      "key": "submitting_lab",
+      "title": "Submitting lab",
+      "type": "categorical"
+    }
+  ],
+  "geo_resolutions": [
+    "region",
+    "country"
+  ],
+  "display_defaults": {
+    "map_triplicate": true,
+    "color_by": "region"
+  },
+  "filters": [
+    "host",
+    "region",
+    "country",
+    "submitting_lab"
+  ]
+}

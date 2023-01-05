@@ -29,8 +29,9 @@ The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fa
 
 `nextstrain build quickstart-build/ --dry-run`
 
-The output should list all the steps that will be performed and the last bit printed out should look like this: 
-<img src="https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/check-setup-output.png" alt="drawing" width="100"/>
+The output should list all the steps that will be performed and the last bit printed out should look like this:
+ 
+<img src="https://github.com/nextstrain/avian-flu/blob/master/quickstart-build/images/check-setup-output.png" alt="drawing" width="400"/>
 
 5. Run the build: 
 

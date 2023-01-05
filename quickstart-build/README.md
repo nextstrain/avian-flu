@@ -15,16 +15,19 @@ These builds are small and based completely off data from Genbank, allowing us t
 ## To make your own, custom build
 The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. Once you have those tools installed, do the following: 
 
-1. clone this repo: 
+1. clone the `avian-flu` repo: 
 
-`git clone https://github.com/nextstrain/avian-flu/quickstart-build.git`
+`git clone https://github.com/nextstrain/avian-flu.git`
 
-2. Open the `Snakefile` in a text editor, and read through the format and comments. 
+2. Navigate to the quickstart: 
+
+`cd avian-flu/quickstart-build/`
+
+3. Open the `Snakefile` in a text editor, and read through the format and comments. 
 
 3. Test that the build works with the example data:
 
 `conda activate nextstrain`
-`cd avian-flu/quickstart-build/`
 `snakemake -p --cores 1`
 
 4. Replace the example data with your own data, and rerun: 

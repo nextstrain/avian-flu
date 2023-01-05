@@ -25,12 +25,13 @@ The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fa
 
 3. Open the `Snakefile` in a text editor, and read through the format and comments. 
 
-3. Test that the build works with the example data:
+4. Test that the build works with the example data:
 
 `conda activate nextstrain`
+
 `snakemake -p --cores 1`
 
-4. Replace the example data with your own data, and rerun: 
+5. Replace the example data with your own data, and rerun: 
 
 `snakemake -p --cores 1`
 

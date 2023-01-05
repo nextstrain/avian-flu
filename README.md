@@ -12,6 +12,9 @@ All 32 builds (4 subtypes x 8 segments) can be build by running `snakemake`. For
 
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
 
+# Creating a custom build 
+The easiest way to generate your own, custom avian-flu build is to use the  quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here]().
+
 ## Features unique to avian flu builds
 
 ### cleavage site annotations 
@@ -32,8 +35,8 @@ To string these together and update the `clades.tsv` file for new sequences and 
 
 `snakemake -s Snakefile.clades -p --cores 1 && snakemake -p --cores 1`
 
-## To make your own, custom build
-You are welcome to clone this repo and use it as a starting point for running your own, local builds if you'd like. The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. This build is slightly more complicated than other builds, and has a few custom functions in it to accommodate all the features on [nextstrain.org](https://nextstrain.org/flu/avian), and makes use of wildcards for both subtypes and gene segments. I originally used the [Lassa virus build](https://github.com/nextstrain/lassa) as a template for this one, because lassa also has a segmented genome. So if you'd like a simpler example, I would recommend looking through that build, then building up in complexity to the wildcard structure here. If you'd like to adapt the pipeline here to your own data, you would need to make a few changes and additions:
+## To modify this build to work with your own data
+Although the simplest way to generate a custom build is via the quickstart build, you are welcome to clone this repo and use it as a starting point for running your own, local builds if you'd like. The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. This build is slightly more complicated than other builds, and has a few custom functions in it to accommodate all the features on [nextstrain.org](https://nextstrain.org/flu/avian), and makes use of wildcards for both subtypes and gene segments. If you'd like to adapt this full, non-simplified pipeline here to your own data (which you may want to do if you also want to annotate clades), you would need to make a few changes and additions:
 
 #### 1. fauna / RethinkDB credentials
 This build starts by pulling sequences from our live [fauna](https://github.com/nextstrain/fauna) database (a RethinkDB

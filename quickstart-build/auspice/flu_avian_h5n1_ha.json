@@ -1,0 +1,3146 @@
+{
+  "version": "v2",
+  "meta": {
+    "title": "Real-time tracking of influenza A/H5N1 virus evolution",
+    "updated": "2023-01-12",
+    "maintainers": [
+      {
+        "name": "You!",
+        "url": ""
+      }
+    ],
+    "display_defaults": {
+      "map_triplicate": true,
+      "color_by": "region"
+    },
+    "genome_annotations": {
+      "nuc": {
+        "end": 1760,
+        "start": 1,
+        "strand": "+",
+        "seqid": "config/reference_h5n1_ha.gb",
+        "type": "source"
+      },
+      "HA": {
+        "end": 1728,
+        "seqid": "config/reference_h5n1_ha.gb",
+        "start": 22,
+        "strand": "+",
+        "type": "CDS"
+      }
+    },
+    "colorings": [
+      {
+        "key": "gt",
+        "title": "Genotype",
+        "type": "categorical"
+      },
+      {
+        "key": "num_date",
+        "title": "Date",
+        "type": "continuous"
+      },
+      {
+        "key": "country",
+        "title": "Country",
+        "type": "categorical"
+      },
+      {
+        "key": "region",
+        "title": "Region",
+        "type": "categorical",
+        "scale": [
+          [
+            "China",
+            "#4042C7"
+          ],
+          [
+            "Southeast Asia",
+            "#4274CE"
+          ],
+          [
+            "South Asia",
+            "#5199B7"
+          ],
+          [
+            "Japan Korea",
+            "#69B091"
+          ],
+          [
+            "Africa",
+            "#CEB541"
+          ]
+        ]
+      },
+      {
+        "key": "host",
+        "title": "Host",
+        "type": "categorical",
+        "scale": [
+          [
+            "Avian",
+            "#4066CF"
+          ],
+          [
+            "Environment",
+            "#77B67F"
+          ],
+          [
+            "Human",
+            "#DC2F24"
+          ]
+        ]
+      },
+      {
+        "key": "furin_cleavage_motif",
+        "title": "furin cleavage motif",
+        "type": "categorical"
+      },
+      {
+        "key": "cleavage_site_sequence",
+        "title": "cleavage site sequence",
+        "type": "categorical"
+      },
+      {
+        "key": "cleavage_site_sequence",
+        "title": "cleavage site sequence",
+        "type": "categorical"
+      },
+      {
+        "key": "furin_cleavage_motif",
+        "title": "furin cleavage motif",
+        "type": "categorical"
+      }
+    ],
+    "filters": [
+      "host",
+      "region",
+      "country",
+      "submitting_lab"
+    ],
+    "geo_resolutions": [
+      {
+        "key": "region",
+        "demes": {
+          "Africa": {
+            "latitude": 4.070194,
+            "longitude": 21.824559
+          },
+          "South Asia": {
+            "latitude": 24.485438,
+            "longitude": 76.513158
+          },
+          "China": {
+            "latitude": 35.000074,
+            "longitude": 104.999927
+          },
+          "Southeast Asia": {
+            "latitude": 3.020567,
+            "longitude": 112.390683
+          },
+          "Japan Korea": {
+            "latitude": 35.845119,
+            "longitude": 136.736386
+          }
+        }
+      },
+      {
+        "key": "country",
+        "demes": {
+          "Thailand": {
+            "latitude": 14.8971921,
+            "longitude": 100.83273
+          },
+          "China": {
+            "latitude": 35.000074,
+            "longitude": 104.999927
+          },
+          "Japan": {
+            "latitude": 35.68536,
+            "longitude": 139.75309
+          },
+          "Laos": {
+            "latitude": 20.0171109,
+            "longitude": 103.378253
+          },
+          "Egypt": {
+            "latitude": 26.2540493,
+            "longitude": 29.2675469
+          },
+          "Bangladesh": {
+            "latitude": 24.4768783,
+            "longitude": 90.2932426
+          },
+          "Vietnam": {
+            "latitude": 16.16667,
+            "longitude": 107.83333
+          }
+        }
+      }
+    ],
+    "panels": [
+      "tree",
+      "map",
+      "entropy"
+    ]
+  },
+  "tree": {
+    "name": "NODE_0000016",
+    "node_attrs": {
+      "div": 0,
+      "num_date": {
+        "value": 2000.6483390128317,
+        "confidence": [
+          2000.002741847171,
+          2001.8325613557195
+        ]
+      },
+      "region": {
+        "value": "China",
+        "confidence": {
+          "Africa": 0.06086849466090837,
+          "China": 0.5211124098789425,
+          "Japan Korea": 0.02919716557182939,
+          "Southeast Asia": 0.3673292209668569
+        },
+        "entropy": 1.063614393955593
+      },
+      "country": {
+        "value": "China",
+        "confidence": {
+          "China": 0.40509196267379605,
+          "Egypt": 0.11730682159820505,
+          "Thailand": 0.27806793572716076,
+          "Vietnam": 0.07675804861406847
+        },
+        "entropy": 1.5620979455618955
+      }
+    },
+    "branch_attrs": {
+      "mutations": {}
+    },
+    "children": [
+      {
+        "name": "A/environment/Hunan/1_35/2007",
+        "node_attrs": {
+          "div": 0.040684841945563634,
+          "num_date": {
+            "value": 2007.2452054794521,
+            "confidence": [
+              2007.1712328767123,
+              2007.2452054794521
+            ]
+          },
+          "host": {
+            "value": "Environment"
+          },
+          "cleavage_site_sequence": {
+            "value": "RRKR"
+          },
+          "furin_cleavage_motif": {
+            "value": "present"
+          },
+          "region": {
+            "value": "China",
+            "confidence": {
+              "China": 1.0
+            },
+            "entropy": -1.000088900581841e-12
+          },
+          "country": {
+            "value": "China",
+            "confidence": {
+              "China": 1.0
+            },
+            "entropy": -1.000088900581841e-12
+          }
+        },
+        "branch_attrs": {
+          "mutations": {
+            "nuc": [
+              "G52A",
+              "A55G",
+              "A82G",
+              "C156T",
+              "A171G",
+              "G196A",
+              "T198C",
+              "G202A",
+              "G227A",
+              "C279T",
+              "A280C",
+              "C289T",
+              "A320G",
+              "A332G",
+              "C360T",
+              "C412A",
+              "T436C",
+              "C475T",
+              "A477C",
+              "C480T",
+              "A482T",
+              "G485A",
+              "A486G",
+              "T490C",
+              "G510A",
+              "T521C",
+              "C531T",
+              "A544C",
+              "A553G",
+              "G554T",
+              "G557A",
+              "A563C",
+              "T564C",
+              "A568G",
+              "G616A",
+              "C620A",
+              "C632T",
+              "A635T",
+              "C637A",
+              "A661G",
+              "G672A",
+              "A726G",
+              "G744A",
+              "A771G",
+              "G781A",
+              "A783T",
+              "C789T",
+              "G795T",
+              "G900A",
+              "T903C",
+              "T1008C",
+              "G1017A",
+              "A1027G",
+              "G1028C",
+              "G1037T",
+              "A1042G",
+              "G1056A",
+              "T1074C",
+              "T1083G",
+              "T1119C",
+              "T1143C",
+              "G1158A",
+              "C1161T",
+              "G1188A",
+              "G1201A",
+              "A1233G",
+              "C1241T",
+              "G1293A",
+              "G1305A",
+              "A1314G",
+              "T1344C",
+              "C1419A",
+              "G1517A",
+              "A1566C",
+              "A1602T",
+              "G1604T",
+              "C1654T",
+              "G1701A",
+              "A1727G",
+              "G1742T"
+            ],
+            "HA": [
+              "V11I",
+              "S12G",
+              "I21V",
+              "D59N",
+              "D61N",
+              "R69K",
+              "I87L",
+              "P90S",
+              "N100S",
+              "D104G",
+              "Q131K",
+              "S139P",
+              "P152S",
+              "Q154L",
+              "G155E",
+              "S157P",
+              "I167T",
+              "T175P",
+              "R178V",
+              "S179N",
+              "N181T",
+              "T183A",
+              "D199N",
+              "A200E",
+              "T204I",
+              "K205M",
+              "L206I",
+              "I214V",
+              "A254T",
+              "E258D",
+              "S336A",
+              "R339I",
+              "R341G",
+              "V394I",
+              "T407I",
+              "D466E",
+              "R499K",
+              "K515N",
+              "G528V"
+            ]
+          },
+          "labels": {
+            "aa": "HA: V11I, S12G, I21V, D59N, D61N, R69K, I87L, P90S, N100S, D104G, Q131K, S139P, P152S, Q154L, G155E, S157P, I167T, T175P, R178V, S179N, N181T, T183A, D199N, A200E, T204I, K205M, L206I, I214V, A254T, E258D, S336A, R339I, R341G, V394I, T407I, D466E, R499K, K515N, G528V"
+          }
+        }
+      },
+      {
+        "name": "NODE_0000001",
+        "node_attrs": {
+          "div": 0.007432889658127424,
+          "num_date": {
+            "value": 2002.0251415970833,
+            "confidence": [
+              2000.9683742454417,
+              2002.5477738978818
+            ]
+          },
+          "region": {
+            "value": "China",
+            "confidence": {
+              "Africa": 0.05620911522724774,
+              "China": 0.4866925425914466,
+              "Japan Korea": 0.013070662149680242,
+              "Southeast Asia": 0.43707464639229854
+            },
+            "entropy": 0.9652707621155906
+          },
+          "country": {
+            "value": "China",
+            "confidence": {
+              "China": 0.4019626893957572,
+              "Egypt": 0.1250308620844283,
+              "Thailand": 0.36095107113455893,
+              "Vietnam": 0.04901930610219714
+            },
+            "entropy": 1.3839424646206
+          }
+        },
+        "branch_attrs": {
+          "mutations": {}
+        },
+        "children": [
+          {
+            "name": "NODE_0000000",
+            "node_attrs": {
+              "div": 0.016019109892606968,
+              "num_date": {
+                "value": 2003.8404479163373,
+                "confidence": [
+                  2003.5313603378752,
+                  2004.0078346608714
+                ]
+              },
+              "region": {
+                "value": "Southeast Asia",
+                "confidence": {
+                  "Africa": 0.002528466985293618,
+                  "China": 0.030248564529453733,
+                  "Japan Korea": 0.0014028003958312567,
+                  "Southeast Asia": 0.9649985967736341
+                },
+                "entropy": 0.17037300053422244
+              },
+              "country": {
+                "value": "Thailand",
+                "confidence": {
+                  "China": 0.04947738811927611,
+                  "Egypt": 0.013939862875453487,
+                  "Thailand": 0.8951810533735762,
+                  "Vietnam": 0.026347006831306276
+                },
+                "entropy": 0.4827983306799354
+              }
+            },
+            "branch_attrs": {
+              "mutations": {
+                "nuc": [
+                  "C43T",
+                  "C326T",
+                  "C370T",
+                  "A440G",
+                  "A533G",
+                  "A704G",
+                  "C948T",
+                  "G1052A",
+                  "C1063T",
+                  "T1272C",
+                  "A1320G",
+                  "C1607T",
+                  "A1632T",
+                  "G1668A",
+                  "T1680C"
+                ],
+                "HA": [
+                  "L8F",
+                  "A102V",
+                  "N140S",
+                  "N171S",
+                  "K228R",
+                  "R344K",
+                  "T529I"
+                ]
+              },
+              "labels": {
+                "aa": "HA: L8F, A102V, N140S, N171S, K228R, R344K, T529I"
+              }
+            },
+            "children": [
+              {
+                "name": "A/openbill_stork/Thailand/VSMU_4_NSN/2004",
+                "node_attrs": {
+                  "div": 0.017734889999128377,
+                  "num_date": {
+                    "value": 2004.0969945355191,
+                    "confidence": [
+                      2004.0969945355191,
+                      2004.0969945355191
+                    ]
+                  },
+                  "host": {
+                    "value": "Avian"
+                  },
+                  "cleavage_site_sequence": {
+                    "value": "RKKR"
+                  },
+                  "furin_cleavage_motif": {
+                    "value": "present"
+                  },
+                  "region": {
+                    "value": "Southeast Asia",
+                    "confidence": {
+                      "Southeast Asia": 1.0
+                    },
+                    "entropy": -1.000088900581841e-12
+                  },
+                  "country": {
+                    "value": "Thailand",
+                    "confidence": {
+                      "Thailand": 1.0
+                    },
+                    "entropy": -1.000088900581841e-12
+                  }
+                },
+                "branch_attrs": {
+                  "mutations": {
+                    "nuc": [
+                      "G1N",
+                      "C2N",
+                      "A3N",
+                      "G4N",
+                      "G5N",
+                      "G6N",
+                      "G7N",
+                      "T8N",
+                      "T9N",
+                      "C10N",
+                      "A11N",
+                      "A12N",
+                      "T13N",
+                      "C14N",
+                      "T15N",
+                      "G16N",
+                      "T17N",
+                      "C18N",
+                      "A19N",
+                      "A20N",
+                      "A21N",
+                      "A390G",
+                      "C792T",
+                      "C1485T",
+                      "T1730N",
+                      "T1731N",
+                      "T1732N",
+                      "G1733N",
+                      "T1734N",
+                      "G1735N",
+                      "A1736N",
+                      "G1737N",
+                      "T1738N",
+                      "T1739N",
+                      "C1740N",
+                      "A1741N",
+                      "G1742N",
+                      "A1743N",
+                      "T1744N",
+                      "T1745N",
+                      "G1746N",
+                      "T1747N",
+                      "A1748N",
+                      "G1749N",
+                      "T1750N",
+                      "T1751N",
+                      "A1752N",
+                      "A1753N",
+                      "A1754N",
+                      "A1755N",
+                      "A1756N",
+                      "C1757N",
+                      "A1758N",
+                      "C1759N",
+                      "C1760N"
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "A/quail/Vietnam/CVVI_49/2010",
+                "node_attrs": {
+                  "div": 0.048675254293198966,
+                  "num_date": {
+                    "value": 2010.0260273972603,
+                    "confidence": [
+                      2010.0260273972603,
+                      2010.0260273972603
+                    ]
+                  },
+                  "host": {
+                    "value": "Avian"
+                  },
+                  "cleavage_site_sequence": {
+                    "value": "RKKR"
+                  },
+                  "furin_cleavage_motif": {
+                    "value": "present"
+                  },
+                  "region": {
+                    "value": "Southeast Asia",
+                    "confidence": {
+                      "Southeast Asia": 1.0
+                    },
+                    "entropy": -1.000088900581841e-12
+                  },
+                  "country": {
+                    "value": "Vietnam",
+                    "confidence": {
+                      "Vietnam": 1.0
+                    },
+                    "entropy": -1.000088900581841e-12
+                  }
+                },
+                "branch_attrs": {
+                  "mutations": {
+                    "nuc": [
+                      "A48G",
+                      "A123G",
+                      "T147C",
+                      "C180T",
+                      "C195T",
+                      "T198C",
+                      "G210T",
+                      "A228G",
+                      "C252T",
+                      "G291A",
+                      "G348A",
+                      "A350T",
+                      "A388C",
+                      "A426G",
+                      "T436C",
+                      "A456G",
+                      "T466G",
+                      "C540T",
+                      "A551G",
+                      "C558T",
+                      "A571G",
+                      "G588A",
+                      "C592A",
+                      "T603C",
+                      "C648T",
+                      "T663C",
+                      "A681G",
+                      "G697A",
+                      "T698C",
+                      "A741G",
+                      "T885C",
+                      "C954T",
+                      "C963T",
+                      "C966T",
+                      "T1014C",
+                      "A1042G",
+                      "A1107G",
+                      "G1152A",
+                      "T1155C",
+                      "A1191T",
+                      "G1284A",
+                      "T1338C",
+                      "T1389C",
+                      "C1395T",
+                      "C1404A",
+                      "C1429T",
+                      "T1494C",
+                      "A1515G",
+                      "A1524G",
+                      "C1561T",
+                      "A1587G",
+                      "A1599G",
+                      "A1606G",
+                      "C1654T",
+                      "G1704T",
+                      "T1719C"
+                    ],
+                    "HA": [
+                      "D110V",
+                      "S139P",
+                      "S149A",
+                      "K177R",
+                      "N184D",
+                      "L191M",
+                      "V226T",
+                      "R341G",
+                      "I529V"
+                    ]
+                  },
+                  "labels": {
+                    "aa": "HA: D110V, S139P, S149A, K177R, N184D, L191M, V226T, R341G, I529V"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "NODE_0000002",
+            "node_attrs": {
+              "div": 0.011424088825489013,
+              "num_date": {
+                "value": 2002.6998334535563,
+                "confidence": [
+                  2001.4789473980068,
+                  2003.1042472115523
+                ]
+              },
+              "region": {
+                "value": "China",
+                "confidence": {
+                  "Africa": 0.0856112039815832,
+                  "China": 0.5791582281873485,
+                  "Japan Korea": 0.014498320001842242,
+                  "Southeast Asia": 0.3140461042666146
+                },
+                "entropy": 0.9853487565339916
+              },
+              "country": {
+                "value": "China",
+                "confidence": {
+                  "China": 0.4885091810922816,
+                  "Egypt": 0.1729570490441864,
+                  "Thailand": 0.23242468979565875,
+                  "Vietnam": 0.044617604430287894
+                },
+                "entropy": 1.3676702273162302
+              }
+            },
+            "branch_attrs": {
+              "mutations": {
+                "nuc": [
+                  "G225A",
+                  "G349A",
+                  "T357C",
+                  "A439G",
+                  "G555A",
+                  "G915A",
+                  "C1561T"
+                ],
+                "HA": [
+                  "D110N",
+                  "N140D",
+                  "M298I"
+                ]
+              },
+              "labels": {
+                "aa": "HA: D110N, N140D, M298I"
+              }
+            },
+            "children": [
+              {
+                "name": "NODE_0000003",
+                "node_attrs": {
+                  "div": 0.033437794463521686,
+                  "num_date": {
+                    "value": 2005.9556444688744,
+                    "confidence": [
+                      2005.5834032557948,
+                      2006.5366414711623
+                    ]
+                  },
+                  "region": {
+                    "value": "Africa",
+                    "confidence": {
+                      "Africa": 0.9911734038837822,
+                      "China": 0.005208810035426966,
+                      "Southeast Asia": 0.002619834678346876
+                    },
+                    "entropy": 0.059330683791021174
+                  },
+                  "country": {
+                    "value": "Egypt",
+                    "confidence": {
+                      "China": 0.005990423947208545,
+                      "Egypt": 0.9884211175633029,
+                      "Thailand": 0.0022190913659792303,
+                      "Vietnam": 0.001163328040158309
+                    },
+                    "entropy": 0.07949895420934891
+                  }
+                },
+                "branch_attrs": {
+                  "mutations": {
+                    "nuc": [
+                      "T141C",
+                      "T153C",
+                      "G189A",
+                      "A258G",
+                      "A280C",
+                      "G316A",
+                      "C317T",
+                      "C438A",
+                      "T455C",
+                      "A488G",
+                      "G489A",
+                      "C501T",
+                      "A529G",
+                      "A535G",
+                      "C558T",
+                      "T612A",
+                      "A635G",
+                      "C654T",
+                      "C720T",
+                      "A723G",
+                      "C756T",
+                      "C772T",
+                      "C786A",
+                      "C792T",
+                      "T823A",
+                      "A873G",
+                      "T930C",
+                      "A951C",
+                      "G1011T",
+                      "A1036G",
+                      "G1052A",
+                      "T1143C",
+                      "C1254T",
+                      "G1293A",
+                      "G1458T",
+                      "A1487G",
+                      "T1644C",
+                      "C1679T"
+                    ],
+                    "HA": [
+                      "I87L",
+                      "A99I",
+                      "L145S",
+                      "K156R",
+                      "N170D",
+                      "T172A",
+                      "K205R",
+                      "P251S",
+                      "Y268N",
+                      "R339G",
+                      "R344K",
+                      "K489R",
+                      "S553F"
+                    ]
+                  },
+                  "labels": {
+                    "aa": "HA: I87L, A99I, L145S, K156R, N170D, T172A, K205R, P251S, Y268N, R339G, R344K, K489R, S553F"
+                  }
+                },
+                "children": [
+                  {
+                    "name": "A/chicken/Egypt/0813_NLQP/2008",
+                    "node_attrs": {
+                      "div": 0.04261184026801672,
+                      "num_date": {
+                        "value": 2008.00956284153,
+                        "confidence": [
+                          2008.00956284153,
+                          2008.00956284153
+                        ]
+                      },
+                      "host": {
+                        "value": "Avian"
+                      },
+                      "cleavage_site_sequence": {
+                        "value": "RKKR"
+                      },
+                      "furin_cleavage_motif": {
+                        "value": "present"
+                      },
+                      "region": {
+                        "value": "Africa",
+                        "confidence": {
+                          "Africa": 1.0
+                        },
+                        "entropy": -1.000088900581841e-12
+                      },
+                      "country": {
+                        "value": "Egypt",
+                        "confidence": {
+                          "Egypt": 1.0
+                        },
+                        "entropy": -1.000088900581841e-12
+                      }
+                    },
+                    "branch_attrs": {
+                      "mutations": {
+                        "nuc": [
+                          "A246G",
+                          "A264G",
+                          "C326T",
+                          "A418T",
+                          "A520G",
+                          "G554A",
+                          "G589A",
+                          "G690A",
+                          "G747T",
+                          "C782T",
+                          "A1059G",
+                          "T1083C",
+                          "T1116C",
+                          "C1206A",
+                          "C1302T",
+                          "G1517A"
+                        ],
+                        "HA": [
+                          "A102V",
+                          "I133F",
+                          "I167V",
+                          "R178K",
+                          "V190I",
+                          "M242I",
+                          "A254V",
+                          "R499K"
+                        ]
+                      },
+                      "labels": {
+                        "aa": "HA: A102V, I133F, I167V, R178K, V190I, M242I, A254V, R499K"
+                      }
+                    }
+                  },
+                  {
+                    "name": "NODE_0000004",
+                    "node_attrs": {
+                      "div": 0.03514684774042025,
+                      "num_date": {
+                        "value": 2006.360113292451,
+                        "confidence": [
+                          2005.845650437015,
+                          2006.6917668084247
+                        ]
+                      },
+                      "region": {
+                        "value": "Africa",
+                        "confidence": {
+                          "Africa": 0.9990615678431715
+                        },
+                        "entropy": 0.008396391624828584
+                      },
+                      "country": {
+                        "value": "Egypt",
+                        "confidence": {
+                          "Egypt": 0.9984127715693653
+                        },
+                        "entropy": 0.013983784162860767
+                      }
+                    },
+                    "branch_attrs": {
+                      "mutations": {
+                        "nuc": [
+                          "G358A",
+                          "G459A",
+                          "G1701A"
+                        ],
+                        "HA": [
+                          "D113N"
+                        ]
+                      },
+                      "labels": {
+                        "aa": "HA: D113N"
+                      }
+                    },
+                    "children": [
+                      {
+                        "name": "A/chicken/Egypt/CL6/2007",
+                        "node_attrs": {
+                          "div": 0.040888576977071725,
+                          "num_date": {
+                            "value": 2007.2452054794521,
+                            "confidence": [
+                              2007.1716412254937,
+                              2007.2452054794521
+                            ]
+                          },
+                          "host": {
+                            "value": "Avian"
+                          },
+                          "cleavage_site_sequence": {
+                            "value": "RKKR"
+                          },
+                          "furin_cleavage_motif": {
+                            "value": "present"
+                          },
+                          "region": {
+                            "value": "Africa",
+                            "confidence": {
+                              "Africa": 0.9999999999999999
+                            },
+                            "entropy": -9.99866855976916e-13
+                          },
+                          "country": {
+                            "value": "Egypt",
+                            "confidence": {
+                              "Egypt": 0.9999999999999999
+                            },
+                            "entropy": -9.99866855976916e-13
+                          }
+                        },
+                        "branch_attrs": {
+                          "mutations": {
+                            "nuc": [
+                              "G1N",
+                              "C2N",
+                              "A3N",
+                              "G4N",
+                              "G5N",
+                              "G6N",
+                              "G7N",
+                              "T8N",
+                              "T9N",
+                              "C10N",
+                              "A11N",
+                              "A12N",
+                              "T13N",
+                              "C14N",
+                              "T15N",
+                              "G16N",
+                              "T17N",
+                              "C18N",
+                              "A19N",
+                              "A20N",
+                              "A21N",
+                              "A28G",
+                              "A171G",
+                              "G428A",
+                              "T441C",
+                              "G488A",
+                              "A612G",
+                              "A1299G",
+                              "T1470C",
+                              "A1605G",
+                              "C1692T",
+                              "A1729N",
+                              "T1730N",
+                              "T1731N",
+                              "T1732N",
+                              "G1733N",
+                              "T1734N",
+                              "G1735N",
+                              "A1736N",
+                              "G1737N",
+                              "T1738N",
+                              "T1739N",
+                              "C1740N",
+                              "A1741N",
+                              "G1742N",
+                              "A1743N",
+                              "T1744N",
+                              "T1745N",
+                              "G1746N",
+                              "T1747N",
+                              "A1748N",
+                              "G1749N",
+                              "T1750N",
+                              "T1751N",
+                              "A1752N",
+                              "A1753N",
+                              "A1754N",
+                              "A1755N",
+                              "A1756N",
+                              "C1757N",
+                              "A1758N",
+                              "C1759N",
+                              "C1760N"
+                            ],
+                            "HA": [
+                              "K3E",
+                              "S136N",
+                              "R156K"
+                            ]
+                          },
+                          "labels": {
+                            "aa": "HA: K3E, S136N, R156K"
+                          }
+                        }
+                      },
+                      {
+                        "name": "A/chicken/Egypt/083/2008",
+                        "node_attrs": {
+                          "div": 0.04670942314805483,
+                          "num_date": {
+                            "value": 2008.0040983606557,
+                            "confidence": [
+                              2008.0040983606557,
+                              2008.0040983606557
+                            ]
+                          },
+                          "host": {
+                            "value": "Avian"
+                          },
+                          "cleavage_site_sequence": {
+                            "value": "RKKR"
+                          },
+                          "furin_cleavage_motif": {
+                            "value": "present"
+                          },
+                          "region": {
+                            "value": "Africa",
+                            "confidence": {
+                              "Africa": 1.0
+                            },
+                            "entropy": -1.000088900581841e-12
+                          },
+                          "country": {
+                            "value": "Egypt",
+                            "confidence": {
+                              "Egypt": 1.0
+                            },
+                            "entropy": -1.000088900581841e-12
+                          }
+                        },
+                        "branch_attrs": {
+                          "mutations": {
+                            "nuc": [
+                              "G1N",
+                              "C2N",
+                              "A3N",
+                              "G4N",
+                              "G5N",
+                              "G6N",
+                              "G7N",
+                              "T8N",
+                              "T9N",
+                              "C10N",
+                              "A11N",
+                              "A12N",
+                              "T13N",
+                              "C14N",
+                              "T15N",
+                              "G16N",
+                              "T17N",
+                              "C18N",
+                              "A19N",
+                              "A20N",
+                              "A21N",
+                              "G105A",
+                              "C156T",
+                              "C261T",
+                              "C289T",
+                              "A398G",
+                              "T436C",
+                              "A487G",
+                              "T490C",
+                              "T500A",
+                              "G554A",
+                              "A562C",
+                              "C569T",
+                              "C573T",
+                              "C620A",
+                              "A705G",
+                              "A745G",
+                              "C1425G",
+                              "G1620A",
+                              "G1641A",
+                              "C1644T",
+                              "A1741N",
+                              "G1742N",
+                              "A1743N",
+                              "T1744N",
+                              "T1745N",
+                              "G1746N",
+                              "T1747N",
+                              "A1748N",
+                              "G1749N",
+                              "T1750N",
+                              "T1751N",
+                              "A1752N",
+                              "A1753N",
+                              "A1754N",
+                              "A1755N",
+                              "A1756N",
+                              "C1757N",
+                              "A1758N",
+                              "C1759N",
+                              "C1760N"
+                            ],
+                            "HA": [
+                              "P90S",
+                              "H126R",
+                              "S139P",
+                              "R156G",
+                              "S157P",
+                              "F160Y",
+                              "R178K",
+                              "N181H",
+                              "T183I",
+                              "A200E",
+                              "M242V"
+                            ]
+                          },
+                          "labels": {
+                            "aa": "HA: P90S, H126R, S139P, R156G, S157P, F160Y, R178K, N181H, T183I, A200E, M242V"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "NODE_0000005",
+                "node_attrs": {
+                  "div": 0.015992544342295936,
+                  "num_date": {
+                    "value": 2003.5638624070707,
+                    "confidence": [
+                      2002.4557924733335,
+                      2004.156262647526
+                    ]
+                  },
+                  "region": {
+                    "value": "China",
+                    "confidence": {
+                      "Africa": 0.04115231035062911,
+                      "China": 0.7264290892766887,
+                      "Japan Korea": 0.017552135839619672,
+                      "Southeast Asia": 0.20873726948690055
+                    },
+                    "entropy": 0.7926791713824599
+                  },
+                  "country": {
+                    "value": "China",
+                    "confidence": {
+                      "China": 0.6532611202593994,
+                      "Egypt": 0.09997247813578648,
+                      "Thailand": 0.135383898329097,
+                      "Vietnam": 0.043870442637588804
+                    },
+                    "entropy": 1.1660768133387256
+                  }
+                },
+                "branch_attrs": {
+                  "mutations": {
+                    "nuc": [
+                      "T57C",
+                      "A219G",
+                      "G750T",
+                      "T874G",
+                      "G998A",
+                      "C1029T",
+                      "A1042-",
+                      "G1056A",
+                      "T1389C"
+                    ],
+                    "HA": [
+                      "E243D",
+                      "L285V",
+                      "R326K",
+                      "R341X",
+                      "*569X"
+                    ]
+                  },
+                  "labels": {
+                    "aa": "HA: E243D, L285V, R326K, R341X, *569X"
+                  }
+                },
+                "children": [
+                  {
+                    "name": "NODE_0000006",
+                    "node_attrs": {
+                      "div": 0.024020982644019074,
+                      "num_date": {
+                        "value": 2005.526493150045,
+                        "confidence": [
+                          2004.934879829082,
+                          2005.6914884415874
+                        ]
+                      },
+                      "region": {
+                        "value": "China",
+                        "confidence": {
+                          "China": 0.9955522916827128,
+                          "Southeast Asia": 0.0040356627606416545
+                        },
+                        "entropy": 0.030298843261297517
+                      },
+                      "country": {
+                        "value": "China",
+                        "confidence": {
+                          "China": 0.9960811122294688,
+                          "Thailand": 0.0012341009166066206
+                        },
+                        "entropy": 0.03202722964432853
+                      }
+                    },
+                    "branch_attrs": {
+                      "mutations": {
+                        "nuc": [
+                          "T321C",
+                          "T455C",
+                          "A488C",
+                          "T490C",
+                          "A576G",
+                          "G589A",
+                          "C606T",
+                          "C610T",
+                          "A856G",
+                          "A1034T",
+                          "A1040-",
+                          "G1041-",
+                          "G1043A",
+                          "G1308A",
+                          "G1638T",
+                          "C1647T"
+                        ],
+                        "HA": [
+                          "L145S",
+                          "K156T",
+                          "S157P",
+                          "V190I",
+                          "P197S",
+                          "T279A",
+                          "Q338L",
+                          "E340X"
+                        ]
+                      },
+                      "labels": {
+                        "aa": "HA: L145S, K156T, S157P, V190I, P197S, T279A, Q338L, E340X"
+                      }
+                    },
+                    "children": [
+                      {
+                        "name": "NODE_0000007",
+                        "node_attrs": {
+                          "div": 0.027448255537201427,
+                          "num_date": {
+                            "value": 2006.370048313956,
+                            "confidence": [
+                              2005.5448449828461,
+                              2006.6446974677037
+                            ]
+                          },
+                          "region": {
+                            "value": "China",
+                            "confidence": {
+                              "China": 0.9982359537468534,
+                              "Southeast Asia": 0.0014311852987075313
+                            },
+                            "entropy": 0.01415955149233268
+                          },
+                          "country": {
+                            "value": "China",
+                            "confidence": {
+                              "China": 0.9974586719407071
+                            },
+                            "entropy": 0.022097485093056264
+                          }
+                        },
+                        "branch_attrs": {
+                          "mutations": {
+                            "nuc": [
+                              "C396T",
+                              "C480T",
+                              "C495T",
+                              "T1083G",
+                              "T1437G",
+                              "A1683G"
+                            ]
+                          }
+                        },
+                        "children": [
+                          {
+                            "name": "A/environment/Hunan/1_8/2007",
+                            "node_attrs": {
+                              "div": 0.03203319644089853,
+                              "num_date": {
+                                "value": 2007.16301369863,
+                                "confidence": [
+                                  2007.16301369863,
+                                  2007.2367851868228
+                                ]
+                              },
+                              "host": {
+                                "value": "Environment"
+                              },
+                              "cleavage_site_sequence": {
+                                "value": "RRKR"
+                              },
+                              "furin_cleavage_motif": {
+                                "value": "present"
+                              },
+                              "region": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              },
+                              "country": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              }
+                            },
+                            "branch_attrs": {
+                              "mutations": {
+                                "nuc": [
+                                  "T441C",
+                                  "T466G",
+                                  "G554A",
+                                  "A702C",
+                                  "G732C",
+                                  "A763G",
+                                  "A1173G",
+                                  "G1641A"
+                                ],
+                                "HA": [
+                                  "S149A",
+                                  "R178K",
+                                  "I248V"
+                                ]
+                              },
+                              "labels": {
+                                "aa": "HA: S149A, R178K, I248V"
+                              }
+                            }
+                          },
+                          {
+                            "name": "A/environment/Guizhou/9/2009",
+                            "node_attrs": {
+                              "div": 0.04243010994947546,
+                              "num_date": {
+                                "value": 2009.0424657534247,
+                                "confidence": [
+                                  2009.0424657534247,
+                                  2009.0424657534247
+                                ]
+                              },
+                              "host": {
+                                "value": "Environment"
+                              },
+                              "cleavage_site_sequence": {
+                                "value": "RRKR"
+                              },
+                              "furin_cleavage_motif": {
+                                "value": "present"
+                              },
+                              "region": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              },
+                              "country": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              }
+                            },
+                            "branch_attrs": {
+                              "mutations": {
+                                "nuc": [
+                                  "A65G",
+                                  "C217T",
+                                  "C279T",
+                                  "G291A",
+                                  "A477G",
+                                  "A504G",
+                                  "G510A",
+                                  "T567C",
+                                  "A589G",
+                                  "T606C",
+                                  "G627A",
+                                  "C632T",
+                                  "A661G",
+                                  "G672A",
+                                  "C772T",
+                                  "A804G",
+                                  "A893G",
+                                  "C948T",
+                                  "C1140T",
+                                  "T1182C",
+                                  "G1221T",
+                                  "A1377G",
+                                  "T1470C",
+                                  "A1578T",
+                                  "C1652T",
+                                  "A1653G"
+                                ],
+                                "HA": [
+                                  "K15R",
+                                  "I190V",
+                                  "T204I",
+                                  "I214V",
+                                  "P251S",
+                                  "N291S",
+                                  "A544V"
+                                ]
+                              },
+                              "labels": {
+                                "aa": "HA: K15R, I190V, T204I, I214V, P251S, N291S, A544V"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "name": "NODE_0000008",
+                        "node_attrs": {
+                          "div": 0.025160908864923545,
+                          "num_date": {
+                            "value": 2005.7345100894352,
+                            "confidence": [
+                              2005.3976814966586,
+                              2005.8340357731738
+                            ]
+                          },
+                          "region": {
+                            "value": "China",
+                            "confidence": {
+                              "China": 0.9974381376445552,
+                              "Southeast Asia": 0.002523275208336699
+                            },
+                            "entropy": 0.01808466395406031
+                          },
+                          "country": {
+                            "value": "China",
+                            "confidence": {
+                              "China": 0.9988906716784456
+                            },
+                            "entropy": 0.010370131877011421
+                          }
+                        },
+                        "branch_attrs": {
+                          "mutations": {
+                            "nuc": [
+                              "C162T",
+                              "T1503C"
+                            ]
+                          }
+                        },
+                        "children": [
+                          {
+                            "name": "A/Guangxi/1/2005",
+                            "node_attrs": {
+                              "div": 0.02688022696383321,
+                              "num_date": {
+                                "value": 2005.8945205479451,
+                                "confidence": [
+                                  2005.8945205479451,
+                                  2005.8945205479451
+                                ]
+                              },
+                              "host": {
+                                "value": "Human"
+                              },
+                              "cleavage_site_sequence": {
+                                "value": "RRKR"
+                              },
+                              "furin_cleavage_motif": {
+                                "value": "present"
+                              },
+                              "region": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 0.9999999999999999
+                                },
+                                "entropy": -9.99866855976916e-13
+                              },
+                              "country": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              }
+                            },
+                            "branch_attrs": {
+                              "mutations": {
+                                "nuc": [
+                                  "G1N",
+                                  "C2N",
+                                  "A3N",
+                                  "G4N",
+                                  "G5N",
+                                  "G6N",
+                                  "G7N",
+                                  "T8N",
+                                  "T9N",
+                                  "C10N",
+                                  "A11N",
+                                  "A12N",
+                                  "T13N",
+                                  "C14N",
+                                  "T15N",
+                                  "G16N",
+                                  "T17N",
+                                  "C18N",
+                                  "A19N",
+                                  "A20N",
+                                  "A21N",
+                                  "A258G",
+                                  "T461G",
+                                  "T1272C",
+                                  "A1729N",
+                                  "T1730N",
+                                  "T1731N",
+                                  "T1732N",
+                                  "G1733N",
+                                  "T1734N",
+                                  "G1735N",
+                                  "A1736N",
+                                  "G1737N",
+                                  "T1738N",
+                                  "T1739N",
+                                  "C1740N",
+                                  "A1741N",
+                                  "G1742N",
+                                  "A1743N",
+                                  "T1744N",
+                                  "T1745N",
+                                  "G1746N",
+                                  "T1747N",
+                                  "A1748N",
+                                  "G1749N",
+                                  "T1750N",
+                                  "T1751N",
+                                  "A1752N",
+                                  "A1753N",
+                                  "A1754N",
+                                  "A1755N",
+                                  "A1756N",
+                                  "C1757N",
+                                  "A1758N",
+                                  "C1759N",
+                                  "C1760N"
+                                ],
+                                "HA": [
+                                  "V147G"
+                                ]
+                              },
+                              "labels": {
+                                "aa": "HA: V147G"
+                              }
+                            }
+                          },
+                          {
+                            "name": "NODE_0000009",
+                            "node_attrs": {
+                              "div": 0.02573068272221054,
+                              "num_date": {
+                                "value": 2005.9229358537477,
+                                "confidence": [
+                                  2005.5519596887525,
+                                  2006.221961781653
+                                ]
+                              },
+                              "region": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 0.9770521868056159,
+                                  "Southeast Asia": 0.021835886459014985
+                                },
+                                "entropy": 0.11495680546302872
+                              },
+                              "country": {
+                                "value": "China",
+                                "confidence": {
+                                  "China": 0.9818939403521846,
+                                  "Laos": 0.005415447614534538,
+                                  "Thailand": 0.0017167103787331223,
+                                  "Vietnam": 0.007501431617810234
+                                },
+                                "entropy": 0.11725767846435198
+                              }
+                            },
+                            "branch_attrs": {
+                              "mutations": {
+                                "nuc": [
+                                  "G849A"
+                                ]
+                              }
+                            },
+                            "children": [
+                              {
+                                "name": "A/water/Xinjiang/3/2009",
+                                "node_attrs": {
+                                  "div": 0.04484450496559442,
+                                  "num_date": {
+                                    "value": 2009.0424657534247,
+                                    "confidence": [
+                                      2009.0424657534247,
+                                      2009.0424657534247
+                                    ]
+                                  },
+                                  "host": {
+                                    "value": "Environment"
+                                  },
+                                  "cleavage_site_sequence": {
+                                    "value": "RRKR"
+                                  },
+                                  "furin_cleavage_motif": {
+                                    "value": "present"
+                                  },
+                                  "region": {
+                                    "value": "China",
+                                    "confidence": {
+                                      "China": 1.0
+                                    },
+                                    "entropy": -1.000088900581841e-12
+                                  },
+                                  "country": {
+                                    "value": "China",
+                                    "confidence": {
+                                      "China": 1.0
+                                    },
+                                    "entropy": -1.000088900581841e-12
+                                  }
+                                },
+                                "branch_attrs": {
+                                  "mutations": {
+                                    "nuc": [
+                                      "G189A",
+                                      "G213A",
+                                      "T223C",
+                                      "A226G",
+                                      "G274A",
+                                      "G309A",
+                                      "C321T",
+                                      "G459A",
+                                      "T519C",
+                                      "G616A",
+                                      "A631G",
+                                      "C632A",
+                                      "C639T",
+                                      "C666A",
+                                      "T765A",
+                                      "G774A",
+                                      "A872G",
+                                      "G877A",
+                                      "C897A",
+                                      "A1077C",
+                                      "C1230T",
+                                      "T1242C",
+                                      "C1254T",
+                                      "T1276C",
+                                      "A1287G",
+                                      "G1293A",
+                                      "C1416T",
+                                      "C1464T",
+                                      "C1521T",
+                                      "A1632T",
+                                      "T1637C",
+                                      "G1733A",
+                                      "A1755C",
+                                      "A1756N",
+                                      "C1757N",
+                                      "A1758N",
+                                      "C1759N",
+                                      "C1760N"
+                                    ],
+                                    "HA": [
+                                      "R69G",
+                                      "E85K",
+                                      "D199N",
+                                      "T204E",
+                                      "E284G",
+                                      "E286K",
+                                      "V539A"
+                                    ]
+                                  },
+                                  "labels": {
+                                    "aa": "HA: R69G, E85K, D199N, T204E, E284G, E286K, V539A"
+                                  }
+                                }
+                              },
+                              {
+                                "name": "NODE_0000010",
+                                "node_attrs": {
+                                  "div": 0.03202635343277665,
+                                  "num_date": {
+                                    "value": 2007.7229220043525,
+                                    "confidence": [
+                                      2006.7351698822245,
+                                      2008.141000414937
+                                    ]
+                                  },
+                                  "region": {
+                                    "value": "Southeast Asia",
+                                    "confidence": {
+                                      "Africa": 0.002952864131703638,
+                                      "China": 0.1937142273011782,
+                                      "Japan Korea": 0.004112279576228659,
+                                      "Southeast Asia": 0.7965996275671011
+                                    },
+                                    "entropy": 0.5544782482352938
+                                  },
+                                  "country": {
+                                    "value": "China",
+                                    "confidence": {
+                                      "China": 0.3873767029044377,
+                                      "Laos": 0.2500423671031554,
+                                      "Thailand": 0.024210479237399263,
+                                      "Vietnam": 0.2813855022109689
+                                    },
+                                    "entropy": 1.3861890543588884
+                                  }
+                                },
+                                "branch_attrs": {
+                                  "mutations": {
+                                    "nuc": [
+                                      "A51G",
+                                      "T352C",
+                                      "G489A",
+                                      "A525G",
+                                      "C620A",
+                                      "C632T",
+                                      "A775G",
+                                      "T777C",
+                                      "C963T",
+                                      "G1251A",
+                                      "G1455A"
+                                    ],
+                                    "HA": [
+                                      "I10M",
+                                      "F111L",
+                                      "A200E",
+                                      "T204I",
+                                      "N252D"
+                                    ]
+                                  },
+                                  "labels": {
+                                    "aa": "HA: I10M, F111L, A200E, T204I, N252D"
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "name": "A/duck/Lao/6/2010",
+                                    "node_attrs": {
+                                      "div": 0.044173041019595405,
+                                      "num_date": {
+                                        "value": 2010.16301369863,
+                                        "confidence": [
+                                          2010.16301369863,
+                                          2010.2368710943613
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Avian"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Southeast Asia",
+                                        "confidence": {
+                                          "Southeast Asia": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Laos",
+                                        "confidence": {
+                                          "Laos": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "G1N",
+                                          "C2N",
+                                          "A3N",
+                                          "G4N",
+                                          "G5N",
+                                          "G6N",
+                                          "G7N",
+                                          "T8N",
+                                          "T9N",
+                                          "C10N",
+                                          "A11N",
+                                          "A12N",
+                                          "T13N",
+                                          "C14N",
+                                          "T15N",
+                                          "G16N",
+                                          "T17N",
+                                          "C18N",
+                                          "A19N",
+                                          "A20N",
+                                          "A21N",
+                                          "T38C",
+                                          "C57T",
+                                          "T147C",
+                                          "G186A",
+                                          "G315A",
+                                          "G316A",
+                                          "G459A",
+                                          "C475T",
+                                          "T564C",
+                                          "C648T",
+                                          "A699T",
+                                          "A736C",
+                                          "A855T",
+                                          "T882C",
+                                          "T903C",
+                                          "A1187G",
+                                          "C1224T",
+                                          "A1271G",
+                                          "A1320G",
+                                          "T1413C",
+                                          "C1429T",
+                                          "A1729N",
+                                          "T1730N",
+                                          "T1731N",
+                                          "T1732N",
+                                          "G1733N",
+                                          "T1734N",
+                                          "G1735N",
+                                          "A1736N",
+                                          "G1737N",
+                                          "T1738N",
+                                          "T1739N",
+                                          "C1740N",
+                                          "A1741N",
+                                          "G1742N",
+                                          "A1743N",
+                                          "T1744N",
+                                          "T1745N",
+                                          "G1746N",
+                                          "T1747N",
+                                          "A1748N",
+                                          "G1749N",
+                                          "T1750N",
+                                          "T1751N",
+                                          "A1752N",
+                                          "A1753N",
+                                          "A1754N",
+                                          "A1755N",
+                                          "A1756N",
+                                          "C1757N",
+                                          "A1758N",
+                                          "C1759N",
+                                          "C1760N"
+                                        ],
+                                        "HA": [
+                                          "L6P",
+                                          "A99T",
+                                          "P152S",
+                                          "S239R",
+                                          "K389R",
+                                          "N417S"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: L6P, A99T, P152S, S239R, K389R, N417S"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "name": "A/Vietnam/UT36250_1/2010",
+                                    "node_attrs": {
+                                      "div": 0.04294170675400156,
+                                      "num_date": {
+                                        "value": 2010.1739726027397,
+                                        "confidence": [
+                                          2010.1739726027397,
+                                          2010.1739726027397
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Human"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Southeast Asia",
+                                        "confidence": {
+                                          "Southeast Asia": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Vietnam",
+                                        "confidence": {
+                                          "Vietnam": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "T9C",
+                                          "A49G",
+                                          "A65G",
+                                          "A66G",
+                                          "T141C",
+                                          "A246G",
+                                          "C455T",
+                                          "T642C",
+                                          "A661G",
+                                          "G744A",
+                                          "G1011A",
+                                          "G1017A",
+                                          "-1040A",
+                                          "-1041A",
+                                          "-1042A",
+                                          "G1146A",
+                                          "A1167T",
+                                          "G1221A",
+                                          "T1561C",
+                                          "C1607T",
+                                          "A1623G",
+                                          "C1654T"
+                                        ],
+                                        "HA": [
+                                          "M10V",
+                                          "K15R",
+                                          "S145L",
+                                          "I214V",
+                                          "X340E",
+                                          "X341K",
+                                          "T529I",
+                                          "X569*"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: M10V, K15R, S145L, I214V, X340E, X341K, T529I, X569*"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "NODE_0000011",
+                    "node_attrs": {
+                      "div": 0.04040908556996411,
+                      "num_date": {
+                        "value": 2007.0775966716506,
+                        "confidence": [
+                          2006.3132757757326,
+                          2007.483500548347
+                        ]
+                      },
+                      "region": {
+                        "value": "China",
+                        "confidence": {
+                          "China": 0.617414625529297,
+                          "Japan Korea": 0.11769247151570228,
+                          "South Asia": 0.025676845597629637,
+                          "Southeast Asia": 0.21571972107612378
+                        },
+                        "entropy": 1.06258162894229
+                      },
+                      "country": {
+                        "value": "China",
+                        "confidence": {
+                          "China": 0.5092008720783293,
+                          "Japan": 0.1868149653512105,
+                          "Thailand": 0.06537768883724679,
+                          "Vietnam": 0.11526935554415878
+                        },
+                        "entropy": 1.474732416091503
+                      }
+                    },
+                    "branch_attrs": {
+                      "mutations": {
+                        "nuc": [
+                          "C43T",
+                          "T69C",
+                          "G75T",
+                          "G202A",
+                          "G227A",
+                          "T243A",
+                          "G291A",
+                          "G309A",
+                          "C360T",
+                          "C370T",
+                          "T411A",
+                          "A427G",
+                          "G428A",
+                          "C438A",
+                          "A456G",
+                          "T466G",
+                          "C475T",
+                          "G489T",
+                          "A529G",
+                          "A535G",
+                          "G554A",
+                          "T585C",
+                          "C620A",
+                          "A635G",
+                          "G667A",
+                          "G747A",
+                          "G849A",
+                          "A899G",
+                          "A906G",
+                          "A912G",
+                          "G969A",
+                          "C975T",
+                          "A1065G",
+                          "T1137C",
+                          "T1257A",
+                          "A1281G",
+                          "C1426A",
+                          "G1452A",
+                          "C1652T",
+                          "C1692T",
+                          "T1698C",
+                          "A1729G"
+                        ],
+                        "HA": [
+                          "L8F",
+                          "Q18H",
+                          "D61N",
+                          "R69K",
+                          "S136D",
+                          "S149A",
+                          "P152S",
+                          "K156N",
+                          "N170D",
+                          "T172A",
+                          "R178K",
+                          "A200E",
+                          "K205R",
+                          "V216I",
+                          "M242I",
+                          "K293R",
+                          "A544V"
+                        ]
+                      },
+                      "labels": {
+                        "aa": "HA: L8F, Q18H, D61N, R69K, S136D, S149A, P152S, K156N, N170D, T172A, R178K, A200E, K205R, V216I, M242I, K293R, A544V"
+                      }
+                    },
+                    "children": [
+                      {
+                        "name": "A/wild_duck/Fujian/2/2011",
+                        "node_attrs": {
+                          "div": 0.07204757632772232,
+                          "num_date": {
+                            "value": 2011.190410958904,
+                            "confidence": [
+                              2011.190410958904,
+                              2011.190410958904
+                            ]
+                          },
+                          "host": {
+                            "value": "Avian"
+                          },
+                          "cleavage_site_sequence": {
+                            "value": "RRKR"
+                          },
+                          "furin_cleavage_motif": {
+                            "value": "present"
+                          },
+                          "region": {
+                            "value": "China",
+                            "confidence": {
+                              "China": 1.0
+                            },
+                            "entropy": -1.000088900581841e-12
+                          },
+                          "country": {
+                            "value": "China",
+                            "confidence": {
+                              "China": 1.0
+                            },
+                            "entropy": -1.000088900581841e-12
+                          }
+                        },
+                        "branch_attrs": {
+                          "mutations": {
+                            "nuc": [
+                              "T9A",
+                              "C10T",
+                              "G27A",
+                              "T35C",
+                              "T39C",
+                              "T72C",
+                              "A134G",
+                              "C156T",
+                              "A171G",
+                              "A177G",
+                              "C183T",
+                              "A258G",
+                              "A283G",
+                              "A359G",
+                              "G372A",
+                              "T399C",
+                              "A413G",
+                              "C420T",
+                              "C422G",
+                              "T436C",
+                              "T441A",
+                              "G459A",
+                              "C495A",
+                              "A513G",
+                              "A520C",
+                              "A532G",
+                              "C545T",
+                              "C573T",
+                              "C574A",
+                              "G600A",
+                              "T603C",
+                              "C632T",
+                              "C643A",
+                              "A661G",
+                              "A704G",
+                              "A866G",
+                              "A893G",
+                              "A915G",
+                              "C927T",
+                              "G1037T",
+                              "-1042A",
+                              "A1059G",
+                              "C1134T",
+                              "C1161T",
+                              "A1200G",
+                              "G1212A",
+                              "C1254A",
+                              "T1353C",
+                              "C1362A",
+                              "C1429T",
+                              "T1461C",
+                              "T1545C",
+                              "A1599G",
+                              "G1701T",
+                              "T1725C"
+                            ],
+                            "HA": [
+                              "V5A",
+                              "K38R",
+                              "N88D",
+                              "D113G",
+                              "Q131R",
+                              "P134R",
+                              "S139P",
+                              "D140E",
+                              "I167L",
+                              "N171D",
+                              "T175I",
+                              "Q185K",
+                              "T204I",
+                              "Q208K",
+                              "I214V",
+                              "K228R",
+                              "K282R",
+                              "N291S",
+                              "I298M",
+                              "R339I",
+                              "X341R",
+                              "X569*"
+                            ]
+                          },
+                          "labels": {
+                            "aa": "HA: V5A, K38R, N88D, D113G, Q131R, P134R, S139P, D140E, I167L, N171D, T175I, Q185K, T204I, Q208K, I214V, K228R, K282R, N291S, I298M, R339I, X341R, X569*"
+                          }
+                        }
+                      },
+                      {
+                        "name": "NODE_0000012",
+                        "node_attrs": {
+                          "div": 0.04959802241517467,
+                          "num_date": {
+                            "value": 2008.8773761227214,
+                            "confidence": [
+                              2008.2256229460072,
+                              2009.336023462963
+                            ]
+                          },
+                          "region": {
+                            "value": "Japan Korea",
+                            "confidence": {
+                              "China": 0.30638665728043524,
+                              "Japan Korea": 0.3221296081637202,
+                              "South Asia": 0.05531089003468152,
+                              "Southeast Asia": 0.2963872914795975
+                            },
+                            "entropy": 1.3254969797402978
+                          },
+                          "country": {
+                            "value": "Japan",
+                            "confidence": {
+                              "Bangladesh": 0.06236681483250912,
+                              "China": 0.2333697382870788,
+                              "Japan": 0.41152107194810017,
+                              "Vietnam": 0.18895685374890092
+                            },
+                            "entropy": 1.540180204949463
+                          }
+                        },
+                        "branch_attrs": {
+                          "mutations": {
+                            "nuc": [
+                              "A12C",
+                              "T50C",
+                              "G52A",
+                              "C90T",
+                              "C99T",
+                              "A390G",
+                              "T498C",
+                              "T711C",
+                              "G724A",
+                              "A741C",
+                              "A787C",
+                              "G1043-",
+                              "A1044-",
+                              "C1179T",
+                              "T1197C",
+                              "C1607T",
+                              "G1666A",
+                              "A1710G"
+                            ],
+                            "HA": [
+                              "I10T",
+                              "V11I",
+                              "V235I",
+                              "N256H",
+                              "X341-",
+                              "T529I",
+                              "V549M",
+                              "X569*"
+                            ]
+                          },
+                          "labels": {
+                            "aa": "HA: I10T, V11I, V235I, N256H, X341-, T529I, V549M, X569*"
+                          }
+                        },
+                        "children": [
+                          {
+                            "name": "A/duck/Bangladesh/34752/2018",
+                            "node_attrs": {
+                              "div": 0.0956854979540877,
+                              "num_date": {
+                                "value": 2018.0643835616438,
+                                "confidence": [
+                                  2018.0643835616438,
+                                  2018.0643835616438
+                                ]
+                              },
+                              "host": {
+                                "value": "Avian"
+                              },
+                              "cleavage_site_sequence": {
+                                "value": "RRKR"
+                              },
+                              "furin_cleavage_motif": {
+                                "value": "present"
+                              },
+                              "region": {
+                                "value": "South Asia",
+                                "confidence": {
+                                  "South Asia": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              },
+                              "country": {
+                                "value": "Bangladesh",
+                                "confidence": {
+                                  "Bangladesh": 1.0
+                                },
+                                "entropy": -1.000088900581841e-12
+                              }
+                            },
+                            "branch_attrs": {
+                              "mutations": {
+                                "nuc": [
+                                  "G1N",
+                                  "C2N",
+                                  "A3N",
+                                  "G4N",
+                                  "G5N",
+                                  "C10T",
+                                  "C12T",
+                                  "G27A",
+                                  "A49G",
+                                  "T53C",
+                                  "T78C",
+                                  "G109A",
+                                  "C183T",
+                                  "G213A",
+                                  "A228G",
+                                  "A246C",
+                                  "A332G",
+                                  "A350C",
+                                  "A413G",
+                                  "A415G",
+                                  "A425G",
+                                  "T454C",
+                                  "C465T",
+                                  "T474C",
+                                  "T475C",
+                                  "T489G",
+                                  "T507C",
+                                  "G535A",
+                                  "G589A",
+                                  "C606T",
+                                  "T609C",
+                                  "G621A",
+                                  "A651G",
+                                  "T660C",
+                                  "G672A",
+                                  "G690A",
+                                  "T766C",
+                                  "T801C",
+                                  "T807C",
+                                  "A822G",
+                                  "G838A",
+                                  "G843A",
+                                  "A844C",
+                                  "A846G",
+                                  "T885A",
+                                  "C888T",
+                                  "C894T",
+                                  "T903C",
+                                  "T909C",
+                                  "G912T",
+                                  "C954T",
+                                  "T957C",
+                                  "G1041A",
+                                  "C1063T",
+                                  "T1083A",
+                                  "A1107G",
+                                  "G1128A",
+                                  "T1182C",
+                                  "A1200G",
+                                  "C1206T",
+                                  "G1221A",
+                                  "T1242C",
+                                  "G1245A",
+                                  "A1266G",
+                                  "G1284A",
+                                  "G1293A",
+                                  "A1299G",
+                                  "C1323T",
+                                  "T1341C",
+                                  "T1347A",
+                                  "A1406G",
+                                  "C1410T",
+                                  "T1443C",
+                                  "C1464T",
+                                  "A1495G",
+                                  "C1533T",
+                                  "G1539A",
+                                  "G1555T",
+                                  "G1572A",
+                                  "A1584G",
+                                  "A1590G",
+                                  "C1618T",
+                                  "G1641A",
+                                  "C1760N"
+                                ],
+                                "HA": [
+                                  "T10A",
+                                  "I11T",
+                                  "E30K",
+                                  "D104G",
+                                  "N110T",
+                                  "Q131R",
+                                  "I132V",
+                                  "K135R",
+                                  "S152P",
+                                  "N156K",
+                                  "A172T",
+                                  "V190I",
+                                  "V273I",
+                                  "K275Q",
+                                  "K462R",
+                                  "N492D",
+                                  "A512S"
+                                ]
+                              },
+                              "labels": {
+                                "aa": "HA: T10A, I11T, E30K, D104G, N110T, Q131R, I132V, K135R, S152P, N156K, A172T, V190I, V273I, K275Q, K462R, N492D, A512S"
+                              }
+                            }
+                          },
+                          {
+                            "name": "NODE_0000013",
+                            "node_attrs": {
+                              "div": 0.05475108516161515,
+                              "num_date": {
+                                "value": 2009.7710277567219,
+                                "confidence": [
+                                  2009.274054680053,
+                                  2010.1756779773705
+                                ]
+                              },
+                              "region": {
+                                "value": "Japan Korea",
+                                "confidence": {
+                                  "China": 0.17766155007352472,
+                                  "Japan Korea": 0.44816833582115156,
+                                  "South Asia": 0.027291733717330315,
+                                  "Southeast Asia": 0.3354609893554804
+                                },
+                                "entropy": 1.1824257055881418
+                              },
+                              "country": {
+                                "value": "Japan",
+                                "confidence": {
+                                  "Bangladesh": 0.03184817285192773,
+                                  "China": 0.12401375649549434,
+                                  "Japan": 0.5574007251130142,
+                                  "Vietnam": 0.2273103317666233
+                                },
+                                "entropy": 1.263323401914883
+                              }
+                            },
+                            "branch_attrs": {
+                              "mutations": {
+                                "nuc": [
+                                  "T42C",
+                                  "A265T",
+                                  "A556G",
+                                  "A855C",
+                                  "C1419T",
+                                  "G1439A",
+                                  "G1492A",
+                                  "T1608C",
+                                  "A1653G"
+                                ],
+                                "HA": [
+                                  "M82L",
+                                  "S179G",
+                                  "R473K",
+                                  "D491N"
+                                ]
+                              },
+                              "labels": {
+                                "aa": "HA: M82L, S179G, R473K, D491N"
+                              }
+                            },
+                            "children": [
+                              {
+                                "name": "NODE_0000014",
+                                "node_attrs": {
+                                  "div": 0.06162435937836305,
+                                  "num_date": {
+                                    "value": 2010.9887524347482,
+                                    "confidence": [
+                                      2010.7364165852096,
+                                      2011.105957757317
+                                    ]
+                                  },
+                                  "region": {
+                                    "value": "Japan Korea",
+                                    "confidence": {
+                                      "Japan Korea": 0.9994470811690734
+                                    },
+                                    "entropy": 0.005225382707322326
+                                  },
+                                  "country": {
+                                    "value": "Japan",
+                                    "confidence": {
+                                      "Japan": 0.9994438711628243
+                                    },
+                                    "entropy": 0.005469106614394017
+                                  }
+                                },
+                                "branch_attrs": {
+                                  "mutations": {
+                                    "nuc": [
+                                      "G46A",
+                                      "A243G",
+                                      "T321G",
+                                      "T429C",
+                                      "C1332T",
+                                      "C1386T",
+                                      "C1456T",
+                                      "T1561C",
+                                      "A1677G",
+                                      "G1701A",
+                                      "G1742A",
+                                      "A1748G"
+                                    ],
+                                    "HA": [
+                                      "A9T",
+                                      "N100K"
+                                    ]
+                                  },
+                                  "labels": {
+                                    "aa": "HA: A9T, N100K"
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "name": "A/peregrine_falcon/Aomori/7/2011",
+                                    "node_attrs": {
+                                      "div": 0.06390894124860202,
+                                      "num_date": {
+                                        "value": 2011.2013698630137,
+                                        "confidence": [
+                                          2011.2013698630137,
+                                          2011.2013698630137
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Avian"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Japan Korea",
+                                        "confidence": {
+                                          "Japan Korea": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Japan",
+                                        "confidence": {
+                                          "Japan": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "G1N",
+                                          "C2N",
+                                          "A3N",
+                                          "G4N",
+                                          "G5N",
+                                          "G6N",
+                                          "G7N",
+                                          "G483A",
+                                          "A520G",
+                                          "A544C",
+                                          "G1104A",
+                                          "A1753N",
+                                          "A1754N",
+                                          "A1755N",
+                                          "A1756N",
+                                          "C1757N",
+                                          "A1758N",
+                                          "C1759N",
+                                          "C1760N"
+                                        ],
+                                        "HA": [
+                                          "I167V",
+                                          "T175P"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: I167V, T175P"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "name": "A/chicken/Chiba/1/2011",
+                                    "node_attrs": {
+                                      "div": 0.06219797364468195,
+                                      "num_date": {
+                                        "value": 2011.16301369863,
+                                        "confidence": [
+                                          2011.16301369863,
+                                          2011.2356989268658
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Avian"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Japan Korea",
+                                        "confidence": {
+                                          "Japan Korea": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Japan",
+                                        "confidence": {
+                                          "Japan": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "G1N",
+                                          "C2N",
+                                          "A3N",
+                                          "G4N",
+                                          "G5N",
+                                          "G6N",
+                                          "G7N",
+                                          "T8N",
+                                          "T9N",
+                                          "C10N",
+                                          "A11N",
+                                          "C12N",
+                                          "T13N",
+                                          "C14N",
+                                          "T15N",
+                                          "G16N",
+                                          "T17N",
+                                          "C18N",
+                                          "A19N",
+                                          "A20N",
+                                          "A21N",
+                                          "T441A",
+                                          "G1729N",
+                                          "T1730N",
+                                          "T1731N",
+                                          "T1732N",
+                                          "G1733N",
+                                          "T1734N",
+                                          "G1735N",
+                                          "A1736N",
+                                          "G1737N",
+                                          "T1738N",
+                                          "T1739N",
+                                          "C1740N",
+                                          "A1741N",
+                                          "A1742N",
+                                          "A1743N",
+                                          "T1744N",
+                                          "T1745N",
+                                          "G1746N",
+                                          "T1747N",
+                                          "G1748N",
+                                          "G1749N",
+                                          "T1750N",
+                                          "T1751N",
+                                          "A1752N",
+                                          "A1753N",
+                                          "A1754N",
+                                          "A1755N",
+                                          "A1756N",
+                                          "C1757N",
+                                          "A1758N",
+                                          "C1759N",
+                                          "C1760N"
+                                        ],
+                                        "HA": [
+                                          "D140E"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: D140E"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "name": "NODE_0000015",
+                                "node_attrs": {
+                                  "div": 0.07150349570269779,
+                                  "num_date": {
+                                    "value": 2012.6128893526738,
+                                    "confidence": [
+                                      2012.540591786768,
+                                      2012.782357648326
+                                    ]
+                                  },
+                                  "region": {
+                                    "value": "Southeast Asia",
+                                    "confidence": {
+                                      "Southeast Asia": 0.999781909409643
+                                    },
+                                    "entropy": 0.0022347371550498953
+                                  },
+                                  "country": {
+                                    "value": "Vietnam",
+                                    "confidence": {
+                                      "Vietnam": 0.9997666677122606
+                                    },
+                                    "entropy": 0.002500701251321912
+                                  }
+                                },
+                                "branch_attrs": {
+                                  "mutations": {
+                                    "nuc": [
+                                      "G36T",
+                                      "T63C",
+                                      "C261T",
+                                      "T281C",
+                                      "A513G",
+                                      "A575G",
+                                      "G589A",
+                                      "T603C",
+                                      "T642C",
+                                      "C654T",
+                                      "A675T",
+                                      "T780C",
+                                      "A846G",
+                                      "T861C",
+                                      "A866G",
+                                      "G912A",
+                                      "G1011A",
+                                      "G1146A",
+                                      "G1158T",
+                                      "A1191G",
+                                      "C1218T",
+                                      "C1254T",
+                                      "G1293A",
+                                      "A1368G",
+                                      "A1426C",
+                                      "T1461A",
+                                      "A1524G",
+                                      "T1591C",
+                                      "G1737A"
+                                    ],
+                                    "HA": [
+                                      "I87T",
+                                      "Q185R",
+                                      "V190I",
+                                      "K282R"
+                                    ]
+                                  },
+                                  "labels": {
+                                    "aa": "HA: I87T, Q185R, V190I, K282R"
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "name": "A/muscovy_duck/Vietnam/LBM335/2013",
+                                    "node_attrs": {
+                                      "div": 0.0755018574131142,
+                                      "num_date": {
+                                        "value": 2013.017808219178,
+                                        "confidence": [
+                                          2013.017808219178,
+                                          2013.017808219178
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Avian"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Southeast Asia",
+                                        "confidence": {
+                                          "Southeast Asia": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Vietnam",
+                                        "confidence": {
+                                          "Vietnam": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "G1N",
+                                          "C2N",
+                                          "A3N",
+                                          "G4N",
+                                          "G5N",
+                                          "G6N",
+                                          "G7N",
+                                          "T90C",
+                                          "A425G",
+                                          "C585T",
+                                          "A684G",
+                                          "A699G",
+                                          "C966T",
+                                          "A1492G",
+                                          "A1753N",
+                                          "A1754N",
+                                          "A1755N",
+                                          "A1756N",
+                                          "C1757N",
+                                          "A1758N",
+                                          "C1759N",
+                                          "C1760N"
+                                        ],
+                                        "HA": [
+                                          "K135R",
+                                          "N491D"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: K135R, N491D"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "name": "A/duck/Vietnam/NCVD_2745/2013",
+                                    "node_attrs": {
+                                      "div": 0.07322270471069255,
+                                      "num_date": {
+                                        "value": 2013.0260273972603,
+                                        "confidence": [
+                                          2013.0260273972603,
+                                          2013.0260273972603
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Avian"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Southeast Asia",
+                                        "confidence": {
+                                          "Southeast Asia": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Vietnam",
+                                        "confidence": {
+                                          "Vietnam": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "G1N",
+                                          "C2N",
+                                          "A3N",
+                                          "G4N",
+                                          "G5N",
+                                          "G6N",
+                                          "G7N",
+                                          "T8N",
+                                          "T9N",
+                                          "C10N",
+                                          "A11N",
+                                          "C12N",
+                                          "T13N",
+                                          "C14N",
+                                          "T15N",
+                                          "G16N",
+                                          "T17N",
+                                          "C18N",
+                                          "A19N",
+                                          "A20N",
+                                          "A21N",
+                                          "G316A",
+                                          "T586C",
+                                          "A819G",
+                                          "G1729N",
+                                          "T1730N",
+                                          "T1731N",
+                                          "T1732N",
+                                          "G1733N",
+                                          "T1734N",
+                                          "G1735N",
+                                          "A1736N",
+                                          "A1737N",
+                                          "T1738N",
+                                          "T1739N",
+                                          "C1740N",
+                                          "A1741N",
+                                          "G1742N",
+                                          "A1743N",
+                                          "T1744N",
+                                          "T1745N",
+                                          "G1746N",
+                                          "T1747N",
+                                          "A1748N",
+                                          "G1749N",
+                                          "T1750N",
+                                          "T1751N",
+                                          "A1752N",
+                                          "A1753N",
+                                          "A1754N",
+                                          "A1755N",
+                                          "A1756N",
+                                          "C1757N",
+                                          "A1758N",
+                                          "C1759N",
+                                          "C1760N"
+                                        ],
+                                        "HA": [
+                                          "A99T"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: A99T"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "name": "A/chicken/Vietnam/NCVD14_A459/2014",
+                                    "node_attrs": {
+                                      "div": 0.07840907003854346,
+                                      "num_date": {
+                                        "value": 2014.1301369863013,
+                                        "confidence": [
+                                          2014.1301369863013,
+                                          2014.1301369863013
+                                        ]
+                                      },
+                                      "host": {
+                                        "value": "Avian"
+                                      },
+                                      "cleavage_site_sequence": {
+                                        "value": "RRKR"
+                                      },
+                                      "furin_cleavage_motif": {
+                                        "value": "present"
+                                      },
+                                      "region": {
+                                        "value": "Southeast Asia",
+                                        "confidence": {
+                                          "Southeast Asia": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      },
+                                      "country": {
+                                        "value": "Vietnam",
+                                        "confidence": {
+                                          "Vietnam": 1.0
+                                        },
+                                        "entropy": -1.000088900581841e-12
+                                      }
+                                    },
+                                    "branch_attrs": {
+                                      "mutations": {
+                                        "nuc": [
+                                          "G1N",
+                                          "C2N",
+                                          "A3N",
+                                          "G4N",
+                                          "G5N",
+                                          "G6N",
+                                          "G7N",
+                                          "T8N",
+                                          "T9N",
+                                          "C10N",
+                                          "A11N",
+                                          "C12N",
+                                          "T13N",
+                                          "C14N",
+                                          "T15N",
+                                          "G16N",
+                                          "T17N",
+                                          "C18N",
+                                          "A19N",
+                                          "A20N",
+                                          "A21N",
+                                          "C58A",
+                                          "T117G",
+                                          "A294G",
+                                          "T490C",
+                                          "T507C",
+                                          "A893G",
+                                          "G918A",
+                                          "A1062G",
+                                          "T1086C",
+                                          "T1419C",
+                                          "G1434A",
+                                          "G1704T",
+                                          "G1729N",
+                                          "T1730N",
+                                          "T1731N",
+                                          "T1732N",
+                                          "G1733N",
+                                          "T1734N",
+                                          "G1735N",
+                                          "A1736N",
+                                          "A1737N",
+                                          "T1738N",
+                                          "T1739N",
+                                          "C1740N",
+                                          "A1741N",
+                                          "G1742N",
+                                          "A1743N",
+                                          "T1744N",
+                                          "T1745N",
+                                          "G1746N",
+                                          "T1747N",
+                                          "A1748N",
+                                          "G1749N",
+                                          "T1750N",
+                                          "T1751N",
+                                          "A1752N",
+                                          "A1753N",
+                                          "A1754N",
+                                          "A1755N",
+                                          "A1756N",
+                                          "C1757N",
+                                          "A1758N",
+                                          "C1759N",
+                                          "C1760N"
+                                        ],
+                                        "HA": [
+                                          "L13I",
+                                          "S157P",
+                                          "N291S"
+                                        ]
+                                      },
+                                      "labels": {
+                                        "aa": "HA: L13I, S157P, N291S"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

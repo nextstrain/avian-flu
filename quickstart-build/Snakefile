@@ -20,15 +20,13 @@ rule all:
 """Specify all input files here. For this build, you'll start with input sequences
 from the example_data folder, which contain metadata information in the
 sequence header. Specify here files denoting specific strains to include or drop,
-references sequences, and files for auspice visualization (lat_longs, colors)"""
+references sequences, and files for auspice visualization"""
 rule files:
     params:
         input_sequences = "example_data/{subtype}_{segment}.fasta",
         dropped_strains = "config/dropped_strains_{subtype}.txt",
         include_strains = "config/include_strains_{subtype}.txt",
         reference = "config/reference_{subtype}_{segment}.gb",
-        colors = "config/colors_{subtype}.tsv",
-        lat_longs = "config/lat_longs_{subtype}.tsv",
         auspice_config = "config/auspice_config_{subtype}.json"
 
 
@@ -305,8 +303,6 @@ rule export:
         tree = rules.refine.output.tree,
         metadata = rules.parse.output.metadata,
         node_data = node_data_by_wildcards,
-        colors = files.colors,
-        lat_longs = files.lat_longs,
         auspice_config = files.auspice_config
     output:
         auspice_json = "auspice/flu_avian_{subtype}_{segment}.json"
@@ -316,8 +312,6 @@ rule export:
             --tree {input.tree} \
             --metadata {input.metadata} \
             --node-data {input.node_data}\
-            --colors {input.colors} \
-            --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \
             --include-root-sequence \
             --output {output.auspice_json}

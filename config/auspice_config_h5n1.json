@@ -4,6 +4,11 @@
     {"name": "Louise Moncla", "url": "http://bedford.io/team/louise-moncla/"}
   ],
   "build_url": "https://github.com/nextstrain/avian-flu",
+  "data_provenance": [
+    {
+      "name": "GISAID"
+    }
+  ],
   "colorings": [
     {
       "key": "gt",

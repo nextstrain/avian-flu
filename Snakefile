@@ -14,7 +14,8 @@ rule files:
         colors = "config/colors_{subtype}.tsv",
         lat_longs = "config/lat_longs_{subtype}.tsv",
         auspice_config = "config/auspice_config_{subtype}.json",
-        clades_file = "clade-labeling/{subtype}-clades.tsv"
+        clades_file = "clade-labeling/{subtype}-clades.tsv",
+        description = "config/description.md"
 
 files = rules.files.params
 
@@ -293,7 +294,8 @@ rule export:
         cleavage_site_sequences = rules.cleavage_site.output.cleavage_site_sequences,
         colors = files.colors,
         lat_longs = files.lat_longs,
-        auspice_config = files.auspice_config
+        auspice_config = files.auspice_config,
+        description = files.description
     output:
         auspice_json = "auspice/flu_avian_{subtype}_{segment}.json"
     shell:
@@ -305,6 +307,7 @@ rule export:
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \
+            --description {input.description} \
             --include-root-sequence \
             --output {output.auspice_json}
         """

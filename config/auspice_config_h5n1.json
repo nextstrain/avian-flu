@@ -36,6 +36,11 @@
       "type": "categorical"
     },
     {
+      "key": "domestic_status",
+      "title": "Domestic or Wild",
+      "type": "categorical"
+    },
+    {
       "key": "h5_label_clade",
       "title": "H5 clade",
       "type": "categorical"

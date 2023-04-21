@@ -8,7 +8,7 @@
     {
       "name": "GISAID"
     }
-  ],  
+  ],
   "colorings": [
     {
       "key": "gt",
@@ -33,6 +33,11 @@
     {
       "key": "host",
       "title": "Host",
+      "type": "categorical"
+    },
+    {
+      "key": "domestic_status",
+      "title": "Domestic or Wild",
       "type": "categorical"
     },
     {

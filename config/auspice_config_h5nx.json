@@ -47,7 +47,12 @@
     },
     {
       "key": "h5_label_clade",
-      "title": "H5 clade",
+      "title": "LABEL clade",
+      "type": "categorical"
+    },
+    {
+      "key": "gisaid_clade",
+      "title": "GISAID clade",
       "type": "categorical"
     },
     {
@@ -58,6 +63,16 @@
     {
       "key": "cleavage_site_sequence",
       "title": "cleavage site sequence",
+      "type": "categorical"
+    },
+    {
+      "key": "authors",
+      "title": "Authors",
+      "type": "categorical"
+    },
+    {
+      "key": "PMID",
+      "title": "Pubmed ID",
       "type": "categorical"
     },
     {
@@ -81,10 +96,13 @@
   },
   "filters": [
     "host",
+    "domestic_status",
     "region",
     "country",
     "submitting_lab",
     "subtype",
-    "h5_label_clade"
+    "h5_label_clade",
+    "gisaid_clade",
+    "authors"
   ]
 }

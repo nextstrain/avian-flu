@@ -84,7 +84,7 @@ separate_new_strains(new_strains, sequences, new_strains_fasta)
 
 """run label and reformat the output"""
 print("\nrunning LABEL to assign clades to", len(new_strains), "new strains of", subtype)
-os.system('flu-amd/LABEL -D {new_strains_fasta} {label_output} H5v2015'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
+os.system('flu-amd/./LABEL -D {new_strains_fasta} {label_output} H5v2015'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
 os.system('python clade-labeling/check-LABEL-annotations.py --label_output {label_output}_final.txt --output {new_clades_file}'.format(new_clades_file=new_clades_file, label_output=label_output))
 
 

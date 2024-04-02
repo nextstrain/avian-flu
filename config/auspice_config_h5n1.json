@@ -1,7 +1,7 @@
 {
   "title": "Real-time tracking of influenza A/H5N1 virus evolution",
   "maintainers": [
-    {"name": "Louise Moncla", "url": "http://bedford.io/team/louise-moncla/"}
+    {"name": "Louise Moncla", "url": "https://lmoncla.github.io/monclalab/"}
   ],
   "build_url": "https://github.com/nextstrain/avian-flu",
   "data_provenance": [
@@ -47,7 +47,7 @@
     },
     {
       "key": "h5_label_clade",
-      "title": "LABEL clade",
+      "title": "Provisional LABEL clade",
       "type": "categorical"
     },
     {

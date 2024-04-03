@@ -1,15 +1,22 @@
-SUBTYPES = ["h5nx","h5n1","h9n2","h7n9"]
-SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+SUBTYPES = ["h5nx-all-time","h5nx-2-year"]#["h5nx","h5n1"]#["h5nx","h5n1"]
+SEGMENTS = #["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
+
+# notes to self: for whatever reason, the paths no longer work for running Snakefile.clades with LABEL in the nextstrain
+# shell environment. Need to run with Nextstrain build .
 
 rule all:
     input:
         auspice_json = expand("auspice/flu_avian_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        #auspice_json = expand("auspice/avian-flu_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        #sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
+        #metadata = expand("results/metadata_{subtype}_{segment}.tsv", subtype=SUBTYPES, segment=SEGMENTS)
 
 rule files:
     params:
         dropped_strains = "config/dropped_strains_{subtype}.txt",
+        include_strains = "config/include_strains_{subtype}.txt",
         reference = "config/reference_{subtype}_{segment}.gb",
         colors = "config/colors_{subtype}.tsv",
         lat_longs = "config/lat_longs_{subtype}.tsv",
@@ -20,19 +27,19 @@ rule files:
 files = rules.files.params
 
 def download_by(w):
-    db = {'h5nx': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
+    db = {'h5nx-all-time': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5nx-2-year': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9','h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
     return(db[w.subtype])
 
 def metadata_by_wildcards(w):
-    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
+    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx-all-time": rules.add_h5_clade.output.metadata, "h5nx-2-year": rules.add_h5_clade.output.metadata,"h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
     return(md[w.subtype])
 
 def group_by(w):
-    gb = {'h5nx': 'subtype country year','h5n1': 'region country year', 'h7n9': 'division year', 'h9n2': 'country year'}
+    gb = {'h5nx-all-time': 'subtype country year','h5nx-2-year': 'subtype country year','h5n1': 'region country year', 'h7n9': 'division year', 'h9n2': 'country year'}
     return gb[w.subtype]
 
 def sequences_per_group(w):
-    spg = {'h5nx': '5','h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
+    spg = {'h5nx-all-time': '5','h5nx-2-year':'30','h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
     return spg[w.subtype]
 
 def min_length(w):
@@ -41,7 +48,7 @@ def min_length(w):
     return(length)
 
 def min_date(w):
-    date = {'h5nx':'1996','h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
+    date = {'h5nx-all-time':'1996','h5nx-2-year':'2022','h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
     return date[w.subtype]
 
 def traits_columns(w):
@@ -53,7 +60,7 @@ rule download:
     output:
         sequences = "data/{subtype}_{segment}.fasta"
     params:
-        fasta_fields = "strain virus accession collection_date region country division location host subtype originating_lab submitting_lab h5_clade",
+        fasta_fields = "strain virus accession collection_date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
         download_by = download_by
     shell:
         """
@@ -65,7 +72,7 @@ rule download:
             --path data \
             --fstem {wildcards.subtype}_{wildcards.segment}
         """
-
+### comment
 rule parse:
     message: "Parsing fasta into sequences and metadata"
     input:
@@ -74,8 +81,8 @@ rule parse:
         sequences = "results/sequences_{subtype}_{segment}.fasta",
         metadata = "results/metadata_{subtype}_{segment}.tsv"
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location host subtype originating_lab submitting_lab h5_clade",
-        prettify_fields = "region country division location host originating_lab submitting_lab"
+        fasta_fields =  "strain virus isolate_id date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
+        prettify_fields = "region country division location host originating_lab submitting_lab authors PMID"
     shell:
         """
         augur parse \
@@ -113,7 +120,8 @@ rule filter:
     input:
         sequences = rules.parse.output.sequences,
         metadata = metadata_by_wildcards,
-        exclude = files.dropped_strains
+        exclude = files.dropped_strains,
+        include = files.include_strains,
     output:
         sequences = "results/filtered_{subtype}_{segment}.fasta"
     params:
@@ -121,7 +129,7 @@ rule filter:
         sequences_per_group = sequences_per_group,
         min_date = min_date,
         min_length = min_length,
-        exclude_where = "host=laboratoryderived host=ferret host=unknown host=other country=? region=?"
+        exclude_where = "host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2"
 
     shell:
         """
@@ -129,6 +137,7 @@ rule filter:
             --sequences {input.sequences} \
             --metadata {input.metadata} \
             --exclude {input.exclude} \
+            --include {input.include} \
             --output {output.sequences} \
             --group-by {params.group_by} \
             --sequences-per-group {params.sequences_per_group} \

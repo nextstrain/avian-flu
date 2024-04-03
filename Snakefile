@@ -1,5 +1,5 @@
 SUBTYPES = ["h5nx-all-time","h5nx-2-year"]#["h5nx","h5n1"]#["h5nx","h5n1"]
-SEGMENTS = #["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+SEGMENTS = ["ha"]#["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
 
@@ -35,7 +35,7 @@ def metadata_by_wildcards(w):
     return(md[w.subtype])
 
 def group_by(w):
-    gb = {'h5nx-all-time': 'subtype country year','h5nx-2-year': 'subtype country year','h5n1': 'region country year', 'h7n9': 'division year', 'h9n2': 'country year'}
+    gb = {'h5nx-all-time': 'subtype country year','h5nx-2-year': 'subtype region month host','h5n1': 'region country year', 'h7n9': 'division year', 'h9n2': 'country year'}
     return gb[w.subtype]
 
 def sequences_per_group(w):
@@ -52,7 +52,7 @@ def min_date(w):
     return date[w.subtype]
 
 def traits_columns(w):
-    traits = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
+    traits = {'h5nx-all-time':'region','h5nx-2-year':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
     return traits[w.subtype]
 
 rule download:

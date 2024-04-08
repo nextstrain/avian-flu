@@ -1,0 +1,76 @@
+LOCUS       AF144303                1565 bp    RNA     linear   VRL 31-AUG-1999
+DEFINITION  Influenza A virus (A/Goose/Guangdong/1/96(H5N1)) nucleocapsid
+            protein (NP) gene, complete cds.
+ACCESSION   AF144303
+VERSION     AF144303.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+  ORGANISM  Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 1565)
+  AUTHORS   Xu,X., Subbarao, Cox,N.J. and Guo,Y.
+  TITLE     Genetic characterization of the pathogenic influenza
+            A/Goose/Guangdong/1/96 (H5N1) virus: similarity of its
+            hemagglutinin gene to those of H5N1 viruses from the 1997 outbreaks
+            in Hong Kong
+  JOURNAL   Virology 261 (1), 15-19 (1999)
+   PUBMED   10484749
+REFERENCE   2  (bases 1 to 1565)
+  AUTHORS   Xu,X., Subbarao,K., Cox,N.J. and Guo,Y.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (20-APR-1999) Influenza Branch, Center for Diseases
+            Control and Prevention, 1600 Clifton Road, Atlanta, GA 30333, USA
+FEATURES             Location/Qualifiers
+     source          1..1565
+                     /organism="Influenza A virus
+                     (A/goose/Guangdong/1/1996(H5N1))"
+                     /mol_type="genomic RNA"
+                     /strain="A/Goose/Guangdong/1/96(H5N1)"
+                     /db_xref="taxon:93838"
+     gene            46..1542
+                     /gene="NP"
+     CDS             46..1542
+                     /gene="NP"
+                     /codon_start=1
+                     /product="nucleocapsid protein"
+                     /protein_id="AAD51925.1"
+                     /translation="MASQGTKRSYEQMETGGERQNATEIRASVGRMVGGIGRFYIQMC
+                     TELKLSDYEGRLIQNSITIERMVLSAFDERRNKYLEEHPSAGKDPKKTGGPIYRRRDG
+                     KWVRELILYDKEEIRRIWRQANNGEDATAGLTHMMIWHSNLNDATYQRTRALVRTGMD
+                     PRMCSLMQGSTLPRRSGAAGAAVKGVGTMVMELIRMIKRGINDRNFWRGENGRRTRIA
+                     YERMCNILKGKFQTAAQRAMMDQVRESRNPGNAEIEDLIFLARSALILRGSVAHKSCL
+                     PACVYGLAVASGYDFEREGYSLVGIDPFRLLQNSQVFSLIRPNENPAHKSQLVWMACH
+                     SAAFEDLRVSSFIRGTRVAPRGQLSTRGVQIASNENMETMDSSTLELRSRYWAIRTRS
+                     GGNTNQQRASAGQISVQPTFSVQRNLPFERATIMAAFTGNTEGRTSDMRTEIIRMMES
+                     SRPEDVSFQGRGVFELSDEKATNPIVPSFDMSNEGSYFFGDNAEEYDN"
+ORIGIN      
+        1 agcaaaagca gggtagataa tcactcactg agtgacatca acatcatggc gtctcagggc
+       61 accaaacgat cttatgaaca gatggaaact ggtggagaac gccagaatgc tactgagatc
+      121 agagcatctg ttggaagaat ggttggtgga attgggaggt tttatataca gatgtgcact
+      181 gaactcaaac tcagcgacta tgaaggaagg ctgattcaga acagcataac aatagagaga
+      241 atggttctct ctgcatttga tgaaaggagg aacaaatacc tggaagaaca tcccagtgcg
+      301 gggaaggacc caaagaaaac tggaggtcca atctaccgaa gaagagacgg aaaatgggtg
+      361 agagagctga ttctgtatga caaagaggag atcaggagaa tttggcgtca agcgaacaat
+      421 ggagaagatg caactgctgg tctcactcac atgatgatct ggcattccaa tctaaatgat
+      481 gccacatacc agagaacaag agctctcgtg cgtactggga tggaccctag aatgtgctct
+      541 ctgatgcaag gatcaactct cccgaggaga tctggagctg ctggtgcggc agtaaaggga
+      601 gtcggaacga tggtgatgga actaattcgg atgataaagc gagggattaa cgatcggaat
+      661 ttctggagag gtgaaaatgg gcgaagaaca agaattgcat atgagagaat gtgcaacatc
+      721 ctcaaaggga aattccaaac agcagcacaa agagcaatga tggatcaggt acgggaaagc
+      781 agaaatcctg ggaatgctga gattgaagat ctcatatttc tggcacggtc tgcactcatc
+      841 ctgagaggat cagtggccca caagtcctgc ttgcctgctt gtgtgtacgg gcttgccgtg
+      901 gccagtggat atgactttga gagagaaggg tactctctgg tcgggattga tcctttccgt
+      961 ctgctgcaaa acagccaggt ctttagtcta attagaccaa atgagaatcc agcacataaa
+     1021 agtcaattgg tgtggatggc atgccattct gcagcatttg aagatctgag agtctcaagc
+     1081 ttcatcagag ggacaagagt ggccccaagg ggacaactat ctactagagg agttcaaatt
+     1141 gcttcaaatg agaacatgga aacaatggac tccagcactc ttgaactgag aagcagatat
+     1201 tgggctataa ggaccaggag tggaggaaac accaaccagc agagagcatc tgcaggacaa
+     1261 atcagtgtgc agcctacttt ctcggtacag agaaatcttc ccttcgaaag agcgaccatt
+     1321 atggcggcat tcacagggaa tacagagggc agaacatctg acatgaggac tgaaatcata
+     1381 aggatgatgg aaagctccag accagaagat gtgtctttcc aggggcgggg agtcttcgag
+     1441 ctctcggacg aaaaggcaac gaacccgatc gtgccttcct ttgacatgag taatgaagga
+     1501 tcttatttct tcggagacaa tgcagaggaa tatgacaatt gaagaaaaat acccttgttt
+     1561 ctact
+//
+

@@ -1,0 +1,71 @@
+LOCUS       AF144307                 865 bp    RNA     linear   VRL 01-SEP-1999
+DEFINITION  Influenza A virus (A/Goose/Guangdong/1/96(H5N1)) nonstructural
+            proteins NS1 and NS2 (NS) gene, alternatively spliced products,
+            complete cds.
+ACCESSION   AF144307
+VERSION     AF144307.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+  ORGANISM  Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Orthomyxoviridae; Influenzavirus A.
+REFERENCE   1  (bases 1 to 865)
+  AUTHORS   Xu,X., Subbarao, Cox,N.J. and Guo,Y.
+  TITLE     Genetic characterization of the pathogenic influenza
+            A/Goose/Guangdong/1/96 (H5N1) virus: similarity of its
+            hemagglutinin gene to those of H5N1 viruses from the 1997 outbreaks
+            in Hong Kong
+  JOURNAL   Virology 261 (1), 15-19 (1999)
+   PUBMED   10484749
+REFERENCE   2  (bases 1 to 865)
+  AUTHORS   Xu,X., Subbarao,K., Cox,N.J. and Guo,Y.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (20-APR-1999) Influenza Branch, Center for Diseases
+            Control and Prevention, 1600 Clifton Road, Atlanta, GA 30333, USA
+FEATURES             Location/Qualifiers
+     source          1..865
+                     /organism="Influenza A virus
+                     (A/goose/Guangdong/1/1996(H5N1))"
+                     /mol_type="genomic RNA"
+                     /strain="A/Goose/Guangdong/1/96(H5N1)"
+                     /db_xref="taxon:93838"
+     gene            15..852
+                     /gene="NS"
+     CDS             join(15..44,517..852)
+                     /gene="NS2"
+                     /note="NS2"
+                     /codon_start=1
+                     /product="nonstructural protein 2"
+                     /protein_id="AAD51931.1"
+                     /translation="MDSNTITSFQDILQRMSKMQLESSSVDLNGMITQFERLKIYRDS
+                     LGESMMRMGDLHSLQNRNATWRNELSQKFEEIRWLIAECRNILTKTENSFEQITFLQA
+                     LQLLLEVESEIRTFSFQLI"
+     CDS             15..707
+                     /gene="NS1"
+                     /note="NS1"
+                     /codon_start=1
+                     /product="nonstructural protein 1"
+                     /protein_id="AAD51930.1"
+                     /translation="MDSNTITSFQVDCYLWHIRKLLSMRDMCDAPFDDRLRRDQKALK
+                     GRGSTLGLDLRVATMEGKKIVEDILKSETNENLKIAIASSPAPRYITDMSIEEMSREW
+                     YMLMPRQKITGGLMVKMDQAIMDKRIILKANFSVLFDQLETLVSLRAFTESGAIVAEI
+                     FPIPSVPGHFTEDVKNAIGILIGGLEWNDNSIRASENIQRFAWGIHDENGGPSLPPKQ
+                     KRYMAKRVESEV"
+ORIGIN      
+        1 gtgacaaaga cataatggat tccaacacga taacctcgtt tcaggtagat tgttatctat
+       61 ggcacataag aaagctactc agtatgagag acatgtgtga tgcccccttt gatgacaggc
+      121 tccgaagaga ccaaaaggca ttaaagggaa gaggcagcac acttggactc gatttaagag
+      181 tggctacaat ggaggggaaa aagatcgttg aggacatcct gaagagtgag acaaatgaaa
+      241 acctcaaaat agccattgct tccagtcctg ctcctcggta tatcaccgat atgagcatag
+      301 aggagatgag ccgagaatgg tacatgctga tgcctaggca gaaaataact ggaggcctta
+      361 tggtgaaaat ggaccaagcc ataatggata aaagaattat ccttaaagca aatttctcag
+      421 ttctatttga tcaactagag acattagtct ctctgagggc attcacagaa agtggtgcta
+      481 ttgtggctga aatatttccc attccctccg taccaggaca ttttacagag gatgtcaaaa
+      541 atgcaattgg aatcctcatc ggtggacttg aatggaatga taactcaatt cgagcgtctg
+      601 aaaatataca gagattcgct tggggaatcc atgatgagaa tgggggacct tcactccctc
+      661 caaaacagaa acgctacatg gcgaaacgag ttgagtcaga agtttgaaga gatcagatgg
+      721 ctcattgctg aatgtagaaa tatactgaca aagactgaaa atagctttga acagataaca
+      781 tttttgcaag cattgcaact cttacttgaa gttgagagtg agataaggac cttctctttt
+      841 cagcttattt aatactaaaa aacac
+//
+

@@ -48,12 +48,20 @@ def min_length(w):
     return(length)
 
 def min_date(w):
-    date = {'h5nx-all-time':'1996','h5nx-2-year':'2022','h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
+    date = {'h5nx-all-time':'1996','h5nx-2-year':'2Y','h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
     return date[w.subtype]
 
 def traits_columns(w):
     traits = {'h5nx-all-time':'region','h5nx-2-year':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
     return traits[w.subtype]
+
+def clock_rate(w):
+    clock_rate = {'h5nx-all-time':None,'h5nx-2-year':'0.0048','h5n1': None, 'h7n9': None, 'h9n2': None}
+    return clock_rate[w.subtype]
+
+def clock_rate_std_dev(w):
+    clock_rate_std_dev = {'h5nx-all-time':None,'h5nx-2-year':'0.00211','h5n1': None, 'h7n9': None, 'h9n2': None}
+    return clock_rate_std_dev[w.subtype]
 
 rule download:
     message: "Downloading sequences from fauna"
@@ -204,7 +212,9 @@ rule refine:
     params:
         coalescent = "const",
         date_inference = "marginal",
-        clock_filter_iqd = 4
+        clock_filter_iqd = 4,
+        clock = clock_rate,
+        clock_std_dev = clock_rate_std_dev
     shell:
         """
         augur refine \
@@ -217,6 +227,8 @@ rule refine:
             --coalescent {params.coalescent} \
             --date-confidence \
             --date-inference {params.date_inference} \
+            --clock-rate {params.clock} \
+            --clock-std-dev {params.clock_std_dev} \
             --clock-filter-iqd {params.clock_filter_iqd}
         """
 

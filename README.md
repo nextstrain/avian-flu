@@ -35,6 +35,23 @@ To string these together and update the `clades.tsv` file for new sequences and 
 
 `snakemake -s Snakefile.clades -p --cores 1 && snakemake -p --cores 1`
 
+### Using the same strains for all segments
+
+By default we subsample data for each segment independently.
+Alternatively, you can ask the pipeline to use the same strains for each segment.
+This modifies the pipeline in a few ways:
+1. An additional metadata processing step is added which counts the number of segments a strain has sequence data for
+2. Subsampling is performed as normal for the HA segment, with the additional condition that each sample has sequence data for all segments
+3. All other segments are subsampled to contain the same strains as used for HA in step 2
+
+To enable this set the config parameter `same_strains_per_segment` to a truthy value. If you are calling `snakemake` directly you can add
+
+    --config 'same_strains_per_segment=True'
+
+If you are using `nextstrain build` then add that to the end of the command (i.e. as a parameter which will be passed through to Snakemake).
+
+Note that you may need to remove any existing data in `results/` in order for snakemake to correctly regenerate the intermediate files.
+
 ## To modify this build to work with your own data
 Although the simplest way to generate a custom build is via the quickstart build, you are welcome to clone this repo and use it as a starting point for running your own, local builds if you'd like. The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. This build is slightly more complicated than other builds, and has a few custom functions in it to accommodate all the features on [nextstrain.org](https://nextstrain.org/flu/avian), and makes use of wildcards for both subtypes and gene segments. If you'd like to adapt this full, non-simplified pipeline here to your own data (which you may want to do if you also want to annotate clades), you would need to make a few changes and additions:
 

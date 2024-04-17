@@ -1,15 +1,19 @@
-SUBTYPES = ["h5nx","h5n1","h9n2","h7n9"]
+SUBTYPES = ["h5nx","h5n1"]#["h5nx","h5n1","h9n2","h7n9"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
 path_to_fauna = '../fauna'
 
 rule all:
     input:
-        auspice_json = expand("auspice/flu_avian_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        #auspice_json = expand("auspice/flu_avian_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        auspice_json = expand("auspice/avian-flu_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        #sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
+        #metadata = expand("results/metadata_{subtype}_{segment}.tsv", subtype=SUBTYPES, segment=SEGMENTS)
 
 rule files:
     params:
         dropped_strains = "config/dropped_strains_{subtype}.txt",
+        include_strains = "config/include_strains_{subtype}.txt",
         reference = "config/reference_{subtype}_{segment}.gb",
         colors = "config/colors_{subtype}.tsv",
         lat_longs = "config/lat_longs_{subtype}.tsv",
@@ -113,7 +117,8 @@ rule filter:
     input:
         sequences = rules.parse.output.sequences,
         metadata = metadata_by_wildcards,
-        exclude = files.dropped_strains
+        exclude = files.dropped_strains,
+        include = files.include_strains
     output:
         sequences = "results/filtered_{subtype}_{segment}.fasta"
     params:
@@ -129,6 +134,7 @@ rule filter:
             --sequences {input.sequences} \
             --metadata {input.metadata} \
             --exclude {input.exclude} \
+            --include {input.include}\
             --output {output.sequences} \
             --group-by {params.group_by} \
             --sequences-per-group {params.sequences_per_group} \
@@ -297,7 +303,7 @@ rule export:
         auspice_config = files.auspice_config,
         description = files.description
     output:
-        auspice_json = "auspice/flu_avian_{subtype}_{segment}.json"
+        auspice_json = "auspice/avian-flu_{subtype}_{segment}.json"
     shell:
         """
         augur export v2 \

@@ -1,7 +1,6 @@
 A/Colorado/18/2022
 A/England/215201407/2021
 A/Astrakhan/3212/2020
-A/Goose/Guangdong/1/1996
 A/Mink/Spain/3691822VIR1058610/2022
 A/Mink/Spain/3691222VIR105868/2022
 A/Mink/Spain/36911022VIR1058611/2022
@@ -22,7 +21,18 @@ A/dairycattle/Texas/24008749004original/2024
 A/dairycattle/Texas/24008749006original/2024
 A/dairycattle/Texas/24008749007original/2024
 A/dairycattle/Texas/24008749005original/2024
+A/dairycattle/Texas/24008749002v/2024
 A/goat/Minnesota/24007234006original/2024
 A/goat/Minnesota/24007234009original/2024
 A/goat/Minnesota/24007234003original/2024
 A/Texas/37/2024
+A/feline/USA/24009116005original/2024
+A/feline/USA/24008850001original/2024
+A/feline/USA/24009116004original/2024
+A/feline/USA/24009116002original/2024
+A/feline/USA/24008764001original/2024
+A/feline/USA/24009311006original/2024
+A/feline/USA/24008764002original/2024
+A/feline/USA/23037332001original/2023
+A/feline/USA/24008850002original/2024
+A/feline/USA/24009311004original/2024

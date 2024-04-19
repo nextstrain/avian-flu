@@ -30,8 +30,8 @@ if __name__ == '__main__':
         for segment in params.segments:
             call = ['nextstrain', 'build', '--aws-batch', '.', '-j 1']
             targets = []
-            targets.append('auspice/flu_avian_%s_%s_tree.json'%(subtype, segment))
-            targets.append('auspice/flu_avian_%s_%s_meta.json'%(subtype, segment))
+            targets.append('auspice/avian-flu_%s_%s_tree.json'%(subtype, segment))
+            targets.append('auspice/avian-flu_%s_%s_meta.json'%(subtype, segment))
             call.extend(targets)
             print(' '.join(call))
             log = open('logs/%s_%s.txt'%(subtype, segment), 'w')

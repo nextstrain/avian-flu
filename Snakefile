@@ -1,6 +1,6 @@
 SUBTYPES = ["h5nx","h5n1","h7n9","h9n2"]#["h5nx","h5n1"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
-TIME = ["all-time","3-year"]
+TIME =     ["all-time","2y"]
 
 path_to_fauna = '../fauna'
 
@@ -41,7 +41,12 @@ def metadata_by_wildcards(w):
     return(md[w.subtype])
 
 def group_by(w):
-    gb = {'h5nx': {'all-time':'subtype country year','3-year': 'subtype region month host'},'h5n1': {'all-time':'region country year','3-year':'subtype region month host'}, 'h7n9': {'all-time':'division year'}, 'h9n2': {'all-time':'country year'}}
+    gb = {
+        'h5nx': {'all-time': 'subtype country year', '2y': 'subtype region month host'},
+        'h5n1': {'all-time': 'region country year', '2y': 'subtype region month host'},
+        'h7n9': {'all-time': 'division year'},
+        'h9n2': {'all-time': 'country year'}
+        }
     return gb[w.subtype][w.time]
 
 def min_length(w):
@@ -50,7 +55,12 @@ def min_length(w):
     return(length)
 
 def min_date(w):
-    date = {'h5nx': {'all-time':'1996','3-year': '3Y'},'h5n1': {'all-time':'1996','3-year':'3Y'}, 'h7n9': {'all-time':'2013'}, 'h9n2': {'all-time':'1966'}}
+    date = {
+        'h5nx': {'all-time': '1996', '2y': '2Y'},
+        'h5n1': {'all-time': '1996', '2y': '2Y'},
+        'h7n9': {'all-time': '2013'},
+        'h9n2': {'all-time': '1966'}
+        }
     return date[w.subtype][w.time]
 
 def traits_columns(w):
@@ -58,16 +68,46 @@ def traits_columns(w):
     return traits[w.subtype]
 
 def clock_rate(w):
-    clock_rates_h5nx = {'pb2':'--clock-rate 0.00287','pb1':'--clock-rate 0.00267', 'pa':'--clock-rate 0.00238','ha':'--clock-rate 0.0048','np':'--clock-rate 0.0022','na':'--clock-rate 0.0028','mp':'--clock-rate 0.0017','ns':'--clock-rate 0.0017'}
-    clock_rates_h5n1 = {'pb2':'--clock-rate 0.00287','pb1':'--clock-rate 0.00264', 'pa':'--clock-rate 0.00248','ha':'--clock-rate 0.00455','np':'--clock-rate 0.00252','na':'--clock-rate 0.00349','mp':'--clock-rate 0.00191','ns':'--clock-rate 0.00249'}
+    clock_rates_h5nx = {
+        'pb2': '--clock-rate 0.00287',
+        'pb1': '--clock-rate 0.00267',
+        'pa': '--clock-rate 0.00238',
+        'ha': '--clock-rate 0.0048',
+        'np': '--clock-rate 0.0022',
+        'na': '--clock-rate 0.0028',
+        'mp': '--clock-rate 0.0017',
+        'ns': '--clock-rate 0.0017'
+        }
 
-    clock_rate = {'h5nx': {'all-time':'','3-year': clock_rates_h5nx[w.segment]},'h5n1': {'all-time':'','3-year':clock_rates_h5n1[w.segment]}, 'h7n9': {'all-time':''}, 'h9n2': {'all-time':''}}
+    clock_rates_h5n1 = {
+        'pb2': '--clock-rate 0.00287',
+        'pb1': '--clock-rate 0.00264',
+        'pa': '--clock-rate 0.00248',
+        'ha': '--clock-rate 0.00455',
+        'np': '--clock-rate 0.00252',
+        'na': '--clock-rate 0.00349',
+        'mp': '--clock-rate 0.00191',
+        'ns': '--clock-rate 0.00249'
+        }
+
+    clock_rate = {
+        'h5nx': {'all-time':'', '2y': clock_rates_h5nx[w.segment]},
+        'h5n1': {'all-time':'', '2y': clock_rates_h5n1[w.segment]},
+        'h7n9': {'all-time':''},
+        'h9n2': {'all-time':''}
+        }
 
     return clock_rate[w.subtype][w.time]
 
 
 def clock_rate_std_dev(w):
-    clock_rate_std_dev = {'h5nx': {'all-time':'','3-year': '--clock-std-dev 0.00211'},'h5n1': {'all-time':'','3-year':'--clock-std-dev 0.00211'}, 'h7n9': {'all-time':''}, 'h9n2': {'all-time':''}}
+    clock_rate_std_dev = {
+        'h5nx': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
+        'h5n1': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
+        'h7n9': {'all-time': ''},
+        'h9n2': {'all-time': ''}
+        }
+
     return clock_rate_std_dev[w.subtype][w.time]
 
 

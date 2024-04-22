@@ -1,17 +1,22 @@
-SUBTYPES = ["h5nx","h5n1"]#["h5nx","h5n1"]
-SEGMENTS = ["pb2","ha"]#["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+SUBTYPES = ["h5nx","h5n1","h7n9","h9n2"]#["h5nx","h5n1"]
+SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 TIME = ["all-time","3-year"]
 
 path_to_fauna = '../fauna'
 
 
+def all_targets():
+    return [
+        *expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=["h5nx","h5n1"], segment=SEGMENTS,time=TIME),
+        *expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=['h7n9', 'h9n2'], segment=SEGMENTS,time=['all-time'])
+    ]
+
 rule all:
     input:
-        auspice_json = expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=SUBTYPES, segment=SEGMENTS,time=TIME)
+        auspice_json = all_targets()
+        # sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
+        # metadata = expand("results/metadata_{subtype}_{segment}.tsv", subtype=SUBTYPES, segment=SEGMENTS)
 
-        #auspice_json = expand("auspice/avian-flu_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
-        #sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
-        #metadata = expand("results/metadata_{subtype}_{segment}.tsv", subtype=SUBTYPES, segment=SEGMENTS)
 
 rule files:
     params:
@@ -39,12 +44,8 @@ def group_by(w):
     gb = {'h5nx': {'all-time':'subtype country year','3-year': 'subtype region month host'},'h5n1': {'all-time':'region country year','3-year':'subtype region month host'}, 'h7n9': {'all-time':'division year'}, 'h9n2': {'all-time':'country year'}}
     return gb[w.subtype][w.time]
 
-# def sequences_per_group(w):
-#     spg = {'h5nx': {'all-time':'5','3-year': '30'},'h5n1': {'all-time':'10','3-year':'40'}, 'h7n9': {'all-time':'70'}, 'h9n2': {'all-time':'10'}}
-#     return spg[w.subtype][w.time]
-
 def sequences_per_group(w):
-    spg = {'h5nx': {'all-time':'1','3-year': '1'},'h5n1': {'all-time':'1','3-year':'1'}, 'h7n9': {'all-time':'70'}, 'h9n2': {'all-time':'10'}}
+    spg = {'h5nx': {'all-time':'5','3-year': '30'},'h5n1': {'all-time':'10','3-year':'40'}, 'h7n9': {'all-time':'70'}, 'h9n2': {'all-time':'10'}}
     return spg[w.subtype][w.time]
 
 def min_length(w):
@@ -70,7 +71,7 @@ def clock_rate(w):
 
 
 def clock_rate_std_dev(w):
-    clock_rate_std_dev = {'h5nx': {'all-time':'','3-year': '--clock-std-dev 0.00211'},'h5n1': {'all-time':'','3-year':'--clock-std-dev 0.00211'}, 'h7n9': {'all-time':''}, 'h9n2': {'all-time':'None'}}
+    clock_rate_std_dev = {'h5nx': {'all-time':'','3-year': '--clock-std-dev 0.00211'},'h5n1': {'all-time':'','3-year':'--clock-std-dev 0.00211'}, 'h7n9': {'all-time':''}, 'h9n2': {'all-time':''}}
     return clock_rate_std_dev[w.subtype][w.time]
 
 

@@ -44,10 +44,6 @@ def group_by(w):
     gb = {'h5nx': {'all-time':'subtype country year','3-year': 'subtype region month host'},'h5n1': {'all-time':'region country year','3-year':'subtype region month host'}, 'h7n9': {'all-time':'division year'}, 'h9n2': {'all-time':'country year'}}
     return gb[w.subtype][w.time]
 
-def sequences_per_group(w):
-    spg = {'h5nx': {'all-time':'5','3-year': '30'},'h5n1': {'all-time':'10','3-year':'40'}, 'h7n9': {'all-time':'70'}, 'h9n2': {'all-time':'10'}}
-    return spg[w.subtype][w.time]
-
 def min_length(w):
     len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400, "na":1270, "mp":900, "ns":800}
     length = len_dict[w.segment]
@@ -132,7 +128,8 @@ rule filter:
     message:
         """
         Filtering to
-          - {params.sequences_per_group} sequence(s) per {params.group_by!s}
+          - subsampling to {params.subsample_max_sequences} sequences
+          - grouping by {params.group_by}
           - excluding strains in {input.exclude}
           - samples with missing region and country metadata
           - excluding strains prior to {params.min_date}
@@ -146,7 +143,7 @@ rule filter:
         sequences = "results/filtered_{subtype}_{segment}_{time}.fasta"
     params:
         group_by = group_by,
-        sequences_per_group = sequences_per_group,
+        subsample_max_sequences = 3000,
         min_date = min_date,
         min_length = min_length,
         exclude_where = "host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2"
@@ -160,7 +157,7 @@ rule filter:
             --include {input.include} \
             --output {output.sequences} \
             --group-by {params.group_by} \
-            --sequences-per-group {params.sequences_per_group} \
+            --subsample-max-sequences {params.subsample_max_sequences} \
             --min-date {params.min_date} \
             --exclude-where {params.exclude_where} \
             --min-length {params.min_length} \

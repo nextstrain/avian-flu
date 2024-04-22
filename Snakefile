@@ -8,11 +8,6 @@ path_to_fauna = '../fauna'
 rule all:
     input:
         auspice_json = expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=SUBTYPES, segment=SEGMENTS,time=TIME)
-        # auspice_json = expand("auspice/flu_avian_h5nx_{segment}_{time}.json", segment=SEGMENTS,time=TIME),
-        # auspice_json = expand("auspice/flu_avian_h5n1_{segment}_{time}.json", segment=SEGMENTS,time=TIME),
-        # auspice_json = expand("auspice/flu_avian_h7n9_{segment}_all-time.json", segment=SEGMENTS),
-        # auspice_json = expand("auspice/flu_avian_h9n2_{segment}_all-time.json", segment=SEGMENTS)
-
 
         #auspice_json = expand("auspice/avian-flu_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
         #sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
@@ -30,6 +25,7 @@ rule files:
         description = "config/description.md"
 
 files = rules.files.params
+
 
 def download_by(w):
     db = {'h5nx': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
@@ -305,10 +301,10 @@ rule traits:
 rule cleavage_site:
     message: "determining sequences that harbor furin cleavage sites"
     input:
-        alignment = "results/aligned_{subtype}_ha.fasta"
+        alignment = "results/aligned_{subtype}_ha_{time}.fasta"
     output:
-        cleavage_site_annotations = "results/cleavage-site_{subtype}_ha.json",
-        cleavage_site_sequences = "results/cleavage-site-sequences_{subtype}_ha.json"
+        cleavage_site_annotations = "results/cleavage-site_{subtype}_ha_{time}.json",
+        cleavage_site_sequences = "results/cleavage-site-sequences_{subtype}_ha_{time}.json"
     shell:
         """
         python scripts/annotate-ha-cleavage-site.py \

@@ -1,14 +1,19 @@
-SUBTYPES = ["h5nx-all-time","h5nx-2-year"]#["h5nx","h5n1"]#["h5nx","h5n1"]
-SEGMENTS = ["ha"]#["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+SUBTYPES = ["h5nx","h5n1"]#["h5nx","h5n1"]
+SEGMENTS = ["pb2","ha"]#["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+TIME = ["all-time","3-year"]
 
 path_to_fauna = '../fauna'
 
-# notes to self: for whatever reason, the paths no longer work for running Snakefile.clades with LABEL in the nextstrain
-# shell environment. Need to run with Nextstrain build .
 
 rule all:
     input:
-        auspice_json = expand("auspice/flu_avian_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        auspice_json = expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=SUBTYPES, segment=SEGMENTS,time=TIME)
+        # auspice_json = expand("auspice/flu_avian_h5nx_{segment}_{time}.json", segment=SEGMENTS,time=TIME),
+        # auspice_json = expand("auspice/flu_avian_h5n1_{segment}_{time}.json", segment=SEGMENTS,time=TIME),
+        # auspice_json = expand("auspice/flu_avian_h7n9_{segment}_all-time.json", segment=SEGMENTS),
+        # auspice_json = expand("auspice/flu_avian_h9n2_{segment}_all-time.json", segment=SEGMENTS)
+
+
         #auspice_json = expand("auspice/avian-flu_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
         #sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
         #metadata = expand("results/metadata_{subtype}_{segment}.tsv", subtype=SUBTYPES, segment=SEGMENTS)
@@ -27,20 +32,24 @@ rule files:
 files = rules.files.params
 
 def download_by(w):
-    db = {'h5nx-all-time': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5nx-2-year': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9','h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
+    db = {'h5nx': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
     return(db[w.subtype])
 
 def metadata_by_wildcards(w):
-    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx-all-time": rules.add_h5_clade.output.metadata, "h5nx-2-year": rules.add_h5_clade.output.metadata,"h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
+    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
     return(md[w.subtype])
 
 def group_by(w):
-    gb = {'h5nx-all-time': 'subtype country year','h5nx-2-year': 'subtype region month host','h5n1': 'region country year', 'h7n9': 'division year', 'h9n2': 'country year'}
-    return gb[w.subtype]
+    gb = {'h5nx': {'all-time':'subtype country year','3-year': 'subtype region month host'},'h5n1': {'all-time':'region country year','3-year':'subtype region month host'}, 'h7n9': {'all-time':'division year'}, 'h9n2': {'all-time':'country year'}}
+    return gb[w.subtype][w.time]
+
+# def sequences_per_group(w):
+#     spg = {'h5nx': {'all-time':'5','3-year': '30'},'h5n1': {'all-time':'10','3-year':'40'}, 'h7n9': {'all-time':'70'}, 'h9n2': {'all-time':'10'}}
+#     return spg[w.subtype][w.time]
 
 def sequences_per_group(w):
-    spg = {'h5nx-all-time': '5','h5nx-2-year':'30','h5n1': '10', 'h7n9': '70', 'h9n2': '10'}
-    return spg[w.subtype]
+    spg = {'h5nx': {'all-time':'1','3-year': '1'},'h5n1': {'all-time':'1','3-year':'1'}, 'h7n9': {'all-time':'70'}, 'h9n2': {'all-time':'10'}}
+    return spg[w.subtype][w.time]
 
 def min_length(w):
     len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400, "na":1270, "mp":900, "ns":800}
@@ -48,20 +57,26 @@ def min_length(w):
     return(length)
 
 def min_date(w):
-    date = {'h5nx-all-time':'1996','h5nx-2-year':'2Y','h5n1': '1996', 'h7n9': '2013', 'h9n2': '1966'}
-    return date[w.subtype]
+    date = {'h5nx': {'all-time':'1996','3-year': '3Y'},'h5n1': {'all-time':'1996','3-year':'3Y'}, 'h7n9': {'all-time':'2013'}, 'h9n2': {'all-time':'1966'}}
+    return date[w.subtype][w.time]
 
 def traits_columns(w):
-    traits = {'h5nx-all-time':'region','h5nx-2-year':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
+    traits = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
     return traits[w.subtype]
 
 def clock_rate(w):
-    clock_rate = {'h5nx-all-time':None,'h5nx-2-year':'0.0048','h5n1': None, 'h7n9': None, 'h9n2': None}
-    return clock_rate[w.subtype]
+    clock_rates_h5nx = {'pb2':'--clock-rate 0.00287','pb1':'--clock-rate 0.00267', 'pa':'--clock-rate 0.00238','ha':'--clock-rate 0.0048','np':'--clock-rate 0.0022','na':'--clock-rate 0.0028','mp':'--clock-rate 0.0017','ns':'--clock-rate 0.0017'}
+    clock_rates_h5n1 = {'pb2':'--clock-rate 0.00287','pb1':'--clock-rate 0.00264', 'pa':'--clock-rate 0.00248','ha':'--clock-rate 0.00455','np':'--clock-rate 0.00252','na':'--clock-rate 0.00349','mp':'--clock-rate 0.00191','ns':'--clock-rate 0.00249'}
+
+    clock_rate = {'h5nx': {'all-time':'','3-year': clock_rates_h5nx[w.segment]},'h5n1': {'all-time':'','3-year':clock_rates_h5n1[w.segment]}, 'h7n9': {'all-time':''}, 'h9n2': {'all-time':''}}
+
+    return clock_rate[w.subtype][w.time]
+
 
 def clock_rate_std_dev(w):
-    clock_rate_std_dev = {'h5nx-all-time':None,'h5nx-2-year':'0.00211','h5n1': None, 'h7n9': None, 'h9n2': None}
-    return clock_rate_std_dev[w.subtype]
+    clock_rate_std_dev = {'h5nx': {'all-time':'','3-year': '--clock-std-dev 0.00211'},'h5n1': {'all-time':'','3-year':'--clock-std-dev 0.00211'}, 'h7n9': {'all-time':''}, 'h9n2': {'all-time':'None'}}
+    return clock_rate_std_dev[w.subtype][w.time]
+
 
 rule download:
     message: "Downloading sequences from fauna"
@@ -129,9 +144,9 @@ rule filter:
         sequences = rules.parse.output.sequences,
         metadata = metadata_by_wildcards,
         exclude = files.dropped_strains,
-        include = files.include_strains,
+        include = files.include_strains
     output:
-        sequences = "results/filtered_{subtype}_{segment}.fasta"
+        sequences = "results/filtered_{subtype}_{segment}_{time}.fasta"
     params:
         group_by = group_by,
         sequences_per_group = sequences_per_group,
@@ -165,7 +180,7 @@ rule align:
         sequences = rules.filter.output.sequences,
         reference = files.reference
     output:
-        alignment = "results/aligned_{subtype}_{segment}.fasta"
+        alignment = "results/aligned_{subtype}_{segment}_{time}.fasta"
     shell:
         """
         augur align \
@@ -182,7 +197,7 @@ rule tree:
     input:
         alignment = rules.align.output.alignment
     output:
-        tree = "results/tree-raw_{subtype}_{segment}.nwk"
+        tree = "results/tree-raw_{subtype}_{segment}_{time}.nwk"
     params:
         method = "iqtree"
     shell:
@@ -207,8 +222,8 @@ rule refine:
         alignment = rules.align.output,
         metadata = rules.parse.output.metadata
     output:
-        tree = "results/tree_{subtype}_{segment}.nwk",
-        node_data = "results/branch-lengths_{subtype}_{segment}.json"
+        tree = "results/tree_{subtype}_{segment}_{time}.nwk",
+        node_data = "results/branch-lengths_{subtype}_{segment}_{time}.json"
     params:
         coalescent = "const",
         date_inference = "marginal",
@@ -227,8 +242,8 @@ rule refine:
             --coalescent {params.coalescent} \
             --date-confidence \
             --date-inference {params.date_inference} \
-            --clock-rate {params.clock} \
-            --clock-std-dev {params.clock_std_dev} \
+            {params.clock} \
+            {params.clock_std_dev} \
             --clock-filter-iqd {params.clock_filter_iqd}
         """
 
@@ -238,7 +253,7 @@ rule ancestral:
         tree = rules.refine.output.tree,
         alignment = rules.align.output
     output:
-        node_data = "results/nt-muts_{subtype}_{segment}.json"
+        node_data = "results/nt-muts_{subtype}_{segment}_{time}.json"
     params:
         inference = "joint"
     shell:
@@ -258,7 +273,7 @@ rule translate:
         node_data = rules.ancestral.output.node_data,
         reference = files.reference
     output:
-        node_data = "results/aa-muts_{subtype}_{segment}.json"
+        node_data = "results/aa-muts_{subtype}_{segment}_{time}.json"
     shell:
         """
         augur translate \
@@ -274,7 +289,7 @@ rule traits:
         tree = rules.refine.output.tree,
         metadata = rules.parse.output.metadata
     output:
-        node_data = "results/traits_{subtype}_{segment}.json",
+        node_data = "results/traits_{subtype}_{segment}_{time}.json",
     params:
         columns = traits_columns,
     shell:
@@ -318,7 +333,7 @@ rule export:
         auspice_config = files.auspice_config,
         description = files.description
     output:
-        auspice_json = "auspice/flu_avian_{subtype}_{segment}.json"
+        auspice_json = "auspice/flu_avian_{subtype}_{segment}_{time}.json"
     shell:
         """
         augur export v2 \

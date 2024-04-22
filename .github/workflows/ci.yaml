@@ -8,4 +8,4 @@ jobs:
   ci:
     uses: nextstrain/.github/.github/workflows/pathogen-repo-ci.yaml@master
     with:
-      build-args: auspice/flu_avian_h5n1_ha.json
+      build-args: auspice/flu_avian_h5n1_ha_all-time.json

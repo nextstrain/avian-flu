@@ -18,7 +18,7 @@ rule all:
 rule files:
     params:
         dropped_strains = "config/dropped_strains_{subtype}.txt",
-        include_strains = "config/include_strains_{subtype}.txt",
+        include_strains = "config/include_strains_{subtype}_{time}.txt",
         reference = "config/reference_{subtype}_{segment}.gb",
         colors = "config/colors_{subtype}.tsv",
         lat_longs = "config/lat_longs_{subtype}.tsv",

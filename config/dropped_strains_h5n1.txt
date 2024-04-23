@@ -6,3 +6,6 @@ A/chicken/Dakahlia/110/2007 # divergent
 A/chicken/Pessel/BPPVRII/2007 # divergent
 A/duck/China/E26/2012 # divergent
 A/Fox/Bayern/WS113/2022
+A/mallard/Denmark/091795/2022
+A/Mallard/Netherlands/8/2023
+A/kelpgull/Chile/C35523/2017

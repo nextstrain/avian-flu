@@ -1,0 +1,77 @@
+LOCUS       OL638147                1422 bp    cRNA    linear   VRL 01-DEC-2021
+DEFINITION  Influenza A virus (A/goose/Czech Republic/18520-2/2021(H5N1))
+            segment 6 neuraminidase (NA) gene, complete cds.
+ACCESSION   OL638147
+VERSION     OL638147.1
+KEYWORDS    .
+SOURCE      Influenza A virus
+  ORGANISM  Influenza A virus
+            Viruses; Riboviria; Orthornavirae; Negarnaviricota;
+            Polyploviricotina; Insthoviricetes; Articulavirales;
+            Orthomyxoviridae; Alphainfluenzavirus; Alphainfluenzavirus
+            influenzae.
+REFERENCE   1  (bases 1 to 1422)
+  AUTHORS   Nagy,A., Cernikova,L. and Stara,M.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (26-NOV-2021) Molecular Biology, State Veterinary
+            Institute Prague, Sidlistni 136/24, Prague 16503, Czech Republic
+COMMENT     ##Assembly-Data-START##
+            Assembly Method       :: Samtools, BCFtools v. 2021
+            Sequencing Technology :: ONT
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1422
+                     /organism="Influenza A virus"
+                     /mol_type="viral cRNA"
+                     /strain="A/goose/Czech Republic/18520-2/2021"
+                     /serotype="H5N1"
+                     /isolate="18520-2"
+                     /isolation_source="organs"
+                     /host="goose"
+                     /db_xref="taxon:11320"
+                     /segment="6"
+                     /country="Czech Republic"
+                     /collection_date="27-Sep-2021"
+     gene            6..1415
+                     /gene="NA"
+     CDS             6..1415
+                     /gene="NA"
+                     /codon_start=1
+                     /product="neuraminidase"
+                     /protein_id="UFL16557.1"
+                     /translation="MNPNQKITTIGSICMVIGIVSLMLQIGNIISIWVSHSIQTGNQY
+                     QPEPCNQSIITYENNTWVNQTYVNISNTNFLAEQAVTSVTLAGNSSLCPISGWAIYSK
+                     DNGIRIGSKGDVFVIREPFISCSHLXCRTFFLTQGALLNDKHSNGTVKDRSPYRTLMS
+                     CPVGEAPSPYNSRFESVAWSASACHDGISWLTIGISGPDNGAVAVLKYNGIITDTIKS
+                     WRNNILRTQESECACVNGSCFTVMTDGPSNGQASYKIFKIEKGKVVKSVELNAPNYHY
+                     EECSCYPDAGDIMCVCRDNWHGSNRPWVSFNQNLEYQIGYICSGVFGDNPRPNDGTGS
+                     CSPMSSNGAYGVKGFSFKYGNGVWIGRTKSTSSRSGFEMIWDPNGWTETDSSFSVKQD
+                     IVEITDWSGYSGSFVQHPELTGLDCMRPCFWVELIRGRPKENTIWTSGSSISFCGVNS
+                     DTVGWSWPDGAELPFTIDK"
+ORIGIN      
+        1 tcaaaatgaa tccaaatcaa aagataacaa ccattggatc aatctgtatg gtaattggga
+       61 tagtcagctt gatgctgcaa attgggaata taatctcaat atgggttagc cattcaatcc
+      121 aaacagggaa tcaataccag cctgaaccat gcaatcaaag catcattacc tatgagaaca
+      181 acacctgggt aaatcagacg tatgtcaaca tcagcaatac caattttctt gctgagcagg
+      241 ctgttacttc ggtaacatta gcgggcaatt catctctttg ccctattagt gggtgggcaa
+      301 tatacagtaa ggacaacggt ataagaattg ggtccaaggg ggatgtgttt gttataagag
+      361 aaccgttcat ctcatgctcc cacttggrat gcagaacctt tttcctgacc cagggagctc
+      421 tgctgaatga caaacattct aatgggaccg ttaaggatag aagcccctat agaactttga
+      481 tgagttgtcc cgtgggtgag gctccttccc cgtacaattc aagatttgag tctgttgctt
+      541 ggtcggcaag tgcttgtcat gatggcatta gttggttgac aatcggtatt tctggtccag
+      601 acaatggagc tgtggctgta ttgaagtaca atggcataat aacggatact atcaagagtt
+      661 ggagaaacaa cattttgaga actcaagaat ctgaatgtgc gtgcgtaaat ggctcttgct
+      721 tcactgtaat gactgatgga ccragcaatg ggcaggcctc atataaaatc ttcaagatag
+      781 agaaagggaa agttgtcaaa tcagttgaat tgaatgcccc taattaccac tacgaggaat
+      841 gctcctgtta tcctgatgcg ggtgatatta tgtgtgtgtg cagggacaat tggcatggct
+      901 caaaccggcc gtgggtatct tttaatcaaa atctggagta tcaaatagga tatatatgca
+      961 gtggggtttt cggggacaat ccccgcccca atgatggaac aggcagttgc agtccaatgt
+     1021 cctctaacgg ggcatatggg gtaaaagggt tttcatttaa gtacggtaat ggggtttgga
+     1081 tcggaagaac aaaaagcact agttccagaa gcggctttga gatgatttgg gatccgaatg
+     1141 ggtggactga gacggacagt agtttctcag tgaagcaaga cattgtagaa ataactgact
+     1201 ggtcaggata tagtggaagt tttgtccagc atccagaact gacaggatta gattgcatga
+     1261 ggccttgttt ctgggttgag ctaattagag ggaggcccaa agagaacaca atttggacta
+     1321 gcgggagcag catatccttt tgtggtgtaa atagtgacac tgtgggttgg tcttggccag
+     1381 acggtgctga gttgccattc accattgaca agtagtttgt tc
+//
+

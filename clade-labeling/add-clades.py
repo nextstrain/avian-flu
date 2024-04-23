@@ -57,7 +57,7 @@ def annotate_metadata_file(metadata_infile, metadata_outfile, clade_assignments)
 				else:
 					clade = "?"
 					unknown_clades += 1
-					print("unknown clade for ", strain_name)
+					#print("unknown clade for ", strain_name)
 				new_line = line.strip() + "\t" + clade + "\n"
 		
 			with open(metadata_outfile, "a") as outfile:

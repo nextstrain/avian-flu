@@ -15,7 +15,7 @@ SEGMENTS = ["ha"]
 generated JSON files in the auspice folder for each subtype and segment."""
 rule all:
     input:
-        auspice_json = expand("auspice/flu_avian_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
+        auspice_json = expand("auspice/avian-flu_{subtype}_{segment}.json", subtype=SUBTYPES, segment=SEGMENTS)
 
 """Specify all input files here. For this build, you'll start with input sequences
 from the example_data folder, which contain metadata information in the
@@ -305,7 +305,7 @@ rule export:
         node_data = node_data_by_wildcards,
         auspice_config = files.auspice_config
     output:
-        auspice_json = "auspice/flu_avian_{subtype}_{segment}.json"
+        auspice_json = "auspice/avian-flu_{subtype}_{segment}.json"
     shell:
         """
         augur export v2 \

@@ -1,4 +1,4 @@
-SUBTYPES = ["h5nx","h5n1","h7n9","h9n2"]#["h5nx","h5n1"]
+SUBTYPES = ["h5nx", "h5n1", "h7n9", "h9n2"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 TIME =     ["all-time","2y"]
 
@@ -7,16 +7,13 @@ path_to_fauna = '../fauna'
 
 def all_targets():
     return [
-        *expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=["h5nx","h5n1"], segment=SEGMENTS,time=TIME),
-        *expand("auspice/flu_avian_{subtype}_{segment}_{time}.json", subtype=['h7n9', 'h9n2'], segment=SEGMENTS,time=['all-time'])
+        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=["h5nx","h5n1"], segment=SEGMENTS,time=TIME),
+        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=['h7n9', 'h9n2'], segment=SEGMENTS,time=['all-time'])
     ]
 
 rule all:
     input:
         auspice_json = all_targets()
-        # sequences = expand("results/sequences_{subtype}_{segment}.fasta", subtype=SUBTYPES, segment=SEGMENTS),
-        # metadata = expand("results/metadata_{subtype}_{segment}.tsv", subtype=SUBTYPES, segment=SEGMENTS)
-
 
 rule files:
     params:
@@ -367,7 +364,7 @@ rule export:
         auspice_config = files.auspice_config,
         description = files.description
     output:
-        auspice_json = "auspice/flu_avian_{subtype}_{segment}_{time}.json"
+        auspice_json = "auspice/avian-flu_{subtype}_{segment}_{time}.json"
     shell:
         """
         augur export v2 \

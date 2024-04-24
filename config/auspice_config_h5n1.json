@@ -21,13 +21,13 @@
       "type": "continuous"
     },
     {
-      "key": "country",
-      "title": "Country",
+      "key": "region",
+      "title": "Region",
       "type": "categorical"
     },
     {
-      "key": "region",
-      "title": "Region",
+      "key": "country",
+      "title": "Country",
       "type": "categorical"
     },
     {
@@ -47,22 +47,22 @@
     },
     {
       "key": "h5_label_clade",
-      "title": "Provisional LABEL clade",
+      "title": "Provisional LABEL Clade",
       "type": "categorical"
     },
     {
       "key": "gisaid_clade",
-      "title": "GISAID clade",
+      "title": "GISAID Clade",
       "type": "categorical"
     },
     {
       "key": "furin_cleavage_motif",
-      "title": "furin cleavage motif",
+      "title": "Furin Cleavage Motif",
       "type": "categorical"
     },
     {
       "key": "cleavage_site_sequence",
-      "title": "cleavage site sequence",
+      "title": "Cleavage Site Sequence",
       "type": "categorical"
     },
     {
@@ -71,24 +71,20 @@
       "type": "categorical"
     },
     {
-      "key": "PMID",
-      "title": "Pubmed ID",
+      "key": "originating_lab",
+      "title": "Originating Lab",
       "type": "categorical"
     },
     {
       "key": "submitting_lab",
-      "title": "Submitting lab",
-      "type": "categorical"
-    },
-    {
-      "key": "originating_lab",
-      "title": "Originating lab",
+      "title": "Submitting Lab",
       "type": "categorical"
     }
   ],
   "geo_resolutions": [
     "region",
-    "country"
+    "country",
+    "division"
   ],
   "display_defaults": {
     "map_triplicate": true,
@@ -99,10 +95,12 @@
     "domestic_status",
     "region",
     "country",
-    "submitting_lab",
+    "division",
     "subtype",
     "h5_label_clade",
     "gisaid_clade",
-    "authors"
+    "authors",
+    "originating_lab",
+    "submitting_lab"
   ]
 }

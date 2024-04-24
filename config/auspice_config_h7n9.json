@@ -8,7 +8,7 @@
     {
       "name": "GISAID"
     }
-  ],  
+  ],
   "colorings": [
     {
       "key": "gt",
@@ -27,7 +27,7 @@
     },
     {
       "key": "division",
-      "title": "Division",
+      "title": "Admin Division",
       "type": "categorical"
     },
     {
@@ -37,22 +37,22 @@
     },
     {
       "key": "furin_cleavage_motif",
-      "title": "furin cleavage motif",
+      "title": "Furin Cleavage Motif",
       "type": "categorical"
     },
     {
       "key": "cleavage_site_sequence",
-      "title": "cleavage site sequence",
-      "type": "categorical"
-    },
-    {
-      "key": "submitting_lab",
-      "title": "Submitting lab",
+      "title": "Cleavage Site Sequence",
       "type": "categorical"
     },
     {
       "key": "originating_lab",
-      "title": "Originating lab",
+      "title": "Originating Lab",
+      "type": "categorical"
+    },
+    {
+      "key": "submitting_lab",
+      "title": "Submitting Lab",
       "type": "categorical"
     }
   ],
@@ -69,6 +69,7 @@
     "host",
     "country",
     "division",
+    "originating_lab",
     "submitting_lab"
   ]
 }

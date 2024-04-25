@@ -1,6 +1,16 @@
 SUBTYPES = ["h5nx", "h5n1", "h7n9", "h9n2"]
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 TIME =     ["all-time","2y"]
+TARGET_SEQUENCES_PER_TREE = 3000
+
+
+# The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
+# will change the behaviour of the workflow to use the same strains for each segment. This is achieved via three steps:
+# (1) Add a metadata processing step to add the segment count per strain to the HA metadata file
+# (2) Filter the HA segment as normal plus filter to those strains with 8 segments
+# (3) Filter the other segments by simply force-including the same strains as (2)
+SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
+
 
 path_to_fauna = '../fauna'
 
@@ -34,6 +44,8 @@ def download_by(w):
     return(db[w.subtype])
 
 def metadata_by_wildcards(w):
+    if SAME_STRAINS and w.segment == 'ha':
+        return "results/metadata-segments_{subtype}_ha.tsv"
     md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
     return(md[w.subtype])
 
@@ -161,44 +173,87 @@ rule add_h5_clade:
             --clades {input.clades_file}
         """
 
+rule add_segment_sequence_counts:
+    """
+    For each subtype's HA metadata file add a column "n_segments" which reports
+    how many segments have sequence data (no QC performed). This will force the
+    download & parsing of all segments for a given subtype. Note that this does
+    not currently consider the prescribed min lengths (see min_length function)
+    for each segment, but that would be a nice improvement.
+    """
+    input:
+        segments = lambda w: expand("results/metadata-with-clade_{{subtype}}_{segment}.tsv", segment=SEGMENTS) \
+            if w.subtype in ['h5n1', 'h5nx'] \
+            else expand("results/metadata_{{subtype}}_{segment}.tsv", segment=SEGMENTS),
+        metadata = lambda w: "results/metadata-with-clade_{subtype}_ha.tsv" \
+            if w.subtype in ['h5n1', 'h5nx'] \
+            else "results/metadata_{subtype}_ha.tsv",
+    output:
+        metadata = "results/metadata-segments_{subtype}_ha.tsv"
+    shell:
+        """
+        python scripts/add_segment_counts.py \
+            --segments {input.segments} \
+            --metadata {input.metadata} \
+            --output {output.metadata}
+        """
+
+
+def _filter_params(wildcards, input, output, threads, resources):
+    """
+    Generate the arguments to `augur filter`. When we are running independent analyses
+    (i.e. not using the same strains for each segment), then we generate a full set of
+    filter parameters here.
+    When we are using the same sequences for each segment, then for HA we use a full
+    filter call and for the rest of the segments we filter to the strains chosen for HA
+    """
+    # For non-HA segments when we are using the SAME_STRAINS for all segments
+    # we have a simple filtering approach: match what we're using for HA!
+    # We also include the "force-include" list; 99% of the time these strains will already be in
+    # the HA strain list (as they were force-included there too) but there may be rare occasions
+    # where we force-include a strain which does not have a HA sequence.
+    if input.strains:
+        # some basic error checking to guard against inadvertent changes in the future
+        if not (SAME_STRAINS and wildcards.segment!='ha'):
+            raise Exception("A strains input should only be present for SAME_STRAINS + HA!")
+        return f"--exclude-all --include {input.strains} {input.include}"
+
+    # If SAME_STRAINS (and due to the above conditional we have the HA segment at this point)
+    # then we want to restrict to strains present in all 8 segments. Note that force-included
+    # strains may not have all segments, but that's preferable to filtering them out.
+    restrict_n_segments = f"n_segments!={len(SEGMENTS)}" if SAME_STRAINS else ''
+
+    # formulate our typical filtering parameters
+    cmd  = f" --group-by {group_by(wildcards)}"
+    cmd += f" --subsample-max-sequences {TARGET_SEQUENCES_PER_TREE}"
+    cmd += f" --min-date {min_date(wildcards)}"
+    cmd += f" --include {input.include}"
+    cmd += f" --exclude-where host=laboratoryderived host=ferret host=unknown host=other country=? region=? gisaid_clade=3C.2 {restrict_n_segments}"
+    cmd += f" --min-length {min_length(wildcards)}"
+    cmd += f" --non-nucleotide"
+    return cmd
+
 rule filter:
-    message:
-        """
-        Filtering to
-          - subsampling to {params.subsample_max_sequences} sequences
-          - grouping by {params.group_by}
-          - excluding strains in {input.exclude}
-          - samples with missing region and country metadata
-          - excluding strains prior to {params.min_date}
-        """
     input:
         sequences = rules.parse.output.sequences,
         metadata = metadata_by_wildcards,
         exclude = files.dropped_strains,
-        include = files.include_strains
+        include = files.include_strains,
+        strains = lambda w: f"results/filtered_{w.subtype}_ha_{w.time}.txt" if (SAME_STRAINS and w.segment!='ha') else [],
     output:
-        sequences = "results/filtered_{subtype}_{segment}_{time}.fasta"
+        sequences = "results/filtered_{subtype}_{segment}_{time}.fasta",
+        strains = "results/filtered_{subtype}_{segment}_{time}.txt",
     params:
-        group_by = group_by,
-        subsample_max_sequences = 3000,
-        min_date = min_date,
-        min_length = min_length,
-        exclude_where = "host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2"
-
+        args = _filter_params,
     shell:
         """
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
             --exclude {input.exclude} \
-            --include {input.include} \
-            --output {output.sequences} \
-            --group-by {params.group_by} \
-            --subsample-max-sequences {params.subsample_max_sequences} \
-            --min-date {params.min_date} \
-            --exclude-where {params.exclude_where} \
-            --min-length {params.min_length} \
-            --non-nucleotide
+            --output-sequences {output.sequences} \
+            --output-strains {output.strains} \
+            {params.args}
         """
 
 rule align:

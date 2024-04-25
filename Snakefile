@@ -15,6 +15,12 @@ rule all:
     input:
         auspice_json = all_targets()
 
+rule test_target:
+    """
+    For testing purposes such as CI workflows.
+    """
+    input: "auspice/avian-flu_h5n1_ha_all-time.json"
+
 rule files:
     params:
         dropped_strains = "config/dropped_strains_{subtype}.txt",

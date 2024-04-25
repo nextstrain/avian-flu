@@ -56,6 +56,13 @@ If you are using `nextstrain build` then add that to the end of the command (i.e
 
 Note that you may need to remove any existing data in `results/` in order for snakemake to correctly regenerate the intermediate files.
 
+#### Running full genome builds
+
+Run `snakemake` / `nextstrain build` with `--snakefile Snakefile.genome`
+
+Currently this is only set up for the "h5n1-cattle-outbreak" build, and restricts the build to a set of strains where we think there's no reassortment (`config/include_strains_h5n1-cattle-outbreak.txt`). Output files will be placed in `results/h5n1-cattle-outbreak/genome`. Input files must be created by running (part of) the main workflow to produce `results/sequences_h5n1_{segment}.fasta` and `results/metadata_h5n1_{segment}.tsv` files. See `Snakefile.genome` for more details.
+
+
 ### To modify this build to work with your own data
 Although the simplest way to generate a custom build is via the quickstart build, you are welcome to clone this repo and use it as a starting point for running your own, local builds if you'd like. The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. This build is slightly more complicated than other builds, and has a few custom functions in it to accommodate all the features on [nextstrain.org](https://nextstrain.org/avian-flu), and makes use of wildcards for both subtypes and gene segments. If you'd like to adapt this full, non-simplified pipeline here to your own data (which you may want to do if you also want to annotate clades), you would need to make a few changes and additions:
 

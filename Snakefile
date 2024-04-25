@@ -251,7 +251,7 @@ rule refine:
     input:
         tree = rules.tree.output.tree,
         alignment = rules.align.output,
-        metadata = rules.parse.output.metadata
+        metadata = metadata_by_wildcards,
     output:
         tree = "results/tree_{subtype}_{segment}_{time}.nwk",
         node_data = "results/branch-lengths_{subtype}_{segment}_{time}.json"

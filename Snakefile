@@ -1,8 +1,7 @@
-SUBTYPES = ["h5nx", "h5n1", "h7n9", "h9n2"]
-SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
-TIME =     ["all-time","2y"]
-TARGET_SEQUENCES_PER_TREE = 3000
-
+SUBTYPES = config.get('subtypes', ["h5nx", "h5n1", "h7n9", "h9n2"])
+SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"])
+TIME =     config.get('time',     ["all-time","2y"])
+TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via three steps:
@@ -17,8 +16,8 @@ path_to_fauna = '../fauna'
 
 def all_targets():
     return [
-        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=["h5nx","h5n1"], segment=SEGMENTS,time=TIME),
-        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=['h7n9', 'h9n2'], segment=SEGMENTS,time=['all-time'])
+        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=[s for s in SUBTYPES if s in ["h5nx","h5n1"]], segment=SEGMENTS,time=TIME),
+        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=[s for s in SUBTYPES if s in ['h7n9', 'h9n2']], segment=SEGMENTS,time=[t for t in TIME if t=='all-time'])
     ]
 
 rule all:

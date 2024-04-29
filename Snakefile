@@ -2,6 +2,7 @@ SUBTYPES = config.get('subtypes', ["h5nx", "h5n1", "h7n9", "h9n2"])
 SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"])
 TIME =     config.get('time',     ["all-time","2y"])
 TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
+S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avian-flu")
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via three steps:
@@ -43,15 +44,19 @@ rule files:
 
 files = rules.files.params
 
-
-def download_by(w):
-    db = {'h5nx': 'subtype:h5n1,h5n2,h5n3,h5n4,h5n5,h5n6,h5n7,h5n8,h5n9', 'h5n1': 'subtype:h5n1', 'h7n9': 'subtype:h7n9', 'h9n2': 'subtype:h9n2'}
-    return(db[w.subtype])
+def subtypes_by_subtype_wildcard(wildcards):
+    db = {
+        'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
+        'h5n1': ['h5n1'],
+        'h7n9': ['h7n9'],
+        'h9n2': ['h9n2'],
+    }
+    return(db[wildcards.subtype])
 
 def metadata_by_wildcards(w):
     if SAME_STRAINS and w.segment == 'ha':
         return "results/metadata-segments_{subtype}_ha.tsv"
-    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": rules.parse.output.metadata, "h9n2": rules.parse.output.metadata}
+    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": "results/metadata_{subtype}_{segment}.tsv", "h9n2": "results/metadata_{subtype}_{segment}.tsv"}
     return(md[w.subtype])
 
 def group_by(w):
@@ -125,48 +130,49 @@ def clock_rate_std_dev(w):
     return clock_rate_std_dev[w.subtype][w.time]
 
 
-rule download:
-    message: "Downloading sequences from fauna"
+rule download_sequences:
     output:
-        sequences = "data/{subtype}_{segment}.fasta"
+        sequences = "data/all_sequences_{segment}.fasta.zst",
     params:
-        fasta_fields = "strain virus accession collection_date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
-        download_by = download_by
+        s3_src=S3_SRC,
     shell:
         """
-        python3 {path_to_fauna}/vdb/download.py \
-            --database vdb \
-            --virus avian_flu \
-            --fasta_fields {params.fasta_fields} \
-            --select  {params.download_by} locus:{wildcards.segment} \
-            --path data \
-            --fstem {wildcards.subtype}_{wildcards.segment}
+        aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst {output.sequences}
         """
-### comment
-rule parse:
-    message: "Parsing fasta into sequences and metadata"
+
+rule download_metadata:
+    output:
+        metadata = "data/all_metadata_{segment}.tsv.zst",
+    params:
+        s3_src=S3_SRC,
+    shell:
+        """
+        aws s3 cp {params.s3_src:q}/{wildcards.segment}/metadata.tsv.zst {output.metadata}
+        """
+
+rule filter_by_subtype:
     input:
-        sequences = rules.download.output.sequences
+        sequences="data/all_sequences_{segment}.fasta.zst",
+        metadata="data/all_metadata_{segment}.tsv.zst",
     output:
         sequences = "results/sequences_{subtype}_{segment}.fasta",
-        metadata = "results/metadata_{subtype}_{segment}.tsv"
+        metadata = "results/metadata_{subtype}_{segment}.tsv",
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
-        prettify_fields = "region country division location host originating_lab submitting_lab authors PMID"
+        subtypes=subtypes_by_subtype_wildcard,
     shell:
         """
-        augur parse \
+        augur filter \
             --sequences {input.sequences} \
+            --metadata {input.metadata} \
+            --query "subtype in {params.subtypes!r}" \
             --output-sequences {output.sequences} \
-            --output-metadata {output.metadata} \
-            --fields {params.fasta_fields} \
-            --prettify-fields {params.prettify_fields}
+            --output-metadata {output.metadata}
         """
 
 rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
-        metadata = rules.parse.output.metadata,
+        metadata = "results/metadata_{subtype}_{segment}.tsv",
         clades_file = files.clades_file
     output:
         metadata= "results/metadata-with-clade_{subtype}_{segment}.tsv"
@@ -240,7 +246,7 @@ def _filter_params(wildcards, input, output, threads, resources):
 
 rule filter:
     input:
-        sequences = rules.parse.output.sequences,
+        sequences = "results/sequences_{subtype}_{segment}.fasta",
         metadata = metadata_by_wildcards,
         exclude = files.dropped_strains,
         include = files.include_strains,
@@ -378,7 +384,7 @@ rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"
     input:
         tree = rules.refine.output.tree,
-        metadata = rules.parse.output.metadata
+        metadata = "results/metadata_{subtype}_{segment}.tsv"
     output:
         node_data = "results/traits_{subtype}_{segment}_{time}.json",
     params:

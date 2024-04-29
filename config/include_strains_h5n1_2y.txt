@@ -124,7 +124,6 @@ A/Chicken/USA/24-009654-004-original/2024
 A/Cattle/USA/24-010071-006-original/2024
 A/Chicken/USA/24-008355-003-original/2024
 A/Cattle/USA/24-009367-009-original/2024
-A/PEFA/USA/24-005915-001-original/2024
 A/Cattle/USA/24-009028-008-original/2024
 A/Cattle/USA/24-009586-005-original/2024
 A/Cattle/USA/24-010354-018-original-300/2024
@@ -237,7 +236,6 @@ A/Cattle/USA/24-010354-013-original-300/2024
 A/Cattle/USA/24-009110-026-original/2024
 A/Cattle/USA/24-009367-003-original/2024
 A/Cattle/USA/24-010071-001-original/2024
-A/CAGO/USA/24-003692-001-original/2024
 A/Cattle/USA/24-009110-025-original/2024
 A/Cattle/USA/24-009367-005-original/2024
 A/Cat/USA/24-009311-004-original/2024

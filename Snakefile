@@ -56,7 +56,7 @@ def subtypes_by_subtype_wildcard(wildcards):
 def metadata_by_wildcards(w):
     if SAME_STRAINS and w.segment == 'ha':
         return "results/metadata-segments_{subtype}_ha.tsv"
-    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": "results/metadata_{subtype}_{segment}.tsv", "h9n2": "results/metadata_{subtype}_{segment}.tsv"}
+    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": "data/metadata_{subtype}_{segment}.tsv", "h9n2": "data/metadata_{subtype}_{segment}.tsv"}
     return(md[w.subtype])
 
 def group_by(w):
@@ -155,8 +155,8 @@ rule filter_by_subtype:
         sequences="data/all_sequences_{segment}.fasta.zst",
         metadata="data/all_metadata_{segment}.tsv.zst",
     output:
-        sequences = "results/sequences_{subtype}_{segment}.fasta",
-        metadata = "results/metadata_{subtype}_{segment}.tsv",
+        sequences = "data/sequences_{subtype}_{segment}.fasta",
+        metadata = "data/metadata_{subtype}_{segment}.tsv",
     params:
         subtypes=subtypes_by_subtype_wildcard,
     shell:
@@ -172,7 +172,7 @@ rule filter_by_subtype:
 rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
-        metadata = "results/metadata_{subtype}_{segment}.tsv",
+        metadata = "data/metadata_{subtype}_{segment}.tsv",
         clades_file = files.clades_file
     output:
         metadata= "results/metadata-with-clade_{subtype}_{segment}.tsv"
@@ -195,10 +195,10 @@ rule add_segment_sequence_counts:
     input:
         segments = lambda w: expand("results/metadata-with-clade_{{subtype}}_{segment}.tsv", segment=SEGMENTS) \
             if w.subtype in ['h5n1', 'h5nx'] \
-            else expand("results/metadata_{{subtype}}_{segment}.tsv", segment=SEGMENTS),
+            else expand("data/metadata_{{subtype}}_{segment}.tsv", segment=SEGMENTS),
         metadata = lambda w: "results/metadata-with-clade_{subtype}_ha.tsv" \
             if w.subtype in ['h5n1', 'h5nx'] \
-            else "results/metadata_{subtype}_ha.tsv",
+            else "data/metadata_{subtype}_ha.tsv",
     output:
         metadata = "results/metadata-segments_{subtype}_ha.tsv"
     shell:
@@ -246,7 +246,7 @@ def _filter_params(wildcards, input, output, threads, resources):
 
 rule filter:
     input:
-        sequences = "results/sequences_{subtype}_{segment}.fasta",
+        sequences = "data/sequences_{subtype}_{segment}.fasta",
         metadata = metadata_by_wildcards,
         exclude = files.dropped_strains,
         include = files.include_strains,
@@ -384,7 +384,7 @@ rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"
     input:
         tree = rules.refine.output.tree,
-        metadata = "results/metadata_{subtype}_{segment}.tsv"
+        metadata = "data/metadata_{subtype}_{segment}.tsv"
     output:
         node_data = "results/traits_{subtype}_{segment}_{time}.json",
     params:

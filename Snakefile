@@ -233,7 +233,7 @@ def _filter_params(wildcards, input, output, threads, resources):
     cmd += f" --subsample-max-sequences {TARGET_SEQUENCES_PER_TREE}"
     cmd += f" --min-date {min_date(wildcards)}"
     cmd += f" --include {input.include}"
-    cmd += f" --exclude-where host=laboratoryderived host=ferret host=unknown host=other country=? region=? gisaid_clade=3C.2 {restrict_n_segments}"
+    cmd += f" --exclude-where host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2 {restrict_n_segments}"
     cmd += f" --min-length {min_length(wildcards)}"
     cmd += f" --non-nucleotide"
     return cmd

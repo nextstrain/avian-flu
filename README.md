@@ -15,7 +15,7 @@ nextstrain build --aws-batch --aws-batch-cpus 16 --aws-batch-memory 28800 . --jo
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
 
 ## Creating a custom build 
-The easiest way to generate your own, custom avian-flu build is to use the  quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).
+The easiest way to generate your own, custom avian-flu build is to use the quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).
 
 ### Features unique to avian flu builds
 

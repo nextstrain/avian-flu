@@ -1,10 +1,19 @@
 {
   "title": "Real-time tracking of influenza A/H5NX virus evolution",
   "maintainers": [
-    {"name": "Louise Moncla", "url": "https://lmoncla.github.io/monclalab/"}
+    {"name": "Louise Moncla", "url": "https://lmoncla.github.io/monclalab/"},
+    {"name": "the Nextstrain team", "url": "https://nextstrain.org/team"}
   ],
   "build_url": "https://github.com/nextstrain/avian-flu",
   "data_provenance": [
+    {
+      "name": "USDA",
+      "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1102327"
+    },
+    {
+      "name": "Andersen Lab",
+      "url": "https://github.com/andersen-lab/avian-influenza/"
+    },
     {
       "name": "GISAID"
     }

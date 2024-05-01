@@ -131,7 +131,7 @@ def clock_rate_std_dev(w):
 
 rule download_sequences:
     output:
-        sequences = "data/all_sequences_{segment}.fasta.zst",
+        sequences = "data/{segment}/sequences.fasta.zst",
     params:
         s3_src=S3_SRC,
     shell:
@@ -141,7 +141,7 @@ rule download_sequences:
 
 rule download_metadata:
     output:
-        metadata = "data/all_metadata.tsv.zst",
+        metadata = "data/metadata.tsv.zst",
     params:
         s3_src=S3_SRC,
     shell:
@@ -151,8 +151,8 @@ rule download_metadata:
 
 rule filter_sequences_by_subtype:
     input:
-        sequences="data/all_sequences_{segment}.fasta.zst",
-        metadata="data/all_metadata.tsv.zst",
+        sequences="data/{segment}/sequences.fasta.zst",
+        metadata="data/metadata.tsv.zst",
     output:
         sequences = "data/sequences_{subtype}_{segment}.fasta",
     params:
@@ -168,7 +168,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata="data/all_metadata.tsv.zst",
+        metadata="data/metadata.tsv.zst",
     output:
         metadata = "data/metadata_{subtype}.tsv",
     params:

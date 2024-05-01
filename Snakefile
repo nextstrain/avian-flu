@@ -5,10 +5,9 @@ TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
 S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avian-flu")
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
-# will change the behaviour of the workflow to use the same strains for each segment. This is achieved via three steps:
-# (1) Add a metadata processing step to add the segment count per strain to the HA metadata file
-# (2) Filter the HA segment as normal plus filter to those strains with 8 segments
-# (3) Filter the other segments by simply force-including the same strains as (2)
+# will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
+# (1) Filter the HA segment as normal plus filter to those strains with 8 segments
+# (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
 
@@ -53,11 +52,11 @@ def subtypes_by_subtype_wildcard(wildcards):
     }
     return(db[wildcards.subtype])
 
-def metadata_by_wildcards(w):
-    if SAME_STRAINS and w.segment == 'ha':
-        return "results/metadata-segments_{subtype}_ha.tsv"
-    md = {"h5n1": rules.add_h5_clade.output.metadata, "h5nx": rules.add_h5_clade.output.metadata, "h7n9": "data/metadata_{subtype}_{segment}.tsv", "h9n2": "data/metadata_{subtype}_{segment}.tsv"}
-    return(md[w.subtype])
+def metadata_by_wildcards(wildcards):
+    if wildcards.subtype in ("h5n1", "h5nx"):
+        return "results/metadata-with-clade_{subtype}.tsv"
+    else:
+        return "data/metadata_{subtype}.tsv"
 
 def group_by(w):
     gb = {
@@ -142,21 +141,20 @@ rule download_sequences:
 
 rule download_metadata:
     output:
-        metadata = "data/all_metadata_{segment}.tsv.zst",
+        metadata = "data/all_metadata.tsv.zst",
     params:
         s3_src=S3_SRC,
     shell:
         """
-        aws s3 cp {params.s3_src:q}/{wildcards.segment}/metadata.tsv.zst {output.metadata}
+        aws s3 cp {params.s3_src:q}/metadata.tsv.zst {output.metadata}
         """
 
-rule filter_by_subtype:
+rule filter_sequences_by_subtype:
     input:
         sequences="data/all_sequences_{segment}.fasta.zst",
-        metadata="data/all_metadata_{segment}.tsv.zst",
+        metadata="data/all_metadata.tsv.zst",
     output:
         sequences = "data/sequences_{subtype}_{segment}.fasta",
-        metadata = "data/metadata_{subtype}_{segment}.tsv",
     params:
         subtypes=subtypes_by_subtype_wildcard,
     shell:
@@ -165,17 +163,31 @@ rule filter_by_subtype:
             --sequences {input.sequences} \
             --metadata {input.metadata} \
             --query "subtype in {params.subtypes!r}" \
-            --output-sequences {output.sequences} \
+            --output-sequences {output.sequences}
+        """
+
+rule filter_metadata_by_subtype:
+    input:
+        metadata="data/all_metadata.tsv.zst",
+    output:
+        metadata = "data/metadata_{subtype}.tsv",
+    params:
+        subtypes=subtypes_by_subtype_wildcard,
+    shell:
+        """
+        augur filter \
+            --metadata {input.metadata} \
+            --query "subtype in {params.subtypes!r}" \
             --output-metadata {output.metadata}
         """
 
 rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
-        metadata = "data/metadata_{subtype}_{segment}.tsv",
+        metadata = "data/metadata_{subtype}.tsv",
         clades_file = files.clades_file
     output:
-        metadata= "results/metadata-with-clade_{subtype}_{segment}.tsv"
+        metadata= "results/metadata-with-clade_{subtype}.tsv"
     shell:
         """
         python clade-labeling/add-clades.py \
@@ -183,32 +195,6 @@ rule add_h5_clade:
             --output {output.metadata} \
             --clades {input.clades_file}
         """
-
-rule add_segment_sequence_counts:
-    """
-    For each subtype's HA metadata file add a column "n_segments" which reports
-    how many segments have sequence data (no QC performed). This will force the
-    download & parsing of all segments for a given subtype. Note that this does
-    not currently consider the prescribed min lengths (see min_length function)
-    for each segment, but that would be a nice improvement.
-    """
-    input:
-        segments = lambda w: expand("results/metadata-with-clade_{{subtype}}_{segment}.tsv", segment=SEGMENTS) \
-            if w.subtype in ['h5n1', 'h5nx'] \
-            else expand("data/metadata_{{subtype}}_{segment}.tsv", segment=SEGMENTS),
-        metadata = lambda w: "results/metadata-with-clade_{subtype}_ha.tsv" \
-            if w.subtype in ['h5n1', 'h5nx'] \
-            else "data/metadata_{subtype}_ha.tsv",
-    output:
-        metadata = "results/metadata-segments_{subtype}_ha.tsv"
-    shell:
-        """
-        python scripts/add_segment_counts.py \
-            --segments {input.segments} \
-            --metadata {input.metadata} \
-            --output {output.metadata}
-        """
-
 
 def _filter_params(wildcards, input, output, threads, resources):
     """
@@ -384,7 +370,7 @@ rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"
     input:
         tree = rules.refine.output.tree,
-        metadata = "data/metadata_{subtype}_{segment}.tsv"
+        metadata = metadata_by_wildcards,
     output:
         node_data = "results/traits_{subtype}_{segment}_{time}.json",
     params:

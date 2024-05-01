@@ -5,7 +5,7 @@ config["segments"] = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 rule all:
     input:
         sequences=expand("upload/s3/sequences_{segment}.done", segment=config["segments"]),
-        metadata=expand("upload/s3/metadata_{segment}.done", segment=config["segments"]),
+        metadata="upload/s3/metadata.done",
 
 rule download_segment:
     output:
@@ -44,6 +44,27 @@ rule parse_segment:
             --prettify-fields {params.prettify_fields}
         """
 
+rule merge_segment_metadata:
+    """
+    For each subtype's HA metadata file add a column "n_segments" which reports
+    how many segments have sequence data (no QC performed). This will force the
+    download & parsing of all segments for a given subtype. Note that this does
+    not currently consider the prescribed min lengths (see min_length function)
+    for each segment, but that would be a nice improvement.
+    """
+    input:
+        segments = expand("upload/results/metadata_{segment}.tsv", segment=config["segments"]),
+        metadata = "upload/results/metadata_ha.tsv",
+    output:
+        metadata = "upload/results/metadata.tsv",
+    shell:
+        """
+        python scripts/add_segment_counts.py \
+            --segments {input.segments} \
+            --metadata {input.metadata} \
+            --output {output.metadata}
+        """
+
 rule upload_sequences:
     input:
         sequences="upload/results/sequences_{segment}.fasta",
@@ -61,9 +82,9 @@ rule upload_sequences:
 
 rule upload_metadata:
     input:
-        metadata="upload/results/metadata_{segment}.tsv",
+        metadata="upload/results/metadata.tsv",
     output:
-        flag=touch("upload/s3/metadata_{segment}.done"),
+        flag=touch("upload/s3/metadata.done"),
     params:
         s3_dst=config["s3_dst"],
     shell:
@@ -71,5 +92,5 @@ rule upload_metadata:
         zstd -c {input.metadata:q} \
             | aws s3 cp \
                   - \
-                  {params.s3_dst:q}/{wildcards.segment}/metadata.tsv.zst
+                  {params.s3_dst:q}/metadata.tsv.zst
         """

@@ -131,28 +131,28 @@ def clock_rate_std_dev(w):
 
 rule download_sequences:
     output:
-        sequences = "data/{segment}/sequences.fasta.zst",
+        sequences = "data/{segment}/sequences.fasta",
     params:
         s3_src=S3_SRC,
     shell:
         """
-        aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst {output.sequences}
+        aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
         """
 
 rule download_metadata:
     output:
-        metadata = "data/metadata.tsv.zst",
+        metadata = "data/metadata.tsv",
     params:
         s3_src=S3_SRC,
     shell:
         """
-        aws s3 cp {params.s3_src:q}/metadata.tsv.zst {output.metadata}
+        aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
         """
 
 rule filter_sequences_by_subtype:
     input:
-        sequences="data/{segment}/sequences.fasta.zst",
-        metadata="data/metadata.tsv.zst",
+        sequences="data/{segment}/sequences.fasta",
+        metadata="data/metadata.tsv",
     output:
         sequences = "data/sequences_{subtype}_{segment}.fasta",
     params:
@@ -168,7 +168,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata="data/metadata.tsv.zst",
+        metadata="data/metadata.tsv",
     output:
         metadata = "data/metadata_{subtype}.tsv",
     params:

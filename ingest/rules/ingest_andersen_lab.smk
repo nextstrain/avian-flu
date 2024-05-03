@@ -34,7 +34,8 @@ rule extract_consensus_sequences:
     input:
         andersen_lab_repo = "data/andersen-lab-avian-influenza.tar.gz"
     output:
-        fasta = directory("data/andersen-lab/fasta")
+        fasta = directory("data/andersen-lab/fasta"),
+        output_flag = touch("data/andersen-lab/extract_consensus_sequences.done")
     shell:
         """
         tar xz --file={input.andersen_lab_repo} \
@@ -42,4 +43,26 @@ rule extract_consensus_sequences:
             -C data/andersen-lab \
             --wildcards \
             "*/fasta"
+        """
+
+rule rename_and_concatenate_segment_fastas:
+    """
+    Truncate the FASTA headers to just the SRA run accessions
+    and concatenate FASTAs of the same segment
+    """
+    input:
+        extract_consensus_sequences_flag = "data/andersen-lab/extract_consensus_sequences.done"
+    output:
+        fasta = "data/andersen-lab/{segment}.fasta"
+    params:
+        segment = lambda wildcards: wildcards.segment.upper()
+    shell:
+        """
+        for fasta in data/andersen-lab/fasta/*_{params.segment}_cns.fa; do
+            seqkit replace \
+                -p "Consensus_(SRR[0-9]+)_.*" \
+                -r '$1' \
+                "$fasta" \
+                >> {output.fasta}
+        done
         """

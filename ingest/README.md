@@ -5,6 +5,7 @@ This is the ingest pipeline for avian virus sequences.
 ## Software requirements
 
 Follow the [standard installation instructions](https://docs.nextstrain.org/en/latest/install.html) for Nextstrain's suite of software tools.
+This workflow requires the Nextstrain CLI's Docker runtime which includes [fauna](https://github.com/nextstrain/fauna) as a sibling directory of the workflow directory and includes the Python RethinkDB bindings required for downloading from fauna.
 
 ## Usage
 
@@ -18,12 +19,14 @@ Run the complete ingest pipeline and upload results to AWS S3 with the following
 
 ```sh
 nextstrain build \
+    --env RETHINK_HOST \
+    --env RETHINK_AUTH_KEY \
     --env AWS_ACCESS_KEY_ID \
     --env AWS_SECRET_ACCESS_KEY \
     .
 ```
 
-Locally, this workflow will produce one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
+Locally, this workflow produces one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
 The workflow compresses and uploads these files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.
 Each file represents all available subtypes.
 
@@ -35,5 +38,7 @@ The complete ingest pipeline with AWS S3 uploads uses the following environment 
 
 #### Required
 
+- `RETHINK_HOST`
+- `RETHINK_AUTH_KEY`
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`

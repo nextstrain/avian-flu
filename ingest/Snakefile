@@ -1,0 +1,10 @@
+path_to_fauna = '../fauna'
+config["s3_dst"] = "s3://nextstrain-data-private/files/workflows/avian-flu"
+config["segments"] = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+
+rule all:
+    input:
+        sequences=expand("s3/sequences_{segment}.done", segment=config["segments"]),
+        metadata="s3/metadata.done",
+
+include: "rules/upload_from_fauna.smk"

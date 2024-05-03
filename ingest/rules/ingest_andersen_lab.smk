@@ -66,3 +66,19 @@ rule rename_and_concatenate_segment_fastas:
                 >> {output.fasta}
         done
         """
+
+rule curate_metadata:
+    input:
+        metadata = "data/andersen-lab/PRJNA1102327_metadata.csv"
+    output:
+        metadata = "data/andersen-lab/metadata.tsv"
+    log:
+        "logs/curate_metadata.txt",
+    shell:
+        """
+        augur curate normalize-strings \
+            --metadata {input.metadata} \
+            | python3 ./scripts/curate_andersen_lab_data.py \
+            | augur curate passthru \
+                --output-metadata {output.metadata} 2>> {log}
+        """

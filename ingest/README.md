@@ -19,6 +19,7 @@ Run the complete ingest pipeline and upload results to AWS S3 with the following
 
 ```sh
 nextstrain build \
+    --docker \
     --env RETHINK_HOST \
     --env RETHINK_AUTH_KEY \
     --env AWS_ACCESS_KEY_ID \

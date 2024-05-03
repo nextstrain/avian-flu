@@ -1,0 +1,39 @@
+# nextstrain.org/avian-flu/ingest
+
+This is the ingest pipeline for avian virus sequences.
+
+## Software requirements
+
+Follow the [standard installation instructions](https://docs.nextstrain.org/en/latest/install.html) for Nextstrain's suite of software tools.
+
+## Usage
+
+> NOTE: All command examples assume you are within the `ingest` directory.
+> If running commands from the outer `avian-flu` directory, replace the `.` with `ingest`.
+
+### Upload data from fauna to S3
+
+The ingest pipeline downloads all sequences and metadata from fauna and uploads those data to S3.
+Run the complete ingest pipeline and upload results to AWS S3 with the following command.
+
+```sh
+nextstrain build \
+    --env AWS_ACCESS_KEY_ID \
+    --env AWS_SECRET_ACCESS_KEY \
+    .
+```
+
+Locally, this workflow will produce one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
+The workflow compresses and uploads these files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.
+Each file represents all available subtypes.
+
+## Configuration
+
+### Environment Variables
+
+The complete ingest pipeline with AWS S3 uploads uses the following environment variables:
+
+#### Required
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`

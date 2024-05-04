@@ -85,3 +85,32 @@ rule curate_metadata:
             | augur curate passthru \
                 --output-metadata {output.metadata} 2>> {log}
         """
+
+rule match_metadata_and_segment_fasta:
+    """
+    Matches the full metadata with the corresponding segment sequence FASTAs
+    and outputs the matching metadata TSV and sequence FASTAs per segment.
+    """
+    input:
+        metadata = "data/andersen-lab/metadata.tsv",
+        fasta = "data/andersen-lab/{segment}.fasta"
+    output:
+        metadata = "results/andersen-lab/metadata_{segment}.tsv",
+        fasta = "results/andersen-lab/sequences_{segment}.fasta"
+    log:
+        "logs/match_segment_metadata_and_fasta/{segment}.txt",
+    shell:
+        """
+        augur curate passthru \
+            --metadata {input.metadata} \
+            --fasta {input.fasta} \
+            --seq-id-column isolate_id \
+            --seq-field sequence \
+            --unmatched-reporting warn \
+            --duplicate-reporting warn \
+            --output-metadata {output.metadata} \
+            --output-fasta {output.fasta} \
+            --output-id-field strain \
+            --output-seq-field sequence \
+            2> {log}
+        """

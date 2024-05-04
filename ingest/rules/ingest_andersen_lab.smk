@@ -114,3 +114,21 @@ rule match_metadata_and_segment_fasta:
             --output-seq-field sequence \
             2> {log}
         """
+
+rule merge_andersen_segment_metadata:
+    """
+    Add a column "n_segments" which reports how many segments
+    have sequence data (no QC performed).
+    """
+    input:
+        segments = expand("results/andersen-lab/metadata_{segment}.tsv", segment=config["segments"]),
+        metadata = "results/andersen-lab/metadata_ha.tsv",
+    output:
+        metadata = "results/andersen-lab/metadata.tsv",
+    shell:
+        """
+        python scripts/add_segment_counts.py \
+            --segments {input.segments} \
+            --metadata {input.metadata} \
+            --output {output.metadata}
+        """

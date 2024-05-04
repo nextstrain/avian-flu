@@ -69,7 +69,8 @@ rule rename_and_concatenate_segment_fastas:
 
 rule curate_metadata:
     input:
-        metadata = "data/andersen-lab/PRJNA1102327_metadata.csv"
+        metadata = "data/andersen-lab/PRJNA1102327_metadata.csv",
+        geolocation_rules = "defaults/geolocation_rules.tsv"
     output:
         metadata = "data/andersen-lab/metadata.tsv"
     log:
@@ -79,6 +80,8 @@ rule curate_metadata:
         augur curate normalize-strings \
             --metadata {input.metadata} \
             | python3 ./scripts/curate_andersen_lab_data.py \
+            | ./vendored/apply-geolocation-rules \
+                --geolocation-rules {input.geolocation_rules} \
             | augur curate passthru \
                 --output-metadata {output.metadata} 2>> {log}
         """

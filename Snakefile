@@ -11,9 +11,6 @@ S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avia
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
 
-path_to_fauna = '../fauna'
-
-
 def all_targets():
     return [
         *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=[s for s in SUBTYPES if s in ["h5nx","h5n1"]], segment=SEGMENTS,time=TIME),

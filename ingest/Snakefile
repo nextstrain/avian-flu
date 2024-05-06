@@ -7,4 +7,12 @@ rule all:
         sequences=expand("s3/sequences_{segment}.done", segment=config["segments"]),
         metadata="s3/metadata.done",
 
+rule all_local:
+    """
+    A rule to ingest all data but _skip_ the final uploading steps.
+    """
+    input:
+        sequences=expand("results/metadata_{segment}.tsv", segment=config["segments"]),
+        metadata="results/metadata.tsv",
+
 include: "rules/upload_from_fauna.smk"

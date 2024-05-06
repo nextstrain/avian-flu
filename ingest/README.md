@@ -12,7 +12,7 @@ This workflow requires the Nextstrain CLI's Docker runtime which includes [fauna
 > NOTE: All command examples assume you are within the `ingest` directory.
 > If running commands from the outer `avian-flu` directory, replace the `.` with `ingest`.
 
-### Upload data from fauna to S3
+### Ingest and upload data from fauna to S3
 
 The ingest pipeline downloads all sequences and metadata from fauna and uploads those data to S3.
 Run the complete ingest pipeline and upload results to AWS S3 with the following command.
@@ -30,6 +30,18 @@ nextstrain build \
 Locally, this workflow produces one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
 The workflow compresses and uploads these files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.
 Each file represents all available subtypes.
+
+
+### Ingest data without uploading to S3
+
+Run the above command however add specify the rule `all_local`, e.g.
+
+```sh
+nextstrain build \
+    ... \
+    . all_local
+```
+
 
 ## Configuration
 

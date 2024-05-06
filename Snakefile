@@ -3,6 +3,7 @@ SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "n
 TIME =     config.get('time',     ["all-time","2y"])
 TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
 S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avian-flu")
+LOCAL_INGEST = bool(config.get('local_ingest', False))
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
@@ -148,8 +149,8 @@ rule download_metadata:
 
 rule filter_sequences_by_subtype:
     input:
-        sequences="data/{segment}/sequences.fasta",
-        metadata="data/metadata.tsv",
+        sequences=lambda w: "ingest/results/sequences_{segment}.fasta" if LOCAL_INGEST else "data/{segment}/sequences.fasta",
+        metadata=lambda w: "ingest/results/metadata.tsv" if LOCAL_INGEST else "data/metadata.tsv",
     output:
         sequences = "data/sequences_{subtype}_{segment}.fasta",
     params:
@@ -165,7 +166,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata="data/metadata.tsv",
+        metadata=lambda w: "ingest/results/metadata.tsv" if LOCAL_INGEST else "data/metadata.tsv",
     output:
         metadata = "data/metadata_{subtype}.tsv",
     params:

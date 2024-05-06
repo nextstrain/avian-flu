@@ -6,7 +6,9 @@ Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about 
 
 ## Building
 
-All 32 builds (4 subtypes x 8 segments) can be built by running `snakemake`. For rapid AWS rebuild run as:
+All 32 builds (4 subtypes x 8 segments) can be built by running `snakemake`.
+This pipeline starts by downloading data from a private S3 bucket and the appropriate credentials are required; see below for how to use locally ingested files.
+For rapid AWS rebuild run as:
 
 ```bash
 nextstrain build --aws-batch --aws-batch-cpus 16 --aws-batch-memory 28800 . --jobs 16
@@ -55,6 +57,12 @@ To enable this set the config parameter `same_strains_per_segment` to a truthy v
 If you are using `nextstrain build` then add that to the end of the command (i.e. as a parameter which will be passed through to Snakemake).
 
 Note that you may need to remove any existing data in `results/` in order for snakemake to correctly regenerate the intermediate files.
+
+#### Using locally ingested data (instead of downloading from S3)
+
+Run the pipeline with `--config 'local_ingest=True'` to use the locally available files produced by the ingest pipeline (see `./ingest/README.md` for details on how to run).
+Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/results/sequences_{SEGMENT}.fasta`.
+
 
 #### Running full genome builds
 

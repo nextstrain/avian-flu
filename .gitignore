@@ -5,6 +5,7 @@ results/
 auspice/
 build/
 logs/
+benchmarks/
 
 # Sensitive environment variables
 environment*

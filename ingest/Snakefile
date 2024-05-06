@@ -4,15 +4,12 @@ config["segments"] = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
 rule all:
     input:
-        sequences=expand("s3/sequences_{segment}.done", segment=config["segments"]),
-        metadata="s3/metadata.done",
-
-rule all_local:
-    """
-    A rule to ingest all data but _skip_ the final uploading steps.
-    """
-    input:
         sequences=expand("results/metadata_{segment}.tsv", segment=config["segments"]),
         metadata="results/metadata.tsv",
+
+rule upload_all:
+    input:
+        sequences=expand("s3/sequences_{segment}.done", segment=config["segments"]),
+        metadata="s3/metadata.done",
 
 include: "rules/upload_from_fauna.smk"

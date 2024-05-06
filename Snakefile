@@ -126,31 +126,50 @@ def clock_rate_std_dev(w):
 
     return clock_rate_std_dev[w.subtype][w.time]
 
+if LOCAL_INGEST:
+    rule copy_sequences_from_ingest:
+        output:
+            sequences = "data/{segment}/sequences.fasta",
+        params:
+            sequences = lambda w: f"ingest/results/sequences_{w.segment}.fasta"
+        shell:
+            """
+            cp {params.sequences} {output.sequences}
+            """
 
-rule download_sequences:
-    output:
-        sequences = "data/{segment}/sequences.fasta",
-    params:
-        s3_src=S3_SRC,
-    shell:
-        """
-        aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
-        """
+    rule copy_metadata_from_ingest:
+        output:
+            metadata = "data/metadata.tsv",
+        shell:
+            """
+            cp ingest/results/metadata.tsv {output.metadata}
+            """
 
-rule download_metadata:
-    output:
-        metadata = "data/metadata.tsv",
-    params:
-        s3_src=S3_SRC,
-    shell:
-        """
-        aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
-        """
+else:
+    rule download_sequences:
+        output:
+            sequences = "data/{segment}/sequences.fasta",
+        params:
+            s3_src=S3_SRC,
+        shell:
+            """
+            aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
+            """
+
+    rule download_metadata:
+        output:
+            metadata = "data/metadata.tsv",
+        params:
+            s3_src=S3_SRC,
+        shell:
+            """
+            aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
+            """
 
 rule filter_sequences_by_subtype:
     input:
-        sequences=lambda w: "ingest/results/sequences_{segment}.fasta" if LOCAL_INGEST else "data/{segment}/sequences.fasta",
-        metadata=lambda w: "ingest/results/metadata.tsv" if LOCAL_INGEST else "data/metadata.tsv",
+        sequences = "data/{segment}/sequences.fasta",
+        metadata = "data/metadata.tsv",
     output:
         sequences = "data/sequences_{subtype}_{segment}.fasta",
     params:
@@ -166,7 +185,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata=lambda w: "ingest/results/metadata.tsv" if LOCAL_INGEST else "data/metadata.tsv",
+        metadata = "data/metadata.tsv",
     output:
         metadata = "data/metadata_{subtype}.tsv",
     params:

@@ -14,8 +14,9 @@ This workflow requires the Nextstrain CLI's Docker runtime which includes [fauna
 
 ### Ingest and upload data from fauna to S3
 
-The ingest pipeline downloads all sequences and metadata from fauna and uploads those data to S3.
-Run the complete ingest pipeline and upload results to AWS S3 with the following command.
+The ingest pipeline supports downloading all sequences and metadata from fauna and uploading those data to S3.
+
+To download all data locally from fauna, run the ingest pipeline with the following command.
 
 ```sh
 nextstrain build \
@@ -27,21 +28,21 @@ nextstrain build \
     .
 ```
 
-Locally, this workflow produces one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
-The workflow compresses and uploads these files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.
+This command produces one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
 Each file represents all available subtypes.
 
-
-### Ingest data without uploading to S3
-
-Run the above command however add specify the rule `all_local`, e.g.
+Add the `upload_all` target to the command above to run the complete ingest pipeline _and_ upload results to AWS S3.
+The workflow compresses and uploads the local files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.
 
 ```sh
 nextstrain build \
-    ... \
-    . all_local
+    --docker \
+    --env RETHINK_HOST \
+    --env RETHINK_AUTH_KEY \
+    --env AWS_ACCESS_KEY_ID \
+    --env AWS_SECRET_ACCESS_KEY \
+    . upload_all
 ```
-
 
 ## Configuration
 

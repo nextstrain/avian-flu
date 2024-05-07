@@ -34,20 +34,19 @@ files = rules.files.params
 
 rule filter:
     input:
-        sequences = lambda w: f"results/sequences_{subtype(w.build_name)}_{w.segment}.fasta",
-        metadata = lambda w: f"results/metadata_{subtype(w.build_name)}_{w.segment}.tsv",
+        sequences = lambda w: f"data/sequences_{subtype(w.build_name)}_{w.segment}.fasta",
+        metadata = lambda w: f"data/metadata_{subtype(w.build_name)}.tsv",
         include = files.include,
     output:
-        sequences = "results/{build_name}/genome/sequences_{segment}.fasta",
-        metadata = "results/{build_name}/genome/metadata_{segment}.tsv",
+        sequences = "results/{build_name}/genome/sequences_{segment}.fasta"
     shell:
         """
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
-            --exclude-all --include {input.include} \
-            --output-sequences {output.sequences} \
-            --output-metadata {output.metadata}
+            --exclude-all \
+            --include {input.include} \
+            --output-sequences {output.sequences}
         """
 
 rule align:
@@ -77,7 +76,7 @@ rule join_sequences:
         """
         python scripts/join-segments.py \
             --segments {input.alignment} \
-            --output {output.alignment} 
+            --output {output.alignment}
         """
 
 
@@ -114,7 +113,7 @@ rule tree:
 
 def clock_rate(w):
     assert subtype(w.build_name)=='h5n1', 'Clock rates only available for H5N1'
-    # These parameters taken from the main Snakfile 
+    # These parameters taken from the main Snakefile
     clock_rates_h5n1 = {
         'pb2': 0.00287,
         'pb1': 0.00264,
@@ -133,7 +132,7 @@ def clock_rate(w):
         'np': 1565,
         'na': 1458,
         'mp': 1027,
-        'ns': 865 
+        'ns': 865
     }
     mean = sum([cr * lengths[seg] for seg,cr in clock_rates_h5n1.items()])/sum(lengths.values())
     stdev = mean/2
@@ -150,7 +149,7 @@ rule refine:
     input:
         tree = "results/{build_name}/genome/tree-raw.nwk",
         alignment = "results/{build_name}/genome/aligned.fasta",
-        metadata = "results/{build_name}/genome/metadata_ha.tsv", # assuming all salient info is in HA
+        metadata = lambda w: f"data/metadata_{subtype(w.build_name)}.tsv",
     output:
         tree = "results/{build_name}/genome/tree.nwk",
         node_data = "results/{build_name}/genome/branch-lengths.json"
@@ -225,7 +224,7 @@ rule cleavage_site:
 rule export:
     input:
         tree = "results/{build_name}/genome/tree.nwk",
-        metadata = "results/{build_name}/genome/metadata_ha.tsv", # assuming all salient info is in HA
+        metadata = lambda w: f"data/metadata_{subtype(w.build_name)}.tsv",
         node_data = [
             rules.refine.output.node_data,
             rules.ancestral.output.node_data,

@@ -11,10 +11,6 @@
       "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1102327"
     },
     {
-      "name": "Andersen Lab",
-      "url": "https://github.com/andersen-lab/avian-influenza/"
-    },
-    {
       "name": "GISAID"
     }
   ],
@@ -43,7 +39,7 @@
       "key": "division",
       "title": "Admin Division",
       "type": "categorical"
-    },    
+    },
     {
       "key": "host",
       "title": "Host",

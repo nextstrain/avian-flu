@@ -207,6 +207,25 @@ rule translate:
             --output {output.node_data}
         """
 
+rule traits:
+    message: "Inferring ancestral traits for {params.columns!s}"
+    input:
+        tree = rules.refine.output.tree,
+        metadata = lambda w: f"data/metadata_{subtype(w.build_name)}.tsv"
+    output:
+        node_data = "results/{build_name}/genome/traits.json"
+    params:
+        columns = 'division'
+    shell:
+        """
+        augur traits \
+            --tree {input.tree} \
+            --metadata {input.metadata} \
+            --output {output.node_data} \
+            --columns {params.columns} \
+            --confidence
+        """
+
 rule cleavage_site:
     input:
         ha_alignment = "results/{build_name}/genome/aligned_ha.fasta",
@@ -229,6 +248,7 @@ rule export:
             rules.refine.output.node_data,
             rules.ancestral.output.node_data,
             rules.translate.output.node_data,
+            rules.traits.output.node_data,
             rules.cleavage_site.output.cleavage_site_annotations,
             rules.cleavage_site.output.cleavage_site_sequences,
         ],

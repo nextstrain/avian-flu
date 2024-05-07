@@ -5,12 +5,13 @@ results/
 auspice/
 build/
 logs/
+benchmarks/
 
 # Sensitive environment variables
 environment*
 
 # Snakemake state dir
-/.snakemake
+.snakemake
 
 # Local config overrides
 /config_local.yaml

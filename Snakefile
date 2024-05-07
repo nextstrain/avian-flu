@@ -3,15 +3,13 @@ SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "n
 TIME =     config.get('time',     ["all-time","2y"])
 TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
 S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avian-flu")
+LOCAL_INGEST = bool(config.get('local_ingest', False))
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
 # (1) Filter the HA segment as normal plus filter to those strains with 8 segments
 # (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
-
-
-path_to_fauna = '../fauna'
 
 
 def all_targets():
@@ -128,31 +126,50 @@ def clock_rate_std_dev(w):
 
     return clock_rate_std_dev[w.subtype][w.time]
 
+if LOCAL_INGEST:
+    rule copy_sequences_from_ingest:
+        output:
+            sequences = "data/{segment}/sequences.fasta",
+        params:
+            sequences = lambda w: f"ingest/results/sequences_{w.segment}.fasta"
+        shell:
+            """
+            cp {params.sequences} {output.sequences}
+            """
 
-rule download_sequences:
-    output:
-        sequences = "data/{segment}/sequences.fasta",
-    params:
-        s3_src=S3_SRC,
-    shell:
-        """
-        aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
-        """
+    rule copy_metadata_from_ingest:
+        output:
+            metadata = "data/metadata.tsv",
+        shell:
+            """
+            cp ingest/results/metadata.tsv {output.metadata}
+            """
 
-rule download_metadata:
-    output:
-        metadata = "data/metadata.tsv",
-    params:
-        s3_src=S3_SRC,
-    shell:
-        """
-        aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
-        """
+else:
+    rule download_sequences:
+        output:
+            sequences = "data/{segment}/sequences.fasta",
+        params:
+            s3_src=S3_SRC,
+        shell:
+            """
+            aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
+            """
+
+    rule download_metadata:
+        output:
+            metadata = "data/metadata.tsv",
+        params:
+            s3_src=S3_SRC,
+        shell:
+            """
+            aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
+            """
 
 rule filter_sequences_by_subtype:
     input:
-        sequences="data/{segment}/sequences.fasta",
-        metadata="data/metadata.tsv",
+        sequences = "data/{segment}/sequences.fasta",
+        metadata = "data/metadata.tsv",
     output:
         sequences = "data/sequences_{subtype}_{segment}.fasta",
     params:
@@ -168,7 +185,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata="data/metadata.tsv",
+        metadata = "data/metadata.tsv",
     output:
         metadata = "data/metadata_{subtype}.tsv",
     params:

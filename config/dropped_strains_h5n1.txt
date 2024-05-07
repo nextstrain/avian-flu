@@ -11,3 +11,24 @@ A/Mallard/Netherlands/8/2023
 A/kelpgull/Chile/C35523/2017
 A/egret/Korea/22WC603/2023
 A/chicken/Poland/003/2020
+
+# Duplicated entries in GISAID
+A/blackbird/Texas/24008354001original/2024
+A/blackbird/Texas/24008357001original/2024
+A/commongrackle/Texas/24008356001original/2024
+A/commongrackle/Texas/24008356003original/2024
+A/feline/Montana/24009038001/2024
+A/feline/Texas/2402932901/2024
+A/feline/Texas/2402932902/2024
+A/feline/USA/24008764001original/2024
+A/feline/USA/24008764002original/2024
+A/feline/USA/24008850001original/2024
+A/feline/USA/24008850002original/2024
+A/feline/USA/24009116002original/2024
+A/feline/USA/24009116004original/2024
+A/feline/USA/24009116005original/2024
+A/feline/USA/24009311004original/2024
+A/feline/USA/24009311006original/2024
+A/goat/Minnesota/24007234009original/2024
+A/peregrinefalcon/California/24005915001original/2024
+A/skunk/NewMexico/24006483001original/2024

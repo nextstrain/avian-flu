@@ -157,6 +157,7 @@ rule refine:
         coalescent = "const",
         date_inference = "marginal",
         clock_rate = clock_rate,
+        root_strain = "A/skunk/NewMexico/24006483001/2024"
     shell:
         """
         augur refine \
@@ -167,6 +168,7 @@ rule refine:
             --output-node-data {output.node_data} \
             --timetree \
             --coalescent {params.coalescent} \
+            --root {params.root_strain} \
             --date-confidence \
             --date-inference {params.date_inference} \
             {params.clock_rate} \

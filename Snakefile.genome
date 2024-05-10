@@ -213,6 +213,23 @@ rule translate:
             --output {output.node_data}
         """
 
+rule clades:
+    input:
+        tree = rules.refine.output.tree
+    output:
+        node_data = "results/{build_name}/genome/clades.json"
+    run:
+        import json
+        from Bio import Phylo
+        nodes = {}
+        T= Phylo.read(input.tree, 'newick')
+        for node in T.find_clades():
+            nodes[node.name] = {'clade_membership':'2.3.4.4'}
+
+        with open(output.node_data, 'w') as fh:
+            json.dump({'nodes':nodes}, fh)
+
+
 rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"
     input:
@@ -255,6 +272,7 @@ rule export:
             rules.ancestral.output.node_data,
             rules.translate.output.node_data,
             rules.traits.output.node_data,
+            rules.clades.output.node_data,
             rules.cleavage_site.output.cleavage_site_annotations,
             rules.cleavage_site.output.cleavage_site_sequences,
         ],

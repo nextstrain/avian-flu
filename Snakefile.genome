@@ -8,7 +8,8 @@ import json
 # -----------------------------------------------
 
 # Segment order determines how the full genome annotation (entropy panel) is set up
-SEGMENTS = ["ha", "na", "pb2", "pb1", "pa", "np", "mp", "ns"]
+# using the canonical ordering <https://viralzone.expasy.org/6>
+SEGMENTS = ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
 assert len(set(SEGMENTS))==len(SEGMENTS), "Duplicate segment detected - check 'SEGMENTS' list"
 
 BUILD_NAME = ['h5n1-cattle-outbreak']

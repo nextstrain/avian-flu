@@ -179,6 +179,7 @@ rule ancestral:
     input:
         tree = "results/{build_name}/genome/tree.nwk",
         alignment = "results/{build_name}/genome/aligned.fasta",
+        root_sequence = "results/{build_name}/genome/reference.gb",
     output:
         node_data = "results/{build_name}/genome/nt-muts.json"
     params:
@@ -189,7 +190,8 @@ rule ancestral:
             --tree {input.tree} \
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
-            --inference {params.inference}\
+            --inference {params.inference} \
+            --root-sequence {input.root_sequence} \
             --keep-ambiguous
         """
 

@@ -6,14 +6,14 @@ rule update_clades:
     shell:
         """
         python clade-labeling/update-clades.py \
-            --metadata results/metadata_h5n1_ha.tsv \
-            --sequences data/h5n1_ha.fasta \
+            --metadata data/metadata_h5n1.tsv \
+            --sequences data/sequences_h5n1_ha.fasta \
             --clades_file clade-labeling/h5n1-clades.tsv \
             --subtype h5n1 \
 
         python clade-labeling/update-clades.py \
-            --metadata results/metadata_h5nx_ha.tsv \
-            --sequences data/h5nx_ha.fasta \
+            --metadata data/metadata_h5nx.tsv \
+            --sequences data/sequences_h5nx_ha.fasta \
             --clades_file clade-labeling/h5nx-clades.tsv \
             --subtype h5nx
         """

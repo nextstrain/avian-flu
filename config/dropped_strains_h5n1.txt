@@ -11,6 +11,7 @@ A/Mallard/Netherlands/8/2023
 A/kelpgull/Chile/C35523/2017
 A/egret/Korea/22WC603/2023
 A/chicken/Poland/003/2020
+A/chicken/Scotland/128320/2023
 
 # Duplicated entries in GISAID
 A/blackbird/Texas/24008354001original/2024

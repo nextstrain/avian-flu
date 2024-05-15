@@ -12,6 +12,8 @@ A/chicken/Texas/24007264001/2024
 A/chicken/Texas/24007264003/2024
 A/chicken/Texas/24009654001/2024
 A/chicken/Texas/24009654004/2024
+A/chicken/Texas/24009654001/2024
+
 A/dairycattle/Idaho/24009491001/2024
 A/dairycattle/Idaho/24009491002/2024
 A/dairycattle/Idaho/24009491003/2024
@@ -211,11 +213,13 @@ A/domesticcat/Texas/24008850001/2024
 A/domesticcat/Texas/24008850002/2024
 A/domesticcat/Texas/24009311004/2024
 A/domesticcat/UnitedStates/24009311006/2024
+A/domesticcat/NewMexico/24009116001/2024
 A/grackle/Texas/24008356001/2024
 A/grackle/Texas/24008356003/2024
 A/grackle/Texas/24008765002/2024
 A/pigeon/Texas/24008765001/2024
 A/raccoon/NewMexico/24009496002/2024
+
 A/Texas/37/2024
 
 # Dropping these strains from include due to excess private mutations

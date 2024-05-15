@@ -66,9 +66,13 @@ Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/res
 
 #### Running full genome builds
 
-Run `snakemake` / `nextstrain build` with `--snakefile Snakefile.genome`
+Run full genome builds with the following command.
 
-Currently this is only set up for the "h5n1-cattle-outbreak" build, and restricts the build to a set of strains where we think there's no reassortment (`config/include_strains_h5n1-cattle-outbreak.txt`). Output files will be placed in `results/h5n1-cattle-outbreak/genome`. Input files must be created by running (part of) the main workflow to produce `data/sequences_h5n1_{segment}.fasta` and `data/metadata_h5n1.tsv` files. See `Snakefile.genome` for more details.
+``` bash
+nextstrain build . --snakefile Snakefile.genome
+```
+
+Currently this is only set up for the "h5n1-cattle-outbreak" build, and restricts the build to a set of strains where we think there's no reassortment (`config/include_strains_h5n1-cattle-outbreak.txt`). Output files will be placed in `results/h5n1-cattle-outbreak/genome`. See `Snakefile.genome` for more details.
 
 
 ### To modify this build to work with your own data

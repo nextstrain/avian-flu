@@ -1,3 +1,5 @@
+include: "rules/common.smk"
+
 import json
 
 # -------------------- notes --------------------

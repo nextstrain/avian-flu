@@ -63,7 +63,7 @@ if __name__=="__main__":
         row[column]=strain_count[row['strain']]
     
     with open(args.output, 'w') as fh:
-        writer = csv.DictWriter(fh, fieldnames=fieldnames, delimiter='\t')
+        writer = csv.DictWriter(fh, fieldnames=fieldnames, delimiter='\t', lineterminator='\n')
         writer.writeheader()
         for row in rows:
             writer.writerow(row)

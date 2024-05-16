@@ -222,6 +222,9 @@ A/raccoon/NewMexico/24009496002/2024
 
 A/Texas/37/2024
 
+# Following strains are sourced from ingest/source-data
+A/environment/USA/CO-UW-9084466/2024
+
 # Dropping these strains from include due to excess private mutations
 # A/dairycattle/NorthCarolina/24010327002/2024
 # A/dairycattle/Texas/24009495007/2024

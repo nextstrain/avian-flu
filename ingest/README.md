@@ -56,6 +56,21 @@ nextstrain build . merge_andersen_segment_metadata
 
 The results will be available in `results/andersen-lab/`.
 
+
+### Ingest for whole genome builds
+
+> This section is in flux
+
+To produce ingest files specifically tailored for the whole genome H5N1 cattle outbreak whole genome build, which combines fauna data
+with extra data in `source-data` run the following (you may need rethink credentials as above):
+
+```sh
+nextstrain build . all_genome
+```
+
+The results will be available in `results/genome/`.
+
+
 ## Configuration
 
 ### Environment Variables

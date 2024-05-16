@@ -17,5 +17,12 @@ rule upload_all:
         sequences=expand("s3/fauna/sequences_{segment}.done", segment=config["segments"]),
         metadata="s3/fauna/metadata.done",
 
+rule all_genome:
+    input:
+        sequences=expand("results/genome/sequences_{segment}.fasta", segment=config["segments"]),
+        metadata="results/genome/metadata.tsv",
+
 include: "rules/upload_from_fauna.smk"
 include: "rules/ingest_andersen_lab.smk"
+include: "rules/ingest_genome_data.smk"
+

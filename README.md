@@ -60,17 +60,24 @@ Note that you may need to remove any existing data in `results/` in order for sn
 
 #### Using locally ingested data (instead of downloading from S3)
 
-Run the pipeline with `--config 'local_ingest=True'` to use the locally available files produced by the ingest pipeline (see `./ingest/README.md` for details on how to run).
-Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/results/sequences_{SEGMENT}.fasta`.
+Run the pipeline with `--config 'local_ingest=fauna'` to use the locally available files produced by the ingest pipeline (see `./ingest/README.md` for details on how to run).
+Specifically, the files needed are `ingest/results/fauna/metadata.tsv` and `ingest/results/fauna/sequences_{SEGMENT}.fasta`.
+Replace "fauna" with "genome" (or any other namespace which ingest can produce) as needed.
 
 
 #### Running full genome builds
 
-Run full genome builds with the following command.
+Run full genome builds using the data on S3 (fauna) with the following command:
 
-``` bash
+```bash
 nextstrain build . --snakefile Snakefile.genome
 ```
+
+To include non-fauna data first run the "Ingest for whole genome builds" (see `ingest/README.md`) then run:
+```bash
+nextstrain build . --snakefile Snakefile.genome --config 'local_ingest=genome'
+```
+
 
 Currently this is only set up for the "h5n1-cattle-outbreak" build, and restricts the build to a set of strains where we think there's no reassortment (`config/include_strains_h5n1-cattle-outbreak.txt`). Output files will be placed in `results/h5n1-cattle-outbreak/genome`. See `Snakefile.genome` for more details.
 

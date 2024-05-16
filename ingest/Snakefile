@@ -7,7 +7,7 @@ wildcard_constraints:
 
 rule all:
     input:
-        sequences=expand("results/metadata_{segment}.tsv", segment=config["segments"]),
+        sequences=expand("results/sequences_{segment}.fasta", segment=config["segments"]),
         metadata="results/metadata.tsv",
 
 rule upload_all:

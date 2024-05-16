@@ -1,8 +1,9 @@
 rule download_segment:
     output:
-        sequences = "data/{segment}.fasta",
+        sequences = "data/fauna/{segment}.fasta",
     params:
         fasta_fields = "strain virus accession collection_date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
+        output_dir = "data/fauna",
     benchmark:
         "benchmarks/download_segment_{segment}.txt"
     shell:
@@ -12,16 +13,16 @@ rule download_segment:
             --virus avian_flu \
             --fasta_fields {params.fasta_fields} \
             --select  locus:{wildcards.segment} \
-            --path data \
+            --path {params.output_dir} \
             --fstem {wildcards.segment}
         """
 
 rule parse_segment:
     input:
-        sequences = "data/{segment}.fasta",
+        sequences = "data/fauna/{segment}.fasta",
     output:
-        sequences = "results/sequences_{segment}.fasta",
-        metadata = "results/metadata_{segment}.tsv",
+        sequences = "results/fauna/sequences_{segment}.fasta",
+        metadata = "results/fauna/metadata_{segment}.tsv",
     params:
         fasta_fields =  "strain virus isolate_id date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
         prettify_fields = "region country division location host originating_lab submitting_lab authors PMID"
@@ -44,10 +45,10 @@ rule merge_segment_metadata:
     for each segment, but that would be a nice improvement.
     """
     input:
-        segments = expand("results/metadata_{segment}.tsv", segment=config["segments"]),
-        metadata = "results/metadata_ha.tsv",
+        segments = expand("results/fauna/metadata_{segment}.tsv", segment=config["segments"]),
+        metadata = "results/fauna/metadata_ha.tsv",
     output:
-        metadata = "results/metadata.tsv",
+        metadata = "results/fauna/metadata.tsv",
     shell:
         """
         python scripts/add_segment_counts.py \
@@ -58,9 +59,9 @@ rule merge_segment_metadata:
 
 rule upload_sequences:
     input:
-        sequences="results/sequences_{segment}.fasta",
+        sequences="results/fauna/sequences_{segment}.fasta",
     output:
-        flag=touch("s3/sequences_{segment}.done"),
+        flag=touch("s3/fauna/sequences_{segment}.done"),
     params:
         s3_dst=config["s3_dst"],
     shell:
@@ -73,9 +74,9 @@ rule upload_sequences:
 
 rule upload_metadata:
     input:
-        metadata="results/metadata.tsv",
+        metadata="results/fauna/metadata.tsv",
     output:
-        flag=touch("s3/metadata.done"),
+        flag=touch("s3/fauna/metadata.done"),
     params:
         s3_dst=config["s3_dst"],
     shell:

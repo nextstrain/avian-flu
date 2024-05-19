@@ -1,24 +1,12 @@
-LOCUS       AF144300               13590 bp    RNA     linear   VRL 31-AUG-1999
-DEFINITION  Combined references for 8 segments.
-ACCESSION   AF144300
-VERSION     AF144300.1
+LOCUS       inferred_root_sequence               13590 bp    RNA     linear   VRL 2024
+DEFINITION  Combined references for 8 segments of the inferred ancestral sequence of the 2024 US dairy cattle outbreak.
+ACCESSION   XXXXXXXX
+VERSION     XXXXXXXX.1
 KEYWORDS    .
-SOURCE      Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
-  ORGANISM  Influenza A virus (A/goose/Guangdong/1/1996(H5N1))
+SOURCE      Influenza A virus (coordinates from A/goose/Guangdong/1/1996(H5N1) AF144300)
+  ORGANISM  Influenza A virus (coordinates from A/goose/Guangdong/1/1996(H5N1) AF144300)
             Viruses; ssRNA viruses; ssRNA negative-strand viruses;
             Orthomyxoviridae; Influenzavirus A.
-REFERENCE   1  (bases 1 to 2341)
-  AUTHORS   Xu,X., Subbarao, Cox,N.J. and Guo,Y.
-  TITLE     Genetic characterization of the pathogenic influenza
-            A/Goose/Guangdong/1/96 (H5N1) virus: similarity of its hemagglutinin
-            gene to those of H5N1 viruses from the 1997 outbreaks in Hong Kong
-  JOURNAL   Virology 261 (1), 15-19 (1999)
-   PUBMED   10484749
-REFERENCE   2  (bases 1 to 2341)
-  AUTHORS   Xu,X., Subbarao,K., Cox,N.J. and Guo,Y.
-  TITLE     Direct Submission
-  JOURNAL   Submitted (20-APR-1999) Influenza Branch, Center for Diseases
-            Control and Prevention, 1600 Clifton Road, Atlanta, GA 30333, USA
 FEATURES             Location/Qualifiers
      source          1..13590
                      /organism="Influenza A virus

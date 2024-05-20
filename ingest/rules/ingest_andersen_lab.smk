@@ -6,7 +6,7 @@ from the Andersen Lab's avian-influenza repo
 
 rule fetch_andersen_lab_repo:
     output:
-        andersen_lab_repo = temp("data/andersen-lab-avian-influenza.tar.gz")
+        andersen_lab_repo = temp("andersen-lab/data/avian-influenza.tar.gz")
     shell:
         """
         curl -fsSL \
@@ -18,29 +18,33 @@ rule fetch_andersen_lab_repo:
 
 rule extract_metadata:
     input:
-        andersen_lab_repo = "data/andersen-lab-avian-influenza.tar.gz"
+        andersen_lab_repo = "andersen-lab/data/avian-influenza.tar.gz"
     output:
-        metadata = "data/andersen-lab/PRJNA1102327_metadata.csv"
+        metadata = "andersen-lab/data/PRJNA1102327_metadata.csv"
+    params:
+        output_dir = lambda wildcards, output: Path(output.metadata).parent
     shell:
         """
         tar xz --file={input.andersen_lab_repo} \
             --strip-components=2 \
-            -C data/andersen-lab \
+            -C {params.output_dir} \
             --wildcards \
             "*/metadata/PRJNA1102327_metadata.csv"
         """
 
 rule extract_consensus_sequences:
     input:
-        andersen_lab_repo = "data/andersen-lab-avian-influenza.tar.gz"
+        andersen_lab_repo = "andersen-lab/data/avian-influenza.tar.gz"
     output:
-        fasta = directory("data/andersen-lab/fasta"),
-        output_flag = touch("data/andersen-lab/extract_consensus_sequences.done")
+        fasta = directory("andersen-lab/data/fasta"),
+        output_flag = touch("andersen-lab/data/extract_consensus_sequences.done")
+    params:
+        output_dir = lambda wildcards, output: Path(output.fasta).parent
     shell:
         """
         tar xz --file={input.andersen_lab_repo} \
             --strip-components=1 \
-            -C data/andersen-lab \
+            -C {params.output_dir} \
             --wildcards \
             "*/fasta"
         """
@@ -51,14 +55,14 @@ rule rename_and_concatenate_segment_fastas:
     and concatenate FASTAs of the same segment
     """
     input:
-        extract_consensus_sequences_flag = "data/andersen-lab/extract_consensus_sequences.done"
+        extract_consensus_sequences_flag = "andersen-lab/data/extract_consensus_sequences.done"
     output:
-        fasta = "data/andersen-lab/{segment}.fasta"
+        fasta = "andersen-lab/data/{segment}.fasta"
     params:
         segment = lambda wildcards: wildcards.segment.upper()
     shell:
         """
-        for fasta in data/andersen-lab/fasta/*_{params.segment}_cns.fa; do
+        for fasta in andersen-lab/data/fasta/*_{params.segment}_cns.fa; do
             seqkit replace \
                 -p "Consensus_(SRR[0-9]+)_.*" \
                 -r '$1' \
@@ -69,12 +73,12 @@ rule rename_and_concatenate_segment_fastas:
 
 rule curate_metadata:
     input:
-        metadata = "data/andersen-lab/PRJNA1102327_metadata.csv",
+        metadata = "andersen-lab/data/PRJNA1102327_metadata.csv",
         geolocation_rules = "defaults/geolocation_rules.tsv"
     output:
-        metadata = "data/andersen-lab/metadata.tsv"
+        metadata = "andersen-lab/data/metadata.tsv"
     log:
-        "logs/curate_metadata.txt",
+        "andersen-lab/logs/curate_metadata.txt",
     shell:
         """
         augur curate normalize-strings \
@@ -92,13 +96,13 @@ rule match_metadata_and_segment_fasta:
     and outputs the matching metadata TSV and sequence FASTAs per segment.
     """
     input:
-        metadata = "data/andersen-lab/metadata.tsv",
-        fasta = "data/andersen-lab/{segment}.fasta"
+        metadata = "andersen-lab/data/metadata.tsv",
+        fasta = "andersen-lab/data/{segment}.fasta"
     output:
-        metadata = "results/andersen-lab/metadata_{segment}.tsv",
-        fasta = "results/andersen-lab/sequences_{segment}.fasta"
+        metadata = "andersen-lab/results/metadata_{segment}.tsv",
+        fasta = "andersen-lab/results/sequences_{segment}.fasta"
     log:
-        "logs/match_segment_metadata_and_fasta/{segment}.txt",
+        "andersen-lab/logs/match_segment_metadata_and_fasta/{segment}.txt",
     shell:
         """
         augur curate passthru \
@@ -121,10 +125,10 @@ rule merge_andersen_segment_metadata:
     have sequence data (no QC performed).
     """
     input:
-        segments = expand("results/andersen-lab/metadata_{segment}.tsv", segment=config["segments"]),
-        metadata = "results/andersen-lab/metadata_ha.tsv",
+        segments = expand("andersen-lab/results/metadata_{segment}.tsv", segment=config["segments"]),
+        metadata = "andersen-lab/results/metadata_ha.tsv",
     output:
-        metadata = "results/andersen-lab/metadata.tsv",
+        metadata = "andersen-lab/results/metadata.tsv",
     shell:
         """
         python scripts/add_segment_counts.py \

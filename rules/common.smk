@@ -15,7 +15,7 @@ if LOCAL_INGEST:
         output:
             sequences = "data/{segment}/sequences.fasta",
         params:
-            sequences = lambda w: f"ingest/results/fauna/sequences_{w.segment}.fasta"
+            sequences = lambda w: f"ingest/fauna/results/sequences_{w.segment}.fasta"
         shell:
             """
             cp {params.sequences} {output.sequences}
@@ -26,7 +26,7 @@ if LOCAL_INGEST:
             metadata = "data/metadata.tsv",
         shell:
             """
-            cp ingest/results/fauna/metadata.tsv {output.metadata}
+            cp ingest/fauna/results/metadata.tsv {output.metadata}
             """
 
 else:

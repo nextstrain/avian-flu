@@ -1,9 +1,13 @@
+from pathlib import Path
+
+
 rule download_segment:
     output:
         sequences = "data/fauna/{segment}.fasta",
     params:
         fasta_fields = "strain virus accession collection_date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
-        output_dir = "data/fauna",
+        output_dir = lambda wildcards, output: Path(output.sequences).parent,
+        output_fstem = lambda wildcards, output: Path(output.sequences).stem,
     benchmark:
         "benchmarks/download_segment_{segment}.txt"
     shell:
@@ -14,7 +18,7 @@ rule download_segment:
             --fasta_fields {params.fasta_fields} \
             --select  locus:{wildcards.segment} \
             --path {params.output_dir} \
-            --fstem {wildcards.segment}
+            --fstem {params.output_fstem}
         """
 
 rule parse_segment:

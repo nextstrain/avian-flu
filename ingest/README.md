@@ -28,7 +28,7 @@ nextstrain build \
     .
 ```
 
-This command produces one metadata file, `results/metadata.tsv`, and one sequences file per gene segment like `results/sequences_ha.fasta`.
+This command produces one metadata file, `fauna/results/metadata.tsv`, and one sequences file per gene segment like `fauna/results/sequences_ha.fasta`.
 Each file represents all available subtypes.
 
 Add the `upload_all` target to the command above to run the complete ingest pipeline _and_ upload results to AWS S3.
@@ -54,7 +54,7 @@ It does not merge or deduplicate the data with the fauna data used in the defaul
 nextstrain build . merge_andersen_segment_metadata
 ```
 
-The results will be available in `results/andersen-lab/`.
+The results will be available in `andersen-lab/results/`.
 
 ## Configuration
 

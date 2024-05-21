@@ -1,0 +1,11 @@
+segments:
+  - pb2
+  - pb1
+  - pa
+  - ha
+  - np
+  - na
+  - mp
+  - ns
+
+s3_dst: "s3://nextstrain-data-private/files/workflows/avian-flu"

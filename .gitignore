@@ -6,6 +6,8 @@ auspice/
 build/
 logs/
 benchmarks/
+ingest/fauna/
+ingest/andersen-lab/
 
 # Sensitive environment variables
 environment*

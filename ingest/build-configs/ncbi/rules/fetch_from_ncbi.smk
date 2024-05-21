@@ -10,13 +10,57 @@ OUTPUTS:
     ndjson = ncbi/data/ncbi.ndjson
 
 """
+import datetime
+
+
+def _get_date_filter():
+    """
+    Construct the NCBI Virus collection date filter to use
+    today as the max date.
+    """
+    min_date = config["ncbi_virus_min_collection_date"]
+    max_date = datetime.datetime.today().strftime("%Y-%m-%d")
+    return '{!tag=CollectionDate_dr}CollectionDate_dr:' + f'[{min_date} TO {max_date}]'
+
+
+rule fetch_from_ncbi_virus:
+    output:
+        ncbi_virus_csv="ncbi/data/ncbi_virus.csv",
+    params:
+        github_repo="nextstrain/avian-flu",
+        ncbi_taxon_id=config["ncbi_taxon_id"],
+        ncbi_collection_date_filter=_get_date_filter(),
+        ncbi_virus_filters=" ".join(f"{filter!r}" for filter in config["ncbi_virus_filters"]),
+    shell:
+        """
+        ./build-configs/ncbi/bin/fetch-from-ncbi-virus \
+            {params.ncbi_taxon_id} \
+            {params.github_repo} \
+            --filters {params.ncbi_collection_date_filter:q} {params.ncbi_virus_filters} \
+            > {output.ncbi_virus_csv}
+        """
+
+
+rule select_accessions_from_ncbi_virus:
+    input:
+        ncbi_virus_csv="ncbi/data/ncbi_virus.csv",
+    output:
+        genbank_accessions=temp("ncbi/data/genbank_accessions.txt"),
+    params:
+        accession_column_name="accession_version",
+    shell:
+        """
+        cat {input.ncbi_virus_csv} \
+            | csvtk cut -U -f {params.accession_column_name} \
+            > {output.genbank_accessions}
+        """
 
 
 rule fetch_ncbi_dataset_package:
+    input:
+        genbank_accessions="ncbi/data/genbank_accessions.txt",
     params:
-        ncbi_taxon_id=config["ncbi_taxon_id"],
-        released_after=config["ncbi_released_after"],
-        geo_location=config["ncbi_geo_location"],
+        ncbi_taxon_id=config["ncbi_taxon_id"]
     output:
         dataset_package=temp("ncbi/data/ncbi_dataset.zip"),
     # Allow retries in case of network errors
@@ -25,9 +69,8 @@ rule fetch_ncbi_dataset_package:
         "ncbi/benchmarks/fetch_ncbi_dataset_package.txt"
     shell:
         """
-        datasets download virus genome taxon {params.ncbi_taxon_id:q} \
-            --released-after {params.released_after:q} \
-            --geo-location {params.geo_location:q} \
+        datasets download virus genome accession \
+            --inputfile {input.genbank_accessions} \
             --no-progressbar \
             --filename {output.dataset_package}
         """
@@ -47,35 +90,10 @@ rule extract_ncbi_dataset_sequences:
         """
 
 
-rule format_ncbi_dataset_report:
-    input:
-        dataset_package="ncbi/data/ncbi_dataset.zip",
-    output:
-        ncbi_dataset_tsv=temp("ncbi/data/ncbi_dataset_report.tsv"),
-    params:
-        ncbi_datasets_fields=",".join(config["ncbi_datasets_fields"]),
-    benchmark:
-        "ncbi/benchmarks/format_ncbi_dataset_report.txt"
-    shell:
-        """
-        dataformat tsv virus-genome \
-            --package {input.dataset_package} \
-            --fields {params.ncbi_datasets_fields:q} \
-            --elide-header \
-            | csvtk fix-quotes -Ht \
-            | csvtk add-header -t -l -n {params.ncbi_datasets_fields:q} \
-            | csvtk rename -t -f accession -n accession_version \
-            | csvtk -t mutate -f accession_version -n accession -p "^(.+?)\." \
-            | csvtk del-quotes -t \
-            | tsv-select -H -f accession --rest last \
-            > {output.ncbi_dataset_tsv}
-        """
-
-
 rule format_ncbi_datasets_ndjson:
     input:
         ncbi_dataset_sequences="ncbi/data/ncbi_dataset_sequences.fasta",
-        ncbi_dataset_tsv="ncbi/data/ncbi_dataset_report.tsv",
+        ncbi_virus_csv="ncbi/data/ncbi_virus.csv",
     output:
         ndjson="ncbi/data/ncbi.ndjson",
     log:
@@ -85,7 +103,7 @@ rule format_ncbi_datasets_ndjson:
     shell:
         """
         augur curate passthru \
-            --metadata {input.ncbi_dataset_tsv} \
+            --metadata {input.ncbi_virus_csv} \
             --fasta {input.ncbi_dataset_sequences} \
             --seq-id-column accession_version \
             --seq-field sequence \

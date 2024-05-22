@@ -1,11 +1,4 @@
-# This configuration file should contain all required configuration parameters
-# for the ingest workflow to run to completion.
-#
-# Define optional config parameters with their default values here so that users
-# do not have to dig through the workflows to figure out the default values
-
-# Required to fetch from Entrez
-entrez_search_term: ""
+# Config for the NCBI ingest workflow
 
 # Required to fetch from NCBI Datasets
 ncbi_taxon_id: ""
@@ -91,7 +84,7 @@ curate:
   abbr_authors_field: "abbr_authors"
   # Path to the manual annotations file
   # The path should be relative to the ingest directory
-  annotations: "defaults/annotations.tsv"
+  annotations: "build-configs/ncbi/defaults/annotations.tsv"
   # The ID field in the metadata to use to merge the manual annotations
   annotations_id: "accession"
   # The ID field in the metadata to use as the sequence id in the output FASTA file

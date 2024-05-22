@@ -13,10 +13,6 @@ OUTPUTS:
 """
 
 
-# The following two rules can be ignored if you choose not to use the
-# generalized geolocation rules that are shared across pathogens.
-# The Nextstrain team will try to maintain a generalized set of geolocation
-# rules that can then be overridden by local geolocation rules per pathogen repo.
 rule fetch_general_geolocation_rules:
     output:
         general_geolocation_rules="data/general-geolocation-rules.tsv",
@@ -47,17 +43,9 @@ def format_field_map(field_map: dict[str, str]) -> str:
     return " ".join([f'"{key}"="{value}"' for key, value in field_map.items()])
 
 
-# This curate pipeline is based on existing pipelines for pathogen repos using NCBI data.
-# You may want to add and/or remove steps from the pipeline for custom metadata
-# curation for your pathogen. Note that the curate pipeline is streaming NDJSON
-# records between scripts, so any custom scripts added to the pipeline should expect
-# the input as NDJSON records from stdin and output NDJSON records to stdout.
-# The final step of the pipeline should convert the NDJSON records to two
-# separate files: a metadata TSV and a sequences FASTA.
 rule curate:
     input:
         sequences_ndjson="data/ncbi.ndjson",
-        # Change the geolocation_rules input path if you are removing the above two rules
         all_geolocation_rules="data/all-geolocation-rules.tsv",
         annotations=config["curate"]["annotations"],
     output:
@@ -120,7 +108,7 @@ rule subset_metadata:
     input:
         metadata="data/all_metadata.tsv",
     output:
-        subset_metadata="data/subset_metadata.tsv",
+        subset_metadata="results/metadata.tsv",
     params:
         metadata_fields=",".join(config["curate"]["metadata_columns"]),
     shell:

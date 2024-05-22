@@ -1,0 +1,73 @@
+"""
+This is the main ingest Snakefile that orchestrates the full ingest workflow
+and defines its default outputs.
+"""
+# The workflow filepaths are written relative to this Snakefile's base directory
+workdir: workflow.current_basedir
+
+# Use default configuration values. Override with Snakemake's --configfile/--config options.
+configfile: "defaults/config.yaml"
+
+# This is the default rule that Snakemake will run when there are no specified targets.
+# The default output of the ingest workflow is usually the curated metadata and sequences.
+# Nextstrain-maintained ingest workflows will produce metadata files with the
+# standard Nextstrain fields and additional fields that are pathogen specific.
+# We recommend using these standard fields in custom ingests as well to minimize
+# the customizations you will need for the downstream phylogenetic workflow.
+# TODO: Add link to centralized docs on standard Nextstrain metadata fields
+rule all:
+    input:
+        "results/sequences.fasta",
+        "results/metadata.tsv",
+
+
+# Note that only PATHOGEN-level customizations should be added to these
+# core steps, meaning they are custom rules necessary for all builds of the pathogen.
+# If there are build-specific customizations, they should be added with the
+# custom_rules imported below to ensure that the core workflow is not complicated
+# by build-specific rules.
+include: "rules/fetch_from_ncbi.smk"
+include: "rules/curate.smk"
+
+
+# We are pushing to standardize ingest workflows with Nextclade runs to include
+# Nextclade outputs in our publicly hosted data. However, if a Nextclade dataset
+# does not already exist, creating one requires curated data as input, so we are making
+# Nextclade steps optional here.
+#
+# If Nextclade config values are included, the nextclade rules will create the
+# final metadata TSV by joining the Nextclade output with the metadata.
+# If Nextclade configs are not included, we rename the subset metadata TSV
+# to the final metadata TSV.
+# To run nextclade.smk rules, include the `defaults/nextclade_config.yaml`
+# config file with `nextstrain build ingest --configfile defaults/nextclade_config.yaml`.
+if "nextclade" in config:
+
+    include: "rules/nextclade.smk"
+
+else:
+
+    rule create_final_metadata:
+        input:
+            metadata="data/subset_metadata.tsv"
+        output:
+            metadata="results/metadata.tsv"
+        shell:
+            """
+            mv {input.metadata} {output.metadata}
+            """
+
+# Allow users to import custom rules provided via the config.
+# This allows users to run custom rules that can extend or override the workflow.
+# A concrete example of using custom rules is the extension of the workflow with
+# rules to support the Nextstrain automation that uploads files and sends internal
+# Slack notifications.
+# For extensions, the user will have to specify the custom rule targets when
+# running the workflow.
+# For overrides, the custom Snakefile will have to use the `ruleorder` directive
+# to allow Snakemake to handle ambiguous rules
+# https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#handling-ambiguous-rules
+if "custom_rules" in config:
+    for rule_file in config["custom_rules"]:
+
+        include: rule_file

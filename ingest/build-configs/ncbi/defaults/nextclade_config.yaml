@@ -1,0 +1,12 @@
+# Nextclade parameters to include if you are running Nextclade as a part of your ingest workflow
+# Note that this requires a Nextclade dataset to already exist for your pathogen.
+nextclade:
+  # The name of the Nextclade dataset to use for running nextclade.
+  # Run `nextclade dataset list` to get a full list of available Nextclade datasets
+  dataset_name: ""
+  # Path to the mapping for renaming Nextclade output columns
+  # The path should be relative to the ingest directory
+  field_map: "config/nextclade_field_map.tsv"
+  # This is the ID field you would use to match the Nextclade output with the record metadata.
+  # This should be the new name that you have defined in your field map.
+  id_field: "seqName"

@@ -1,0 +1,23 @@
+# This configuration file should contain all required configuration parameters
+# for the ingest workflow to run with additional Nextstrain automation rules.
+
+# Custom rules to run as part of the Nextstrain automated workflow
+# The paths should be relative to the ingest directory.
+custom_rules:
+  - build-configs/nextstrain-automation/upload.smk
+
+# Nextstrain CloudFront domain to ensure that we invalidate CloudFront after the S3 uploads
+# This is required as long as we are using the AWS CLI for uploads
+cloudfront_domain: "data.nextstrain.org"
+
+# Nextstrain AWS S3 Bucket with pathogen prefix
+# Replace <pathogen> with the pathogen repo name.
+s3_dst: "s3://nextstrain-data/files/workflows/<pathogen>"
+
+# Mapping of files to upload
+files_to_upload:
+  ncbi.ndjson.zst: data/ncbi.ndjson
+  metadata.tsv.zst: results/metadata.tsv
+  sequences.fasta.zst: results/sequences.fasta
+  alignments.fasta.zst: results/alignment.fasta
+  translations.zip: results/translations.zip

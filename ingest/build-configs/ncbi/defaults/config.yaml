@@ -1,0 +1,119 @@
+# This configuration file should contain all required configuration parameters
+# for the ingest workflow to run to completion.
+#
+# Define optional config parameters with their default values here so that users
+# do not have to dig through the workflows to figure out the default values
+
+# Required to fetch from Entrez
+entrez_search_term: ""
+
+# Required to fetch from NCBI Datasets
+ncbi_taxon_id: ""
+
+# The list of NCBI Datasets fields to include from NCBI Datasets output
+# These need to be the "mnemonics" of the NCBI Datasets fields, see docs for full list of fields
+# https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/tsv/dataformat_tsv_virus-genome/#fields
+# Note: the "accession" field MUST be provided to match with the sequences
+ncbi_datasets_fields:
+  - accession
+  - sourcedb
+  - sra-accs
+  - isolate-lineage
+  - geo-region
+  - geo-location
+  - isolate-collection-date
+  - release-date
+  - update-date
+  - length
+  - host-name
+  - isolate-lineage-source
+  - biosample-acc
+  - submitter-names
+  - submitter-affiliation
+  - submitter-country
+
+# Config parameters related to the curate pipeline
+curate:
+  # URL pointed to public generalized geolocation rules
+  # For the Nextstrain team, this is currently
+  # "https://raw.githubusercontent.com/nextstrain/ncov-ingest/master/source-data/gisaid_geoLocationRules.tsv"
+  geolocation_rules_url: "https://raw.githubusercontent.com/nextstrain/ncov-ingest/master/source-data/gisaid_geoLocationRules.tsv"
+  # The path to the local geolocation rules within the pathogen repo
+  # The path should be relative to the ingest directory.
+  local_geolocation_rules: "defaults/geolocation_rules.tsv"
+  # List of field names to change where the key is the original field name and the value is the new field name
+  # The original field names should match the ncbi_datasets_fields provided above.
+  # This is the first step in the pipeline, so any references to field names in the configs below should use the new field names
+  field_map:
+    accession: accession
+    accession_version: accession_version
+    sourcedb: database
+    sra-accs: sra_accessions
+    isolate-lineage: strain
+    geo-region: region
+    geo-location: location
+    isolate-collection-date: date
+    release-date: date_released
+    update-date: date_updated
+    length: length
+    host-name: host
+    isolate-lineage-source: sample_type
+    biosample-acc: biosample_accessions
+    submitter-names: authors
+    submitter-affiliation: institution
+    submitter-country: submitter_country
+  # Standardized strain name regex
+  # Currently accepts any characters because we do not have a clear standard for strain names across pathogens
+  strain_regex: "^.+$"
+  # Back up strain name field to use if "strain" doesn"t match regex above
+  strain_backup_fields: ["accession"]
+  # List of date fields to standardize to ISO format YYYY-MM-DD
+  date_fields: ["date", "date_released", "date_updated"]
+  # List of expected date formats that are present in the date fields provided above
+  # These date formats should use directives expected by datetime
+  # See https://docs.python.org/3.9/library/datetime.html#strftime-and-strptime-format-codes
+  expected_date_formats: ["%Y", "%Y-%m", "%Y-%m-%d", "%Y-%m-%dT%H:%M:%SZ"]
+  titlecase:
+    # List of string fields to titlecase
+    fields: ["region", "country", "division", "location"]
+    # List of abbreviations not cast to titlecase, keeps uppercase
+    abbreviations: ["USA"]
+    # Articles that should not be cast to titlecase
+    articles: [
+      "and", "d", "de", "del", "des", "di", "do", "en", "l", "la", "las", "le",
+      "los", "nad", "of", "op", "sur", "the", "y"
+    ]
+  # Metadata field that contains the list of authors associated with the sequence
+  authors_field: "authors"
+  # Default value to use if the authors field is empty
+  authors_default_value: "?"
+  # Name to use for the generated abbreviated authors field
+  abbr_authors_field: "abbr_authors"
+  # Path to the manual annotations file
+  # The path should be relative to the ingest directory
+  annotations: "defaults/annotations.tsv"
+  # The ID field in the metadata to use to merge the manual annotations
+  annotations_id: "accession"
+  # The ID field in the metadata to use as the sequence id in the output FASTA file
+  output_id_field: "accession"
+  # The field in the NDJSON record that contains the actual genomic sequence
+  output_sequence_field: "sequence"
+  # The list of metadata columns to keep in the final output of the curation pipeline.
+  metadata_columns: [
+    "accession",
+    "accession_version",
+    "strain",
+    "date",
+    "region",
+    "country",
+    "division",
+    "location",
+    "length",
+    "host",
+    "date_released",
+    "date_updated",
+    "sra_accessions",
+    "authors",
+    "abbr_authors",
+    "institution",
+  ]

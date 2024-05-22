@@ -3,8 +3,15 @@
 custom_rules:
   - "build-configs/ncbi/Snakefile"
 
-# Required to fetch from NCBI Datasets
-ncbi_taxon_id: ""
+# NCBI taxon id for "Influenza A virus", which are then further
+# labeled with `serotype` (e.g. H5N1)
+ncbi_taxon_id: "11320"
+# Subset to get data for the H5N1 outbreak in the U.S. in 2024.
+# Also needed because pulling data for 11320 results in an
+# invalid zip archive error when trying to pull the full dataset.
+# <https://github.com/ncbi/datasets/issues/360>
+ncbi_released_after: "04/01/2024"
+ncbi_geo_location: "North America"
 
 # The list of NCBI Datasets fields to include from NCBI Datasets output
 # These need to be the "mnemonics" of the NCBI Datasets fields, see docs for full list of fields

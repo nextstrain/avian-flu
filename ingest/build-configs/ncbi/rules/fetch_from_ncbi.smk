@@ -15,6 +15,8 @@ OUTPUTS:
 rule fetch_ncbi_dataset_package:
     params:
         ncbi_taxon_id=config["ncbi_taxon_id"],
+        released_after=config["ncbi_released_after"],
+        geo_location=config["ncbi_geo_location"],
     output:
         dataset_package=temp("ncbi/data/ncbi_dataset.zip"),
     # Allow retries in case of network errors
@@ -24,6 +26,8 @@ rule fetch_ncbi_dataset_package:
     shell:
         """
         datasets download virus genome taxon {params.ncbi_taxon_id:q} \
+            --released-after {params.released_after:q} \
+            --geo-location {params.geo_location:q} \
             --no-progressbar \
             --filename {output.dataset_package}
         """

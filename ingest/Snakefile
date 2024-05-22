@@ -20,3 +20,9 @@ rule upload_all:
 
 include: "rules/upload_from_fauna.smk"
 include: "rules/ingest_andersen_lab.smk"
+
+# Allow users to import custom rules provided via the config.
+if "custom_rules" in config:
+    for rule_file in config["custom_rules"]:
+
+        include: rule_file

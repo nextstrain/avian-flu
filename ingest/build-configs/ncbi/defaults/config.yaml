@@ -1,5 +1,8 @@
 # Config for the NCBI ingest workflow
 
+custom_rules:
+  - "build-configs/ncbi/Snakefile"
+
 # Required to fetch from NCBI Datasets
 ncbi_taxon_id: ""
 

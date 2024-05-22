@@ -3,19 +3,19 @@ This part of the workflow handles the curation of data from NCBI
 
 REQUIRED INPUTS:
 
-    ndjson      = data/ncbi.ndjson
+    ndjson      = ncbi/data/ncbi.ndjson
 
 OUTPUTS:
 
-    metadata    = data/subset_metadata.tsv
-    seuqences   = results/sequences.fasta
+    metadata    = ncbi/results/metadata.tsv
+    seuqences   = ncbi/results/sequences.fasta
 
 """
 
 
 rule fetch_general_geolocation_rules:
     output:
-        general_geolocation_rules="data/general-geolocation-rules.tsv",
+        general_geolocation_rules="ncbi/data/general-geolocation-rules.tsv",
     params:
         geolocation_rules_url=config["curate"]["geolocation_rules_url"],
     shell:
@@ -26,10 +26,10 @@ rule fetch_general_geolocation_rules:
 
 rule concat_geolocation_rules:
     input:
-        general_geolocation_rules="data/general-geolocation-rules.tsv",
+        general_geolocation_rules="ncbi/data/general-geolocation-rules.tsv",
         local_geolocation_rules=config["curate"]["local_geolocation_rules"],
     output:
-        all_geolocation_rules="data/all-geolocation-rules.tsv",
+        all_geolocation_rules="ncbi/data/all-geolocation-rules.tsv",
     shell:
         """
         cat {input.general_geolocation_rules} {input.local_geolocation_rules} >> {output.all_geolocation_rules}
@@ -45,16 +45,16 @@ def format_field_map(field_map: dict[str, str]) -> str:
 
 rule curate:
     input:
-        sequences_ndjson="data/ncbi.ndjson",
-        all_geolocation_rules="data/all-geolocation-rules.tsv",
+        sequences_ndjson="ncbi/data/ncbi.ndjson",
+        all_geolocation_rules="ncbi/data/all-geolocation-rules.tsv",
         annotations=config["curate"]["annotations"],
     output:
-        metadata="data/all_metadata.tsv",
-        sequences="results/sequences.fasta",
+        metadata="ncbi/data/all_metadata.tsv",
+        sequences="ncbi/results/sequences.fasta",
     log:
-        "logs/curate.txt",
+        "ncbi/logs/curate.txt",
     benchmark:
-        "benchmarks/curate.txt"
+        "ncbi/benchmarks/curate.txt"
     params:
         field_map=format_field_map(config["curate"]["field_map"]),
         strain_regex=config["curate"]["strain_regex"],
@@ -106,9 +106,9 @@ rule curate:
 
 rule subset_metadata:
     input:
-        metadata="data/all_metadata.tsv",
+        metadata="ncbi/data/all_metadata.tsv",
     output:
-        subset_metadata="results/metadata.tsv",
+        subset_metadata="ncbi/results/metadata.tsv",
     params:
         metadata_fields=",".join(config["curate"]["metadata_columns"]),
     shell:

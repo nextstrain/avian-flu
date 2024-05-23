@@ -43,7 +43,8 @@ rule filter:
         include = files.include,
         exclude = files.dropped_strains
     params:
-        min_date = "2024-01-01"
+        min_date = "2024-01-01",
+        query = 'region == "North America"'
     output:
         sequences = "results/{build_name}/genome/sequences_{segment}.fasta"
     shell:
@@ -54,7 +55,7 @@ rule filter:
             --include {input.include} \
             --exclude {input.exclude} \
             --min-date {params.min_date} \
-            --query "(region == 'North America')" \
+            --query {params.query:q} \
             --output-sequences {output.sequences}
         """
 

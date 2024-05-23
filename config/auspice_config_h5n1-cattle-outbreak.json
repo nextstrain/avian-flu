@@ -14,6 +14,40 @@
       "name": "GISAID"
     }
   ],
+  "extensions": {
+    "nextclade": {
+      "pathogen": {
+        "schemaVersion":"3.0.0",
+        "defaultCds": "HA",
+        "cdsOrderPreference":[
+          "PB2",
+          "PB1",
+          "PA",
+          "HA",
+          "NP",
+          "NA",
+          "M1",
+          "M2",
+          "NS1",
+          "NS2"
+      ],
+      "attributes": {
+        "name": "H5N1 dairy cattle outbreak",
+        "reference name": "concatenated ancestral sequences",
+        "reference accession": "none"
+        },
+        "files": {
+          "changelog": "CHANGELOG.md",
+          "examples": "sequences.fasta",
+          "genomeAnnotation": "genome_annotation.gff3",
+          "pathogenJson": "pathogen.json",
+          "readme": "README.md",
+          "reference": "reference.fasta",
+          "treeJson": "tree.json"
+        }
+      }
+    }
+  },
   "colorings": [
     {
       "key": "gt",

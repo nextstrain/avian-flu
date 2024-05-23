@@ -72,10 +72,70 @@ rule format_ncbi_dataset_report:
         """
 
 
+rule select_accessions_from_dataset_report:
+    input:
+        ncbi_dataset_tsv="ncbi/data/ncbi_dataset_report.tsv",
+    output:
+        genbank_accessions=temp("ncbi/data/genbank_accessions.txt"),
+    params:
+        id_column_name=config["ncbi_join_field"],
+    shell:
+        """
+        tsv-select -H \
+            -f {params.id_column_name} \
+            {input.ncbi_dataset_tsv} \
+            > {output.genbank_accessions}
+        """
+
+
+rule fetch_from_ncbi_entrez_with_accessions:
+    input:
+        genbank_accessions="ncbi/data/genbank_accessions.txt",
+    output:
+        entrez_metadata=temp("ncbi/data/entrez_metadata.tsv"),
+    params:
+        source_fields=" ".join(config["entrez_source_fields"]),
+        id_column_name=config["ncbi_join_field"],
+    log:
+        "ncbi/logs/fetch_from_ncbi_entrez_with_accessions.txt",
+    benchmark:
+        "ncbi/benchmarks/fetch_from_ncbi_entrez_with_accessions.txt"
+    shell:
+        """
+        ./build-configs/ncbi/bin/fetch_from_ncbi_entrez_with_accessions \
+            --genbank-accessions {input.genbank_accessions} \
+            --source-fields {params.source_fields} \
+            --id-column-name {params.id_column_name} \
+            --output {output.entrez_metadata} 2>> {log}
+        """
+
+
+rule join_entrez_with_datasets_metadata:
+    input:
+        entrez_metadata="ncbi/data/entrez_metadata.tsv",
+        datasets_metadata="ncbi/data/ncbi_dataset_report.tsv",
+    output:
+        joined_metadata="ncbi/data/ncbi_metadata.tsv",
+    params:
+        ncbi_join_field=config["ncbi_join_field"]
+    benchmark:
+        "ncbi/benchmarks/join_entrez_with_datasets_metadata"
+    shell:
+        """
+        tsv-join -H \
+            --filter-file {input.entrez_metadata} \
+            --key-fields {params.ncbi_join_field} \
+            --append-fields '*' \
+            --write-all '?' \
+            {input.datasets_metadata} \
+            > {output.joined_metadata}
+        """
+
+
 rule format_ncbi_datasets_ndjson:
     input:
         ncbi_dataset_sequences="ncbi/data/ncbi_dataset_sequences.fasta",
-        ncbi_dataset_tsv="ncbi/data/ncbi_dataset_report.tsv",
+        ncbi_metadata="ncbi/data/ncbi_metadata.tsv",
     output:
         ndjson="ncbi/data/ncbi.ndjson",
     log:
@@ -85,7 +145,7 @@ rule format_ncbi_datasets_ndjson:
     shell:
         """
         augur curate passthru \
-            --metadata {input.ncbi_dataset_tsv} \
+            --metadata {input.ncbi_metadata} \
             --fasta {input.ncbi_dataset_sequences} \
             --seq-id-column accession_version \
             --seq-field sequence \

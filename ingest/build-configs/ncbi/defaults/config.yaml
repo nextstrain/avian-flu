@@ -12,6 +12,7 @@ ncbi_taxon_id: "11320"
 # <https://github.com/ncbi/datasets/issues/360>
 ncbi_released_after: "04/01/2024"
 ncbi_geo_location: "North America"
+ncbi_join_field: "accession_version"
 
 # The list of NCBI Datasets fields to include from NCBI Datasets output
 # These need to be the "mnemonics" of the NCBI Datasets fields, see docs for full list of fields
@@ -34,6 +35,12 @@ ncbi_datasets_fields:
   - submitter-names
   - submitter-affiliation
   - submitter-country
+
+# Fields to parse from the GenBank records that are fetched with Entrez
+entrez_source_fields:
+  - strain
+  - serotype
+  - segment
 
 # Config parameters related to the curate pipeline
 curate:

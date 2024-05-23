@@ -28,6 +28,7 @@ rule files:
     params:
         reference = lambda w: f"config/reference_{subtype(w.build_name)}_{{segment}}.gb",
         include = "config/include_strains_{build_name}.txt",
+        dropped_strains = "config/dropped_strains_{build_name}.txt",
         colors = lambda w: f"config/colors_{subtype(w.build_name)}.tsv",
         lat_longs =  lambda w: f"config/lat_longs_{subtype(w.build_name)}.tsv",
         auspice_config = "config/auspice_config_{build_name}.json",
@@ -40,6 +41,10 @@ rule filter:
         sequences = lambda w: f"data/sequences_{subtype(w.build_name)}_{w.segment}.fasta",
         metadata = lambda w: f"data/metadata_{subtype(w.build_name)}.tsv",
         include = files.include,
+        exclude = files.dropped_strains
+    params:
+        min_date = "2024-01-01",
+        query = 'region == "North America"'
     output:
         sequences = "results/{build_name}/genome/sequences_{segment}.fasta"
     shell:
@@ -47,8 +52,10 @@ rule filter:
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
-            --exclude-all \
             --include {input.include} \
+            --exclude {input.exclude} \
+            --min-date {params.min_date} \
+            --query {params.query:q} \
             --output-sequences {output.sequences}
         """
 

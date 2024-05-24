@@ -100,6 +100,10 @@ rule curate:
 
 
 rule split_curated_ndjson_by_segment:
+    """
+    Split out the full curate NDJSON by segment, then we can deduplicate
+    records by strain name within each segment
+    """
     input:
         curated_ndjson="ncbi/data/curated.ndjson",
     output:
@@ -117,6 +121,7 @@ rule split_curated_ndjson_by_segment:
         (cat {input.curated_ndjson} \
             | ./build-configs/ncbi/bin/filter-ndjson-by-segment \
                 --segment {wildcards.segment} \
+            | ./build-configs/ncbi/bin/dedup-by-strain \
             | augur curate passthru \
                 --output-metadata {output.metadata} \
                 --output-fasta {output.sequences} \

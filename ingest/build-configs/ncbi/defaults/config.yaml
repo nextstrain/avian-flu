@@ -73,6 +73,16 @@ curate:
   authors_default_value: "?"
   # Name to use for the generated abbreviated authors field
   abbr_authors_field: "abbr_authors"
+  # # Matching segment names used in fauna to the numeric segments returned by NCBI
+  segments:
+    pb2: "1"
+    pb1: "2"
+    pa: "3"
+    ha: "4"
+    np: "5"
+    na: "6"
+    mp: "7"
+    ns: "8"
   # Path to the manual annotations file
   # The path should be relative to the ingest directory
   annotations: "build-configs/ncbi/defaults/annotations.tsv"

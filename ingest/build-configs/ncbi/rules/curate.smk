@@ -67,6 +67,7 @@ rule curate:
         authors_field=config["curate"]["authors_field"],
         authors_default_value=config["curate"]["authors_default_value"],
         abbr_authors_field=config["curate"]["abbr_authors_field"],
+        segments=format_field_map(config["curate"]["segments"]),
         annotations_id=config["curate"]["annotations_id"],
         id_field=config["curate"]["output_id_field"],
         sequence_field=config["curate"]["output_sequence_field"],
@@ -93,6 +94,8 @@ rule curate:
                 --abbr-authors-field {params.abbr_authors_field} \
             | ./vendored/apply-geolocation-rules \
                 --geolocation-rules {input.all_geolocation_rules} \
+            | ./build-configs/ncbi/bin/transform-segment \
+                --segments {params.segments} \
             | ./vendored/merge-user-metadata \
                 --annotations {input.annotations} \
                 --id-field {params.annotations_id} \

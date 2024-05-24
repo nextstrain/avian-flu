@@ -8,7 +8,7 @@ REQUIRED INPUTS:
 OUTPUTS:
 
     metadata    = ncbi/results/metadata.tsv
-    seuqences   = ncbi/results/sequences.fasta
+    seuqences   = ncbi/results/sequences_{segment}.fasta
 
 """
 
@@ -49,8 +49,7 @@ rule curate:
         all_geolocation_rules="ncbi/data/all-geolocation-rules.tsv",
         annotations=config["curate"]["annotations"],
     output:
-        metadata="ncbi/data/all_metadata.tsv",
-        sequences="ncbi/results/sequences.fasta",
+        curated_ndjson="ncbi/data/curated.ndjson",
     log:
         "ncbi/logs/curate.txt",
     benchmark:
@@ -67,10 +66,8 @@ rule curate:
         authors_field=config["curate"]["authors_field"],
         authors_default_value=config["curate"]["authors_default_value"],
         abbr_authors_field=config["curate"]["abbr_authors_field"],
-        segments=format_field_map(config["curate"]["segments"]),
+        segments=format_field_map(config["ncbi_segments"]),
         annotations_id=config["curate"]["annotations_id"],
-        id_field=config["curate"]["output_id_field"],
-        sequence_field=config["curate"]["output_sequence_field"],
     shell:
         """
         (cat {input.sequences_ndjson} \
@@ -98,7 +95,28 @@ rule curate:
                 --segments {params.segments} \
             | ./vendored/merge-user-metadata \
                 --annotations {input.annotations} \
-                --id-field {params.annotations_id} \
+                --id-field {params.annotations_id} ) 2>> {log} > {output.curated_ndjson}
+        """
+
+
+rule split_curated_ndjson_by_segment:
+    input:
+        curated_ndjson="ncbi/data/curated.ndjson",
+    output:
+        metadata="ncbi/data/all_metadata_{segment}.tsv",
+        sequences="ncbi/results/sequences_{segment}.fasta",
+    params:
+        id_field=config["curate"]["output_id_field"],
+        sequence_field=config["curate"]["output_sequence_field"],
+    log:
+        "ncbi/logs/{segment}/split_curated_ndjson_by_segment.txt",
+    benchmark:
+        "ncbi/benchmarks/{segment}/split_curated_ndjson_by_segment.txt"
+    shell:
+        """
+        (cat {input.curated_ndjson} \
+            | ./build-configs/ncbi/bin/filter-ndjson-by-segment \
+                --segment {wildcards.segment} \
             | augur curate passthru \
                 --output-metadata {output.metadata} \
                 --output-fasta {output.sequences} \
@@ -109,13 +127,32 @@ rule curate:
 
 rule subset_metadata:
     input:
-        metadata="ncbi/data/all_metadata.tsv",
+        metadata="ncbi/data/all_metadata_{segment}.tsv",
     output:
-        subset_metadata="ncbi/results/metadata.tsv",
+        subset_metadata="ncbi/data/metadata_{segment}.tsv",
     params:
         metadata_fields=",".join(config["curate"]["metadata_columns"]),
     shell:
         """
         tsv-select -H -f {params.metadata_fields} \
             {input.metadata} > {output.subset_metadata}
+        """
+
+
+rule merge_ncbi_segment_metadata:
+    """
+    Add a column "n_segments" which reports how many segments
+    have sequence data (no QC performed).
+    """
+    input:
+        segments = expand("ncbi/data/metadata_{segment}.tsv", segment=config["ncbi_segments"]),
+        metadata = "ncbi/data/metadata_ha.tsv",
+    output:
+        metadata = "ncbi/results/metadata.tsv",
+    shell:
+        """
+        python scripts/add_segment_counts.py \
+            --segments {input.segments} \
+            --metadata {input.metadata} \
+            --output {output.metadata}
         """

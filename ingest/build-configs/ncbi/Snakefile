@@ -7,7 +7,9 @@ configfile: "build-configs/ncbi/defaults/config.yaml"
 
 rule ingest_ncbi:
     input:
-        "ncbi/results/sequences.fasta",
+        expand([
+            "ncbi/results/sequences_{segment}.fasta",
+        ], segment=config["ncbi_segments"].keys()),
         "ncbi/results/metadata.tsv",
 
 # Include file paths are relative this Snakefile

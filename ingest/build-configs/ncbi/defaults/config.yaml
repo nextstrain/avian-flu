@@ -14,6 +14,17 @@ ncbi_virus_filters:
   - '{!tag=Region_s}Region_s:("North America")'
   - 'Serotype_s:("H5N1")'
 
+# Matching segment names used in fauna to the numeric segments returned by NCBI
+ncbi_segments:
+  pb2: "1"
+  pb1: "2"
+  pa: "3"
+  ha: "4"
+  np: "5"
+  na: "6"
+  mp: "7"
+  ns: "8"
+
 # Config parameters related to the curate pipeline
 curate:
   # URL pointed to public generalized geolocation rules
@@ -73,23 +84,13 @@ curate:
   authors_default_value: "?"
   # Name to use for the generated abbreviated authors field
   abbr_authors_field: "abbr_authors"
-  # # Matching segment names used in fauna to the numeric segments returned by NCBI
-  segments:
-    pb2: "1"
-    pb1: "2"
-    pa: "3"
-    ha: "4"
-    np: "5"
-    na: "6"
-    mp: "7"
-    ns: "8"
   # Path to the manual annotations file
   # The path should be relative to the ingest directory
   annotations: "build-configs/ncbi/defaults/annotations.tsv"
   # The ID field in the metadata to use to merge the manual annotations
   annotations_id: "accession"
   # The ID field in the metadata to use as the sequence id in the output FASTA file
-  output_id_field: "accession"
+  output_id_field: "strain"
   # The field in the NDJSON record that contains the actual genomic sequence
   output_sequence_field: "sequence"
   # The list of metadata columns to keep in the final output of the curation pipeline.
@@ -97,7 +98,6 @@ curate:
     "accession",
     "accession_version",
     "strain",
-    "segment",
     "serotype",
     "date",
     "region",

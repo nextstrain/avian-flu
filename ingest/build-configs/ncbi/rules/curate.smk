@@ -93,6 +93,7 @@ rule curate:
                 --geolocation-rules {input.all_geolocation_rules} \
             | ./build-configs/ncbi/bin/transform-segment \
                 --segments {params.segments} \
+            | ./build-configs/ncbi/bin/transform-to-match-fauna \
             | ./vendored/merge-user-metadata \
                 --annotations {input.annotations} \
                 --id-field {params.annotations_id} ) 2>> {log} > {output.curated_ndjson}

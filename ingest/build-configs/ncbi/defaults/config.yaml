@@ -44,7 +44,7 @@ curate:
     sra-accs: sra_accessions
     strain: strain
     segment: segment
-    serotype: serotype
+    serotype: subtype
     isolate-lineage: isolate
     geo-region: region
     geo-location: location
@@ -56,12 +56,21 @@ curate:
     isolate-lineage-source: sample_type
     biosample-acc: biosample_accessions
     submitter-names: authors
-    submitter-affiliation: institution
+    submitter-affiliation: submitting_lab
+    # These columns are added to match fauna outputs
+    isolate_id: isolate_id
+    virus: virus
+    domestic_status: domestic_status
+    originating_lab: originating_lab
+    PMID: PMID
+    gisaid_clade: gisaid_clade
+    h5_clade: h5_clade
+
   # Standardized strain name regex
   # Currently accepts any characters because we do not have a clear standard for strain names across pathogens
   strain_regex: "^.+$"
   # Back up strain name field to use if "strain" doesn"t match regex above
-  strain_backup_fields: ["accession"]
+  strain_backup_fields: ["isolate", "accession"]
   # List of date fields to standardize to ISO format YYYY-MM-DD
   date_fields: ["date", "date_released", "date_updated"]
   # List of expected date formats that are present in the date fields provided above
@@ -94,22 +103,22 @@ curate:
   # The field in the NDJSON record that contains the actual genomic sequence
   output_sequence_field: "sequence"
   # The list of metadata columns to keep in the final output of the curation pipeline.
-  metadata_columns: [
-    "accession",
-    "accession_version",
-    "strain",
-    "serotype",
-    "date",
-    "region",
-    "country",
-    "division",
-    "location",
-    "length",
-    "host",
-    "date_released",
-    "date_updated",
-    "sra_accessions",
-    "authors",
-    "abbr_authors",
-    "institution",
-  ]
+  # Explicitly matching the metadata columns output by fauna
+  metadata_columns:
+  - strain
+  - virus
+  - isolate_id
+  - date
+  - region
+  - country
+  - division
+  - location
+  - host
+  - domestic_status
+  - subtype
+  - originating_lab
+  - submitting_lab
+  - authors
+  - PMID
+  - gisaid_clade
+  - h5_clade

@@ -47,6 +47,7 @@ rule filter:
         query = 'region == "North America"'
     output:
         sequences = "results/{build_name}/genome/sequences_{segment}.fasta"
+    log: "logs/{build_name}/genome/sequences_{segment}.txt"
     shell:
         """
         augur filter \
@@ -56,6 +57,7 @@ rule filter:
             --exclude {input.exclude} \
             --min-date {params.min_date} \
             --query {params.query:q} \
+            --output-log {log} \
             --output-sequences {output.sequences}
         """
 

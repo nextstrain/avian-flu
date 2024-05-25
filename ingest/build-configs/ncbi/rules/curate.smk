@@ -67,6 +67,7 @@ rule curate:
         authors_default_value=config["curate"]["authors_default_value"],
         abbr_authors_field=config["curate"]["abbr_authors_field"],
         segments=format_field_map(config["ncbi_segments"]),
+        host_map=config["curate"]["host_map"],
         annotations_id=config["curate"]["annotations_id"],
     shell:
         """
@@ -93,6 +94,8 @@ rule curate:
                 --geolocation-rules {input.all_geolocation_rules} \
             | ./build-configs/ncbi/bin/transform-segment \
                 --segments {params.segments} \
+            | ./build-configs/ncbi/bin/transform-host \
+                --host-map {params.host_map} \
             | ./build-configs/ncbi/bin/transform-to-match-fauna \
             | ./vendored/merge-user-metadata \
                 --annotations {input.annotations} \

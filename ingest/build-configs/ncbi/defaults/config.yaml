@@ -93,6 +93,9 @@ curate:
   authors_default_value: "?"
   # Name to use for the generated abbreviated authors field
   abbr_authors_field: "abbr_authors"
+  # Path to the host map file
+  # The path should be relative to the ingest directory
+  host_map: "build-configs/ncbi/defaults/host-map.tsv"
   # Path to the manual annotations file
   # The path should be relative to the ingest directory
   annotations: "build-configs/ncbi/defaults/annotations.tsv"

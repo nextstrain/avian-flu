@@ -47,23 +47,8 @@
       "type": "categorical"
     },
     {
-      "key": "domestic_status",
-      "title": "Domestic or Wild",
-      "type": "categorical"
-    },
-    {
       "key": "subtype",
       "title": "Subtype",
-      "type": "categorical"
-    },
-    {
-      "key": "h5_label_clade",
-      "title": "Provisional LABEL Clade",
-      "type": "categorical"
-    },
-    {
-      "key": "gisaid_clade",
-      "title": "GISAID Clade",
       "type": "categorical"
     },
     {
@@ -104,13 +89,10 @@
   },
   "filters": [
     "host",
-    "domestic_status",
     "region",
     "country",
     "division",
     "subtype",
-    "h5_label_clade",
-    "gisaid_clade",
     "author",
     "originating_lab",
     "submitting_lab"

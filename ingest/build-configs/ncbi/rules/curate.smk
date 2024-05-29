@@ -78,6 +78,7 @@ rule curate:
             | ./vendored/transform-strain-names \
                 --strain-regex {params.strain_regex} \
                 --backup-fields {params.strain_backup_fields} \
+            | ./build-configs/ncbi/bin/parse-metadata-from-strain \
             | augur curate format-dates \
                 --date-fields {params.date_fields} \
                 --expected-date-formats {params.expected_date_formats} \

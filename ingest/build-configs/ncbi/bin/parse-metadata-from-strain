@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""
+Attempts to parse additional metadata from the `strain` field.
+"""
+import argparse
+import json
+from sys import stderr, stdin, stdout
+from typing import Optional, Dict
+
+
+EXPECTED_STRAIN_SPLIT_LENGTH = {4, 5}
+EXPECTED_STRAIN_SPLIT_PREFIX = "A"
+HUMAN_HOST = "Homo sapiens"
+NCBI_LOCATION_SEPARATOR = ":"
+
+
+def parse_strain(strain: str) -> Optional[Dict[str, str]]:
+    """
+    Parses the `STRAIN_METADATA` from the provided *strain*, with the expectation
+    that the strain name is formatted as:
+
+    For non-human hosts:
+
+        A / <host> / <location> / <sample id> / <year>
+
+    For human hosts:
+
+        A / <location> / <sample id> / <year>
+
+    """
+    split_strain = strain.split("/")
+
+    if (len(split_strain) not in EXPECTED_STRAIN_SPLIT_LENGTH
+            or split_strain[0] != EXPECTED_STRAIN_SPLIT_PREFIX):
+        print("WARNING: Unable to parse additional metadata from strain. ",
+              f"Encountered unexpected `strain` format {strain!r}",
+              file=stderr)
+        return None
+
+    # Assume human host format
+    if len(split_strain) == 4:
+        prefix, location, sample, year = split_strain
+        host = HUMAN_HOST
+    elif len(split_strain) == 5:
+        prefix, host, location, sample, year = split_strain
+    else:
+        raise ValueError(f"Encountered unsupported strain format {strain!r}")
+
+    return {
+        "host": host,
+        "location": location,
+        "date": year
+    }
+
+
+def update_record(record: Dict[str, str], strain_metadata: Dict[str, str]):
+    """
+    Updates provided *record* with additional metadata from *strain_metadata*
+    """
+    # Add strain metadata to record if those fields do not exist or are empty
+    for field, strain_value in strain_metadata.items():
+        record_value = record.get(field, "")
+        # Special handling of the location field since the record may contain
+        # a less specific geolocation than the location parsed from strain
+        if field == "location" and NCBI_LOCATION_SEPARATOR not in record_value:
+
+            record[field] = record_value + NCBI_LOCATION_SEPARATOR + strain_value
+
+        if record_value == "":
+            record[field] = strain_value
+
+
+if __name__ == "__main__":
+
+    for record in stdin:
+        record = json.loads(record).copy()
+
+        strain_metadata = parse_strain(record.get("strain", ""))
+        if strain_metadata is not None:
+            update_record(record, strain_metadata)
+
+        json.dump(record, stdout, allow_nan=False, indent=None, separators=',:')
+        print()

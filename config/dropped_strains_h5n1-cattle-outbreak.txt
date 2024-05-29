@@ -59,7 +59,9 @@ A/goat/Minnesota/24-007234-044/2024
 A/goat/Minnesota/24-007234-047/2024
 A/goat/Minnesota/24-007234-048/2024
 A/goat/Minnesota/24-007234-050/2024
+A/goat/Minnesota/24-007234-059/2024
 A/greathornedowl/Oregon/24-006223-001/2024
+A/harris-hawk/Utah/24-004080-001/2024
 A/hoodedmerganser/SouthCarolina/W24-028/2024
 A/mallard/Colorado/24003181003/2024 # Cannot find corresponding sequence in NCBI
 A/mallard/Maine/24004330001/2024 # Cannot find corresponding sequence in NCBI
@@ -70,6 +72,8 @@ A/mountain_lion/Montana/24-005908-001/2024
 A/mountain_lion/Montana/24-010315-001/2024
 A/muteswan/California/24-005918-001/2024
 A/redheadduck/NorthCarolina/W24-83A/2024
+A/red-tailedhawk/Oregon/24-008306-001/2024
+A/red-tailedhawk/SouthCarolina/24-005993-001/2024
 A/skunk/Montana/24-007939-001/2024
 A/skunk/Washington/24-005959-001/2024
 A/skunk/Washington/24-005959-002/2024

@@ -35,7 +35,7 @@ rule files:
         colors = lambda w: f"config/colors_{subtype(w.build_name)}.tsv",
         lat_longs =  lambda w: f"config/lat_longs_{subtype(w.build_name)}.tsv",
         auspice_config = "config/auspice_config_{build_name}.json",
-        description = "config/description.md"
+        description = "config/description_{build_name}.md"
 
 files = rules.files.params
 

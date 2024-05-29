@@ -1,135 +1,98 @@
-A/chicken/Scotland/1959
-A/mallard/Poland/141/2015 # overly divergent
-A/Chicken/Egypt/AR528/2017
-A/mink/EasternChina/0712/2018 # divergent
-A/chicken/Dakahlia/110/2007 # divergent
-A/chicken/Pessel/BPPVRII/2007 # divergent
-A/duck/China/E26/2012 # divergent
-A/Fox/Bayern/WS113/2022
-A/mallard/Denmark/091795/2022
-A/Mallard/Netherlands/8/2023
-A/kelpgull/Chile/C35523/2017
-A/egret/Korea/22WC603/2023
-A/chicken/Poland/003/2020
-A/chicken/Scotland/128320/2023
-
-# Duplicated entries in GISAID
-A/blackbird/Texas/24008354001original/2024
-A/blackbird/Texas/24008357001original/2024
-A/commongrackle/Texas/24008356001original/2024
-A/commongrackle/Texas/24008356003original/2024
-A/feline/Montana/24009038001/2024
-A/feline/Texas/2402932901/2024
-A/feline/Texas/2402932902/2024
-A/feline/USA/24008764001original/2024
-A/feline/USA/24008764002original/2024
-A/feline/USA/24008850001original/2024
-A/feline/USA/24008850002original/2024
-A/feline/USA/24009116002original/2024
-A/feline/USA/24009116004original/2024
-A/feline/USA/24009116005original/2024
-A/feline/USA/24009311004original/2024
-A/feline/USA/24009311006original/2024
-A/goat/Minnesota/24007234009original/2024
-A/peregrinefalcon/California/24005915001original/2024
-A/skunk/NewMexico/24006483001original/2024
-
 # Dropping these strains from include due to excess private mutations
-A/dairycattle/NorthCarolina/24010327002/2024
-A/dairycattle/Texas/24009495007/2024
-A/domesticcat/NewMexico/24009116001/2024
+A/cattle/NorthCarolina/24-010327-002/2024
+A/cattle/Texas/24-009495-007/2024
+A/domesticcat/NewMexico/24-009116-001/2024
 
 # These strains are basal to the outbreak and we exclude them to avoid low-confidence DTA reconstruction.
-A/Canadagoose/Wyoming/24003692001original/2024
-A/Peregrinefalcon/California/24005915001/2024
+A/Canadagoose/Wyoming/24003692001original/2024 # Cannot find corresponding sequence in NCBI
+A/Peregrinefalcon/California/24-005915-001/2024
 
 # These strains represent diversity that's significantly outgrouped relative to cattle outbreak
-A/americancrow/Iowa/24006634001/2024
-A/Americanwhitepelican/NorthCarolina/W2484/2024
-A/baldeagle/Washington/24007953001/2024
-A/canadagoose/Indiana/24005146001/2024
-A/canadagoose/Indiana/24008719001/2024
-A/canadagoose/Missouri/24006385003/2024
-A/canadagoose/NewMexico/24005749001/2024
-A/Canadagoose/NorthCarolina/W2451/2024
-A/Canadagoose/NorthCarolina/W2490A/2024
-A/Canadagoose/SouthCarolina/24004559002/2024
-A/chicken/California/24000494001original/2024
-A/chicken/California/24000494002original/2024
-A/chicken/Colorado/24000499001original/2024
-A/chicken/Indiana/24005716002/2024
-A/chicken/Indiana/24005716003/2024
-A/chicken/Indiana/24005716006/2024
-A/chicken/Maine/24000724001original/2024
-A/chicken/Maine/24000724002original/2024
-A/chicken/Maine/24000724003original/2024
-A/chicken/Maine/24007946001/2024
-A/chicken/Maryland/24005539001/2024
-A/chicken/Maryland/24005539002/2024
-A/chicken/Minnesota/24000764001original/2024
-A/chicken/Minnesota/24005907001/2024
-A/chicken/Minnesota/24007263002/2024
-A/chicken/Minnesota/24007263003/2024
-A/chicken/Ohio/24005334001/2024
-A/chicken/Ohio/24005334002/2024
-A/chicken/Oregon/24007557001/2024
-A/commonraven/California/24007417001/2024
-A/crow/Illinois/24004479001/2024
-A/crow/Illinois/24004479002/2024
-A/domesticcat/Montana/24009038001/2024
-A/domesticgoose/California/24000492001original/2024
-A/domesticgoose/Minnesota/24000764003original/2024
-A/duck/Maine/24004330036/2024
-A/duck/Minnesota/24005907002/2024
-A/goat/Minnesota/24007234003original/2024
-A/goat/Minnesota/24007234006original/2024
-A/goat/Minnesota/24007234009/2024
-A/goat/Minnesota/24007234029/2024
-A/goat/Minnesota/24007234030/2024
-A/goat/Minnesota/24007234032/2024
-A/goat/Minnesota/24007234034/2024
-A/goat/Minnesota/24007234035/2024
-A/goat/Minnesota/24007234036/2024
-A/goat/Minnesota/24007234037/2024
-A/goat/Minnesota/24007234044/2024
-A/goat/Minnesota/24007234047/2024
-A/goat/Minnesota/24007234048/2024
-A/goat/Minnesota/24007234050/2024
-A/greathornedowl/Oregon/24006223001/2024
-A/hoodedmerganser/SouthCarolina/W24028/2024
-A/mallard/Colorado/24003181003/2024
-A/mallard/Maine/24004330001/2024
-A/mallard/Minnesota/24006961018/2024
-A/mallard/NewHampshire/24004334044/2024
-A/MountainLion/Montana/01/2024
-A/mountainlion/Montana/24005908001/2024
-A/mountainlion/Montana/24010315001/2024
-A/muteswan/California/24005918001/2024
-A/redheadduck/NorthCarolina/W2483A/2024
-A/skunk/Montana/24007939001/2024
-A/skunk/Washington/24005959001/2024
-A/skunk/Washington/24005959002/2024
-A/skunk/Washington/24005959003/2024
-A/skunk/Washington/24005959004/2024
-A/skunk/Washington/24005959005/2024
-A/skunk/Washington/24005959006/2024
-A/snowgoose/California/24004881002/2024
-A/snowgoose/California/24004881004/2024
-A/snowgoose/Colorado/24007706001/2024
-A/turkey/Minnesota/24007263001/2024
-A/turkey/Missouri/24005369001/2024
-A/turkey/Missouri/24005369002/2024
-A/turkey/Missouri/24005371001/2024
-A/turkey/Missouri/24005371002/2024
-A/turkey/Missouri/24005372001/2024
-A/turkey/Missouri/24005372002/2024
-A/turkey/SouthDakota/24007379001/2024
-A/turkey/SouthDakota/24007379002/2024
-A/turkey/Wisconsin/24000378001original/2024
-A/turkey/Wisconsin/24000378002original/2024
-A/turkey/Wisconsin/24000378003original/2024
-A/turkeyvulture/California/24007419001/2024
-A/westerngull/California/24004708001/2024
-A/woodduck/Mississippi/24004235001/2024
-A/woodduck/NorthCarolina/W24026/2024
-
+A/americancrow/Iowa/24-006634-001/2024
+A/Americanwhitepelican/NorthCarolina/W24-84/2024
+A/baldeagle/Washington/24-007953-001/2024
+A/canada_goose/Indiana/24-005146-001/2024
+A/canadagoose/Indiana/24-008719-001/2024
+A/canadagoose/Missouri/24-006385-003/2024
+A/canadagoose/NewMexico/24-005749-001/2024
+A/Canadagoose/NorthCarolina/W24-51/2024
+A/Canadagoose/NorthCarolina/W24-90A/2024
+A/Canadagoose/SouthCarolina/24004559002/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/California/24000494001original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/California/24000494002original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Colorado/24000499001original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Indiana/24-005716-002/2024
+A/chicken/Indiana/24-005716-003/2024
+A/chicken/Indiana/24-005716-006/2024
+A/chicken/Maine/24000724001original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Maine/24000724002original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Maine/24000724003original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Maine/24007946001/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Maryland/24-005539-001/2024
+A/chicken/Maryland/24-005539-002/2024
+A/chicken/Minnesota/24000764001original/2024 # Cannot find corresponding sequence in NCBI
+A/chicken/Minnesota/24-005907-001/2024
+A/chicken/Minnesota/24-007263-002/2024
+A/chicken/Minnesota/24-007263-003/2024
+A/chicken/Ohio/24-005334-001/2024
+A/chicken/Ohio/24-005334-002/2024
+A/chicken/Oregon/24-007557-001/2024
+A/commonraven/California/24-007417-001/2024
+A/crow/Illinois/24-004479-001/2024
+A/crow/Illinois/24-004479-002/2024
+A/domesticcat/Montana/24-009038-001/2024
+A/domesticgoose/California/24000492001original/2024 # Cannot find corresponding sequence in NCBI
+A/domesticgoose/Minnesota/24000764003original/2024 # Cannot find corresponding sequence in NCBI
+A/duck/Maine/24004330036/2024 # Cannot find corresponding sequence in NCBI
+A/duck/Minnesota/24-005907-002/2024
+A/goat/Minnesota/24-007234-003/2024
+A/goat/Minnesota/24-007234-006/2024
+A/goat/Minnesota/24-007234-009/2024
+A/goat/Minnesota/24-007234-029/2024
+A/goat/Minnesota/24-007234-030/2024
+A/goat/Minnesota/24-007234-032/2024
+A/goat/Minnesota/24-007234-034/2024
+A/goat/Minnesota/24-007234-035/2024
+A/goat/Minnesota/24-007234-036/2024
+A/goat/Minnesota/24-007234-037/2024
+A/goat/Minnesota/24-007234-044/2024
+A/goat/Minnesota/24-007234-047/2024
+A/goat/Minnesota/24-007234-048/2024
+A/goat/Minnesota/24-007234-050/2024
+A/greathornedowl/Oregon/24-006223-001/2024
+A/hoodedmerganser/SouthCarolina/W24-028/2024
+A/mallard/Colorado/24003181003/2024 # Cannot find corresponding sequence in NCBI
+A/mallard/Maine/24004330001/2024 # Cannot find corresponding sequence in NCBI
+A/mallard/Minnesota/24-006961-018/2024
+A/mallard/NewHampshire/24004334044/2024 # Cannot find corresponding sequence in NCBI
+A/MountainLion/Montana/01/2024 # Cannot find corresponding sequence in NCBI
+A/mountain_lion/Montana/24-005908-001/2024
+A/mountain_lion/Montana/24-010315-001/2024
+A/muteswan/California/24-005918-001/2024
+A/redheadduck/NorthCarolina/W24-83A/2024
+A/skunk/Montana/24-007939-001/2024
+A/skunk/Washington/24-005959-001/2024
+A/skunk/Washington/24-005959-002/2024
+A/skunk/Washington/24-005959-003/2024
+A/skunk/Washington/24-005959-004/2024
+A/skunk/Washington/24-005959-005/2024
+A/skunk/Washington/24-005959-006/2024
+A/snow_goose/California/24-004881-002/2024
+A/snow_goose/California/24-004881-004/2024
+A/snowgoose/Colorado/24-007706-001/2024
+A/turkey/Minnesota/24-007263-001/2024
+A/turkey/Missouri/24-005369-001/2024
+A/turkey/Missouri/24-005369-002/2024
+A/turkey/Missouri/24-005371-001/2024
+A/turkey/Missouri/24-005371-002/2024
+A/turkey/Missouri/24-005372-001/2024
+A/turkey/Missouri/24-005372-002/2024
+A/turkey/SouthDakota/24-007379-001/2024
+A/turkey/SouthDakota/24-007379-002/2024
+A/turkey/Wisconsin/24000378001original/2024 # Cannot find corresponding sequence in NCBI
+A/turkey/Wisconsin/24000378002original/2024 # Cannot find corresponding sequence in NCBI
+A/turkey/Wisconsin/24000378003original/2024 # Cannot find corresponding sequence in NCBI
+A/turkeyvulture/California/24-007419-001/2024
+A/westerngull/California/24-004708-001/2024
+A/woodduck/Mississippi/24004235001/2024 # Cannot find corresponding sequence in NCBI
+A/woodduck/NorthCarolina/W24-026/2024

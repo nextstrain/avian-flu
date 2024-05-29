@@ -11,7 +11,8 @@
       "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1102327"
     },
     {
-      "name": "GISAID"
+      "name": "GenBank",
+      "url": "https://www.ncbi.nlm.nih.gov/genbank/"
     }
   ],
   "colorings": [
@@ -110,7 +111,7 @@
     "subtype",
     "h5_label_clade",
     "gisaid_clade",
-    "authors",
+    "author",
     "originating_lab",
     "submitting_lab"
   ]

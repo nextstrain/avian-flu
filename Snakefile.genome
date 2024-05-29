@@ -1,5 +1,8 @@
 include: "rules/common.smk"
 
+assert LOCAL_INGEST == True and INGEST_SOURCE == "ncbi", \
+    "Full genome build is only set up for local ingest from 'ncbi'."
+
 import json
 
 # -------------------- notes --------------------
@@ -150,6 +153,7 @@ def clock_rate(w):
     stdev = mean/2
     return f"--clock-rate {mean} --clock-std-dev {stdev}"
 
+
 rule refine:
     message:
         """
@@ -169,7 +173,7 @@ rule refine:
         coalescent = "const",
         date_inference = "marginal",
         clock_rate = clock_rate,
-        root_strain = "A/skunk/NewMexico/24006483001/2024"
+        root_strain = "A/skunk/NewMexico/24-006483-001/2024"
     shell:
         """
         augur refine \

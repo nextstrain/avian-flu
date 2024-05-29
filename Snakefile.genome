@@ -74,6 +74,7 @@ rule align:
             --reference-sequence {input.reference} \
             --output {output.alignment} \
             --remove-reference \
+            --fill-gaps \
             --nthreads {threads}
         """
 
@@ -188,6 +189,7 @@ rule ancestral:
     input:
         tree = "results/{build_name}/genome/tree.nwk",
         alignment = "results/{build_name}/genome/aligned.fasta",
+        root_sequence = "config/h5_cattle_genome_root.gb",
     output:
         node_data = "results/{build_name}/genome/nt-muts.json"
     params:
@@ -198,7 +200,8 @@ rule ancestral:
             --tree {input.tree} \
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
-            --inference {params.inference}\
+            --inference {params.inference} \
+            --root-sequence {input.root_sequence} \
             --keep-ambiguous
         """
 
@@ -207,7 +210,7 @@ rule translate:
     input:
         tree = "results/{build_name}/genome/tree.nwk",
         node_data = "results/{build_name}/genome/nt-muts.json",
-        reference = "results/{build_name}/genome/reference.gb",
+        reference = "config/h5_cattle_genome_root.gb",
     output:
         node_data = "results/{build_name}/genome/aa-muts.json"
     shell:
@@ -218,6 +221,7 @@ rule translate:
             --reference-sequence {input.reference} \
             --output {output.node_data}
         """
+
 
 rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"

@@ -27,7 +27,7 @@ if __name__ == "__main__":
         record.update(NEXTSTRAIN_RECORD)
         # phylo workflow expects subtype to be in lower case
         record["subtype"] = record.get("subtype", "").lower()
-        record["isolate_id"] = record.get("accession", "")
+        record["isolate_id"] = record.get("genbank_accession", "")
 
         # Keep a copy of the original strain name since we are editing it below
         record["original_strain"] = record["strain"]

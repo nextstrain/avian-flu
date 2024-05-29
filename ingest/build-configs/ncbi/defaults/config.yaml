@@ -100,7 +100,7 @@ curate:
   # The path should be relative to the ingest directory
   annotations: "build-configs/ncbi/defaults/annotations.tsv"
   # The ID field in the metadata to use to merge the manual annotations
-  annotations_id: "genbank_accession"
+  annotations_id: "strain"
   # The ID field in the metadata to use as the sequence id in the output FASTA file
   output_id_field: "strain"
   # The field in the NDJSON record that contains the actual genomic sequence

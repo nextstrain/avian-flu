@@ -12,6 +12,15 @@ This workflow requires the Nextstrain CLI's Docker runtime which includes [fauna
 > NOTE: All command examples assume you are within the `ingest` directory.
 > If running commands from the outer `avian-flu` directory, replace the `.` with `ingest`.
 
+### Ingest data from NCBI GenBank
+
+To download, parse and curate data from NCBI GenBank run the following command.
+```sh
+nextstrain build . ingest_ncbi --configfile build-configs/ncbi/defaults/config.yaml
+```
+
+This results in the files `metadata.tsv`, `sequences_ha.fasta`, etc... under `ingest/ncbi/results/`.
+
 ### Ingest and upload data from fauna to S3
 
 The ingest pipeline supports downloading all sequences and metadata from fauna and uploading those data to S3.

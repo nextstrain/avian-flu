@@ -69,10 +69,13 @@ Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/res
 Run full genome builds with the following command.
 
 ``` bash
-nextstrain build . --snakefile Snakefile.genome
+nextstrain build . --snakefile Snakefile.genome --config local_ingest=True ingest_source=ncbi
 ```
 
-Currently this is only set up for the "h5n1-cattle-outbreak" build, and restricts the build to a set of strains where we think there's no reassortment (`config/include_strains_h5n1-cattle-outbreak.txt`). Output files will be placed in `results/h5n1-cattle-outbreak/genome`. See `Snakefile.genome` for more details.
+Currently this is only set up for the "h5n1-cattle-outbreak" build using locally ingested NCBI data. and The build is restricted to a set of strains where we think there's no reassortment, with outgroups
+excluded in (`config/dropped_strains_h5n1-cattle-outbreak.txt`).
+Output files will be placed in `results/h5n1-cattle-outbreak/genome`.
+See `Snakefile.genome` for more details.
 
 
 ### To modify this build to work with your own data

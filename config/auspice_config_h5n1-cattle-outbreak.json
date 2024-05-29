@@ -35,15 +35,6 @@
         "name": "H5N1 dairy cattle outbreak",
         "reference name": "concatenated ancestral sequences",
         "reference accession": "none"
-        },
-        "files": {
-          "changelog": "CHANGELOG.md",
-          "examples": "sequences.fasta",
-          "genomeAnnotation": "genome_annotation.gff3",
-          "pathogenJson": "pathogen.json",
-          "readme": "README.md",
-          "reference": "reference.fasta",
-          "treeJson": "tree.json"
         }
       }
     }

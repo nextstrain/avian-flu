@@ -38,8 +38,8 @@ curate:
   # The original field names should match the ncbi_datasets_fields provided above.
   # This is the first step in the pipeline, so any references to field names in the configs below should use the new field names
   field_map:
-    accession: accession
-    accession_version: accession_version
+    accession: genbank_accession
+    accession_version: genbank_accession_version
     sourcedb: database
     sra-accs: sra_accessions
     strain: strain
@@ -70,7 +70,7 @@ curate:
   # Currently accepts any characters because we do not have a clear standard for strain names across pathogens
   strain_regex: "^.+$"
   # Back up strain name field to use if "strain" doesn"t match regex above
-  strain_backup_fields: ["isolate", "accession"]
+  strain_backup_fields: ["isolate", "genbank_accession"]
   # List of date fields to standardize to ISO format YYYY-MM-DD
   date_fields: ["date", "date_released", "date_updated"]
   # List of expected date formats that are present in the date fields provided above
@@ -100,7 +100,7 @@ curate:
   # The path should be relative to the ingest directory
   annotations: "build-configs/ncbi/defaults/annotations.tsv"
   # The ID field in the metadata to use to merge the manual annotations
-  annotations_id: "accession"
+  annotations_id: "genbank_accession"
   # The ID field in the metadata to use as the sequence id in the output FASTA file
   output_id_field: "strain"
   # The field in the NDJSON record that contains the actual genomic sequence
@@ -125,3 +125,4 @@ curate:
   - PMID
   - gisaid_clade
   - h5_clade
+  - genbank_accession

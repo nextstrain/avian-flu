@@ -114,5 +114,8 @@
     "author",
     "originating_lab",
     "submitting_lab"
+  ],
+  "metadata_columns": [
+    "genbank_accession"
   ]
 }

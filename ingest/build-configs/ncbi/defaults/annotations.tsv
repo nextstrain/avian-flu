@@ -5,5 +5,4 @@
 # Lines starting with '#' are treated as comments
 # Any '#' after the field value are treated as comments.
 A/environment/USA/CO-UW-9084466/2024	division	Colorado # Based on linked BioSample https://www.ncbi.nlm.nih.gov/biosample/SAMN41462555
-A/domesticcat/UnitedStates/24-009311-006/2024	division	? # Better to unknown division be listed as unknown than as "USA"
 A/environment/USA/CO-UW-9084466/2024	host	Cattle # This sequence from commercial milk is definitively from cattle, strain name guidelines are going to be updated here

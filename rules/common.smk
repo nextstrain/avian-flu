@@ -1,5 +1,7 @@
 S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avian-flu")
 LOCAL_INGEST = bool(config.get('local_ingest', False))
+INGEST_SOURCE = config.get('ingest_source', 'fauna')
+
 
 def subtypes_by_subtype_wildcard(wildcards):
     db = {
@@ -15,7 +17,7 @@ if LOCAL_INGEST:
         output:
             sequences = "data/{segment}/sequences.fasta",
         params:
-            sequences = lambda w: f"ingest/fauna/results/sequences_{w.segment}.fasta"
+            sequences = lambda w: f"ingest/{INGEST_SOURCE}/results/sequences_{w.segment}.fasta"
         shell:
             """
             cp {params.sequences} {output.sequences}
@@ -24,9 +26,11 @@ if LOCAL_INGEST:
     rule copy_metadata_from_ingest:
         output:
             metadata = "data/metadata.tsv",
+        params:
+            metadata = f"ingest/{INGEST_SOURCE}/results/metadata.tsv",
         shell:
             """
-            cp ingest/fauna/results/metadata.tsv {output.metadata}
+            cp {params.metadata} {output.metadata}
             """
 
 else:

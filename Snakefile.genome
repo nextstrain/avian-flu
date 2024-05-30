@@ -1,5 +1,8 @@
 include: "rules/common.smk"
 
+assert LOCAL_INGEST == True and INGEST_SOURCE == "ncbi", \
+    "Full genome build is only set up for local ingest from 'ncbi'."
+
 import json
 
 # -------------------- notes --------------------
@@ -32,7 +35,7 @@ rule files:
         colors = lambda w: f"config/colors_{subtype(w.build_name)}.tsv",
         lat_longs =  lambda w: f"config/lat_longs_{subtype(w.build_name)}.tsv",
         auspice_config = "config/auspice_config_{build_name}.json",
-        description = "config/description.md"
+        description = "config/description_{build_name}.md"
 
 files = rules.files.params
 
@@ -47,6 +50,7 @@ rule filter:
         query = 'region == "North America"'
     output:
         sequences = "results/{build_name}/genome/sequences_{segment}.fasta"
+    log: "logs/{build_name}/genome/sequences_{segment}.txt"
     shell:
         """
         augur filter \
@@ -56,6 +60,7 @@ rule filter:
             --exclude {input.exclude} \
             --min-date {params.min_date} \
             --query {params.query:q} \
+            --output-log {log} \
             --output-sequences {output.sequences}
         """
 
@@ -149,6 +154,7 @@ def clock_rate(w):
     stdev = mean/2
     return f"--clock-rate {mean} --clock-std-dev {stdev}"
 
+
 rule refine:
     message:
         """
@@ -168,7 +174,9 @@ rule refine:
         coalescent = "const",
         date_inference = "marginal",
         clock_rate = clock_rate,
-        root_strain = "A/skunk/NewMexico/24006483001/2024"
+        # Using the closest outgroup as the root
+        # Make sure this strain is force included via augur filter --include
+        root_strain = "A/skunk/NewMexico/24-006483-001/2024"
     shell:
         """
         augur refine \

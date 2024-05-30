@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""
+Transforms to specific fields in the NDJSON record to match the output
+metdata from fauna for easier downstream use in the phylogenetic workflow
+"""
+import json
+from sys import stdin, stdout
+
+
+NEXTSTRAIN_RECORD = {
+    "virus": "avian_flu",
+    "domestic_status": "?",
+    "originating_lab": "?",
+    "PMID": "?",
+    "gisaid_clade": "?",
+    "h5_clade": "?",
+}
+
+
+if __name__ == "__main__":
+
+    for record in stdin:
+        record = json.loads(record).copy()
+
+        # Add hardcoded values to match fauna output
+        record.update(NEXTSTRAIN_RECORD)
+        # phylo workflow expects subtype to be in lower case
+        record["subtype"] = record.get("subtype", "").lower()
+        record["isolate_id"] = record.get("genbank_accession", "")
+
+        # Keep a copy of the original strain name since we are editing it below
+        record["original_strain"] = record["strain"]
+        # Remove spaces from strain names since they are not allowed in our phylo workflow.
+        record["strain"] = record["original_strain"].replace(" ", "")
+
+        json.dump(record, stdout, allow_nan=False, indent=None, separators=',:')
+        print()

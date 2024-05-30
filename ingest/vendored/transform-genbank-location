@@ -7,14 +7,23 @@ GenBank by verifying that the 'database' field has a value of "GenBank" or "RefS
 Outputs the modified record to stdout.
 """
 import json
-from sys import stdin, stdout
+from sys import stdin, stderr, stdout
 
 
 def parse_location(record: dict) -> dict:
     # Expected pattern for the location field is "<country_value>[:<region>][, <locality>]"
     # See GenBank docs for their "country" field:
     # https://www.ncbi.nlm.nih.gov/genbank/collab/country/
-    geographic_data = record['location'].split(':')
+    location_field = record.get("location", "")
+    if not location_field:
+        print(
+            "`transform-genbank-location` requires a `location` field; this record does not have one.",
+            file=stderr,
+        )
+        # bail early because we're not gonna make any changes
+        return record
+
+    geographic_data = location_field.split(':')
 
     country = geographic_data[0]
     division = ''
@@ -38,6 +47,13 @@ if __name__ == '__main__':
         database = record.get('database', '')
         if database in {'GenBank', 'RefSeq'}:
             parse_location(record)
+        else:
+            if database:
+                error_msg = f"""Database value of {database} not supported for `transform-genbank-location`; must be "GenBank" or "RefSeq"."""
+            else:
+                error_msg = "Record must contain `database` field to use `transform-genbank-location.`"
+
+            print(error_msg, file=stderr)
 
         json.dump(record, stdout, allow_nan=False, indent=None, separators=',:')
         print()

@@ -1,0 +1,17 @@
+"""
+This is the NCBI ingest Snakefile that orchestrates the NCBI ingest
+workflow and defines its default outputs.
+"""
+# Use default configuration values. Override with Snakemake's --configfile/--config options.
+configfile: "build-configs/ncbi/defaults/config.yaml"
+
+rule ingest_ncbi:
+    input:
+        expand([
+            "ncbi/results/sequences_{segment}.fasta",
+        ], segment=config["ncbi_segments"].keys()),
+        "ncbi/results/metadata.tsv",
+
+# Include file paths are relative this Snakefile
+include: "rules/fetch_from_ncbi.smk"
+include: "rules/curate.smk"

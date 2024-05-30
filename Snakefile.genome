@@ -173,6 +173,8 @@ rule refine:
         coalescent = "const",
         date_inference = "marginal",
         clock_rate = clock_rate,
+        # Using the closest outgroup as the root
+        # Make sure this strain is force included via augur filter --include
         root_strain = "A/skunk/NewMexico/24-006483-001/2024"
     shell:
         """

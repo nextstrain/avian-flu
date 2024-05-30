@@ -2,7 +2,6 @@
 """
 Attempts to parse additional metadata from the `strain` field.
 """
-import argparse
 import json
 from sys import stderr, stdin, stdout
 from typing import Optional, Dict
@@ -53,7 +52,7 @@ def parse_strain(strain: str) -> Optional[Dict[str, str]]:
     }
 
 
-def update_record(record: Dict[str, str], strain_metadata: Dict[str, str]):
+def update_record(record: Dict[str, str], strain_metadata: Dict[str, str]) -> None:
     """
     Updates provided *record* with additional metadata from *strain_metadata*
     """

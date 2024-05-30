@@ -15,7 +15,8 @@ from urllib.parse import urlencode
 from typing import List, Optional
 import argparse
 
-def parse_args():
+
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ncbi-taxon-id", required=True,
         help="NCBI Taxon ID. Visit NCBI virus at " +
@@ -31,9 +32,10 @@ def parse_args():
              "See docs/ncbi-virus-all-fields-example.json for the available NCBI Virus fields.")
     return parser.parse_args()
 
+
 def build_query_url(ncbi_taxon_id: str,
-                    filters: Optional[List[str]]=None,
-                    fields: Optional[List[str]]=None):
+                    filters: Optional[List[str]] = None,
+                    fields: Optional[List[str]] = None) -> None:
     """
     Generate URL to download all viral sequences and their curated metadata
     from GenBank via NCBI Virus.
@@ -87,9 +89,10 @@ def build_query_url(ncbi_taxon_id: str,
         # to be nice.
         'email': 'hello@nextstrain.org',
     }
-    query = urlencode(params, doseq = True, encoding = "utf-8")
+    query = urlencode(params, doseq=True, encoding="utf-8")
 
     print(f"{endpoint}?{query}")
+
 
 def main():
     args = parse_args()
@@ -98,6 +101,7 @@ def main():
         filters=args.filters,
         fields=args.fields
     )
+
 
 if __name__ == '__main__':
     main()

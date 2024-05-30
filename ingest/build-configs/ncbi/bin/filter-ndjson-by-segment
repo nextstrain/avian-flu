@@ -7,7 +7,7 @@ import json
 from sys import stderr, stdin, stdout
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--segment",
         help="Segment name to match for in NDJSON record (case sensitive).")
@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
         if segment_field is None:
             print(
-                f"WARNING: Excluding record without 'segment' field.",
+                "WARNING: Excluding record without 'segment' field.",
                 file=stderr
             )
             continue

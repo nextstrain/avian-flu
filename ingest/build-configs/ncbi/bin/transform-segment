@@ -8,7 +8,7 @@ import json
 from sys import stderr, stdin, stdout
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--segments", nargs="+", required=True,
         help="Segments expected in the `segment` field, " +

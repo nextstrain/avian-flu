@@ -3,10 +3,8 @@
 Deduplicate records by strain name.
 Only keeps the first record of duplicates.
 """
-import argparse
 import json
 from sys import stderr, stdin, stdout
-
 
 
 if __name__ == "__main__":

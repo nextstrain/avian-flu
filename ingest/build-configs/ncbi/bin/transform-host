@@ -8,7 +8,7 @@ import json
 from sys import stderr, stdin, stdout
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host-map", required=True,
         help="TSV file that maps `old_name` to the `new_name`.")

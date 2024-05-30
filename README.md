@@ -16,26 +16,26 @@ nextstrain build --aws-batch --aws-batch-cpus 16 --aws-batch-memory 28800 . --jo
 
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
 
-## Creating a custom build 
+## Creating a custom build
 The easiest way to generate your own, custom avian-flu build is to use the quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).
 
 ### Features unique to avian flu builds
 
-#### cleavage site annotations 
-Influenza virus HA is translated as a single peptide (HA0) that is cleaved to form the mature, functional form (HA1 and HA2). In all human strains and many avian strains, the cleavage site is composed of a single, basic amino acid residue. However, some avian influenza subtypes, particularly H5s, have acquired additional basic residues immediately preceding the HA cleavage site. In some cases, this results in addition of a furin cleavage motif, allowing HA to be cleaved by furin, which is ubiquitously expressed, and allows for viral replication across a range of tissues. The addition of this "polybasic cleavage site" is one of the prime determinants of avian influenza virulence. In these builds, we have annotated whether strains contain a furin cleavage motif, defined here as the sequence `R-X-K/R-R` immediately preceding the start of HA2, where `X` can be any amino acid. We have also added a color by for the cleavage site sequence, which we define here as the 4 bases preceding HA2. 
+#### cleavage site annotations
+Influenza virus HA is translated as a single peptide (HA0) that is cleaved to form the mature, functional form (HA1 and HA2). In all human strains and many avian strains, the cleavage site is composed of a single, basic amino acid residue. However, some avian influenza subtypes, particularly H5s, have acquired additional basic residues immediately preceding the HA cleavage site. In some cases, this results in addition of a furin cleavage motif, allowing HA to be cleaved by furin, which is ubiquitously expressed, and allows for viral replication across a range of tissues. The addition of this "polybasic cleavage site" is one of the prime determinants of avian influenza virulence. In these builds, we have annotated whether strains contain a furin cleavage motif, defined here as the sequence `R-X-K/R-R` immediately preceding the start of HA2, where `X` can be any amino acid. We have also added a color by for the cleavage site sequence, which we define here as the 4 bases preceding HA2.
 
 #### clade labeling
 H5 viruses are classified into clades, which are currently viewable as a color by on [nextstrain.org](https://nextstrain.org/avian-flu/h5n1/ha?c=h5_label_clade). Because clade annotations are not available in all public databases, we annotate sequences with their most likely clade using a tool developed by Samuel S. Shepard at CDC called [LABEL](https://wonder.cdc.gov/amd/flu/label/). The assigned clade for each H5N1 or H5Nx sequence are available as public tsvs [here](https://github.com/nextstrain/avian-flu/tree/master/clade-labeling).
 
-To update the `clades.tsv` file with clade annotations for new sequences, run: 
+To update the `clades.tsv` file with clade annotations for new sequences, run:
 
 `snakemake -s Snakefile.clades -p --cores 1`
 
-To run the builds on without updating the clades file, run: 
+To run the builds on without updating the clades file, run:
 
 `snakemake -p --cores 1`
 
-To string these together and update the `clades.tsv` file for new sequences and then run the builds: 
+To string these together and update the `clades.tsv` file for new sequences and then run the builds:
 
 `snakemake -s Snakefile.clades -p --cores 1 && snakemake -p --cores 1`
 
@@ -72,7 +72,8 @@ Run full genome builds with the following command.
 nextstrain build . --snakefile Snakefile.genome --config local_ingest=True ingest_source=ncbi
 ```
 
-Currently this is only set up for the "h5n1-cattle-outbreak" build using locally ingested NCBI data. and The build is restricted to a set of strains where we think there's no reassortment, with outgroups
+Currently this is only set up for the "h5n1-cattle-outbreak" build using locally ingested NCBI data,
+and the build is restricted to a set of strains where we think there's no reassortment, with outgroups
 excluded in (`config/dropped_strains_h5n1-cattle-outbreak.txt`).
 Output files will be placed in `results/h5n1-cattle-outbreak/genome`.
 See `Snakefile.genome` for more details.

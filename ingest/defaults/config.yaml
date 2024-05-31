@@ -8,4 +8,6 @@ segments:
   - mp
   - ns
 
-s3_dst: "s3://nextstrain-data-private/files/workflows/avian-flu"
+s3_dst:
+  fauna: s3://nextstrain-data-private/files/workflows/avian-flu
+  andersen-lab: s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab

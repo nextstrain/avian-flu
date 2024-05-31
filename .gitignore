@@ -8,6 +8,7 @@ logs/
 benchmarks/
 ingest/fauna/
 ingest/andersen-lab/
+ingest/ncbi/
 
 # Sensitive environment variables
 environment*

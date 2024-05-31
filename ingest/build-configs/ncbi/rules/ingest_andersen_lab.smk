@@ -83,7 +83,7 @@ rule curate_metadata:
         """
         augur curate normalize-strings \
             --metadata {input.metadata} \
-            | python3 ./scripts/curate_andersen_lab_data.py \
+            | ./build-configs/ncbi/bin/curate_andersen_lab_data \
             | ./vendored/apply-geolocation-rules \
                 --geolocation-rules {input.geolocation_rules} \
             | augur curate passthru \

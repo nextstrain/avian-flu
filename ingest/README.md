@@ -60,7 +60,7 @@ Only run this workflow as needed to see the latest available data in the repo.
 It does not merge or deduplicate the data with the fauna data used in the default ingest workflow.
 
 ```sh
-nextstrain build . merge_andersen_segment_metadata
+nextstrain build . ingest_andersen_lab --configfile build-configs/ncbi/defaults/config.yaml
 ```
 
 The results will be available in `andersen-lab/results/`.

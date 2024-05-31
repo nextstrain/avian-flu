@@ -12,6 +12,16 @@ rule ingest_ncbi:
         ], segment=config["ncbi_segments"].keys()),
         "ncbi/results/metadata.tsv",
 
+
+rule ingest_andersen_lab:
+    input:
+        expand([
+            "andersen-lab/results/sequences_{segment}.fasta",
+        ], segment=config["segments"]),
+        "andersen-lab/results/metadata.tsv",
+
+
 # Include file paths are relative this Snakefile
+include: "rules/ingest_andersen_lab.smk"
 include: "rules/fetch_from_ncbi.smk"
 include: "rules/curate.smk"

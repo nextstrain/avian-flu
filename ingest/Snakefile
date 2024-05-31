@@ -21,7 +21,7 @@ rule upload_all:
         sequences=expand("fauna/s3/sequences_{segment}.done", segment=config["segments"]),
         metadata="fauna/s3/metadata.done",
 
-include: "rules/upload_from_fauna.smk"
+include: "rules/ingest_fauna.smk"
 include: "rules/ingest_andersen_lab.smk"
 include: "rules/merge_segment_metadata.smk"
 include: "rules/upload_to_s3.smk"

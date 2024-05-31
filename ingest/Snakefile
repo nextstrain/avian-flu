@@ -3,8 +3,11 @@ path_to_fauna = '../fauna'
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
+SUPPORTED_DATA_SOURCES = ["fauna", "ncbi", "andersen-lab"]
+
 wildcard_constraints:
-    segment = "|".join(config["segments"])
+    segment = "|".join(config["segments"]),
+    data_source = "|".join(SUPPORTED_DATA_SOURCES)
 
 rule all:
     # As of 2024-05-16 the default ingest only ingests data from fauna
@@ -20,6 +23,7 @@ rule upload_all:
 
 include: "rules/upload_from_fauna.smk"
 include: "rules/ingest_andersen_lab.smk"
+include: "rules/merge_segment_metadata.smk"
 
 # Allow users to import custom rules provided via the config.
 if "custom_rules" in config:

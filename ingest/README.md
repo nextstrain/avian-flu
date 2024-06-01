@@ -12,14 +12,46 @@ This workflow requires the Nextstrain CLI's Docker runtime which includes [fauna
 > NOTE: All command examples assume you are within the `ingest` directory.
 > If running commands from the outer `avian-flu` directory, replace the `.` with `ingest`.
 
-### Ingest data from NCBI GenBank
+### Ingest and upload data from public sources to S3
+
+#### Ingest NCBI GenBank
 
 To download, parse and curate data from NCBI GenBank run the following command.
 ```sh
 nextstrain build . ingest_ncbi --configfile build-configs/ncbi/defaults/config.yaml
 ```
 
-This results in the files `metadata.tsv`, `sequences_ha.fasta`, etc... under `ingest/ncbi/results/`.
+This results in the files `metadata.tsv`, `sequences_ha.fasta`, etc... under `ncbi/results/`.
+
+#### Ingest from Andersen lab's avian-influenza repo
+
+Ingest publicly available consensus sequences and metadata from Andersen lab's [avian-influenza repo](https://github.com/andersen-lab/avian-influenza).
+Only run this workflow as needed to see the latest available data in the repo.
+It does not merge or deduplicate the data the NCBI GenBank workflow.
+
+```sh
+nextstrain build . ingest_andersen_lab --configfile build-configs/ncbi/defaults/config.yaml
+```
+
+The results will be available in `andersen-lab/results/`.
+
+#### Upload to S3
+
+To run both NCBI Genbank and Andersent Lab ingests _and_ upload results to S3,
+run the following command:
+
+```sh
+nextstrain build \
+    --env AWS_ACCESS_KEY_ID \
+    --env AWS_SECRET_ACCESS_KEY \
+    . \
+        upload_all_ncbi \
+            --configfile build-configs/ncbi/defaults/config.yaml
+```
+
+The workflow compresses and uploads the local files to S3 to corresponding paths
+under `s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi` and
+`s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab`.
 
 ### Ingest and upload data from fauna to S3
 
@@ -53,17 +85,6 @@ nextstrain build \
     . upload_all
 ```
 
-### Ingest from Andersen lab's avian-influenza repo
-
-Ingest publicly available consensus sequences and metadata from Andersen lab's [avian-influenza repo](https://github.com/andersen-lab/avian-influenza).
-Only run this workflow as needed to see the latest available data in the repo.
-It does not merge or deduplicate the data with the fauna data used in the default ingest workflow.
-
-```sh
-nextstrain build . ingest_andersen_lab --configfile build-configs/ncbi/defaults/config.yaml
-```
-
-The results will be available in `andersen-lab/results/`.
 
 ## Configuration
 

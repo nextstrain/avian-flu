@@ -1,7 +1,11 @@
 include: "rules/common.smk"
 
-assert LOCAL_INGEST == True and INGEST_SOURCE == "ncbi", \
-    "Full genome build is only set up for local ingest from 'ncbi'."
+if LOCAL_INGEST:
+    assert INGEST_SOURCE == "ncbi", \
+        "Full genome build is only set up for locat ingest from 'ncbi'."
+else:
+    assert S3_SRC.startswith("s3://nextstrain-data/"), \
+        "Full genome build is only set up for data from the public S3 bucket"
 
 import json
 

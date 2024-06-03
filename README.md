@@ -69,10 +69,15 @@ Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/res
 Run full genome builds with the following command.
 
 ``` bash
-nextstrain build . --snakefile Snakefile.genome --config local_ingest=True ingest_source=ncbi
+nextstrain build \
+    --env AWS_ACCESS_KEY_ID \
+    --env AWS_SECRET_ACCESS_KEY \
+    . \
+        --snakefile Snakefile.genome \
+        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi
 ```
 
-Currently this is only set up for the "h5n1-cattle-outbreak" build using locally ingested NCBI data,
+Currently this is only set up for the "h5n1-cattle-outbreak" build using NCBI data,
 and the build is restricted to a set of strains where we think there's no reassortment, with outgroups
 excluded in (`config/dropped_strains_h5n1-cattle-outbreak.txt`).
 Output files will be placed in `results/h5n1-cattle-outbreak/genome`.

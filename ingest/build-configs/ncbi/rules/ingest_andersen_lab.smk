@@ -83,7 +83,7 @@ rule curate_metadata:
         """
         augur curate normalize-strings \
             --metadata {input.metadata} \
-            | python3 ./scripts/curate_andersen_lab_data.py \
+            | ./build-configs/ncbi/bin/curate_andersen_lab_data \
             | ./vendored/apply-geolocation-rules \
                 --geolocation-rules {input.geolocation_rules} \
             | augur curate passthru \
@@ -99,7 +99,7 @@ rule match_metadata_and_segment_fasta:
         metadata = "andersen-lab/data/metadata.tsv",
         fasta = "andersen-lab/data/{segment}.fasta"
     output:
-        metadata = "andersen-lab/results/metadata_{segment}.tsv",
+        metadata = "andersen-lab/data/metadata_{segment}.tsv",
         fasta = "andersen-lab/results/sequences_{segment}.fasta"
     log:
         "andersen-lab/logs/match_segment_metadata_and_fasta/{segment}.txt",
@@ -117,22 +117,4 @@ rule match_metadata_and_segment_fasta:
             --output-id-field strain \
             --output-seq-field sequence \
             2> {log}
-        """
-
-rule merge_andersen_segment_metadata:
-    """
-    Add a column "n_segments" which reports how many segments
-    have sequence data (no QC performed).
-    """
-    input:
-        segments = expand("andersen-lab/results/metadata_{segment}.tsv", segment=config["segments"]),
-        metadata = "andersen-lab/results/metadata_ha.tsv",
-    output:
-        metadata = "andersen-lab/results/metadata.tsv",
-    shell:
-        """
-        python scripts/add_segment_counts.py \
-            --segments {input.segments} \
-            --metadata {input.metadata} \
-            --output {output.metadata}
         """

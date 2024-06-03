@@ -148,22 +148,3 @@ rule subset_metadata:
         tsv-select -H -f {params.metadata_fields} \
             {input.metadata} > {output.subset_metadata}
         """
-
-
-rule merge_ncbi_segment_metadata:
-    """
-    Add a column "n_segments" which reports how many segments
-    have sequence data (no QC performed).
-    """
-    input:
-        segments = expand("ncbi/data/metadata_{segment}.tsv", segment=config["ncbi_segments"]),
-        metadata = "ncbi/data/metadata_ha.tsv",
-    output:
-        metadata = "ncbi/results/metadata.tsv",
-    shell:
-        """
-        python scripts/add_segment_counts.py \
-            --segments {input.segments} \
-            --metadata {input.metadata} \
-            --output {output.metadata}
-        """

@@ -5,13 +5,37 @@ workflow and defines its default outputs.
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "build-configs/ncbi/defaults/config.yaml"
 
+# Sanity check that the requested segments match our ncbi_segments map
+assert all(segment in config["ncbi_segments"].keys() for segment in config["segments"])
+
+NCBI_DATA_SOURCES = ["ncbi", "andersen-lab"]
+
 rule ingest_ncbi:
     input:
         expand([
             "ncbi/results/sequences_{segment}.fasta",
-        ], segment=config["ncbi_segments"].keys()),
+        ], segment=config["segments"]),
         "ncbi/results/metadata.tsv",
 
+
+rule ingest_andersen_lab:
+    input:
+        expand([
+            "andersen-lab/results/sequences_{segment}.fasta",
+        ], segment=config["segments"]),
+        "andersen-lab/results/metadata.tsv",
+
+
+# Uploads all results for NCBI and Andersen Lab ingests
+rule upload_all_ncbi:
+    input:
+        expand([
+            "{data_source}/s3/sequences_{segment}.done",
+            "{data_source}/s3/metadata.done",
+        ], data_source=NCBI_DATA_SOURCES, segment=config["segments"]),
+
+
 # Include file paths are relative this Snakefile
+include: "rules/ingest_andersen_lab.smk"
 include: "rules/fetch_from_ncbi.smk"
 include: "rules/curate.smk"

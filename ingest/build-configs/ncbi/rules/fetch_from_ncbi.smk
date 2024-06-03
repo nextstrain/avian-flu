@@ -57,10 +57,8 @@ rule select_accessions_from_ncbi_virus:
 
 
 rule fetch_ncbi_dataset_package:
-    input:
-        genbank_accessions="ncbi/data/genbank_accessions.txt",
     params:
-        ncbi_taxon_id=config["ncbi_taxon_id"]
+        ncbi_taxon_id=config["ncbi_taxon_id"],
     output:
         dataset_package=temp("ncbi/data/ncbi_dataset.zip"),
     # Allow retries in case of network errors
@@ -69,8 +67,7 @@ rule fetch_ncbi_dataset_package:
         "ncbi/benchmarks/fetch_ncbi_dataset_package.txt"
     shell:
         """
-        datasets download virus genome accession \
-            --inputfile {input.genbank_accessions} \
+        datasets download virus genome taxon {params.ncbi_taxon_id:q} \
             --no-progressbar \
             --filename {output.dataset_package}
         """
@@ -79,6 +76,7 @@ rule fetch_ncbi_dataset_package:
 rule extract_ncbi_dataset_sequences:
     input:
         dataset_package="ncbi/data/ncbi_dataset.zip",
+        genbank_accessions="ncbi/data/genbank_accessions.txt",
     output:
         ncbi_dataset_sequences=temp("ncbi/data/ncbi_dataset_sequences.fasta"),
     benchmark:
@@ -86,7 +84,8 @@ rule extract_ncbi_dataset_sequences:
     shell:
         """
         unzip -jp {input.dataset_package} \
-            ncbi_dataset/data/genomic.fna > {output.ncbi_dataset_sequences}
+            ncbi_dataset/data/genomic.fna \
+            | seqkit grep -f {input.genbank_accessions} > {output.ncbi_dataset_sequences}
         """
 
 

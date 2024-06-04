@@ -99,8 +99,12 @@ rule match_metadata_and_segment_fasta:
         metadata = "andersen-lab/data/metadata.tsv",
         fasta = "andersen-lab/data/{segment}.fasta"
     output:
-        metadata = "andersen-lab/data/metadata_{segment}.tsv",
-        fasta = "andersen-lab/results/sequences_{segment}.fasta"
+        metadata = "andersen-lab/data/matched_metadata_{segment}.tsv",
+        fasta = "andersen-lab/results/sequences_{segment}.fasta",
+    params:
+        input_id_field="isolate_id",
+        sequence_field="sequence",
+        output_id_field=config["curate"]["output_id_field"],
     log:
         "andersen-lab/logs/match_segment_metadata_and_fasta/{segment}.txt",
     shell:
@@ -108,13 +112,34 @@ rule match_metadata_and_segment_fasta:
         augur curate passthru \
             --metadata {input.metadata} \
             --fasta {input.fasta} \
-            --seq-id-column isolate_id \
-            --seq-field sequence \
+            --seq-id-column {params.input_id_field} \
+            --seq-field {params.sequence_field} \
             --unmatched-reporting warn \
             --duplicate-reporting warn \
             --output-metadata {output.metadata} \
             --output-fasta {output.fasta} \
-            --output-id-field strain \
-            --output-seq-field sequence \
+            --output-id-field {params.output_id_field} \
+            --output-seq-field {params.sequence_field} \
             2> {log}
+        """
+
+
+rule reorder_metadata_columns:
+    """
+    Using tsv-select to reorder the columns of the Andersen lab metadata to
+    exactly match the NCBI metadata columns. Ensures that we don't accidently
+    append the wrong columns in joining steps.
+
+    tsv-select will exit with error if the column does not exist.
+    """
+    input:
+        metadata = "andersen-lab/data/matched_metadata_{segment}.tsv",
+    output:
+        reordered_metadata = "andersen-lab/data/metadata_{segment}.tsv"
+    params:
+        metadata_fields=",".join(config["curate"]["metadata_columns"]),
+    shell:
+        """
+        tsv-select -H -f {params.metadata_fields} \
+            {input.metadata} > {output.reordered_metadata}
         """

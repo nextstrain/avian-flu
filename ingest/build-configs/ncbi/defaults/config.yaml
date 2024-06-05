@@ -133,3 +133,6 @@ s3_dst:
   andersen-lab: s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab
 
 cloudfront_domain: data.nextstrain.org
+
+join_ncbi_andersen:
+  match_field: sra_accessions

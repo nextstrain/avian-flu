@@ -39,3 +39,4 @@ rule upload_all_ncbi:
 include: "rules/ingest_andersen_lab.smk"
 include: "rules/fetch_from_ncbi.smk"
 include: "rules/curate.smk"
+include: "rules/join_ncbi_andersen.smk"

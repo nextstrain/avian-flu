@@ -3,7 +3,7 @@ path_to_fauna = '../fauna'
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
-SUPPORTED_DATA_SOURCES = ["fauna", "ncbi", "andersen-lab"]
+SUPPORTED_DATA_SOURCES = ["fauna", "ncbi", "andersen-lab", "joined-ncbi"]
 
 wildcard_constraints:
     segment = "|".join(config["segments"]),

@@ -9,6 +9,7 @@ benchmarks/
 ingest/fauna/
 ingest/andersen-lab/
 ingest/ncbi/
+ingest/joined-ncbi/
 
 # Sensitive environment variables
 environment*

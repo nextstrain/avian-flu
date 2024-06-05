@@ -26,6 +26,14 @@ rule ingest_andersen_lab:
         "andersen-lab/results/metadata.tsv",
 
 
+rule ingest_joined_ncbi:
+    input:
+        expand([
+            "joined-ncbi/results/sequences_{segment}.fasta",
+        ], segment=config["segments"]),
+        "joined-ncbi/results/metadata.tsv",
+
+
 # Uploads all results for NCBI and Andersen Lab ingests
 rule upload_all_ncbi:
     input:

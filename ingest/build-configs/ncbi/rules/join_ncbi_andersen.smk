@@ -53,3 +53,35 @@ rule select_missing_sequences:
             {input.andersen_sequences} \
             > {output.missing_sequences}
         """
+
+
+rule append_missing_metadata_to_ncbi:
+    input:
+        ncbi_metadata = "ncbi/results/metadata.tsv",
+        missing_metadata = "joined-ncbi/data/missing_metadata.tsv",
+    output:
+        joined_metadata = "joined-ncbi/results/metadata.tsv",
+    params:
+        source_column_name = config["join_ncbi_andersen"]["source_column_name"],
+        ncbi_source = config["join_ncbi_andersen"]["ncbi_source"],
+        andersen_source = config["join_ncbi_andersen"]["andersen_source"],
+    shell:
+        """
+        tsv-append \
+            --source-header {params.source_column_name} \
+            --file {params.ncbi_source}={input.ncbi_metadata} \
+            --file {params.andersen_source}={input.missing_metadata} \
+            > {output.joined_metadata}
+        """
+
+
+rule append_missing_sequences_to_ncbi:
+    input:
+        ncbi_sequences = "ncbi/results/sequences_{segment}.fasta",
+        missing_sequences = "joined-ncbi/data/missing_sequences_{segment}.fasta",
+    output:
+        joined_sequences = "joined-ncbi/results/sequences_{segment}.fasta",
+    shell:
+        """
+        cat {input.ncbi_sequences} {input.missing_sequences} > {output.joined_sequences}
+        """

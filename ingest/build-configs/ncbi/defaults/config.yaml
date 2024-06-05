@@ -136,3 +136,6 @@ cloudfront_domain: data.nextstrain.org
 
 join_ncbi_andersen:
   match_field: sra_accessions
+  source_column_name: data_source
+  ncbi_source: genbank
+  andersen_source: andersen-lab

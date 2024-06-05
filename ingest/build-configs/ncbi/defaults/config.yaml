@@ -131,6 +131,7 @@ curate:
 s3_dst:
   ncbi: s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi
   andersen-lab: s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab
+  joined-ncbi: s3://nextstrain-data/files/workflows/avian-flu/h5n1
 
 cloudfront_domain: data.nextstrain.org
 

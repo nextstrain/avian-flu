@@ -8,7 +8,7 @@ configfile: "build-configs/ncbi/defaults/config.yaml"
 # Sanity check that the requested segments match our ncbi_segments map
 assert all(segment in config["ncbi_segments"].keys() for segment in config["segments"])
 
-NCBI_DATA_SOURCES = ["ncbi", "andersen-lab"]
+NCBI_DATA_SOURCES = ["ncbi", "andersen-lab", "joined-ncbi"]
 
 rule ingest_ncbi:
     input:

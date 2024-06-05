@@ -61,9 +61,10 @@ nextstrain build \
             --configfile build-configs/ncbi/defaults/config.yaml
 ```
 
-The workflow compresses and uploads the local files to S3 to corresponding paths
-under `s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi` and
-`s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab`.
+The workflow compresses and uploads the local files to S3 to corresponding paths under
+- joined-ncbi = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/`
+- ncbi = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi`
+- andersen-lab = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab`.
 
 ### Ingest and upload data from fauna to S3
 

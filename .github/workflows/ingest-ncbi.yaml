@@ -1,0 +1,65 @@
+name: Ingest NCBI
+
+defaults:
+  run:
+    # This is the same as GitHub Action's `bash` keyword as of 20 June 2023:
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+    #
+    # Completely spelling it out here so that GitHub can't change it out from under us
+    # and we don't have to refer to the docs to know the expected behavior.
+    shell: bash --noprofile --norc -eo pipefail {0}
+
+on:
+  schedule:
+    # Note times are in UTC, which is 1 or 2 hours behind CET depending on daylight savings.
+    #
+    # Note the actual runs might be late.
+    # Numerous people were confused, about that, including me:
+    #  - https://github.community/t/scheduled-action-running-consistently-late/138025/11
+    #  - https://github.com/github/docs/issues/3059
+    #
+    # Note, '*' is a special character in YAML, so you have to quote this string.
+    #
+    # Docs:
+    #  - https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#schedule
+    #
+    # Tool that deciphers this particular format of crontab string:
+    #  - https://crontab.guru/
+    #
+    # Runs at 5pm UTC (1pm EDT/10am PDT) since curation by NCBI happens on the East Coast.
+    # We were running into invalid zip archive errors at 9am PDT, so hoping an hour
+    # delay will lower the error frequency
+    - cron: '0 17 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  ingest:
+    permissions:
+      id-token: write
+    uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@master
+    secrets: inherit
+    with:
+      # Starting with the default docker runtime
+      # We can migrate to AWS Batch when/if we need to for more resources or if
+      # the job runs longer than the GH Action limit of 6 hours.
+      runtime: docker
+      run: |
+        nextstrain build \
+          ingest \
+            upload_all_ncbi \
+            --configfile build-configs/ncbi/defaults/config.yaml
+      # Specifying artifact name to differentiate ingest build outputs from
+      # the phylogenetic build outputs
+      artifact-name: ingest-ncbi-build-output
+      artifact-paths: |
+        ingest/.snakemake/log/
+        ingest/andersen-lab/results/
+        ingest/andersen-lab/benchmarks/
+        ingest/andersen-lab/logs/
+        ingest/joined-ncbi/results/
+        ingest/joined-ncbi/benchmarks/
+        ingest/joined-ncbi/logs/
+        ingest/ncbi/results/
+        ingest/ncbi/benchmarks/
+        ingest/ncbi/logs/

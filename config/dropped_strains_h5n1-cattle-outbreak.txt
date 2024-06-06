@@ -1,3 +1,14 @@
+# Duplicated entries from Andersen Lab
+A/Cattle/USA/24-008749-004-v/2024 # Duplicate of A/cattle/Texas/24-008749-004/2024
+A/Cattle/USA/24-008749-006-original/2024 # Duplicate of A/cattle/Texas/24-008749-006-original/2024
+A/Cattle/USA/24-008749-006-v/2024 # Duplicate of A/cattle/Texas/24-008749-006-original/2024
+A/Cattle/USA/24-008766-001-original/2024 # Duplicate of A/cattle/Kansas/24-008766-001/2024
+A/Cattle/USA/24-008766-001-v/2024 # Duplicate of A/cattle/Kansas/24-008766-001/2024
+A/Cattle/USA/24-009027-002-original/2024 # Duplicate of A/cattle/Michigan/24-009027-002/2024
+A/Cattle/USA/24-009027-002-v/2024 # Duplicate of A/cattle/Michigan/24-009027-002/2024
+A/PEFA/USA/24-005915-001-original/2024 # Duplicate of A/Peregrinefalcon/California/24-005915-001/2024
+A/Skunk/USA/24-006483-001-original/2024 # Duplicate of A/skunk/NewMexico/24-006483-001/2024
+
 # Dropping these strains from include due to excess private mutations
 A/cattle/NorthCarolina/24-010327-002/2024
 A/cattle/Texas/24-009495-007/2024
@@ -86,4 +97,3 @@ A/turkey/SouthDakota/24-007379-002/2024
 A/turkeyvulture/California/24-007419-001/2024
 A/westerngull/California/24-004708-001/2024
 A/woodduck/NorthCarolina/W24-026/2024
-

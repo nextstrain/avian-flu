@@ -100,6 +100,11 @@
       "key": "submitting_lab",
       "title": "Submitting Lab",
       "type": "categorical"
+    },
+    {
+      "key": "data_source",
+      "title": "Data Source",
+      "type": "categorical"
     }
   ],
   "geo_resolutions": [
@@ -123,6 +128,7 @@
     "submitting_lab"
   ],
   "metadata_columns": [
-    "genbank_accession"
+    "genbank_accession",
+    "sra_accessions"
   ]
 }

@@ -35,6 +35,18 @@ nextstrain build . ingest_andersen_lab --configfile build-configs/ncbi/defaults/
 
 The results will be available in `andersen-lab/results/`.
 
+### Ingest and join NCBI GenBank and Andersen lab data
+
+To ingest and join NCBI GenBank and Andersen lab data, we deduplicate records using SRA accessions.
+Andersen lab data with SRA accessions _not_ found in the NCBI GenBank data are appended
+to the metadata TSV and sequence FASTA files by running:
+
+```
+nextstrain build . ingest_joined_ncbi --configfile build-configs/ncbi/defaults/config.yaml
+```
+
+This results in files `metadata.tsv`, `sequences_ha.fast`, etc... under `joined-ncbi/results/`.
+
 #### Upload to S3
 
 To run both NCBI Genbank and Andersent Lab ingests _and_ upload results to S3,
@@ -49,9 +61,10 @@ nextstrain build \
             --configfile build-configs/ncbi/defaults/config.yaml
 ```
 
-The workflow compresses and uploads the local files to S3 to corresponding paths
-under `s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi` and
-`s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab`.
+The workflow compresses and uploads the local files to S3 to corresponding paths under
+- joined-ncbi = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/`
+- ncbi = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi`
+- andersen-lab = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab`.
 
 ### Ingest and upload data from fauna to S3
 

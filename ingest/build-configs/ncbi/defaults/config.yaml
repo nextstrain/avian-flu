@@ -126,9 +126,17 @@ curate:
   - gisaid_clade
   - h5_clade
   - genbank_accession
+  - sra_accessions
 
 s3_dst:
   ncbi: s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi
   andersen-lab: s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab
+  joined-ncbi: s3://nextstrain-data/files/workflows/avian-flu/h5n1
 
 cloudfront_domain: data.nextstrain.org
+
+join_ncbi_andersen:
+  match_field: sra_accessions
+  source_column_name: data_source
+  ncbi_source: genbank
+  andersen_source: andersen-lab

@@ -30,6 +30,8 @@ NEXTSTRAIN_RECORD = {
     'PMID': '?',
     'gisaid_clade': '?',
     'h5_clade': '?',
+    'genbank_accession': '?',
+    'sra_accessions': '?',
 }
 
 
@@ -40,6 +42,7 @@ def create_new_record(anderson_record: dict) -> dict:
     """
     new_record = copy.deepcopy(NEXTSTRAIN_RECORD)
     new_record['isolate_id'] = anderson_record['Run']
+    new_record['sra_accessions'] = anderson_record['Run']
     new_record['division'] = anderson_record['US State']
     new_record['location'] = anderson_record['US State']
 

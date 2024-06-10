@@ -15,6 +15,7 @@ A/domesticcat/Poland/H249/2023
 A/domesticcat/Poland/H253/2023
 A/domesticcat/Poland/H248/2023
 A/domesticcat/Poland/H247/2023
+A/StateofMexico/INERINF645/2024
 
 # US dairy cattle outbreak
 # Cattle sequences

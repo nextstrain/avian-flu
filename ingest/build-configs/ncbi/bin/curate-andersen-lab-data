@@ -43,15 +43,13 @@ def create_new_record(anderson_record: dict) -> dict:
     new_record = copy.deepcopy(NEXTSTRAIN_RECORD)
     new_record['isolate_id'] = anderson_record['Run']
     new_record['sra_accessions'] = anderson_record['Run']
-    new_record['division'] = anderson_record['US State']
-    new_record['location'] = anderson_record['US State']
 
     center_name = parse_center_name(anderson_record['Center Name'])
     new_record['originating_lab'] = center_name
     new_record['submitting_lab'] = center_name
 
     new_record['host'] = parse_host_group(anderson_record['Host'])
-    new_record['date'] = parse_date(anderson_record['Date'])
+    new_record['date'] = parse_date(anderson_record['Collection_Date'])
     new_record['strain'] = f'A/{anderson_record["Host"]}/{new_record["country"]}/{anderson_record["isolate"]}/{parse_year(new_record["date"])}'
     return new_record
 
@@ -113,7 +111,7 @@ def parse_year(date_string: str) -> str:
     """
     Parse the year from the provided `date_string`
     """
-    date_formats = ['%Y-%m-%d', '%Y-XX-XX']
+    date_formats = ['%Y-%m-%d', '%Y', '%Y-XX-XX']
     for date_format in date_formats:
         try:
             parsed_date = datetime.strptime(date_string, date_format)

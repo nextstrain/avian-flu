@@ -11,7 +11,8 @@ from sys import stderr, stdin, stdout
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host-map", required=True,
-        help="TSV file that maps `old_name` to the `new_name`.")
+        help="TSV file that maps `old_name` to the `new_name`. " +
+             "The `old_name` value is case-insensitive")
     return parser.parse_args()
 
 
@@ -19,12 +20,15 @@ def parse_host_map(host_map_file: str) -> dict:
     """
     Parse the provided *host_map_file* into a dictionary, where the key
     is the `old_name` and the values are the `new_name`.
+
+    The `old_name` is transformed to lowercase to support case-insensitive
+    comparisons.
     """
     host_map = {}
     with open(host_map_file) as tsv_file:
         reader = csv.DictReader(tsv_file, delimiter="\t")
         for row in reader:
-            host_map[row["old_name"]] = row["new_name"]
+            host_map[row["old_name"].lower()] = row["new_name"]
 
     return host_map
 
@@ -37,7 +41,8 @@ if __name__ == "__main__":
         record = json.loads(record).copy()
 
         host_field = record.get("host")
-        host = host_map.get(host_field)
+        # Do case-insensitive comparison of host_field to host_map
+        host = host_map.get(host_field.lower() if isinstance(host_field, str) else "")
         if host_field is None:
             print(
                 f"WARNING: Unable to transform host in record {index!r} " +

@@ -46,12 +46,12 @@ def create_new_record(anderson_record: dict) -> dict:
     new_record['region'] = anderson_record['geo_loc_name_country_continent']
     new_record['country'] = anderson_record['geo_loc_name_country']
     new_record['host'] = anderson_record['Host']
+    new_record['date'] = anderson_record['Collection_Date']
 
     center_name = parse_center_name(anderson_record['Center Name'])
     new_record['originating_lab'] = center_name
     new_record['submitting_lab'] = center_name
 
-    new_record['date'] = parse_date(anderson_record['Collection_Date'])
     new_record['strain'] = f'A/{anderson_record["Host"]}/{new_record["country"]}/{anderson_record["isolate"]}/{parse_year(new_record["date"])}'
     return new_record
 
@@ -63,26 +63,11 @@ def parse_center_name(center_name: str) -> str:
     return center_name
 
 
-def parse_date(date_string: str) -> str:
-    """
-    If date_string is empty, 'NA', or includes a `?`, then returns the
-    hardcoded `2024-XX-XX` date.
-
-    Otherwise return the original date_string.
-    """
-    default_date = '2024-XX-XX'
-
-    if not date_string or date_string == 'NA' or '?' in date_string:
-        return default_date
-
-    return date_string
-
-
 def parse_year(date_string: str) -> str:
     """
     Parse the year from the provided `date_string`
     """
-    date_formats = ['%Y-%m-%d', '%Y', '%Y-XX-XX']
+    date_formats = ['%Y']
     for date_format in date_formats:
         try:
             parsed_date = datetime.strptime(date_string, date_format)

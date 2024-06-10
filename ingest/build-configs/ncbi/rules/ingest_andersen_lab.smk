@@ -22,14 +22,13 @@ rule extract_metadata:
     output:
         metadata = "andersen-lab/data/PRJNA1102327_metadata.csv"
     params:
-        output_dir = lambda wildcards, output: Path(output.metadata).parent
+        metadata_file_path = "metadata/SraRunTable_PRJNA1102327_automated.csv",
     shell:
         """
-        tar xz --file={input.andersen_lab_repo} \
-            --strip-components=2 \
-            -C {params.output_dir} \
+        tar xz -O --file={input.andersen_lab_repo} \
             --wildcards \
-            "*/metadata/PRJNA1102327_metadata.csv"
+            "*/{params.metadata_file_path:q}" \
+            > {output.metadata}
         """
 
 rule extract_consensus_sequences:

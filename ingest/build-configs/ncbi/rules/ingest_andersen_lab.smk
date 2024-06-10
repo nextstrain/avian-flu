@@ -78,11 +78,15 @@ rule curate_metadata:
         metadata = "andersen-lab/data/metadata.tsv"
     log:
         "andersen-lab/logs/curate_metadata.txt",
+    params:
+        host_map=config["curate"]["host_map"],
     shell:
         """
         augur curate normalize-strings \
             --metadata {input.metadata} \
             | ./build-configs/ncbi/bin/curate-andersen-lab-data \
+            | ./build-configs/ncbi/bin/transform-host \
+                --host-map {params.host_map} \
             | ./vendored/apply-geolocation-rules \
                 --geolocation-rules {input.geolocation_rules} \
             | augur curate passthru \

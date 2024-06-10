@@ -73,7 +73,8 @@ rule rename_and_concatenate_segment_fastas:
 rule curate_metadata:
     input:
         metadata = "andersen-lab/data/PRJNA1102327_metadata.csv",
-        geolocation_rules = "defaults/geolocation_rules.tsv"
+        geolocation_rules = "defaults/geolocation_rules.tsv",
+        annotations=config["curate"]["annotations"],
     output:
         metadata = "andersen-lab/data/metadata.tsv"
     log:
@@ -82,6 +83,7 @@ rule curate_metadata:
         host_map=config["curate"]["host_map"],
         date_fields=['date'],
         expected_date_formats=['%Y'],
+        annotations_id=config["curate"]["annotations_id"],
     shell:
         """
         augur curate normalize-strings \
@@ -94,6 +96,9 @@ rule curate_metadata:
                 --host-map {params.host_map} \
             | ./vendored/apply-geolocation-rules \
                 --geolocation-rules {input.geolocation_rules} \
+            | ./vendored/merge-user-metadata \
+                --annotations {input.annotations} \
+                --id-field {params.annotations_id} \
             | augur curate passthru \
                 --output-metadata {output.metadata} 2>> {log}
         """

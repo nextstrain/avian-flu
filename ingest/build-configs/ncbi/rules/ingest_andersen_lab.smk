@@ -16,21 +16,62 @@ rule fetch_andersen_lab_repo:
             > {output.andersen_lab_repo}
         """
 
-rule extract_metadata:
+
+rule extract_old_metadata:
     input:
         andersen_lab_repo = "andersen-lab/data/avian-influenza.tar.gz"
     output:
-        metadata = "andersen-lab/data/PRJNA1102327_metadata.csv"
+        metadata = "andersen-lab/data/PRJNA1102327_old_metadata.csv"
     params:
-        output_dir = lambda wildcards, output: Path(output.metadata).parent
+        metadata_file_path = "metadata/PRJNA1102327_metadata.csv",
+        fields_to_keep = "Run,Date,US State",
     shell:
         """
-        tar xz --file={input.andersen_lab_repo} \
-            --strip-components=2 \
-            -C {params.output_dir} \
+        tar xz -O --file={input.andersen_lab_repo} \
             --wildcards \
-            "*/metadata/PRJNA1102327_metadata.csv"
+            "*/{params.metadata_file_path:q}" \
+            | csvtk cut -f {params.fields_to_keep:q} \
+            > {output.metadata}
         """
+
+
+rule extract_automated_metadata:
+    input:
+        andersen_lab_repo = "andersen-lab/data/avian-influenza.tar.gz"
+    output:
+        metadata = "andersen-lab/data/PRJNA1102327_automated_metadata.csv"
+    params:
+        metadata_file_path = "metadata/SraRunTable_PRJNA1102327_automated.csv",
+    shell:
+        """
+        tar xz -O --file={input.andersen_lab_repo} \
+            --wildcards \
+            "*/{params.metadata_file_path:q}" \
+            > {output.metadata}
+        """
+
+
+rule join_old_and_automated_metadata:
+    """
+    Join the extra fields from the old metadata CSV to the automated metadata
+    to fill in additional data that is no longer included.
+    """
+    input:
+        old_metadata = "andersen-lab/data/PRJNA1102327_old_metadata.csv",
+        automated_metadata = "andersen-lab/data/PRJNA1102327_automated_metadata.csv",
+    output:
+        metadata = "andersen-lab/data/PRJNA1102327_metadata.csv",
+    params:
+        join_field = "Run",
+    shell:
+        """
+        csvtk join -f {params.join_field:q} \
+            --left-join \
+            {input.automated_metadata} \
+            {input.old_metadata} \
+            > {output.metadata}
+        """
+
 
 rule extract_consensus_sequences:
     input:
@@ -74,18 +115,32 @@ rule rename_and_concatenate_segment_fastas:
 rule curate_metadata:
     input:
         metadata = "andersen-lab/data/PRJNA1102327_metadata.csv",
-        geolocation_rules = "defaults/geolocation_rules.tsv"
+        geolocation_rules = "defaults/geolocation_rules.tsv",
+        annotations=config["curate"]["annotations"],
     output:
         metadata = "andersen-lab/data/metadata.tsv"
     log:
         "andersen-lab/logs/curate_metadata.txt",
+    params:
+        host_map=config["curate"]["host_map"],
+        date_fields=['date'],
+        expected_date_formats=['%Y-%m-%d', '%Y'],
+        annotations_id=config["curate"]["annotations_id"],
     shell:
         """
         augur curate normalize-strings \
             --metadata {input.metadata} \
             | ./build-configs/ncbi/bin/curate-andersen-lab-data \
+            | augur curate format-dates \
+                --date-fields {params.date_fields} \
+                --expected-date-formats {params.expected_date_formats} \
+            | ./build-configs/ncbi/bin/transform-host \
+                --host-map {params.host_map} \
             | ./vendored/apply-geolocation-rules \
                 --geolocation-rules {input.geolocation_rules} \
+            | ./vendored/merge-user-metadata \
+                --annotations {input.annotations} \
+                --id-field {params.annotations_id} \
             | augur curate passthru \
                 --output-metadata {output.metadata} 2>> {log}
         """

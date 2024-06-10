@@ -1,0 +1,42 @@
+name: Ingest fauna
+
+defaults:
+  run:
+    # This is the same as GitHub Action's `bash` keyword as of 20 June 2023:
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+    #
+    # Completely spelling it out here so that GitHub can't change it out from under us
+    # and we don't have to refer to the docs to know the expected behavior.
+    shell: bash --noprofile --norc -eo pipefail {0}
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ingest:
+    permissions:
+      id-token: write
+    uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@master
+    secrets: inherit
+    with:
+      # Starting with the default docker runtime
+      # We can migrate to AWS Batch when/if we need to for more resources or if
+      # the job runs longer than the GH Action limit of 6 hours.
+      runtime: docker
+      run: |
+        nextstrain build \
+          --env RETHINK_HOST \
+          --env RETHINK_AUTH_KEY \
+          ingest \
+            upload_all
+      # Specifying artifact name to differentiate ingest build outputs from
+      # the phylogenetic build outputs
+      artifact-name: ingest-fauna-build-output
+      # Explicitly excluding `ingest/fauna/results` and `ingest/fauna/data`
+      # since this is private data and should not available through the public artifacts
+      artifact-paths: |
+        !ingest/fauna/results/
+        !ingest/fauna/data/
+        ingest/.snakemake/log/
+        ingest/fauna/benchmarks/
+        ingest/fauna/logs/

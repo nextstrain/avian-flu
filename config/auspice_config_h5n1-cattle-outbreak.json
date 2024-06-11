@@ -129,7 +129,8 @@
     "subtype",
     "author",
     "originating_lab",
-    "submitting_lab"
+    "submitting_lab",
+    "data_source"
   ],
   "metadata_columns": [
     "genbank_accession",

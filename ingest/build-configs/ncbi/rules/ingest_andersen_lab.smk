@@ -123,8 +123,8 @@ rule curate_metadata:
         "andersen-lab/logs/curate_metadata.txt",
     params:
         host_map=config["curate"]["host_map"],
-        date_fields=['date'],
-        expected_date_formats=['%Y-%m-%d', '%Y'],
+        date_fields=['date', 'date_released'],
+        expected_date_formats=['%Y-%m-%d', '%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%SZ'],
         annotations_id=config["curate"]["annotations_id"],
     shell:
         """
@@ -132,8 +132,8 @@ rule curate_metadata:
             --metadata {input.metadata} \
             | ./build-configs/ncbi/bin/curate-andersen-lab-data \
             | augur curate format-dates \
-                --date-fields {params.date_fields} \
-                --expected-date-formats {params.expected_date_formats} \
+                --date-fields {params.date_fields:q} \
+                --expected-date-formats {params.expected_date_formats:q} \
             | ./build-configs/ncbi/bin/transform-host \
                 --host-map {params.host_map} \
             | ./vendored/apply-geolocation-rules \

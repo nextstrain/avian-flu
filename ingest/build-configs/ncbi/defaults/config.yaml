@@ -127,6 +127,7 @@ curate:
   - h5_clade
   - genbank_accession
   - sra_accessions
+  - date_released
 
 s3_dst:
   ncbi: s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi

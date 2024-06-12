@@ -6,6 +6,9 @@ on:
 
 jobs:
   ci:
-    uses: nextstrain/.github/.github/workflows/pathogen-repo-ci.yaml@master
+    # Pin pathogen-repo-ci since this repo's file structure does not conform to
+    # to the smart pathogen-repo-ci. It's unclear if it every will completely
+    # conform since this is a collaborative repo with an external group.
+    uses: nextstrain/.github/.github/workflows/pathogen-repo-ci.yaml@v0
     with:
       build-args: test_target

@@ -23,6 +23,7 @@ rule upload_all:
 
 include: "rules/ingest_fauna.smk"
 include: "rules/merge_segment_metadata.smk"
+include: "rules/nextclade.smk"
 include: "rules/upload_to_s3.smk"
 
 # Allow users to import custom rules provided via the config.

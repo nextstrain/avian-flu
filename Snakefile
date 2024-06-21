@@ -273,10 +273,13 @@ rule refine:
             --clock-filter-iqd {params.clock_filter_iqd}
         """
 
+def refined_tree(w):
+    return "results/tree_{subtype}_{segment}_{time}.nwk"
+
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         alignment = rules.align.output
     output:
         node_data = "results/nt-muts_{subtype}_{segment}_{time}.json"
@@ -295,7 +298,7 @@ rule ancestral:
 rule translate:
     message: "Translating amino acid sequences"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
         reference = files.reference
     output:
@@ -312,7 +315,7 @@ rule translate:
 rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         metadata = metadata_by_wildcards,
     output:
         node_data = "results/traits_{subtype}_{segment}_{time}.json",
@@ -343,17 +346,22 @@ rule cleavage_site:
             --cleavage_site_sequence {output.cleavage_site_sequences}
         """
 
+def export_node_data_files(wildcards):
+    return [
+        rules.refine.output.node_data,
+        rules.traits.output.node_data,
+        rules.ancestral.output.node_data,
+        rules.translate.output.node_data,
+        rules.cleavage_site.output.cleavage_site_annotations,
+        rules.cleavage_site.output.cleavage_site_sequences,
+    ]
+
 rule export:
     message: "Exporting data files for for auspice"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         metadata = metadata_by_wildcards,
-        branch_lengths = rules.refine.output.node_data,
-        traits = rules.traits.output.node_data,
-        nt_muts = rules.ancestral.output.node_data,
-        aa_muts = rules.translate.output.node_data,
-        fcs = rules.cleavage_site.output.cleavage_site_annotations,
-        cleavage_site_sequences = rules.cleavage_site.output.cleavage_site_sequences,
+        node_data = export_node_data_files,
         colors = files.colors,
         lat_longs = files.lat_longs,
         auspice_config = files.auspice_config,
@@ -365,7 +373,7 @@ rule export:
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} {input.fcs} {input.cleavage_site_sequences}\
+            --node-data {input.node_data} \
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \

@@ -11,6 +11,14 @@ defaults:
 
 on:
   workflow_dispatch:
+    inputs:
+      trial-name:
+        description: |
+          Trial name for deploying builds.
+          If not set, builds will overwrite existing builds at s3://nextstrain-data/avian-flu*
+          If set, builds will be deployed to s3://nextstrain-staging/avian-flu_trials_<trial_name>_*
+        required: false
+        type: string
 
 jobs:
   phylogenetic:
@@ -21,9 +29,24 @@ jobs:
     with:
       runtime: docker
       run: |
-        nextstrain build
+        declare -a config;
+
+        config+=(
+          s3_src="s3://nextstrain-data/files/workflows/avian-flu/h5n1"
+        );
+
+        if [[ "$TRIAL_NAME" ]]; then
+          config+=(
+            deploy_url="s3://nextstrain-staging/avian-flu_trials_${TRIAL_NAME}_"
+          )
+        fi;
+
+        nextstrain build \
           . \
             deploy_all \
             --snakefile Snakefile.genome \
-            --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1
+            --config "${config[@]}"
+
+      env: |
+        TRIAL_NAME: ${{ inputs.trial-name }}
       artifact-name: phylogenetic-full-genome-build-output

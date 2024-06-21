@@ -33,6 +33,9 @@ def subtype(build_name):
 rule all:
     input: expand("auspice/avian-flu_{build_name}_genome.json", build_name=BUILD_NAME)
 
+# This must be after the `all` rule above since it depends on its inputs
+include: "rules/deploy.smk"
+
 rule files:
     params:
         reference = lambda w: f"config/reference_{subtype(w.build_name)}_{{segment}}.gb",

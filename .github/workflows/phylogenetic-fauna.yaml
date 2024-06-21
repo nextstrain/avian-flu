@@ -1,0 +1,56 @@
+name: Phylogenetic Fauna
+
+defaults:
+  run:
+    # This is the same as GitHub Action's `bash` keyword as of 20 June 2023:
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+    #
+    # Completely spelling it out here so that GitHub can't change it out from under us
+    # and we don't have to refer to the docs to know the expected behavior.
+    shell: bash --noprofile --norc -eo pipefail {0}
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Specific container image to use for ingest workflow (will override the default of "nextstrain build")'
+        required: false
+        type: string
+      trial-name:
+        description: |
+          Trial name for deploying builds.
+          If not set, builds will overwrite existing builds at s3://nextstrain-data/avian-flu*
+          If set, builds will be deployed to s3://nextstrain-staging/avian-flu_trials_<trial_name>_*
+        required: false
+        type: string
+
+jobs:
+  phylogenetic:
+    permissions:
+      id-token: write
+    uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@master
+    secrets: inherit
+    with:
+      runtime: aws-batch
+      run: |
+        declare -a config;
+
+        if [[ "$TRIAL_NAME" ]]; then
+          config+=(
+            deploy_url="s3://nextstrain-staging/avian-flu_trials_${TRIAL_NAME}_"
+          )
+        fi;
+
+        nextstrain build \
+          --detach \
+          --no-download \
+          --cpus 16 \
+          --memory 28800mib \
+          . \
+            deploy_all \
+            --config "${config[@]}"
+
+      env: |
+        NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
+        TRIAL_NAME: ${{ inputs.trial-name }}
+      artifact-name: phylogenetic-fauna-build-output

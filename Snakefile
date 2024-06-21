@@ -22,6 +22,9 @@ rule all:
     input:
         auspice_json = all_targets()
 
+# This must be after the `all` rule above since it depends on its inputs
+include: "rules/deploy.smk"
+
 rule test_target:
     """
     For testing purposes such as CI workflows.

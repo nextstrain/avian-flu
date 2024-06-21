@@ -12,6 +12,10 @@ defaults:
 on:
   workflow_dispatch:
     inputs:
+      image:
+        description: 'Specific container image to use for ingest workflow (will override the default of "nextstrain build")'
+        required: false
+        type: string
       trial-name:
         description: |
           Trial name for deploying builds.
@@ -48,5 +52,6 @@ jobs:
             --config "${config[@]}"
 
       env: |
+        NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
         TRIAL_NAME: ${{ inputs.trial-name }}
       artifact-name: phylogenetic-full-genome-build-output

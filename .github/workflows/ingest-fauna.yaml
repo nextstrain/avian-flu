@@ -11,6 +11,18 @@ defaults:
 
 on:
   workflow_dispatch:
+    inputs:
+      image:
+        description: 'Specific container image to use for ingest workflow (will override the default of "nextstrain build")'
+        required: false
+        type: string
+      trial-name:
+        description: |
+          Trial name for outputs.
+          If not set, outputs will overwrite files at s3://nextstrain-data-private/files/workflows/avian-flu/
+          If set, outputs will be uploaded to s3://nextstrain-data-private/files/workflows/avian-flu/trials/<trial_name>/
+        required: false
+        type: string
 
 jobs:
   ingest:
@@ -24,11 +36,25 @@ jobs:
       # the job runs longer than the GH Action limit of 6 hours.
       runtime: docker
       run: |
+        declare -a config;
+
+        if [[ "$TRIAL_NAME" ]]; then
+          # Create JSON string for the nested upload config
+          S3_DST="s3://nextstrain-data-private/files/workflows/avian-flu/trial/$TRIAL_NAME"
+          config+=(
+            s3_dst=$(jq -cn --arg S3_DST "$S3_DST" '{"fauna": $S3_DST}')
+          )
+        fi;
+
         nextstrain build \
           --env RETHINK_HOST \
           --env RETHINK_AUTH_KEY \
           ingest \
-            upload_all
+            upload_all \
+            --config "${config[@]}"
+      env: |
+        NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
+        TRIAL_NAME: ${{ inputs.trial-name }}
       # Specifying artifact name to differentiate ingest build outputs from
       # the phylogenetic build outputs
       artifact-name: ingest-fauna-build-output

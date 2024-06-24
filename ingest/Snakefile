@@ -20,6 +20,7 @@ rule upload_all:
     input:
         sequences=expand("fauna/s3/sequences_{segment}.done", segment=config["segments"]),
         metadata="fauna/s3/metadata.done",
+        nextclade="fauna/s3/nextclade.done",
 
 include: "rules/ingest_fauna.smk"
 include: "rules/merge_segment_metadata.smk"

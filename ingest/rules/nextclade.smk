@@ -31,7 +31,6 @@ rule run_nextclade:
         sequences="{data_source}/results/sequences_ha.fasta",
     output:
         nextclade="{data_source}/results/nextclade.tsv",
-        alignment="{data_source}/results/alignment.fasta",
     benchmark:
         "{data_source}/benchmarks/run_nextclade.txt"
     shell:
@@ -39,8 +38,7 @@ rule run_nextclade:
         nextclade3 run \
             {input.sequences} \
             --input-dataset {input.dataset} \
-            --output-tsv {output.nextclade} \
-            --output-fasta {output.alignment}
+            --output-tsv {output.nextclade}
         """
 
 

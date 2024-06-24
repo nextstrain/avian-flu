@@ -66,6 +66,11 @@
       "type": "categorical"
     },
     {
+      "key": "clade",
+      "title": "Nextclade Clade",
+      "type": "categorical"
+    },
+    {
       "key": "furin_cleavage_motif",
       "title": "Furin Cleavage Motif",
       "type": "categorical"
@@ -109,6 +114,7 @@
     "subtype",
     "h5_label_clade",
     "gisaid_clade",
+    "clade",
     "authors",
     "originating_lab",
     "submitting_lab"

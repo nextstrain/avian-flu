@@ -26,9 +26,13 @@ def parse_host_map(host_map_file: str) -> dict:
     """
     host_map = {}
     with open(host_map_file) as tsv_file:
-        reader = csv.DictReader(tsv_file, delimiter="\t")
+        reader = csv.reader(tsv_file, delimiter="\t")
         for row in reader:
-            host_map[row["old_name"].lower()] = row["new_name"]
+            # Skip comments
+            if not row or row[0].lstrip()[0] == '#':
+                continue
+
+            host_map[row[0].lower()] = row[1]
 
     return host_map
 

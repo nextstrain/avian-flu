@@ -39,9 +39,9 @@ rule extract_automated_metadata:
     input:
         andersen_lab_repo = "andersen-lab/data/avian-influenza.tar.gz"
     output:
-        metadata = "andersen-lab/data/PRJNA1102327_automated_metadata.csv"
+        metadata = "andersen-lab/data/SraRunTable_automated_metadata.csv",
     params:
-        metadata_file_path = "metadata/SraRunTable_PRJNA1102327_automated.csv",
+        metadata_file_path = "metadata/SraRunTable_automated.csv",
     shell:
         """
         tar xz -O --file={input.andersen_lab_repo} \
@@ -58,9 +58,9 @@ rule join_old_and_automated_metadata:
     """
     input:
         old_metadata = "andersen-lab/data/PRJNA1102327_old_metadata.csv",
-        automated_metadata = "andersen-lab/data/PRJNA1102327_automated_metadata.csv",
+        automated_metadata = "andersen-lab/data/SraRunTable_automated_metadata.csv",
     output:
-        metadata = "andersen-lab/data/PRJNA1102327_metadata.csv",
+        metadata = "andersen-lab/data/raw_metadata.csv",
     params:
         join_field = "Run",
     shell:
@@ -114,7 +114,7 @@ rule rename_and_concatenate_segment_fastas:
 
 rule curate_metadata:
     input:
-        metadata = "andersen-lab/data/PRJNA1102327_metadata.csv",
+        metadata = "andersen-lab/data/raw_metadata.csv",
         geolocation_rules = "defaults/geolocation_rules.tsv",
         annotations=config["curate"]["annotations"],
     output:

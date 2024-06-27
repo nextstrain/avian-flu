@@ -10,6 +10,7 @@ def subtypes_by_subtype_wildcard(wildcards):
         'h7n9': ['h7n9'],
         'h9n2': ['h9n2'],
     }
+    db['h5n1-cattle-outbreak'] = [*db['h5nx']]
     return(db[wildcards.subtype])
 
 if LOCAL_INGEST:

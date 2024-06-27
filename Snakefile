@@ -1,4 +1,5 @@
 include: "rules/common.smk"
+include: "rules/cattle-flu.smk"
 
 SUBTYPES = config.get('subtypes', ["h5nx", "h5n1", "h7n9", "h9n2"])
 SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"])
@@ -11,6 +12,11 @@ TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
 # (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
+# constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
+wildcard_constraints:
+    subtype = "[^_]+",
+    segment = "[^_]+",
+    time = "[^_]+",
 
 def all_targets():
     return [
@@ -33,19 +39,23 @@ rule test_target:
 
 rule files:
     params:
-        dropped_strains = "config/dropped_strains_{subtype}.txt",
-        include_strains = "config/include_strains_{subtype}_{time}.txt",
-        reference = "config/reference_{subtype}_{segment}.gb",
-        colors = "config/colors_{subtype}.tsv",
-        lat_longs = "config/lat_longs_{subtype}.tsv",
+        dropped_strains = lambda w: "config/dropped_strains_{subtype}.txt" if not w.subtype=='h5n1-cattle-outbreak' else "config/dropped_strains_h5n1.txt",
+        include_strains = lambda w: "config/include_strains_{subtype}_{time}.txt" if not w.subtype=='h5n1-cattle-outbreak' else "config/include_strains_{subtype}.txt",
+        reference = lambda w: "config/reference_{subtype}_{segment}.gb" if not w.subtype=='h5n1-cattle-outbreak' else "config/reference_h5n1_{segment}.gb",
+        colors = lambda w: "config/colors_{subtype}.tsv" if not w.subtype=='h5n1-cattle-outbreak' else "config/colors_h5n1.tsv",
+        # TODO - Augur 24.4.0 includes extensive lat-longs by default - can we drop the following avian-flu specific ones?
+        lat_longs = lambda w: "config/lat_longs_{subtype}.tsv" if not w.subtype=='h5n1-cattle-outbreak' else "config/lat_longs_h5n1.tsv",
         auspice_config = "config/auspice_config_{subtype}.json",
-        clades_file = "clade-labeling/{subtype}-clades.tsv",
-        description = "config/description.md"
+        clades_file = lambda w: "clade-labeling/{subtype}-clades.tsv" if not w.subtype=='h5n1-cattle-outbreak' else "clade-labeling/h5n1-clades.tsv",
+        description = lambda w: "config/description.md" if not w.subtype=='h5n1-cattle-outbreak' else "config/description_{subtype}.md",
 
 files = rules.files.params
 
 def metadata_by_wildcards(wildcards):
-    if wildcards.subtype in ("h5n1", "h5nx"):
+    # H5 builds have extra clade-level metadata added to the metadata TSV.
+    # We may move this to a node-data JSON which would simplify the snakemake logic
+    # a bit -- see <https://github.com/nextstrain/avian-flu/issues/25>
+    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
         return "results/metadata-with-clade_{subtype}.tsv"
     else:
         return "data/metadata_{subtype}.tsv"
@@ -57,6 +67,8 @@ def group_by(w):
         'h7n9': {'all-time': 'division year'},
         'h9n2': {'all-time': 'country year'}
         }
+    if w.subtype == 'h5n1-cattle-outbreak':
+        return ''
     return gb[w.subtype][w.time]
 
 def min_length(w):
@@ -65,6 +77,8 @@ def min_length(w):
     return(length)
 
 def min_date(w):
+    if w.subtype == 'h5n1-cattle-outbreak':
+        return "2024"
     date = {
         'h5nx': {'all-time': '1996', '2y': '2Y'},
         'h5n1': {'all-time': '1996', '2y': '2Y'},
@@ -75,6 +89,7 @@ def min_date(w):
 
 def traits_columns(w):
     traits = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
+    traits['h5n1-cattle-outbreak'] = traits['h5n1']
     return traits[w.subtype]
 
 def clock_rate(w):
@@ -104,7 +119,8 @@ def clock_rate(w):
         'h5nx': {'all-time':'', '2y': clock_rates_h5nx[w.segment]},
         'h5n1': {'all-time':'', '2y': clock_rates_h5n1[w.segment]},
         'h7n9': {'all-time':''},
-        'h9n2': {'all-time':''}
+        'h9n2': {'all-time':''},
+        'h5n1-cattle-outbreak': {'all-time': clock_rates_h5n1[w.segment]}
         }
 
     return clock_rate[w.subtype][w.time]
@@ -115,7 +131,8 @@ def clock_rate_std_dev(w):
         'h5nx': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
         'h5n1': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
         'h7n9': {'all-time': ''},
-        'h9n2': {'all-time': ''}
+        'h9n2': {'all-time': ''},
+        'h5n1-cattle-outbreak': {'all-time': '--clock-std-dev 0.00211'}
         }
 
     return clock_rate_std_dev[w.subtype][w.time]
@@ -159,12 +176,18 @@ def _filter_params(wildcards, input, output, threads, resources):
     # strains may not have all segments, but that's preferable to filtering them out.
     restrict_n_segments = f"n_segments!={len(SEGMENTS)}" if SAME_STRAINS else ''
 
+    ## By default we filter out unknown country/region, but skip this for the cattle-flu outbreak just
+    ## in case there's something interesting with limited metadata
+    require_location = ' country=? region=? ' if wildcards.subtype!='h5n1-cattle-outbreak' else ''
+
+    grouping = f" --group-by {group_by(wildcards)}" if group_by(wildcards) else ""
+
     # formulate our typical filtering parameters
-    cmd  = f" --group-by {group_by(wildcards)}"
+    cmd  = grouping
     cmd += f" --subsample-max-sequences {TARGET_SEQUENCES_PER_TREE}"
     cmd += f" --min-date {min_date(wildcards)}"
     cmd += f" --include {input.include}"
-    cmd += f" --exclude-where host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2 {restrict_n_segments}"
+    cmd += f" --exclude-where host=laboratoryderived host=ferret host=unknown host=other host=host {require_location} gisaid_clade=3C.2 {restrict_n_segments}"
     cmd += f" --min-length {min_length(wildcards)}"
     cmd += f" --non-nucleotide"
     return cmd
@@ -274,6 +297,13 @@ rule refine:
         """
 
 def refined_tree(w):
+    """
+    Return the refined tree to be used for export, traits, ancestry reconstruction etc
+    The cattle-flu build introduces an additional step beyond `augur refine`, which is
+    why this function exists.
+    """
+    if w.subtype=='h5n1-cattle-outbreak':
+        return "results/tree_{subtype}_{segment}_{time}_outbreak-clade.nwk"
     return "results/tree_{subtype}_{segment}_{time}.nwk"
 
 rule ancestral:
@@ -347,7 +377,7 @@ rule cleavage_site:
         """
 
 def export_node_data_files(wildcards):
-    return [
+    nd = [
         rules.refine.output.node_data,
         rules.traits.output.node_data,
         rules.ancestral.output.node_data,
@@ -355,6 +385,20 @@ def export_node_data_files(wildcards):
         rules.cleavage_site.output.cleavage_site_annotations,
         rules.cleavage_site.output.cleavage_site_sequences,
     ]
+    if wildcards.subtype=="h5n1-cattle-outbreak":
+        nd.append("results/tree_{subtype}_{segment}_{time}_outbreak-clade.json")
+    return nd
+
+
+def additional_export_config(wildcards):
+    args = ""
+
+    if wildcards.subtype == "h5n1-cattle-outbreak":
+        # The auspice-config is for the whole genome analysis, so override the title
+        segment = wildcards.segment.upper()
+        args += f"--title 'Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)'"
+
+    return args
 
 rule export:
     message: "Exporting data files for for auspice"
@@ -368,6 +412,8 @@ rule export:
         description = files.description
     output:
         auspice_json = "auspice/avian-flu_{subtype}_{segment}_{time}.json"
+    params:
+        additional_config = additional_export_config
     shell:
         """
         augur export v2 \
@@ -379,6 +425,7 @@ rule export:
             --auspice-config {input.auspice_config} \
             --description {input.description} \
             --include-root-sequence-inline \
+            {params.additional_config} \
             --output {output.auspice_json}
         """
 

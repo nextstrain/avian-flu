@@ -119,7 +119,8 @@
   "display_defaults": {
     "map_triplicate": false,
     "color_by": "host",
-    "geo_resolution": "division"
+    "geo_resolution": "division",
+    "distance_measure": "div"
   },
   "filters": [
     "host",

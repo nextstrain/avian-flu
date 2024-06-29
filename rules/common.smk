@@ -12,6 +12,18 @@ def subtypes_by_subtype_wildcard(wildcards):
     }
     return(db[wildcards.subtype])
 
+
+def no_sign_request(_wildcards):
+    """
+    Returns the `--no-sign-request` option for AWS CLI if
+    the requested `S3_SRC` poins to the NEXTSTRAIN_PUBLIC_BUCKET.
+    """
+    NEXTSTRAIN_PUBLIC_BUCKET = "s3://nextstrain-data/"
+    if S3_SRC.startswith(NEXTSTRAIN_PUBLIC_BUCKET):
+        return "--no-sign-request"
+    return ""
+
+
 if LOCAL_INGEST:
     rule copy_sequences_from_ingest:
         output:
@@ -39,9 +51,12 @@ else:
             sequences = "data/{segment}/sequences.fasta",
         params:
             s3_src=S3_SRC,
+            no_sign_request=no_sign_request,
         shell:
             """
-            aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
+            aws s3 cp {params.no_sign_request} \
+                {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - \
+                | zstd -d > {output.sequences}
             """
 
     rule download_metadata:
@@ -49,9 +64,12 @@ else:
             metadata = "data/metadata.tsv",
         params:
             s3_src=S3_SRC,
+            no_sign_request=no_sign_request,
         shell:
             """
-            aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
+            aws s3 cp {params.no_sign_request} \
+                {params.s3_src:q}/metadata.tsv.zst - \
+                | zstd -d > {output.metadata}
             """
 
 rule filter_sequences_by_subtype:

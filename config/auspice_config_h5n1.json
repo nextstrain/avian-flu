@@ -39,7 +39,7 @@
       "key": "division",
       "title": "Admin Division",
       "type": "categorical"
-    },    
+    },
     {
       "key": "host",
       "title": "Host",
@@ -63,6 +63,11 @@
     {
       "key": "gisaid_clade",
       "title": "GISAID Clade",
+      "type": "categorical"
+    },
+    {
+      "key": "clade",
+      "title": "Nextclade Clade",
       "type": "categorical"
     },
     {
@@ -109,6 +114,7 @@
     "subtype",
     "h5_label_clade",
     "gisaid_clade",
+    "clade",
     "authors",
     "originating_lab",
     "submitting_lab"

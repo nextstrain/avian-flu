@@ -37,3 +37,21 @@ rule upload_metadata:
             {params.s3_dst:q}/metadata.tsv.zst \
             {params.cloudfront_domain} 2>&1 | tee {output.flag}
         """
+
+
+rule upload_nextclade_tsv:
+    input:
+        nextclade="{data_source}/results/nextclade.tsv",
+    output:
+        flag="{data_source}/s3/nextclade.done",
+    params:
+        s3_dst=lambda wildcards: config["s3_dst"][wildcards.data_source],
+        cloudfront_domain=config.get("cloudfront_domain", ""),
+    shell:
+        """
+        ./vendored/upload-to-s3 \
+            --quiet \
+            {input.nextclade:q} \
+            {params.s3_dst:q}/nextclade.tsv.zst \
+            {params.cloudfront_domain} 2>&1 | tee {output.flag}
+        """

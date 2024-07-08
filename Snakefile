@@ -203,6 +203,8 @@ rule align:
         reference = files.reference
     output:
         alignment = "results/aligned_{subtype}_{segment}_{time}.fasta"
+    threads:
+        4
     shell:
         """
         augur align \
@@ -210,7 +212,7 @@ rule align:
             --reference-sequence {input.reference} \
             --output {output.alignment} \
             --remove-reference \
-            --nthreads 1
+            --nthreads {threads}
         """
 
 
@@ -222,13 +224,15 @@ rule tree:
         tree = "results/tree-raw_{subtype}_{segment}_{time}.nwk"
     params:
         method = "iqtree"
+    threads:
+        4
     shell:
         """
         augur tree \
             --alignment {input.alignment} \
             --output {output.tree} \
             --method {params.method} \
-            --nthreads 1
+            --nthreads {threads}
         """
 
 rule refine:

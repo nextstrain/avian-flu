@@ -44,7 +44,7 @@ jobs:
   ingest:
     permissions:
       id-token: write
-    uses: ./.github/workflows/ingest.yaml
+    uses: ./.github/workflows/ingest-ncbi.yaml
     secrets: inherit
     with:
       image: ${{ inputs.ingest_image }}
@@ -64,10 +64,22 @@ jobs:
         env:
           AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
         run: |
-          s3_urls=(
-            "s3://nextstrain-data/files/workflows/zika/metadata.tsv.zst"
-            "s3://nextstrain-data/files/workflows/zika/sequences.fasta.zst"
+          segments=(
+            'ha'
+            'mp'
+            'na'
+            'np'
+            'ns'
+            'pa'
+            'pb1'
+            'pb2'
           )
+
+          s3_urls=("s3://nextstrain-data/files/workflows/avian-flu/h5n1/metadata.tsv.zst")
+
+          for segment in "${segments[@]}"; do
+            s3_urls+=("s3://nextstrain-data/files/workflows/avian-flu/h5n1/${segment}/sequences.fasta.zst")
+          done
 
           # Code below is modified from ingest/upload-to-s3
           # https://github.com/nextstrain/ingest/blob/c0b4c6bb5e6ccbba86374d2c09b42077768aac23/upload-to-s3#L23-L29
@@ -80,7 +92,7 @@ jobs:
             key="${s3path#*/}"
 
             s3_hash="$(aws s3api head-object --no-sign-request --bucket "$bucket" --key "$key" --query Metadata.sha256sum --output text 2>/dev/null || echo "$no_hash")"
-            echo "${s3_hash}" | tee -a ingest-output-sha256sum
+            echo "${s3_hash}" | tee -a ingest-ncbi-output-sha256sum
           done
 
       - name: Check cache
@@ -88,7 +100,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ingest-output-sha256sum
-          key: ingest-output-sha256sum-${{ hashFiles('ingest-output-sha256sum') }}
+          key: ingest-output-sha256sum-${{ hashFiles('ingest-ncbi-output-sha256sum') }}
           lookup-only: true
 
   phylogenetic:
@@ -96,7 +108,7 @@ jobs:
     if: ${{ needs.check-new-data.outputs.cache-hit != 'true' }}
     permissions:
       id-token: write
-    uses: ./.github/workflows/phylogenetic.yaml
+    uses: ./.github/workflows/phylogenetic-ncbi.yaml
     secrets: inherit
     with:
       image: ${{ inputs.phylogenetic_image }}

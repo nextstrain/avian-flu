@@ -10,6 +10,13 @@ defaults:
     shell: bash --noprofile --norc -eo pipefail {0}
 
 on:
+  workflow_call:
+    inputs:
+      image:
+        description: 'Specific container image to use for phylogenetic workflow (will override the default of "nextstrain build")'
+        required: false
+        type: string
+
   workflow_dispatch:
     inputs:
       image:

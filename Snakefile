@@ -92,50 +92,62 @@ def traits_columns(w):
     traits['h5n1-cattle-outbreak'] = traits['h5n1']
     return traits[w.subtype]
 
+# The following std-dev is used for all (segment) builds which use a specified clock rate
+CLOCK_STD_DEV = 0.00211
+
+CLOCK_RATES = {
+    "h5nx": {
+        "2y": {
+            'pb2': (0.00287, CLOCK_STD_DEV),
+            'pb1': (0.00267, CLOCK_STD_DEV),
+            'pa': (0.00238, CLOCK_STD_DEV),
+            'ha': (0.0048, CLOCK_STD_DEV),
+            'np': (0.0022, CLOCK_STD_DEV),
+            'na': (0.0028, CLOCK_STD_DEV),
+            'mp': (0.0017, CLOCK_STD_DEV),
+            'ns': (0.0017, CLOCK_STD_DEV),
+        },
+        "all-time": {}
+    },
+    "h5n1": {
+        "2y": {
+            'pb2': (0.00287, CLOCK_STD_DEV),
+            'pb1': (0.00264, CLOCK_STD_DEV),
+            'pa': (0.00248, CLOCK_STD_DEV),
+            'ha': (0.00455, CLOCK_STD_DEV),
+            'np': (0.00252, CLOCK_STD_DEV),
+            'na': (0.00349, CLOCK_STD_DEV),
+            'mp': (0.00191, CLOCK_STD_DEV),
+            'ns': (0.00249, CLOCK_STD_DEV),
+        },
+        "all-time": {}
+    },
+    "h7n9": {
+        "2y": {},
+        "all-time": {}
+    },
+    "h9n2": {
+        "2y": {},
+        "all-time": {}
+    }
+}
+CLOCK_RATES['h5n1-cattle-outbreak'] = {
+    'default': {**CLOCK_RATES['h5n1']['2y']}
+}
+
 def clock_rate(w):
-    clock_rates_h5nx = {
-        'pb2': '--clock-rate 0.00287',
-        'pb1': '--clock-rate 0.00267',
-        'pa': '--clock-rate 0.00238',
-        'ha': '--clock-rate 0.0048',
-        'np': '--clock-rate 0.0022',
-        'na': '--clock-rate 0.0028',
-        'mp': '--clock-rate 0.0017',
-        'ns': '--clock-rate 0.0017'
-        }
+    assert w.subtype in CLOCK_RATES, f"Subtype {w.subtype!r} doesn't have any associated clock information"
 
-    clock_rates_h5n1 = {
-        'pb2': '--clock-rate 0.00287',
-        'pb1': '--clock-rate 0.00264',
-        'pa': '--clock-rate 0.00248',
-        'ha': '--clock-rate 0.00455',
-        'np': '--clock-rate 0.00252',
-        'na': '--clock-rate 0.00349',
-        'mp': '--clock-rate 0.00191',
-        'ns': '--clock-rate 0.00249'
-        }
+    assert w.time in CLOCK_RATES[w.subtype], f"Time window {w.time!r} doesn't have any associated clock information for subtype {w.subtype!r}"
 
-    clock_rate = {
-        'h5nx': {'all-time':'', '2y': clock_rates_h5nx[w.segment]},
-        'h5n1': {'all-time':'', '2y': clock_rates_h5n1[w.segment]},
-        'h7n9': {'all-time':''},
-        'h9n2': {'all-time':''},
-        'h5n1-cattle-outbreak': {'default': clock_rates_h5n1[w.segment]}
-        }
+    if w.segment not in CLOCK_RATES[w.subtype][w.time]:  # infer a clock rate, so return the empty string
+        return ""
 
-    return clock_rate[w.subtype][w.time]
+    assert isinstance(CLOCK_RATES[w.subtype][w.time][w.segment], tuple), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a tuple of (rate, std-dev)"
+    assert len(CLOCK_RATES[w.subtype][w.time][w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a tuple of (rate, std-dev)"
 
+    return f"--clock-rate {CLOCK_RATES[w.subtype][w.time][w.segment][0]} --clock-std-dev {CLOCK_RATES[w.subtype][w.time][w.segment][1]}"
 
-def clock_rate_std_dev(w):
-    clock_rate_std_dev = {
-        'h5nx': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
-        'h5n1': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
-        'h7n9': {'all-time': ''},
-        'h9n2': {'all-time': ''},
-        'h5n1-cattle-outbreak': {'default': '--clock-std-dev 0.00211'}
-        }
-
-    return clock_rate_std_dev[w.subtype][w.time]
 
 rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
@@ -277,8 +289,7 @@ rule refine:
         coalescent = "const",
         date_inference = "marginal",
         clock_filter_iqd = 4,
-        clock = clock_rate,
-        clock_std_dev = clock_rate_std_dev
+        clock_info = clock_rate,
     shell:
         """
         augur refine \
@@ -291,8 +302,7 @@ rule refine:
             --coalescent {params.coalescent} \
             --date-confidence \
             --date-inference {params.date_inference} \
-            {params.clock} \
-            {params.clock_std_dev} \
+            {params.clock_info} \
             --clock-filter-iqd {params.clock_filter_iqd}
         """
 

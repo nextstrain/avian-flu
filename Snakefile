@@ -120,7 +120,7 @@ def clock_rate(w):
         'h5n1': {'all-time':'', '2y': clock_rates_h5n1[w.segment]},
         'h7n9': {'all-time':''},
         'h9n2': {'all-time':''},
-        'h5n1-cattle-outbreak': {'all-time': clock_rates_h5n1[w.segment]}
+        'h5n1-cattle-outbreak': {'default': clock_rates_h5n1[w.segment]}
         }
 
     return clock_rate[w.subtype][w.time]
@@ -132,7 +132,7 @@ def clock_rate_std_dev(w):
         'h5n1': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
         'h7n9': {'all-time': ''},
         'h9n2': {'all-time': ''},
-        'h5n1-cattle-outbreak': {'all-time': '--clock-std-dev 0.00211'}
+        'h5n1-cattle-outbreak': {'default': '--clock-std-dev 0.00211'}
         }
 
     return clock_rate_std_dev[w.subtype][w.time]
@@ -401,7 +401,10 @@ def additional_export_config(wildcards):
     return args
 
 rule export:
-    message: "Exporting data files for for auspice"
+    """
+    Export the files into results/ and then use a subsequent rule to move these to the
+    auspice/ directory
+    """
     input:
         tree = refined_tree,
         metadata = metadata_by_wildcards,
@@ -411,7 +414,7 @@ rule export:
         auspice_config = files.auspice_config,
         description = files.description
     output:
-        auspice_json = "auspice/avian-flu_{subtype}_{segment}_{time}.json"
+        auspice_json = "results/avian-flu_{subtype}_{segment}_{time}.json"
     params:
         additional_config = additional_export_config
     shell:
@@ -428,6 +431,46 @@ rule export:
             {params.additional_config} \
             --output {output.auspice_json}
         """
+
+def auspice_name_to_wildcard_name(wildcards):
+    """
+    Used to link Auspice JSONs filenames to their intermediate filename which includes all wildcards.
+    Examples:
+    1. subtype + segment + time in their filename / URL,
+        e.g. "avian-flu_h5n1_ha_2y.json" (nextstrain.org/avian-flu/h5n1/ha/2y)
+        maps to subtype=h5n1, segment=ha, time=2y
+    2. subtype + segment in their filename / URL,
+        e.g. "avian-flu_h5n1-cattle-outbreak_ha.json" (nextstrain.org/avian-flu/h5n1-cattle-outbreak/ha)
+        maps to subtype=h5n1-cattle-outbreak, segment=ha, time=default
+    """
+    parts = wildcards.parts.split("_")
+    if len(parts)==3:
+        [subtype, segment, time] = parts
+        assert segment!='genome', "Genome builds are not available for this build"
+        return f"results/avian-flu_{subtype}_{segment}_{time}.json"
+    if len(parts)==2:
+        [subtype, segment] = parts
+        assert subtype=='h5n1-cattle-outbreak', "Only h5n1 builds produce an Auspice dataset without a time component in the filename"
+        return f"results/avian-flu_{subtype}_{segment}_default.json"
+    raise Exception("Auspice JSON filename requested with an unexpected number of (underscore-separated) parts")
+
+
+rule rename_auspice_datasets:
+    """
+    This allows us to create files in auspice/ which mirror the intended URL structure rather than
+    the wildcard structure we use in the workflow.
+    """
+    input:
+        json = auspice_name_to_wildcard_name
+    output:
+        json = "auspice/avian-flu_{parts}.json"
+    wildcard_constraints:
+        timepart = ".*"
+    shell:
+        """
+        cp {input.json} {output.json}
+        """
+
 
 rule clean:
     message: "Removing directories: {params}"

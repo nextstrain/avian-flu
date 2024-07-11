@@ -11,7 +11,7 @@ rule download_tree:
         dataset="https://data.nextstrain.org/avian-flu_h5n1-cattle-outbreak_genome.json"
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
-        time="all-time",
+        time="default",
     shell:
         """
         curl --compressed {params.dataset} -o {output.tree}
@@ -27,7 +27,7 @@ rule prune_tree:
         node_data = "results/tree_{subtype}_{segment}_{time}_outbreak-clade.json",
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
-        time="all-time",
+        time="default",
     shell:
         """
         python3 scripts/restrict-via-common-ancestor.py \

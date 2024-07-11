@@ -42,8 +42,8 @@ nextstrain build \
     --env AWS_ACCESS_KEY_ID \
     --env AWS_SECRET_ACCESS_KEY \
     . \
-        --snakefile Snakefile.genome \
-        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1
+        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
+        -pf auspice/avian-flu_h5n1-cattle-outbreak_genome.json
 ```
 
 The build is restricted to a set of strains where we think there's no reassortment, with outgroups excluded (`config/dropped_strains_h5n1-cattle-outbreak.txt`).
@@ -55,23 +55,28 @@ See `Snakefile.genome` for more details.
 Strains for each segment are chosen by first constructing a general tree for the segment with all strains from 2024 onwards and then taking the clade which contains all strains in the genome build.
 This should allow any reassortments to be highlighted and will also include outbreak strains which are missing from the genome build (because they don't have all 8 segments sequenced).
 
+> Note that generating any segment-level build here will necessarily build the genome tree, as it's needed to identify the clade of interest in each segment.
+
+All 8 segments can be built by using the helper-target 'h5n1_cattle_outbreak'
 
 ``` bash
 nextstrain build \
-    --env AWS_ACCESS_KEY_ID \
-    --env AWS_SECRET_ACCESS_KEY \
+    --env AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY \
     . \
         --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
-        -pf \
-        auspice/avian-flu_h5n1-cattle-outbreak_pb2.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_pb1.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_pa.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_ha.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_np.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_na.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_mp.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_ns.json
+        -pf h5n1_cattle_outbreak
 ```
+
+Alternatively, you can target specific segments via:
+
+``` bash
+nextstrain build \
+    --env AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY \
+    . \
+        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
+        -pf auspice/avian-flu_h5n1-cattle-flu_ha.json
+```
+
 
 ## Creating a custom build
 The easiest way to generate your own, custom avian-flu build is to use the quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).

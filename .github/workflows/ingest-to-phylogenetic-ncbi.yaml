@@ -1,0 +1,114 @@
+name: Ingest to phylogenetic
+
+defaults:
+  run:
+    # This is the same as GitHub Action's `bash` keyword as of 20 June 2023:
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+    #
+    # Completely spelling it out here so that GitHub can't change it out from under us
+    # and we don't have to refer to the docs to know the expected behavior.
+    shell: bash --noprofile --norc -eo pipefail {0}
+
+on:
+  schedule:
+    # Note times are in UTC, which is 1 or 2 hours behind CET depending on daylight savings.
+    #
+    # Note the actual runs might be late.
+    # Numerous people were confused, about that, including me:
+    #  - https://github.community/t/scheduled-action-running-consistently-late/138025/11
+    #  - https://github.com/github/docs/issues/3059
+    #
+    # Note, '*' is a special character in YAML, so you have to quote this string.
+    #
+    # Docs:
+    #  - https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#schedule
+    #
+    # Tool that deciphers this particular format of crontab string:
+    #  - https://crontab.guru/
+    #
+    # Runs at 5pm UTC (1pm EDT/10am PDT) since curation by NCBI happens on the East Coast.
+    # We were running into invalid zip archive errors at 9am PDT, so hoping an hour
+    # delay will lower the error frequency
+    - cron: '0 17 * * *'
+
+  workflow_dispatch:
+    inputs:
+      ingest_image:
+        description: 'Specific container image to use for ingest workflow (will override the default of "nextstrain build")'
+        required: false
+      phylogenetic_image:
+        description: 'Specific container image to use for phylogenetic workflow (will override the default of "nextstrain build")'
+        required: false
+
+jobs:
+  ingest:
+    permissions:
+      id-token: write
+    uses: ./.github/workflows/ingest-ncbi.yaml
+    secrets: inherit
+    with:
+      image: ${{ inputs.ingest_image }}
+
+  # Check if ingest results include new data by checking for the cache
+  # of the file with the results' Metadata.sh256sum (which should have been added within upload-to-s3)
+  # GitHub will remove any cache entries that have not been accessed in over 7 days,
+  # so if the workflow has not been run over 7 days then it will trigger phylogenetic.
+  check-new-data:
+    needs: [ingest]
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.check-cache.outputs.cache-hit }}
+    steps:
+      - name: Get sha256sum
+        id: get-sha256sum
+        env:
+          AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+        run: |
+          segments=(
+            'ha'
+            'mp'
+            'na'
+            'np'
+            'ns'
+            'pa'
+            'pb1'
+            'pb2'
+          )
+
+          s3_urls=("s3://nextstrain-data/files/workflows/avian-flu/h5n1/metadata.tsv.zst")
+
+          for segment in "${segments[@]}"; do
+            s3_urls+=("s3://nextstrain-data/files/workflows/avian-flu/h5n1/${segment}/sequences.fasta.zst")
+          done
+
+          # Code below is modified from ingest/upload-to-s3
+          # https://github.com/nextstrain/ingest/blob/c0b4c6bb5e6ccbba86374d2c09b42077768aac23/upload-to-s3#L23-L29
+
+          no_hash=0000000000000000000000000000000000000000000000000000000000000000
+
+          for s3_url in "${s3_urls[@]}"; do
+            s3path="${s3_url#s3://}"
+            bucket="${s3path%%/*}"
+            key="${s3path#*/}"
+
+            s3_hash="$(aws s3api head-object --no-sign-request --bucket "$bucket" --key "$key" --query Metadata.sha256sum --output text 2>/dev/null || echo "$no_hash")"
+            echo "${s3_hash}" | tee -a ingest-ncbi-output-sha256sum
+          done
+
+      - name: Check cache
+        id: check-cache
+        uses: actions/cache@v4
+        with:
+          path: ingest-output-sha256sum
+          key: ingest-output-sha256sum-${{ hashFiles('ingest-ncbi-output-sha256sum') }}
+          lookup-only: true
+
+  phylogenetic:
+    needs: [check-new-data]
+    if: ${{ needs.check-new-data.outputs.cache-hit != 'true' }}
+    permissions:
+      id-token: write
+    uses: ./.github/workflows/phylogenetic-ncbi.yaml
+    secrets: inherit
+    with:
+      image: ${{ inputs.phylogenetic_image }}

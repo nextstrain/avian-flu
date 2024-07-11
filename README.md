@@ -63,14 +63,14 @@ nextstrain build \
     . \
         --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
         -pf \
-        auspice/avian-flu_h5n1-cattle-outbreak_pb2_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_pb1_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_pa_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_ha_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_np_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_na_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_mp_all-time.json \
-        auspice/avian-flu_h5n1-cattle-outbreak_ns_all-time.json
+        auspice/avian-flu_h5n1-cattle-outbreak_pb2.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_pb1.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_pa.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_ha.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_np.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_na.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_mp.json \
+        auspice/avian-flu_h5n1-cattle-outbreak_ns.json
 ```
 
 ## Creating a custom build

@@ -1,10 +1,10 @@
-include: "rules/common.smk"
-include: "rules/cattle-flu.smk"
-
 SUBTYPES = config.get('subtypes', ["h5nx", "h5n1", "h7n9", "h9n2"])
 SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"])
 TIME =     config.get('time',     ["all-time","2y"])
 TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
+
+include: "rules/common.smk"
+include: "rules/cattle-flu.smk"
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
@@ -39,9 +39,11 @@ rule test_target:
 
 rule files:
     params:
-        dropped_strains = lambda w: "config/dropped_strains_{subtype}.txt" if not w.subtype=='h5n1-cattle-outbreak' else "config/dropped_strains_h5n1.txt",
+        dropped_strains = lambda w: "config/dropped_strains_{subtype}.txt" \
+            if (not w.subtype=='h5n1-cattle-outbreak' or w.segment=='genome') else \
+            "config/dropped_strains_h5n1.txt",
         include_strains = lambda w: "config/include_strains_{subtype}_{time}.txt" if not w.subtype=='h5n1-cattle-outbreak' else "config/include_strains_{subtype}.txt",
-        reference = lambda w: "config/reference_{subtype}_{segment}.gb" if not w.subtype=='h5n1-cattle-outbreak' else "config/reference_h5n1_{segment}.gb",
+        reference = lambda w: "config/reference_{subtype}_{segment}.gb" if not w.subtype=='h5n1-cattle-outbreak' else "config/h5_cattle_genome_root.gb" if w.segment=='genome' else "config/reference_h5n1_{segment}.gb",
         colors = lambda w: "config/colors_{subtype}.tsv" if not w.subtype=='h5n1-cattle-outbreak' else "config/colors_h5n1.tsv",
         # TODO - Augur 24.4.0 includes extensive lat-longs by default - can we drop the following avian-flu specific ones?
         lat_longs = lambda w: "config/lat_longs_{subtype}.tsv" if not w.subtype=='h5n1-cattle-outbreak' else "config/lat_longs_h5n1.tsv",
@@ -87,10 +89,14 @@ def min_date(w):
         }
     return date[w.subtype][w.time]
 
-def traits_columns(w):
-    traits = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
-    traits['h5n1-cattle-outbreak'] = traits['h5n1']
-    return traits[w.subtype]
+def traits_params(w):
+    if w.subtype=="h5n1-cattle-outbreak":
+        if w.segment=='genome':
+            return "--columns division --sampling-bias-correction 5"
+        return "--columns region country" # same as GISAID H5N1 builds
+
+    columns = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
+    return f"--columns {columns[w.subtype]}"
 
 # The following std-dev is used for all (segment) builds which use a specified clock rate
 CLOCK_STD_DEV = 0.00211
@@ -132,7 +138,13 @@ CLOCK_RATES = {
     }
 }
 CLOCK_RATES['h5n1-cattle-outbreak'] = {
-    'default': {**CLOCK_RATES['h5n1']['2y']}
+    'default': {
+        **CLOCK_RATES['h5n1']['2y'],
+        'genome': calc_genome_clock_rate(
+            {seg: data[0] for seg,data in CLOCK_RATES['h5n1']['2y'].items()},
+            {'pb2': 2341, 'pb1': 2341, 'pa': 2233, 'ha': 1760, 'np': 1565, 'na': 1458, 'mp': 1027, 'ns': 865}
+        ),
+    }
 }
 
 def clock_rate(w):
@@ -172,6 +184,9 @@ def _filter_params(wildcards, input, output, threads, resources):
     When we are using the same sequences for each segment, then for HA we use a full
     filter call and for the rest of the segments we filter to the strains chosen for HA
     """
+
+    assert wildcards.segment!='genome', "Don't use this function for genome builds!"
+
     # For non-HA segments when we are using the SAME_STRAINS for all segments
     # we have a simple filtering approach: match what we're using for HA!
     # We also include the "force-include" list; 99% of the time these strains will already be in
@@ -238,6 +253,9 @@ rule align:
         reference = files.reference
     output:
         alignment = "results/aligned_{subtype}_{segment}_{time}.fasta"
+    wildcard_constraints:
+        # for genome builds we don't use this rule; see `rule join_segments` 
+        segment = "|".join(seg for seg in SEGMENTS if seg!='genome')
     threads:
         4
     shell:
@@ -290,6 +308,10 @@ rule refine:
         date_inference = "marginal",
         clock_filter_iqd = 4,
         clock_info = clock_rate,
+        # For the h5n1-cattle-outbreak (genome only) we use the closest outgroup as the root
+        # Make sure this strain is force included via augur filter --include
+        # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
+        root_strain = lambda w: "--root A/skunk/NewMexico/24-006483-001/2024" if w.subtype=='h5n1-cattle-outbreak' and w.segment=='genome' else '',
     shell:
         """
         augur refine \
@@ -299,6 +321,7 @@ rule refine:
             --output-tree {output.tree} \
             --output-node-data {output.node_data} \
             --timetree \
+            {params.root_strain} \
             --coalescent {params.coalescent} \
             --date-confidence \
             --date-inference {params.date_inference} \
@@ -312,7 +335,7 @@ def refined_tree(w):
     The cattle-flu build introduces an additional step beyond `augur refine`, which is
     why this function exists.
     """
-    if w.subtype=='h5n1-cattle-outbreak':
+    if w.subtype=='h5n1-cattle-outbreak' and w.segment!='genome':
         return "results/tree_{subtype}_{segment}_{time}_outbreak-clade.nwk"
     return "results/tree_{subtype}_{segment}_{time}.nwk"
 
@@ -324,14 +347,16 @@ rule ancestral:
     output:
         node_data = "results/nt-muts_{subtype}_{segment}_{time}.json"
     params:
-        inference = "joint"
+        inference = "joint",
+        root_seq = lambda w: "--root-sequence config/h5_cattle_genome_root.gb" if w.subtype=='h5n1-cattle-outbreak' else '',
     shell:
         """
         augur ancestral \
             --tree {input.tree} \
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
-            --inference {params.inference}\
+            --inference {params.inference} \
+            {params.root_seq} \
             --keep-ambiguous
         """
 
@@ -353,21 +378,20 @@ rule translate:
         """
 
 rule traits:
-    message: "Inferring ancestral traits for {params.columns!s}"
     input:
         tree = refined_tree,
         metadata = metadata_by_wildcards,
     output:
         node_data = "results/traits_{subtype}_{segment}_{time}.json",
     params:
-        columns = traits_columns,
+        info = traits_params,
     shell:
         """
         augur traits \
             --tree {input.tree} \
             --metadata {input.metadata} \
             --output {output.node_data} \
-            --columns {params.columns} \
+            {params.info} \
             --confidence
         """
 
@@ -395,7 +419,8 @@ def export_node_data_files(wildcards):
         rules.cleavage_site.output.cleavage_site_annotations,
         rules.cleavage_site.output.cleavage_site_sequences,
     ]
-    if wildcards.subtype=="h5n1-cattle-outbreak":
+
+    if wildcards.subtype=="h5n1-cattle-outbreak" and wildcards.segment!='genome':
         nd.append("results/tree_{subtype}_{segment}_{time}_outbreak-clade.json")
     return nd
 
@@ -403,7 +428,7 @@ def export_node_data_files(wildcards):
 def additional_export_config(wildcards):
     args = ""
 
-    if wildcards.subtype == "h5n1-cattle-outbreak":
+    if wildcards.subtype == "h5n1-cattle-outbreak" and wildcards.segment!='genome':
         # The auspice-config is for the whole genome analysis, so override the title
         segment = wildcards.segment.upper()
         args += f"--title 'Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)'"

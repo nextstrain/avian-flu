@@ -1,6 +1,11 @@
-S3_SRC = config.get('s3_src', "s3://nextstrain-data-private/files/workflows/avian-flu")
+S3_SRC = config.get('s3_src', False)
 LOCAL_INGEST = bool(config.get('local_ingest', False))
-INGEST_SOURCE = config.get('ingest_source', 'fauna')
+INGEST_SOURCE = config.get('ingest_source', None)
+
+assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
+assert not (S3_SRC and LOCAL_INGEST), "The config defined both 'local_ingest' and 's3_src', which are mutually exclusive"
+if LOCAL_INGEST:
+    assert INGEST_SOURCE is not None, "To use 'local_ingest' you must define 'ingest_source'"
 
 
 def subtypes_by_subtype_wildcard(wildcards):
@@ -11,6 +16,8 @@ def subtypes_by_subtype_wildcard(wildcards):
         'h9n2': ['h9n2'],
     }
     db['h5n1-cattle-outbreak'] = [*db['h5nx']]
+    assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
+        "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
     return(db[wildcards.subtype])
 
 if LOCAL_INGEST:

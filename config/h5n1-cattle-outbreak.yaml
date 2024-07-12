@@ -1,0 +1,134 @@
+# NOTE: The h5n1-cattle-outbreak builds use a specific rule-file (specified within this config)
+# and that rule file may have some config-like parameters within it.
+extra_rule_files:
+  - "rules/cattle-flu.smk"
+
+
+#### Parameters which define which builds to produce via this config ###
+builds:
+  h5n1-cattle-outbreak: ''
+
+segments:
+  - pb2
+  - pb1
+  - pa
+  - ha
+  - np
+  - na
+  - mp
+  - ns
+
+
+#### Parameters which define the input source ####
+s3_src: s3://nextstrain-data/files/workflows/avian-flu/h5n1
+local_ingest: false
+ingest_source: ncbi  # only used if 'local_ingest' is true
+
+
+#### Parameters which control large overarching aspects of the build
+# Set a high target_sequences_per_tree to capture all circulating strains, as they will be pruned down
+# as part of the workflow
+target_sequences_per_tree: 10_000
+
+
+#### Config files ####
+reference: config/reference_h5n1_{segment}.gb  # use H5N1 references
+genome_reference: config/h5_cattle_genome_root.gb
+auspice_config: config/auspice_config_{subtype}.json
+colors: config/colors_h5n1.tsv # use H5N1 colors
+lat_longs: config/lat_longs_h5n1.tsv # use H5N1 lat-longs
+include_strains: config/include_strains_{subtype}.txt
+# use cattle-outbreak specific dropped strains for segment + genome trees
+dropped_strains: config/dropped_strains_{subtype}.txt
+clades_file: clade-labeling/h5n1-clades.tsv # use H5N1 clades
+description: config/description_{subtype}.md
+
+
+#### Rule-specific parameters ####
+filter:
+  min_length:
+    ALL:
+      pb2: 2100
+      pb1: 2100
+      pa: 2000
+      ha: 1600
+      np: 1400
+      na: 1270
+      mp: 900
+      ns: 800
+
+  min_date:
+    ALL: 2024
+
+  group_by:
+    ALL: false # no grouping during filter
+
+  exclude_where:
+    ALL: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
+
+
+refine:
+  coalescent: const
+  date_inference: marginal
+
+  clock_filter_iqd:
+    ALL: false
+
+  root:
+    ALL: false
+
+  # For the genome only we use the closest outgroup as the root
+  # P.S. Make sure this strain is force included via augur filter --include
+  # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
+  genome_root:
+      ALL: A/skunk/NewMexico/24-006483-001/2024
+
+  segment_lengths:
+    ALL:
+      {'pb2': 2341, 'pb1': 2341, 'pa': 2233, 'ha': 1760, 'np': 1565, 'na': 1458, 'mp': 1027, 'ns': 865}
+
+  __clock_std_dev:  &clock_std_dev  0.00211 # YAML anchor so we can reference this value below
+
+  clock_rates:
+    ALL:
+      # The rates for the 8 segments are taken from the GISAID H5N1/2y config
+      pb2: [0.00287, *clock_std_dev]
+      pb1: [0.00264, *clock_std_dev]
+      pa: [0.00248, *clock_std_dev]
+      ha: [0.00455, *clock_std_dev]
+      np: [0.00252, *clock_std_dev]
+      na: [0.00349, *clock_std_dev]
+      mp: [0.00191, *clock_std_dev]
+      ns: [0.00249, *clock_std_dev]
+      # the genome clock rate is calculated by a function in the snakemake pipeline
+      # using the segment rates weighted by their lengths
+
+ancestral:
+  inference: joint
+  root_seq:
+    ALL: false
+  genome_root_seq:
+    ALL: config/h5_cattle_genome_root.gb
+
+traits:
+  # genome build has different parameters...
+  genome_columns:
+    ALL: division
+  genome_sampling_bias_correction:
+    ALL: 5
+
+  # segment builds:
+  columns:
+    ALL: region country # same as GISAID H5N1 builds
+  sampling_bias_correction:
+    ALL: false
+
+  # all builds
+  confidence: 
+    ALL: true
+
+export:
+  genome_title:
+    ALL: Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+  title:
+    ALL: Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)

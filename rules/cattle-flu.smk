@@ -1,8 +1,4 @@
-
-rule h5n1_cattle_outbreak:
-    """helper rule to avoid typing out all targets on the command line"""
-    input:
-        expand("auspice/avian-flu_h5n1-cattle-outbreak_{segment}.json", segment=[*SEGMENTS, 'genome'])
+# This rule file is conditionally included for the h5n1-cattle-outbreak build
 
 rule filter_segments_for_genome:
     # Note for developers: The {genome_seg} wildcard here is not the {segment}
@@ -14,9 +10,8 @@ rule filter_segments_for_genome:
     input:
         sequences = "data/sequences_{subtype}_{genome_seg}.fasta",
         metadata = "results/metadata-with-clade_{subtype}.tsv",
-        # Following will be part of the config YAML TODO XXX
-        exclude = "config/dropped_strains_{subtype}.txt",
-        include = "config/include_strains_{subtype}.txt",
+        include = config['include_strains'],
+        exclude = config['dropped_strains'],
     output:
         sequences = "results/filtered-for-genome_{subtype}_{genome_seg}_{time}.fasta",
     params:
@@ -39,7 +34,8 @@ rule filter_segments_for_genome:
 rule align_segments_for_genome:
     input:
         sequences = "results/filtered-for-genome_{subtype}_{genome_seg}_{time}.fasta",
-        reference = "config/reference_h5n1_{genome_seg}.gb",
+        # Use the H5N1 reference sequences for alignment
+        reference = lambda w: expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
     output:
         alignment =  "results/aligned-for-genome_{subtype}_{genome_seg}_{time}.fasta",
     threads:
@@ -59,8 +55,7 @@ rule join_segments:
     # the output of this rule is the same as 'rule align' but the wildcard constraints
     # allow snakemake to choose the correct rule to run
     input:
-        alignment = expand("results/aligned-for-genome_{{subtype}}_{genome_seg}_{{time}}.fasta",
-                           genome_seg=["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]) 
+        alignment = expand("results/aligned-for-genome_{{subtype}}_{genome_seg}_{{time}}.fasta", genome_seg=SEGMENTS) 
     output:
         alignment = "results/aligned_{subtype}_{segment}_{time}.fasta"
     wildcard_constraints:
@@ -92,9 +87,3 @@ rule prune_tree:
             --output-tree {output.tree} \
             --output-metadata {output.node_data}
         """
-
-
-def calc_genome_clock_rate(segment_rates, segment_lengths):
-    mean = sum([cr * segment_lengths[seg] for seg,cr in segment_rates.items()])/sum(segment_lengths.values())
-    stdev = mean/2
-    return (mean, stdev)

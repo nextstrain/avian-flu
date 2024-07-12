@@ -1,0 +1,162 @@
+#### Parameters which define which builds to produce via this config ###
+builds:
+  h5nx: 
+    - all-time
+    - 2y
+  h5n1: 
+    - all-time
+    - 2y
+  h7n9: 
+    - all-time
+  h9n2: 
+    - all-time
+
+segments:
+  - pb2
+  - pb1
+  - pa
+  - ha
+  - np
+  - na
+  - mp
+  - ns
+
+#### Parameters which define the input source ####
+s3_src: s3://nextstrain-data-private/files/workflows/avian-flu
+local_ingest: false
+ingest_source: fauna  # only used if 'local_ingest' is true
+
+
+#### Parameters which control large overarching aspects of the build
+target_sequences_per_tree: 3000
+same_strains_per_segment: false
+
+
+#### Config files ####
+reference: config/reference_{subtype}_{segment}.gb
+auspice_config: config/auspice_config_{subtype}.json
+colors: config/colors_{subtype}.tsv
+lat_longs: config/lat_longs_{subtype}.tsv
+include_strains: config/include_strains_{subtype}_{time}.txt
+dropped_strains: config/dropped_strains_{subtype}.txt
+clades_file: clade-labeling/{subtype}-clades.tsv
+description: config/description.md
+
+
+#### Rule-specific parameters ####
+filter:
+  # rule parameters are typically defined for each build - e.g.
+  # min_length.h5nx.2y = ... The "ALL" key (e.g. min_length.ALL)
+  # is used as a fallback value if nothing is specifically defined
+  # for the subtype/time combination.
+  # Some parameters have an extra hierarchy of segment, some don't
+  min_length:
+    ALL:
+      pb2: 2100
+      pb1: 2100
+      pa: 2000
+      ha: 1600
+      np: 1400
+      na: 1270
+      mp: 900
+      ns: 800
+
+  min_date:
+    h5nx:
+      all-time: 1996
+      2y: 2Y
+    h5n1:
+      all-time: 1996
+      2y: 2Y
+    h7n9:
+      all-time: 2013
+    h9n2:
+      all-time: 1966
+
+  group_by:
+    h5nx:
+      all-time: subtype country year
+      2y: subtype region month host
+    h5n1:
+      all-time: region country year
+      2y: subtype region month host
+    h7n9:
+      all-time: division year
+    h9n2:
+      all-time: country year
+
+  exclude_where:
+    ALL: host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
+
+refine:
+  coalescent: const
+  date_inference: marginal
+
+  clock_filter_iqd:
+    ALL: 4
+
+  root:
+    ALL: false
+
+  __clock_std_dev:  &clock_std_dev  0.00211 # YAML anchor so we can reference this value
+
+  clock_rates:
+    ALL:                 # anything not specified by a subtype/time combination
+        pb2: ''          # falls back to ALL, and the empty string means no
+        pb1: ''          # supplied clock rate, i.e. infer the clock
+        pa: ''
+        ha: ''
+        np: ''
+        na: ''
+        mp: ''
+        ns: ''
+    h5nx:
+      2y:
+        pb2: [0.00287, *clock_std_dev]
+        pb1: [0.00267, *clock_std_dev]
+        pa: [0.00238, *clock_std_dev]
+        ha: [0.0048, *clock_std_dev]
+        np: [0.0022, *clock_std_dev]
+        na: [0.0028, *clock_std_dev]
+        mp: [0.0017, *clock_std_dev]
+        ns: [0.0017, *clock_std_dev]
+    h5n1:
+      2y:
+        pb2: [0.00287, *clock_std_dev]
+        pb1: [0.00264, *clock_std_dev]
+        pa: [0.00248, *clock_std_dev]
+        ha: [0.00455, *clock_std_dev]
+        np: [0.00252, *clock_std_dev]
+        na: [0.00349, *clock_std_dev]
+        mp: [0.00191, *clock_std_dev]
+        ns: [0.00249, *clock_std_dev]
+
+
+ancestral:
+  inference: joint
+  root_seq:
+    ALL: false
+
+traits:
+  columns:
+    h5nx:
+      all-time: region
+      2y: region
+    h5n1:
+      all-time: region country
+      2y: region country
+    h7n9:
+      all-time: country division
+    h9n2:
+      all-time: region country
+
+  sampling_bias_correction:
+    ALL: false
+
+  confidence:
+    ALL: true
+
+export:
+  title:
+    ALL: false # use the title in the auspice JSON
+    # TODO - if we parameterise this here we can use the subtype wildcard to customise the title

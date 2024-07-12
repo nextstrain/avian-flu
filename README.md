@@ -4,15 +4,23 @@ This is the Nextstrain build for avian influenza subtypes A/H5N1, A/H5NX, A/H7N9
 The most up-to-date builds of avian influenza can be found [on nextstrain.org](https://nextstrain.org/avian-flu).
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
 
+The Snakemake pipeline is parameterised by two config files, one for the A/H5N1, A/H5NX, A/H7N9, and A/H9N2 builds and one for the 2024 A/H5N1 cattle-flu outbreak.
+
+
 ## Segment-level GISAID builds
 
-The default Snakemake pipeline builds 32 Auspice datasets (8 segments x 4 subtypes (A/H5N1, A/H5NX, A/H7N9, A/H9N2)),
-and can be run via `snakemake` with no config overrides. 
+The `config/gisaid.yaml` config builds 32 Auspice datasets (8 segments x 4 subtypes (A/H5N1, A/H5NX, A/H7N9, A/H9N2)) using GISAID data and can be run via
+
+```bash
+snakemake --cores 1 -pf --configfile config/gisaid.yaml
+```
+
 This pipeline starts by downloading data from a private S3 bucket and the appropriate credentials are required; see below for how to use locally ingested files.
 For rapid AWS rebuild run as:
 
+
 ```bash
-nextstrain build --aws-batch --aws-batch-cpus 16 --aws-batch-memory 28800 . --jobs 16
+nextstrain build --aws-batch --aws-batch-cpus 16 --aws-batch-memory 28800 . --jobs 16 --configfile config/gisaid.yaml
 ```
 
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
@@ -22,8 +30,8 @@ Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about 
 The pipeline can automatically deploy resulting builds within the auspice folder
 to nextstrain.org by running:
 
-```
-nextstrain build . deploy_all
+```bash
+nextstrain build . --configfile config/gisaid.yaml -f deploy_all
 ```
 
 ## H5N1 Cattle Outbreak (2024)
@@ -33,49 +41,27 @@ These use NCBI data including consensus genomes and SRA data assembled via the A
 
 > Running this build will overwrite GISAID files in `./data` and thus you can't maintain or run GISAID & NCBI builds in parallel. In most cases this isn't an issue and [we are working on improving this](https://github.com/nextstrain/avian-flu/issues/70). You may want to proactively remove the `./data` directory yourself to make sure everything works as expected.
 
-#### Whole genome build
 
-An up-to-date version of this build is available at [nextstrain.org/avian-flu/h5n1-cattle-outbreak/genome](https://nextstrain.org/avian-flu/h5n1-cattle-outbreak/genome).
-
-``` bash
-nextstrain build \
-    --env AWS_ACCESS_KEY_ID \
-    --env AWS_SECRET_ACCESS_KEY \
-    . \
-        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
-        -pf auspice/avian-flu_h5n1-cattle-outbreak_genome.json
+```bash
+snakemake --cores 1 -pf --configfile config/h5n1-cattle-outbreak.yaml
 ```
+
+This pipeline starts by downloading data from a public S3 bucket, however credentials may still be required to interact with AWS S3 buckets.
+
+
+**Genome builds**
 
 The build is restricted to a set of strains where we think there's no reassortment, with outgroups excluded (`config/dropped_strains_h5n1-cattle-outbreak.txt`).
 Output files will be placed in `results/h5n1-cattle-outbreak/genome`.
 See `Snakefile.genome` for more details.
 
-#### Segment-level builds
+
+**Segment-level builds**
 
 Strains for each segment are chosen by first constructing a general tree for the segment with all strains from 2024 onwards and then taking the clade which contains all strains in the genome build.
 This should allow any reassortments to be highlighted and will also include outbreak strains which are missing from the genome build (because they don't have all 8 segments sequenced).
 
 > Note that generating any segment-level build here will necessarily build the genome tree, as it's needed to identify the clade of interest in each segment.
-
-All 8 segments can be built by using the helper-target 'h5n1_cattle_outbreak'
-
-``` bash
-nextstrain build \
-    --env AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY \
-    . \
-        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
-        -pf h5n1_cattle_outbreak
-```
-
-Alternatively, you can target specific segments via:
-
-``` bash
-nextstrain build \
-    --env AWS_ACCESS_KEY_ID --env AWS_SECRET_ACCESS_KEY \
-    . \
-        --config s3_src=s3://nextstrain-data/files/workflows/avian-flu/h5n1 \
-        -pf auspice/avian-flu_h5n1-cattle-flu_ha.json
-```
 
 
 ## Creating a custom build

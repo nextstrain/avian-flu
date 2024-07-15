@@ -16,15 +16,20 @@ for rule_file in config.get('extra_rule_files', []):
 # (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
-S3_SRC = config.get('s3_src', False)
+S3_SRC = config.get('s3_src', {})
 LOCAL_INGEST = bool(config.get('local_ingest', False))
 INGEST_SOURCE = config.get('ingest_source', None)
 
-assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
-assert not (S3_SRC and LOCAL_INGEST), "The config defined both 'local_ingest' and 's3_src', which are mutually exclusive"
-if LOCAL_INGEST:
-    assert INGEST_SOURCE is not None, "To use 'local_ingest' you must define 'ingest_source'"
+def sanity_check_config():
+    assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
+    assert not (S3_SRC and LOCAL_INGEST), "The config defined both 'local_ingest' and 's3_src', which are mutually exclusive"
+    if LOCAL_INGEST:
+        assert INGEST_SOURCE is not None, "To use 'local_ingest' you must define 'ingest_source'"
 
+    if S3_SRC:
+        assert isinstance(S3_SRC, dict), "Config 's3_src' must be a dict with 'name', 'sequences' and 'metadata' keys"
+
+sanity_check_config()
 
 def collect_builds():
     """
@@ -81,54 +86,48 @@ def subtypes_by_subtype_wildcard(wildcards):
         "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
     return(db[wildcards.subtype])
 
-if LOCAL_INGEST:
-    rule copy_sequences_from_ingest:
-        output:
-            sequences = "data/{segment}/sequences.fasta",
-        params:
-            sequences = lambda w: f"ingest/{INGEST_SOURCE}/results/sequences_{w.segment}.fasta"
-        shell:
-            """
-            cp {params.sequences} {output.sequences}
-            """
+rule download_sequences:
+    output:
+        sequences = f"data/{S3_SRC.get('name', None)}/sequences_{{segment}}.fasta",
+    params:
+        address=lambda w: S3_SRC.get('sequences', None).format(segment=w.segment)
+    shell:
+        """
+        aws s3 cp {params.address:q} - | zstd -d > {output.sequences}
+        """
 
-    rule copy_metadata_from_ingest:
-        output:
-            metadata = "data/metadata.tsv",
-        params:
-            metadata = f"ingest/{INGEST_SOURCE}/results/metadata.tsv",
-        shell:
-            """
-            cp {params.metadata} {output.metadata}
-            """
+rule download_metadata:
+    output:
+        metadata = f"data/{S3_SRC.get('name', None)}/metadata.tsv",
+    params:
+        address=S3_SRC.get('metadata', None),
+    shell:
+        """
+        aws s3 cp {params.address:q} - | zstd -d > {output.metadata}
+        """
 
-else:
-    rule download_sequences:
-        output:
-            sequences = "data/{segment}/sequences.fasta",
-        params:
-            s3_src=S3_SRC,
-        shell:
-            """
-            aws s3 cp {params.s3_src:q}/{wildcards.segment}/sequences.fasta.zst - | zstd -d > {output.sequences}
-            """
 
-    rule download_metadata:
-        output:
-            metadata = "data/metadata.tsv",
-        params:
-            s3_src=S3_SRC,
-        shell:
-            """
-            aws s3 cp {params.s3_src:q}/metadata.tsv.zst - | zstd -d > {output.metadata}
-            """
+def input_metadata(wildcards):
+    if S3_SRC:
+        return f"data/{S3_SRC['name']}/metadata.tsv",
+    elif LOCAL_INGEST:
+        return f"ingest/{INGEST_SOURCE}/results/metadata.tsv",
+    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+
+def input_sequences(wildcards):
+    if S3_SRC:
+        return f"data/{S3_SRC['name']}/sequences_{wildcards.segment}.fasta",
+    elif LOCAL_INGEST:
+        return f"ingest/{INGEST_SOURCE}/results/sequences_{wildcards.segment}.fasta"
+    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+
 
 rule filter_sequences_by_subtype:
     input:
-        sequences = "data/{segment}/sequences.fasta",
-        metadata = "data/metadata.tsv",
+        sequences = input_sequences,
+        metadata = input_metadata,
     output:
-        sequences = "data/sequences_{subtype}_{segment}.fasta",
+        sequences = "results/sequences_{subtype}_{segment}.fasta",
     params:
         subtypes=subtypes_by_subtype_wildcard,
     shell:
@@ -142,9 +141,9 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata = "data/metadata.tsv",
+        metadata = input_metadata,
     output:
-        metadata = "data/metadata_{subtype}.tsv",
+        metadata = "results/metadata_{subtype}.tsv",
     params:
         subtypes=subtypes_by_subtype_wildcard,
     shell:
@@ -162,7 +161,7 @@ def metadata_by_wildcards(wildcards):
     if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
         return "results/metadata-with-clade_{subtype}.tsv"
     else:
-        return "data/metadata_{subtype}.tsv"
+        return "results/metadata_{subtype}.tsv"
 
 
 def get_config(rule_name, rule_key, wildcards, segment=None, fallback="ALL"):
@@ -208,7 +207,7 @@ def refine_clock_filter(w):
 rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
-        metadata = "data/metadata_{subtype}.tsv",
+        metadata = "results/metadata_{subtype}.tsv",
         clades_file = files.clades_file
     output:
         metadata= "results/metadata-with-clade_{subtype}.tsv"
@@ -265,7 +264,7 @@ def _filter_params(wildcards, input, output, threads, resources):
 
 rule filter:
     input:
-        sequences = "data/sequences_{subtype}_{segment}.fasta",
+        sequences = "results/sequences_{subtype}_{segment}.fasta",
         metadata = metadata_by_wildcards,
         exclude = files.dropped_strains,
         include = files.include_strains,

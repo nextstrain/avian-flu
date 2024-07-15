@@ -22,7 +22,10 @@ segments:
   - ns
 
 #### Parameters which define the input source ####
-s3_src: s3://nextstrain-data-private/files/workflows/avian-flu
+s3_src:
+  name: gisaid
+  metadata: s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst
+  sequences: s3://nextstrain-data-private/files/workflows/avian-flu/{segment}/sequences.fasta.zst
 local_ingest: false
 ingest_source: fauna  # only used if 'local_ingest' is true
 

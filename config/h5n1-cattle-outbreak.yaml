@@ -20,9 +20,12 @@ segments:
 
 
 #### Parameters which define the input source ####
-s3_src: s3://nextstrain-data/files/workflows/avian-flu/h5n1
+s3_src:
+  name: ncbi
+  metadata: s3://nextstrain-data/files/workflows/avian-flu/h5n1/metadata.tsv.zst
+  sequences: s3://nextstrain-data/files/workflows/avian-flu/h5n1/{segment}/sequences.fasta.zst
 local_ingest: false
-ingest_source: ncbi  # only used if 'local_ingest' is true
+# P.S. To use local ingest files, comment out s3_src and change to local_ingest: joined-ncbi (e.g.)
 
 
 #### Parameters which control large overarching aspects of the build

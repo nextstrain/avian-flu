@@ -8,16 +8,20 @@ rule filter_segments_for_genome:
     # for each constituent segment. We call this {genome_seg} just to
     # distinguish it when reading the code. 
     input:
-        sequences = "data/sequences_{subtype}_{genome_seg}.fasta",
-        metadata = "results/metadata-with-clade_{subtype}.tsv",
+        sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
+        metadata = "results/{subtype}/metadata-with-clade.tsv",
         include = config['include_strains'],
         exclude = config['dropped_strains'],
     output:
-        sequences = "results/filtered-for-genome_{subtype}_{genome_seg}_{time}.fasta",
+        sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta"
     params:
         min_date = "2024-01-01",
         query = 'region == "North America"'
-    log: "logs/filtered-for-genome_{subtype}_{genome_seg}_{time}.txt",
+    wildcard_constraints:
+        subtype = 'h5n1-cattle-outbreak',
+        segment = 'genome',
+        time = 'default',
+    log: "logs/{subtype}/{segment}/{time}/filtered_{genome_seg}.txt",
     shell:
         """
         augur filter \
@@ -33,11 +37,15 @@ rule filter_segments_for_genome:
 
 rule align_segments_for_genome:
     input:
-        sequences = "results/filtered-for-genome_{subtype}_{genome_seg}_{time}.fasta",
+        sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
         # Use the H5N1 reference sequences for alignment
         reference = lambda w: expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
     output:
-        alignment =  "results/aligned-for-genome_{subtype}_{genome_seg}_{time}.fasta",
+        alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
+    wildcard_constraints:
+        subtype = 'h5n1-cattle-outbreak',
+        segment = 'genome',
+        time = 'default',
     threads:
         8
     shell:
@@ -53,11 +61,12 @@ rule align_segments_for_genome:
 
 rule join_segments:
     # the output of this rule is the same as 'rule align' but the wildcard constraints
-    # allow snakemake to choose the correct rule to run
+    # allow snakemake to choose the correct rule to run. Note that `wildcards.segment="genome"`
+    # here, and for that we need alignments for 8 individual segments, which we refer to as `wildcards.genome_seg`
     input:
-        alignment = expand("results/aligned-for-genome_{{subtype}}_{genome_seg}_{{time}}.fasta", genome_seg=SEGMENTS) 
+        alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
     output:
-        alignment = "results/aligned_{subtype}_{segment}_{time}.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak',
         segment = 'genome',
@@ -71,11 +80,11 @@ rule join_segments:
 
 rule prune_tree:
     input:
-        tree = "results/tree_{subtype}_{segment}_{time}.nwk",
+        tree = "results/{subtype}/{segment}/{time}/tree.nwk",
         strains = "auspice/avian-flu_h5n1-cattle-outbreak_genome.json",
     output:
-        tree = "results/tree_{subtype}_{segment}_{time}_outbreak-clade.nwk",
-        node_data = "results/tree_{subtype}_{segment}_{time}_outbreak-clade.json",
+        tree = "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk",
+        node_data = "results/{subtype}/{segment}/{time}/outbreak-clade-strains-in-genome-tree.json",
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
         time="default",

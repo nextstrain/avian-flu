@@ -99,7 +99,7 @@ jobs:
         id: check-cache
         uses: actions/cache@v4
         with:
-          path: ingest-output-sha256sum
+          path: ingest-ncbi-output-sha256sum
           key: ingest-output-sha256sum-${{ hashFiles('ingest-ncbi-output-sha256sum') }}
           lookup-only: true
 

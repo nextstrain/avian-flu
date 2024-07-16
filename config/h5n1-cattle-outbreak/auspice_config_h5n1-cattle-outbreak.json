@@ -80,6 +80,11 @@
       "type": "categorical"
     },
     {
+      "key": "h5_label_clade",
+      "title": "Provisional LABEL Clade",
+      "type": "categorical"
+    },
+    {
       "key": "furin_cleavage_motif",
       "title": "Furin Cleavage Motif",
       "type": "categorical"

@@ -36,14 +36,14 @@ same_strains_per_segment: false
 
 
 #### Config files ####
-reference: config/reference_{subtype}_{segment}.gb
-auspice_config: config/auspice_config_{subtype}.json
-colors: config/colors_{subtype}.tsv
-lat_longs: config/lat_longs_{subtype}.tsv
-include_strains: config/include_strains_{subtype}_{time}.txt
-dropped_strains: config/dropped_strains_{subtype}.txt
+reference: config/{subtype}/reference_{subtype}_{segment}.gb
+auspice_config: config/{subtype}/auspice_config_{subtype}.json
+colors: config/{subtype}/colors_{subtype}.tsv
+lat_longs: config/{subtype}/lat_longs_{subtype}.tsv
+include_strains: config/{subtype}/include_strains_{subtype}_{time}.txt
+dropped_strains: config/{subtype}/dropped_strains_{subtype}.txt
 clades_file: clade-labeling/{subtype}-clades.tsv
-description: config/description.md
+description: config/description_gisaid.md
 
 
 #### Rule-specific parameters ####

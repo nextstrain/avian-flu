@@ -42,10 +42,6 @@ jobs:
       run: |
         declare -a config;
 
-        config+=(
-          s3_src="s3://nextstrain-data/files/workflows/avian-flu/h5n1"
-        );
-
         if [[ "$TRIAL_NAME" ]]; then
           config+=(
             deploy_url="s3://nextstrain-staging/avian-flu_trials_${TRIAL_NAME}_"
@@ -55,7 +51,7 @@ jobs:
         nextstrain build \
           . \
             deploy_all \
-            --snakefile Snakefile.genome \
+            --configfile config/h5n1-cattle-outbreak.yaml \
             --config "${config[@]}"
 
       env: |

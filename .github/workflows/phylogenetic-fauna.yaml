@@ -48,6 +48,7 @@ jobs:
           --memory 28800mib \
           . \
             deploy_all \
+            --configfile config/gisaid.yaml \
             --config "${config[@]}"
 
       env: |

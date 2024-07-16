@@ -78,7 +78,7 @@ jobs:
     uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@master
     secrets: inherit
     with:
-      runtime: docker
+      runtime: aws-batch
       run: |
         declare -a config;
 
@@ -89,6 +89,10 @@ jobs:
         fi;
 
         nextstrain build \
+          --detach \
+          --no-download \
+          --cpus 16 \
+          --memory 28800mib \
           . \
             deploy_all \
             --configfile config/h5n1-cattle-outbreak.yaml \

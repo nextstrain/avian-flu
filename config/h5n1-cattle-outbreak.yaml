@@ -9,6 +9,7 @@ builds:
   h5n1-cattle-outbreak: ''
 
 segments:
+  - genome
   - pb2
   - pb1
   - pa

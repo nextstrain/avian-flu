@@ -10,3 +10,8 @@ segments:
 
 s3_dst:
   fauna: s3://nextstrain-data-private/files/workflows/avian-flu
+
+nextclade:
+  dataset_name: community/moncla-lab/iav-h5/ha/all-clades
+  field_map: defaults/nextclade_field_map.tsv
+  id_field: seqName

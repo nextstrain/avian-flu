@@ -65,12 +65,14 @@ rule append_missing_metadata_to_ncbi:
         source_column_name = config["join_ncbi_andersen"]["source_column_name"],
         ncbi_source = config["join_ncbi_andersen"]["ncbi_source"],
         andersen_source = config["join_ncbi_andersen"]["andersen_source"],
+        dedup_column = config["join_ncbi_andersen"]["dedup_column"],
     shell:
         """
         tsv-append \
             --source-header {params.source_column_name} \
             --file {params.ncbi_source}={input.ncbi_metadata} \
             --file {params.andersen_source}={input.missing_metadata} \
+            | tsv-uniq -H -f {params.dedup_column} \
             > {output.joined_metadata}
         """
 
@@ -83,5 +85,7 @@ rule append_missing_sequences_to_ncbi:
         joined_sequences = "joined-ncbi/results/sequences_{segment}.fasta",
     shell:
         """
-        cat {input.ncbi_sequences} {input.missing_sequences} > {output.joined_sequences}
+        cat {input.ncbi_sequences} {input.missing_sequences} \
+            | seqkit rmdup \
+            > {output.joined_sequences}
         """

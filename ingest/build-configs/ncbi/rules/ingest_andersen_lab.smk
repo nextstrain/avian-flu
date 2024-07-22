@@ -131,6 +131,7 @@ rule curate_metadata:
         augur curate normalize-strings \
             --metadata {input.metadata} \
             | ./build-configs/ncbi/bin/curate-andersen-lab-data \
+            | ./build-configs/ncbi/bin/dedup-by-strain \
             | augur curate format-dates \
                 --date-fields {params.date_fields:q} \
                 --expected-date-formats {params.expected_date_formats:q} \

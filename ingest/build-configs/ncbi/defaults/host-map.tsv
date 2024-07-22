@@ -1,6 +1,8 @@
 # Check for bird codes in https://www.carolinabirdclub.org/bandcodes.html
+Accipitridae	Avian
 alpaca	Nonhuman Mammal
 american crow	Avian
+AMERICAN ROBIN	Avian
 american wigeon	Avian
 Anas platyrhynchos	Avian
 Anatidae	Avian
@@ -51,6 +53,7 @@ harris-hawk	Avian
 hawk	Avian
 Homo sapiens	Human
 HOSP	Avian
+HOUSE SPARROW	Avian
 House-Mouse	Nonhuman Mammal
 Icteridae	Avian
 Larus occidentalis	Avian
@@ -66,6 +69,7 @@ pefa	Avian
 Pelecanus erythrorhynchos	Avian
 pigeon	Avian
 Procyon lotor	Nonhuman Mammal
+Quiscalus quiscula	Avian
 raccoon	Nonhuman Mammal
 red fox	Nonhuman Mammal
 red tailed hawk	Avian
@@ -74,5 +78,6 @@ snow goose	Avian
 Turdus merula	Avian
 turkey	Avian
 turkey vulture	Avian
+Vicugna pacos	Nonhuman Mammal
 western gull	Avian
 western sandpiper	Avian

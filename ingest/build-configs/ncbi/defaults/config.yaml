@@ -141,3 +141,4 @@ join_ncbi_andersen:
   source_column_name: data_source
   ncbi_source: genbank
   andersen_source: sra-via-andersen-lab
+  dedup_column: strain

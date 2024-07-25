@@ -1,9 +1,15 @@
-include: "rules/common.smk"
+# constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
+wildcard_constraints:
+    subtype = "[^_]+",
+    segment = "[^_]+",
+    time = "[^_]+",
 
-SUBTYPES = config.get('subtypes', ["h5nx", "h5n1", "h7n9", "h9n2"])
-SEGMENTS = config.get('segments', ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"])
-TIME =     config.get('time',     ["all-time","2y"])
-TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
+# defined before extra rules `include`d as they reference this constant
+SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+
+
+for rule_file in config.get('custom_rules', []):
+    include: rule_file
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
@@ -11,16 +17,38 @@ TARGET_SEQUENCES_PER_TREE = config.get('n_seqs', 3000)
 # (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
+S3_SRC = config.get('s3_src', {})
+LOCAL_INGEST = config.get('local_ingest', None)
 
-def all_targets():
-    return [
-        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=[s for s in SUBTYPES if s in ["h5nx","h5n1"]], segment=SEGMENTS,time=TIME),
-        *expand("auspice/avian-flu_{subtype}_{segment}_{time}.json", subtype=[s for s in SUBTYPES if s in ['h7n9', 'h9n2']], segment=SEGMENTS,time=[t for t in TIME if t=='all-time'])
-    ]
+def sanity_check_config():
+    assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
+    # NOTE: we could relax the following exclusivity of S3_SRC and LOCAL_INGEST
+    # if we want to use `--config local_ingest=gisaid` overrides.
+    assert not (S3_SRC and LOCAL_INGEST), "The config defined both 'local_ingest' and 's3_src', which are mutually exclusive"
+    if S3_SRC:
+        assert isinstance(S3_SRC, dict) and all([k in S3_SRC for k in ("name", "sequences", "metadata")]), \
+            "Config 's3_src' must be a dict with 'name', 'sequences' and 'metadata' keys"
+
+sanity_check_config()
+
+def collect_builds():
+    """
+    iteratively create workflow targets from config.builds for the `all` rule
+    you can over-ride this by specifying targets (filenames) on the command line
+    """
+    targets = []
+    for subtype,times in config.get('builds', {}).items():
+        for segment in config.get('segments', []):
+            if len(times):
+                for time in times:
+                    targets.append(f"auspice/avian-flu_{subtype}_{segment}_{time}.json")
+            else:
+                targets.append(f"auspice/avian-flu_{subtype}_{segment}.json")
+    return targets
 
 rule all:
     input:
-        auspice_json = all_targets()
+        auspice_json = collect_builds()
 
 # This must be after the `all` rule above since it depends on its inputs
 include: "rules/deploy.smk"
@@ -33,100 +61,156 @@ rule test_target:
 
 rule files:
     params:
-        dropped_strains = "config/dropped_strains_{subtype}.txt",
-        include_strains = "config/include_strains_{subtype}_{time}.txt",
-        reference = "config/reference_{subtype}_{segment}.gb",
-        colors = "config/colors_{subtype}.tsv",
-        lat_longs = "config/lat_longs_{subtype}.tsv",
-        auspice_config = "config/auspice_config_{subtype}.json",
-        clades_file = "clade-labeling/{subtype}-clades.tsv",
-        description = "config/description.md"
+        dropped_strains = config['dropped_strains'],
+        include_strains = config['include_strains'],
+        reference = config['reference'],
+        colors = config['colors'],
+        # TODO - Augur 24.4.0 includes extensive lat-longs by default - can we drop the following avian-flu specific ones?
+        lat_longs = config['lat_longs'],
+        auspice_config = config['auspice_config'],
+        clades_file = config['clades_file'],
+        description = config['description'],
 
 files = rules.files.params
 
+
+def subtypes_by_subtype_wildcard(wildcards):
+    db = {
+        'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
+        'h5n1': ['h5n1'],
+        'h7n9': ['h7n9'],
+        'h9n2': ['h9n2'],
+    }
+    db['h5n1-cattle-outbreak'] = [*db['h5nx']]
+    assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
+        "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
+    return(db[wildcards.subtype])
+
+rule download_sequences:
+    output:
+        sequences = f"data/{S3_SRC.get('name', None)}/sequences_{{segment}}.fasta",
+    params:
+        address=lambda w: S3_SRC.get('sequences', None).format(segment=w.segment)
+    shell:
+        """
+        aws s3 cp {params.address:q} - | zstd -d > {output.sequences}
+        """
+
+rule download_metadata:
+    output:
+        metadata = f"data/{S3_SRC.get('name', None)}/metadata.tsv",
+    params:
+        address=S3_SRC.get('metadata', None),
+    shell:
+        """
+        aws s3 cp {params.address:q} - | zstd -d > {output.metadata}
+        """
+
+
+def input_metadata(wildcards):
+    if S3_SRC:
+        return f"data/{S3_SRC['name']}/metadata.tsv",
+    elif LOCAL_INGEST:
+        return f"ingest/{LOCAL_INGEST}/results/metadata.tsv",
+    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+
+def input_sequences(wildcards):
+    if S3_SRC:
+        return f"data/{S3_SRC['name']}/sequences_{wildcards.segment}.fasta",
+    elif LOCAL_INGEST:
+        return f"ingest/{LOCAL_INGEST}/results/sequences_{wildcards.segment}.fasta"
+    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+
+
+rule filter_sequences_by_subtype:
+    input:
+        sequences = input_sequences,
+        metadata = input_metadata,
+    output:
+        sequences = "results/{subtype}/{segment}/sequences.fasta",
+    params:
+        subtypes=subtypes_by_subtype_wildcard,
+    shell:
+        """
+        augur filter \
+            --sequences {input.sequences} \
+            --metadata {input.metadata} \
+            --query "subtype in {params.subtypes!r}" \
+            --output-sequences {output.sequences}
+        """
+
+rule filter_metadata_by_subtype:
+    input:
+        metadata = input_metadata,
+    output:
+        metadata = "results/{subtype}/metadata.tsv",
+    params:
+        subtypes=subtypes_by_subtype_wildcard,
+    shell:
+        """
+        augur filter \
+            --metadata {input.metadata} \
+            --query "subtype in {params.subtypes!r}" \
+            --output-metadata {output.metadata}
+        """
+
 def metadata_by_wildcards(wildcards):
-    if wildcards.subtype in ("h5n1", "h5nx"):
-        return "results/metadata-with-clade_{subtype}.tsv"
+    # H5 builds have extra clade-level metadata added to the metadata TSV.
+    # We may move this to a node-data JSON which would simplify the snakemake logic
+    # a bit -- see <https://github.com/nextstrain/avian-flu/issues/25>
+    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
+        return "results/{subtype}/metadata-with-clade.tsv"
     else:
-        return "data/metadata_{subtype}.tsv"
-
-def group_by(w):
-    gb = {
-        'h5nx': {'all-time': 'subtype country year', '2y': 'subtype region month host'},
-        'h5n1': {'all-time': 'region country year', '2y': 'subtype region month host'},
-        'h7n9': {'all-time': 'division year'},
-        'h9n2': {'all-time': 'country year'}
-        }
-    return gb[w.subtype][w.time]
-
-def min_length(w):
-    len_dict = {"pb2": 2100, "pb1": 2100, "pa": 2000, "ha":1600, "np":1400, "na":1270, "mp":900, "ns":800}
-    length = len_dict[w.segment]
-    return(length)
-
-def min_date(w):
-    date = {
-        'h5nx': {'all-time': '1996', '2y': '2Y'},
-        'h5n1': {'all-time': '1996', '2y': '2Y'},
-        'h7n9': {'all-time': '2013'},
-        'h9n2': {'all-time': '1966'}
-        }
-    return date[w.subtype][w.time]
-
-def traits_columns(w):
-    traits = {'h5nx':'region','h5n1': 'region country', 'h7n9': 'country division', 'h9n2': 'region country'}
-    return traits[w.subtype]
-
-def clock_rate(w):
-    clock_rates_h5nx = {
-        'pb2': '--clock-rate 0.00287',
-        'pb1': '--clock-rate 0.00267',
-        'pa': '--clock-rate 0.00238',
-        'ha': '--clock-rate 0.0048',
-        'np': '--clock-rate 0.0022',
-        'na': '--clock-rate 0.0028',
-        'mp': '--clock-rate 0.0017',
-        'ns': '--clock-rate 0.0017'
-        }
-
-    clock_rates_h5n1 = {
-        'pb2': '--clock-rate 0.00287',
-        'pb1': '--clock-rate 0.00264',
-        'pa': '--clock-rate 0.00248',
-        'ha': '--clock-rate 0.00455',
-        'np': '--clock-rate 0.00252',
-        'na': '--clock-rate 0.00349',
-        'mp': '--clock-rate 0.00191',
-        'ns': '--clock-rate 0.00249'
-        }
-
-    clock_rate = {
-        'h5nx': {'all-time':'', '2y': clock_rates_h5nx[w.segment]},
-        'h5n1': {'all-time':'', '2y': clock_rates_h5n1[w.segment]},
-        'h7n9': {'all-time':''},
-        'h9n2': {'all-time':''}
-        }
-
-    return clock_rate[w.subtype][w.time]
+        return "results/{subtype}/metadata.tsv",
 
 
-def clock_rate_std_dev(w):
-    clock_rate_std_dev = {
-        'h5nx': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
-        'h5n1': {'all-time': '', '2y': '--clock-std-dev 0.00211'},
-        'h7n9': {'all-time': ''},
-        'h9n2': {'all-time': ''}
-        }
+def get_config(rule_name, rule_key, wildcards, segment=None, fallback="FALLBACK"):
+    assert rule_name in config, f"Config missing top-level {rule_name} key"
+    assert rule_key in config[rule_name], f"Config missing entry for {rule_name}.{rule_key}"
+    try:
+        return config[rule_name][rule_key][wildcards.subtype][wildcards.time]
+    except KeyError:
+        assert fallback in config[rule_name][rule_key], f"config.{rule_name!r}.{rule_key!r} either needs " \
+            f"an entry for {wildcards.subtype!r}.{wildcards.time!r} added or a (default) {fallback!r} key."
+        return config[rule_name][rule_key][fallback]
 
-    return clock_rate_std_dev[w.subtype][w.time]
+def refine_clock_rates(w):
+    info = get_config('refine', 'clock_rates', w)
+
+    if w.segment == 'genome':
+        # calculate the genome rate via a weighted average of the segment rates
+        assert 'genome' not in info, ("This snakemake pipeline is currently set up to calculate the genome clock rate "
+            "based on the segment rates, however you have provided a genome rate in the config.")
+        try:
+            segment_lengths= get_config('refine', 'segment_lengths', w)
+        except AssertionError as e:
+            # py11 brings e.add_note() which is nicer
+            e.args = (*e.args, "NOTE: For segment=genome we require the segment_lengths to be defined as we use them to calculate the clock rate")
+            raise
+        mean = sum([info[seg][0]*length for seg,length in segment_lengths.items()])/sum(segment_lengths.values())
+        stdev = mean/2
+        return f"--clock-rate {mean} --clock-std-dev {stdev}"
+
+    assert w.segment in info, 'config.refine.clock_rates: data must be provided for each segment. Use "" for inference.'
+    if info[w.segment] == "":
+        return ""
+
+    assert isinstance(info[w.segment], list), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
+    assert len(info[w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
+    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"   
+
+def refine_clock_filter(w):
+    filter = get_config('refine', 'clock_filter_iqd', w)
+    return f"--clock-filter-iqd {filter}" if filter else ""
+
 
 rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
-        metadata = "data/metadata_{subtype}.tsv",
+        metadata = "results/{subtype}/metadata.tsv",
         clades_file = files.clades_file
     output:
-        metadata= "results/metadata-with-clade_{subtype}.tsv"
+        metadata= "results/{subtype}/metadata-with-clade.tsv"
     shell:
         """
         python clade-labeling/add-clades.py \
@@ -143,6 +227,9 @@ def _filter_params(wildcards, input, output, threads, resources):
     When we are using the same sequences for each segment, then for HA we use a full
     filter call and for the rest of the segments we filter to the strains chosen for HA
     """
+
+    assert wildcards.segment!='genome', "Don't use this function for genome builds!"
+
     # For non-HA segments when we are using the SAME_STRAINS for all segments
     # we have a simple filtering approach: match what we're using for HA!
     # We also include the "force-include" list; 99% of the time these strains will already be in
@@ -154,31 +241,37 @@ def _filter_params(wildcards, input, output, threads, resources):
             raise Exception("A strains input should only be present for SAME_STRAINS + HA!")
         return f"--exclude-all --include {input.strains} {input.include}"
 
+    exclude_where = get_config('filter', 'exclude_where', wildcards)
     # If SAME_STRAINS (and due to the above conditional we have the HA segment at this point)
     # then we want to restrict to strains present in all 8 segments. Note that force-included
     # strains may not have all segments, but that's preferable to filtering them out.
-    restrict_n_segments = f"n_segments!={len(SEGMENTS)}" if SAME_STRAINS else ''
+    if SAME_STRAINS:
+        exclude_where += f" n_segments!={len(SEGMENTS)}"
 
-    # formulate our typical filtering parameters
-    cmd  = f" --group-by {group_by(wildcards)}"
-    cmd += f" --subsample-max-sequences {TARGET_SEQUENCES_PER_TREE}"
-    cmd += f" --min-date {min_date(wildcards)}"
+
+    cmd = ""
+
+    group_by_value = get_config('filter', 'group_by', wildcards)
+    cmd += f" --group-by {group_by_value}" if group_by_value else ""
+
+    cmd += f" --subsample-max-sequences {config['target_sequences_per_tree']}"
+    cmd += f" --min-date {get_config('filter', 'min_date', wildcards)}"
     cmd += f" --include {input.include}"
-    cmd += f" --exclude-where host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2 {restrict_n_segments}"
-    cmd += f" --min-length {min_length(wildcards)}"
+    cmd += f" --exclude-where {exclude_where}"
+    cmd += f" --min-length {get_config('filter', 'min_length', wildcards)[wildcards.segment]}"
     cmd += f" --non-nucleotide"
     return cmd
 
 rule filter:
     input:
-        sequences = "data/sequences_{subtype}_{segment}.fasta",
+        sequences = "results/{subtype}/{segment}/sequences.fasta",
         metadata = metadata_by_wildcards,
         exclude = files.dropped_strains,
         include = files.include_strains,
-        strains = lambda w: f"results/filtered_{w.subtype}_ha_{w.time}.txt" if (SAME_STRAINS and w.segment!='ha') else [],
+        strains = lambda w: f"results/{w.subtype}/ha/{w.time}/filtered.txt" if (SAME_STRAINS and w.segment!='ha') else [],
     output:
-        sequences = "results/filtered_{subtype}_{segment}_{time}.fasta",
-        strains = "results/filtered_{subtype}_{segment}_{time}.txt",
+        sequences = "results/{subtype}/{segment}/{time}/filtered.fasta",
+        strains = "results/{subtype}/{segment}/{time}/filtered.txt",
     params:
         args = _filter_params,
     shell:
@@ -202,7 +295,12 @@ rule align:
         sequences = rules.filter.output.sequences,
         reference = files.reference
     output:
-        alignment = "results/aligned_{subtype}_{segment}_{time}.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
+    wildcard_constraints:
+        # for genome builds we don't use this rule; see `rule join_segments` 
+        segment = "|".join(seg for seg in SEGMENTS)
+    threads:
+        4
     shell:
         """
         augur align \
@@ -210,26 +308,36 @@ rule align:
             --reference-sequence {input.reference} \
             --output {output.alignment} \
             --remove-reference \
-            --nthreads 1
+            --nthreads {threads}
         """
 
 
 rule tree:
     message: "Building tree"
     input:
+        # Note that the alignment input may come from `rule align` or `rule join_segments`
         alignment = rules.align.output.alignment
     output:
-        tree = "results/tree-raw_{subtype}_{segment}_{time}.nwk"
+        tree = "results/{subtype}/{segment}/{time}/tree-raw.nwk"
     params:
         method = "iqtree"
+    threads:
+        4
     shell:
         """
         augur tree \
             --alignment {input.alignment} \
             --output {output.tree} \
             --method {params.method} \
-            --nthreads 1
+            --nthreads {threads}
         """
+
+
+def refine_root(wildcards):
+    root = get_config('refine', 'genome_root', wildcards) \
+        if wildcards.segment=='genome' \
+        else get_config('refine', 'root', wildcards)
+    return f"--root {root}" if root else ""
 
 rule refine:
     message:
@@ -244,14 +352,14 @@ rule refine:
         alignment = rules.align.output,
         metadata = metadata_by_wildcards,
     output:
-        tree = "results/tree_{subtype}_{segment}_{time}.nwk",
-        node_data = "results/branch-lengths_{subtype}_{segment}_{time}.json"
+        tree = "results/{subtype}/{segment}/{time}/tree.nwk",
+        node_data = "results/{subtype}/{segment}/{time}/branch-lengths.json"
     params:
-        coalescent = "const",
-        date_inference = "marginal",
-        clock_filter_iqd = 4,
-        clock = clock_rate,
-        clock_std_dev = clock_rate_std_dev
+        coalescent = config['refine']['coalescent'],
+        date_inference = config['refine']['date_inference'],
+        clock_rates = refine_clock_rates,
+        clock_filter = refine_clock_filter,
+        root = refine_root,
     shell:
         """
         augur refine \
@@ -261,41 +369,60 @@ rule refine:
             --output-tree {output.tree} \
             --output-node-data {output.node_data} \
             --timetree \
+            {params.root} \
             --coalescent {params.coalescent} \
             --date-confidence \
             --date-inference {params.date_inference} \
-            {params.clock} \
-            {params.clock_std_dev} \
-            --clock-filter-iqd {params.clock_filter_iqd}
+            {params.clock_rates} \
+            {params.clock_filter}
         """
+
+
+def refined_tree(w):
+    """
+    Return the refined tree to be used for export, traits, ancestry reconstruction etc
+    The cattle-flu build introduces an additional step beyond `augur refine`, which is
+    why this function exists.
+    """
+    if w.subtype=='h5n1-cattle-outbreak' and w.segment!='genome':
+        return "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk"
+    return "results/{subtype}/{segment}/{time}/tree.nwk",
+
+def ancestral_root_seq(wildcards):
+    root_seq = get_config('ancestral', 'genome_root_seq', wildcards) \
+        if wildcards.segment=='genome' \
+        else get_config('ancestral', 'root_seq', wildcards)
+    return f"--root-sequence {root_seq}" if root_seq else ""
 
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         alignment = rules.align.output
     output:
-        node_data = "results/nt-muts_{subtype}_{segment}_{time}.json"
+        node_data = "results/{subtype}/{segment}/{time}/nt-muts.json"
     params:
-        inference = "joint"
+        inference = config['ancestral']['inference'],
+        root_seq = ancestral_root_seq,
     shell:
         """
         augur ancestral \
             --tree {input.tree} \
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
-            --inference {params.inference}\
+            --inference {params.inference} \
+            {params.root_seq} \
             --keep-ambiguous
         """
 
 rule translate:
     message: "Translating amino acid sequences"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = files.reference
+        reference = lambda w: config['genome_reference'] if w.segment=='genome' else files.reference
     output:
-        node_data = "results/aa-muts_{subtype}_{segment}_{time}.json"
+        node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:
         """
         augur translate \
@@ -305,32 +432,53 @@ rule translate:
             --output {output.node_data}
         """
 
+def traits_params(wildcards):
+    columns = get_config('traits', 'genome_columns', wildcards) \
+        if wildcards.segment=='genome' \
+        else get_config('traits', 'columns', wildcards)
+
+    bias = get_config('traits', 'genome_sampling_bias_correction', wildcards) \
+        if wildcards.segment=='genome' \
+        else get_config('traits', 'sampling_bias_correction', wildcards)
+
+    confidence = get_config('traits', 'confidence', wildcards)
+
+    args = f"--columns {columns}"
+    if bias:
+        args += f" --sampling-bias-correction {bias}"
+    if confidence:
+        args += f" --confidence"
+    return args
+
+
 rule traits:
-    message: "Inferring ancestral traits for {params.columns!s}"
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         metadata = metadata_by_wildcards,
     output:
-        node_data = "results/traits_{subtype}_{segment}_{time}.json",
+        node_data = "results/{subtype}/{segment}/{time}/traits.json",
     params:
-        columns = traits_columns,
+        info = traits_params,
     shell:
         """
         augur traits \
             --tree {input.tree} \
             --metadata {input.metadata} \
             --output {output.node_data} \
-            --columns {params.columns} \
-            --confidence
+            {params.info}
         """
 
+
 rule cleavage_site:
-    message: "determining sequences that harbor furin cleavage sites"
+    """
+    Cleavage sites are only computed for HA and are unchanged depending on the build. As such, they are not
+    parameterised in the config file
+    """
     input:
-        alignment = "results/aligned_{subtype}_ha_{time}.fasta"
+        alignment = "results/{subtype}/ha/{time}/aligned.fasta"
     output:
-        cleavage_site_annotations = "results/cleavage-site_{subtype}_ha_{time}.json",
-        cleavage_site_sequences = "results/cleavage-site-sequences_{subtype}_ha_{time}.json"
+        cleavage_site_annotations = "results/{subtype}/ha/{time}/cleavage-site.json",
+        cleavage_site_sequences = "results/{subtype}/ha/{time}/cleavage-site-sequences.json"
     shell:
         """
         python scripts/annotate-ha-cleavage-site.py \
@@ -339,36 +487,105 @@ rule cleavage_site:
             --cleavage_site_sequence {output.cleavage_site_sequences}
         """
 
+def export_node_data_files(wildcards):
+    nd = [
+        rules.refine.output.node_data,
+        rules.traits.output.node_data,
+        rules.ancestral.output.node_data,
+        rules.translate.output.node_data,
+        rules.cleavage_site.output.cleavage_site_annotations,
+        rules.cleavage_site.output.cleavage_site_sequences,
+    ]
+
+    if wildcards.subtype=="h5n1-cattle-outbreak" and wildcards.segment!='genome':
+        nd.append(rules.prune_tree.output.node_data)
+    return nd
+
+
+def additional_export_config(wildcards):
+    args = ""
+
+    title_overrides = get_config('export', 'genome_title', wildcards) \
+        if wildcards.segment=='genome' \
+        else get_config('export', 'title', wildcards)
+    if title_overrides:
+        args += ("--title '" +
+            title_overrides.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time) +
+            "'")
+
+    return args
+
 rule export:
-    message: "Exporting data files for for auspice"
+    """
+    Export the files into results/ and then use a subsequent rule to move these to the
+    auspice/ directory
+    """
     input:
-        tree = rules.refine.output.tree,
+        tree = refined_tree,
         metadata = metadata_by_wildcards,
-        branch_lengths = rules.refine.output.node_data,
-        traits = rules.traits.output.node_data,
-        nt_muts = rules.ancestral.output.node_data,
-        aa_muts = rules.translate.output.node_data,
-        fcs = rules.cleavage_site.output.cleavage_site_annotations,
-        cleavage_site_sequences = rules.cleavage_site.output.cleavage_site_sequences,
+        node_data = export_node_data_files,
         colors = files.colors,
         lat_longs = files.lat_longs,
         auspice_config = files.auspice_config,
         description = files.description
     output:
-        auspice_json = "auspice/avian-flu_{subtype}_{segment}_{time}.json"
+        auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"
+    params:
+        additional_config = additional_export_config
     shell:
         """
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} {input.fcs} {input.cleavage_site_sequences}\
+            --node-data {input.node_data} \
             --colors {input.colors} \
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \
             --description {input.description} \
             --include-root-sequence-inline \
+            {params.additional_config} \
             --output {output.auspice_json}
         """
+
+def auspice_name_to_wildcard_name(wildcards):
+    """
+    Used to link Auspice JSONs filenames to their intermediate filename which includes all wildcards.
+    Examples:
+    1. subtype + segment + time in their filename / URL,
+        e.g. "avian-flu_h5n1_ha_2y.json" (nextstrain.org/avian-flu/h5n1/ha/2y)
+        maps to subtype=h5n1, segment=ha, time=2y
+    2. subtype + segment in their filename / URL,
+        e.g. "avian-flu_h5n1-cattle-outbreak_ha.json" (nextstrain.org/avian-flu/h5n1-cattle-outbreak/ha)
+        maps to subtype=h5n1-cattle-outbreak, segment=ha, time=default
+    """
+    parts = wildcards.parts.split("_")
+    if len(parts)==3:
+        [subtype, segment, time] = parts
+        assert segment!='genome', "Genome builds are not available for this build"
+        return f"results/{subtype}/{segment}/{time}/auspice-dataset.json"
+    if len(parts)==2:
+        [subtype, segment] = parts
+        assert subtype=='h5n1-cattle-outbreak', "Only h5n1 builds produce an Auspice dataset without a time component in the filename"
+        return f"results/{subtype}/{segment}/default/auspice-dataset.json"
+    raise Exception("Auspice JSON filename requested with an unexpected number of (underscore-separated) parts")
+
+
+rule rename_auspice_datasets:
+    """
+    This allows us to create files in auspice/ which mirror the intended URL structure rather than
+    the wildcard structure we use in the workflow.
+    """
+    input:
+        json = auspice_name_to_wildcard_name
+    output:
+        json = "auspice/avian-flu_{parts}.json"
+    wildcard_constraints:
+        timepart = ".*"
+    shell:
+        """
+        cp {input.json} {output.json}
+        """
+
 
 rule clean:
     message: "Removing directories: {params}"

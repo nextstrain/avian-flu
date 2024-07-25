@@ -25,6 +25,46 @@ on:
         type: string
 
 jobs:
+  summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: summary_step
+        run: |
+          URL_A="avian-flu/h5n1/ha/2y"
+          URL_B="avian-flu/h9n2/pb2/all-time"
+          if [[ "$TRIAL_NAME" ]]; then
+              echo "### Trial Build URLs" >> $GITHUB_STEP_SUMMARY
+              URL_BASE="https://nextstrain.org/staging/avian-flu/trials"
+              TRIAL_NAME_URL=$( echo "$TRIAL_NAME" | sed "s|_|/|g" )
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "  * ${URL_BASE}/${TRIAL_NAME_URL}/${URL_A}" >> $GITHUB_STEP_SUMMARY
+              echo "  * ${URL_BASE}/${TRIAL_NAME_URL}/${URL_B}" >> $GITHUB_STEP_SUMMARY
+              echo "  * etc" >> $GITHUB_STEP_SUMMARY
+          else
+              echo "### Canonical URLs will be updated by this run" >> $GITHUB_STEP_SUMMARY
+              URL_BASE="https://nextstrain.org"
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "  * ${URL_BASE}/${URL_A}" >> $GITHUB_STEP_SUMMARY
+              echo "  * ${URL_BASE}/${URL_B}" >> $GITHUB_STEP_SUMMARY
+              echo "  * etc" >> $GITHUB_STEP_SUMMARY
+          fi;
+          echo "" >> $GITHUB_STEP_SUMMARY
+          NOTE="NOTE: These URL paths may be incorrect if you've changed the  "
+          NOTE+="snakemake targets in 'config/gisaid.yaml' as part of this PR. "
+          NOTE+="Please update this GitHub Action if so!"
+          echo "> $NOTE" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Build (meta-)environment"  >> $GITHUB_STEP_SUMMARY
+          if [[ "$NEXTSTRAIN_DOCKER_IMAGE" ]]; then
+              echo "  * Docker image: $NEXTSTRAIN_DOCKER_IMAGE" >> $GITHUB_STEP_SUMMARY
+          else
+              echo "  * Docker image: default (latest)" >> $GITHUB_STEP_SUMMARY
+          fi;
+          echo '  * Git Branch: `'"${BRANCH_NAME}"'`' >> $GITHUB_STEP_SUMMARY
+    env:
+      NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
+      TRIAL_NAME: ${{ inputs.trial-name }}
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
   phylogenetic:
     permissions:
       id-token: write
@@ -48,6 +88,7 @@ jobs:
           --memory 28800mib \
           . \
             deploy_all \
+            --configfile config/gisaid.yaml \
             --config "${config[@]}"
 
       env: |

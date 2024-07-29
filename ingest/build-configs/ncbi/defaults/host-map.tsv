@@ -63,8 +63,10 @@ Meleagris gallopavo	Avian
 Mephitidae	Nonhuman Mammal
 mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
+Mus musculus	Nonhuman Mammal
 mute swan	Avian
 Panthera leo	Nonhuman Mammal
+Passer domesticus	Avian
 pefa	Avian
 Pelecanus erythrorhynchos	Avian
 pigeon	Avian
@@ -79,5 +81,7 @@ Turdus merula	Avian
 turkey	Avian
 turkey vulture	Avian
 Vicugna pacos	Nonhuman Mammal
+Vulpes vulpes	Nonhuman Mammal
 western gull	Avian
 western sandpiper	Avian
+Wild-Bird	Avian

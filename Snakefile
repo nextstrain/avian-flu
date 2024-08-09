@@ -197,7 +197,7 @@ def refine_clock_rates(w):
 
     assert isinstance(info[w.segment], list), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
     assert len(info[w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"   
+    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"
 
 def refine_clock_filter(w):
     filter = get_config('refine', 'clock_filter_iqd', w)
@@ -297,7 +297,7 @@ rule align:
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
     wildcard_constraints:
-        # for genome builds we don't use this rule; see `rule join_segments` 
+        # for genome builds we don't use this rule; see `rule join_segments`
         segment = "|".join(seg for seg in SEGMENTS)
     threads:
         4

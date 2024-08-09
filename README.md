@@ -46,7 +46,7 @@ These use NCBI data including consensus genomes and SRA data assembled via the A
 snakemake --cores 1 -pf --configfile config/h5n1-cattle-outbreak.yaml
 ```
 
-This pipeline starts by downloading data from a public S3 bucket, however credentials may still be required to interact with AWS S3 buckets.
+This pipeline starts by downloading data from a public S3 bucket.
 
 
 **Genome builds**

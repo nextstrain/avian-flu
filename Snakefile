@@ -17,6 +17,7 @@ for rule_file in config.get('custom_rules', []):
 # (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
+NEXTSTRAIN_PUBLIC_BUCKET = "s3://nextstrain-data/"
 S3_SRC = config.get('s3_src', {})
 LOCAL_INGEST = config.get('local_ingest', None)
 
@@ -90,10 +91,11 @@ rule download_sequences:
     output:
         sequences = f"data/{S3_SRC.get('name', None)}/sequences_{{segment}}.fasta",
     params:
-        address=lambda w: S3_SRC.get('sequences', None).format(segment=w.segment)
+        address=lambda w: S3_SRC.get('sequences', None).format(segment=w.segment),
+        no_sign_request=lambda w: "--no-sign-request" if S3_SRC.get('sequences', "").startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
     shell:
         """
-        aws s3 cp {params.address:q} - | zstd -d > {output.sequences}
+        aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.sequences}
         """
 
 rule download_metadata:
@@ -101,9 +103,10 @@ rule download_metadata:
         metadata = f"data/{S3_SRC.get('name', None)}/metadata.tsv",
     params:
         address=S3_SRC.get('metadata', None),
+        no_sign_request=lambda w: "--no-sign-request" if S3_SRC.get('metadata', "").startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
     shell:
         """
-        aws s3 cp {params.address:q} - | zstd -d > {output.metadata}
+        aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.metadata}
         """
 
 
@@ -197,7 +200,7 @@ def refine_clock_rates(w):
 
     assert isinstance(info[w.segment], list), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
     assert len(info[w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"   
+    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"
 
 def refine_clock_filter(w):
     filter = get_config('refine', 'clock_filter_iqd', w)
@@ -297,7 +300,7 @@ rule align:
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
     wildcard_constraints:
-        # for genome builds we don't use this rule; see `rule join_segments` 
+        # for genome builds we don't use this rule; see `rule join_segments`
         segment = "|".join(seg for seg in SEGMENTS)
     threads:
         4

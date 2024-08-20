@@ -1,5 +1,10 @@
 from pathlib import Path
 
+def path_to_fauna(w):
+    try:
+        return config["path_to_fauna"]
+    except KeyError:
+        raise Exception("Your config must define 'path_to_fauna'")
 
 rule download_segment:
     output:
@@ -8,11 +13,12 @@ rule download_segment:
         fasta_fields = "strain virus accession collection_date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
         output_dir = lambda wildcards, output: Path(output.sequences).parent,
         output_fstem = lambda wildcards, output: Path(output.sequences).stem,
+        path_to_fauna = path_to_fauna
     benchmark:
         "fauna/benchmarks/download_segment_{segment}.txt"
     shell:
         """
-        python3 {path_to_fauna}/vdb/download.py \
+        python3 {params.path_to_fauna:q}/vdb/download.py \
             --database vdb \
             --virus avian_flu \
             --fasta_fields {params.fasta_fields} \

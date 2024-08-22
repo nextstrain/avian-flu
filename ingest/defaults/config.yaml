@@ -10,3 +10,5 @@ segments:
 
 s3_dst:
   fauna: s3://nextstrain-data-private/files/workflows/avian-flu
+
+path_to_fauna: ../../fauna

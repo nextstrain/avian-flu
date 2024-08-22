@@ -5,7 +5,8 @@ This is the ingest pipeline for avian virus sequences.
 ## Software requirements
 
 Follow the [standard installation instructions](https://docs.nextstrain.org/en/latest/install.html) for Nextstrain's suite of software tools.
-This workflow requires the Nextstrain CLI's Docker runtime which includes [fauna](https://github.com/nextstrain/fauna) as a sibling directory of the workflow directory and includes the Python RethinkDB bindings required for downloading from fauna.
+This workflow presumes that we are using the Nextstrain CLI's Docker runtime which includes [fauna](https://github.com/nextstrain/fauna) as a sibling directory of the workflow directory and includes the Python RethinkDB bindings required for downloading from fauna.
+
 
 ## Usage
 
@@ -84,6 +85,9 @@ nextstrain build \
 
 This command produces one metadata file, `fauna/results/metadata.tsv`, and one sequences file per gene segment like `fauna/results/sequences_ha.fasta`.
 Each file represents all available subtypes.
+
+> If you are running this outside of Docker we expect 'fauna' to be a sister directory to 'avian-flu'.
+  You can change this via `--config path_to_fauna=<path>` where the path is relative to the 'ingest' directory.
 
 Add the `upload_all` target to the command above to run the complete ingest pipeline _and_ upload results to AWS S3.
 The workflow compresses and uploads the local files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.

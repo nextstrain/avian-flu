@@ -86,10 +86,8 @@ nextstrain build \
 This command produces one metadata file, `fauna/results/metadata.tsv`, and one sequences file per gene segment like `fauna/results/sequences_ha.fasta`.
 Each file represents all available subtypes.
 
-> If you are running this outside of Docker you'll need to define the location of fauna via the `path_to_fauna` config option.
-  The path is relative to the 'ingest' directory.
-  Adding `--config path_to_fauna="../../fauna"` works if your fauna directory is a sister directory to the avian-flu repo itself, which is a common set up.
-  
+> If you are running this outside of Docker we expect 'fauna' to be a sister directory to 'avian-flu'.
+  You can change this via `--config path_to_fauna=<path>` where the path is relative to the 'ingest' directory.
 
 Add the `upload_all` target to the command above to run the complete ingest pipeline _and_ upload results to AWS S3.
 The workflow compresses and uploads the local files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.

@@ -32,7 +32,7 @@ local_ingest: false
 
 #### Parameters which control large overarching aspects of the build
 target_sequences_per_tree: 3000
-same_strains_per_segment: false
+same_strains_per_segment: true
 
 
 #### Config files ####
@@ -158,6 +158,9 @@ traits:
 
   confidence:
     FALLBACK: true
+
+embedding:
+  perplexity: 200
 
 export:
   title:

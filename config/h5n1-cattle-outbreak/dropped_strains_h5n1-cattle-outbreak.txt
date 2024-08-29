@@ -17,6 +17,12 @@ A/domesticcat/NewMexico/24-009116-001/2024
 # These strains are basal to the outbreak and we exclude them to avoid low-confidence DTA reconstruction.
 A/Peregrinefalcon/California/24-005915-001/2024
 
+# These three cattle strains are hundreds of mutations diverged from the outbreak - perhaps due to poor sequencing?
+# Perhaps they are another introduction? Dropping for now
+A/CATTLE/USA/24-022332-005/2024
+A/CATTLE/USA/24-015672-001/2024
+A/CATTLE/USA/24-022332-007/2024
+
 # These strains represent diversity that's significantly outgrouped relative to cattle outbreak
 A/americancrow/Iowa/24-006634-001/2024
 A/AmericanCrow/USA/24-004479-001-original/2024

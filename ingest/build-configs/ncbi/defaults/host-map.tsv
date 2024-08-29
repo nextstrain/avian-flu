@@ -1,8 +1,10 @@
 # Check for bird codes in https://www.carolinabirdclub.org/bandcodes.html
+# Note that the first column in this TSV is case insensitive
 Accipitridae	Avian
 alpaca	Nonhuman Mammal
 american crow	Avian
 AMERICAN ROBIN	Avian
+Turdus migratorius	Avian
 american wigeon	Avian
 Anas platyrhynchos	Avian
 Anatidae	Avian

@@ -1,19 +1,17 @@
-include: "Snakefile"
-
 
 rule update_clades:
     message: "Finding new h5n1 strains and annotating their clades with LABEL"
     shell:
         """
         python clade-labeling/update-clades.py \
-            --metadata data/metadata_h5n1.tsv \
-            --sequences data/sequences_h5n1_ha.fasta \
+            --metadata results/h5n1/metadata.tsv \
+            --sequences results/h5n1/ha/sequences.fasta \
             --clades_file clade-labeling/h5n1-clades.tsv \
             --subtype h5n1 \
 
         python clade-labeling/update-clades.py \
-            --metadata data/metadata_h5nx.tsv \
-            --sequences data/sequences_h5nx_ha.fasta \
+            --metadata results/h5nx/metadata.tsv \
+            --sequences results/h5nx/ha/sequences.fasta \
             --clades_file clade-labeling/h5nx-clades.tsv \
             --subtype h5nx
         """

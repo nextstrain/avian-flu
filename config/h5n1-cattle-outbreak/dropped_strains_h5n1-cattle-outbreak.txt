@@ -111,6 +111,13 @@ A/GreatHornedOwl/USA/24-006223-001-original/2024
 A/harris-hawk/Utah/24-004080-001/2024
 A/HarrisHawk/USA/24-004080-001-original-repeat2/2024
 A/hoodedmerganser/SouthCarolina/W24-028/2024
+A/hornedgrebe/Virginia/W24-219B/2024
+A/hornedgrebe/Virginia/W24-219C/2024
+A/hornedgrebe/Virginia/W24-219D/2024
+A/hornedgrebe/Virginia/W24-248A/2024
+A/hornedgrebe/Virginia/W24-248B/2024
+A/hornedgrebe/Virginia/W24-248C/2024
+A/hornedgrebe/Virginia/W24-248D/2024
 A/mallard/Minnesota/24-006961-018/2024
 A/Mallard/USA/24-006961-018-original/2024
 A/mountain_lion/Montana/24-005908-001/2024
@@ -119,8 +126,10 @@ A/MountainLion/USA/24-005908-001-original/2024
 A/MountainLion/USA/24-010315-001-original/2024
 A/muteswan/California/24-005918-001/2024
 A/MuteSwan/USA/24-005918-001-original/2024
+A/peregrinefalcon/Virginia/W24-219E/2024
 A/red-tailedhawk/Oregon/24-008306-001/2024
 A/red-tailedhawk/SouthCarolina/24-005993-001/2024
+A/red-tailedhawk/Virginia/W24-248F/2024
 A/redheadduck/NorthCarolina/W24-83A/2024
 A/RedTailedHawk/USA/24-003714-001-original-repeat/2024
 A/RedTailedHawk/USA/24-005993-001-original/2024
@@ -129,6 +138,7 @@ A/ruddyturnstone/Virginia/W24-190N/2024
 A/sanderling/Virginia/W24-190A/2024
 A/sanderling/Virginia/W24-190B/2024
 A/sanderling/Virginia/W24-190C/2024
+A/sanderling/Virginia/W24-190D/2024
 A/sanderling/Virginia/W24-190F/2024
 A/sanderling/Virginia/W24-190G/2024
 A/sanderling/Virginia/W24-190I/2024
@@ -179,3 +189,4 @@ A/westerngull/California/24-004708-001/2024
 A/WesternGull/USA/24-004708-001-original/2024
 A/WesternSandpiper/USA/24-004707-001-original/2024
 A/woodduck/NorthCarolina/W24-026/2024
+

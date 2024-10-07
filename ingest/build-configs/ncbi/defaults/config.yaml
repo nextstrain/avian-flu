@@ -110,8 +110,8 @@ curate:
   metadata_columns:
   - strain
   - virus
-  - isolate_id
   - date
+  - date_released
   - region
   - country
   - division
@@ -123,11 +123,39 @@ curate:
   - submitting_lab
   - authors
   - PMID
+  - sra_accessions
   - gisaid_clade
   - h5_clade
-  - genbank_accession
-  - sra_accessions
-  - date_released
+  - n_segments
+  - segment_pb2
+  - segment_pb1
+  - segment_pa
+  - segment_ha
+  - segment_np
+  - segment_na
+  - segment_mp
+  - segment_ns
+  - isolate_id_pb2
+  - isolate_id_pb1
+  - isolate_id_pa
+  - isolate_id_ha
+  - isolate_id_np
+  - isolate_id_na
+  - isolate_id_mp
+  - isolate_id_ns
+  - genbank_accession_pb2
+  - genbank_accession_pb1
+  - genbank_accession_pa
+  - genbank_accession_ha
+  - genbank_accession_np
+  - genbank_accession_na
+  - genbank_accession_mp
+  - genbank_accession_ns
+  # Note - we've not exported the common fields:
+  # bioprojects, database, original_strain, sample_type, abbr_authors
+  # and also dropped many segment-specific fields.
+  # QUESTION: what's the difference between isolate_id and genbank_accession?
+
 
 s3_dst:
   ncbi: s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi
@@ -142,3 +170,30 @@ join_ncbi_andersen:
   ncbi_source: genbank
   andersen_source: sra-via-andersen-lab
   dedup_column: strain
+
+grouping:
+  common_strain_fields:
+    # - strain # not needed - should improve
+    - date
+    - host
+    - region
+    - country
+    - division
+    - location
+    - bioprojects
+    - h5_clade
+    - database
+    - subtype
+    - authors
+    - abbr_authors
+    - submitting_lab
+    - originating_lab
+    - virus
+    - domestic_status
+    - PMID
+    - gisaid_clade
+    - original_strain
+    - sample_type
+    - sra_accessions
+    - date_released # enforce release date to be the same, or segment-specific?
+  accession: genbank_accession

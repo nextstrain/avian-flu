@@ -104,47 +104,81 @@ rule curate:
                 --id-field {params.annotations_id} ) 2>> {log} > {output.curated_ndjson}
         """
 
-
-rule split_curated_ndjson_by_segment:
-    """
-    Split out the full curate NDJSON by segment, then we can deduplicate
-    records by strain name within each segment
-    """
+rule dedup_by_accession:
     input:
-        curated_ndjson="ncbi/data/curated.ndjson",
+        ndjson="ncbi/data/curated.ndjson",
     output:
-        metadata="ncbi/data/all_metadata_{segment}.tsv",
-        sequences="ncbi/results/sequences_{segment}.fasta",
+        ndjson="ncbi/data/curated_by_strain.ndjson",
     params:
-        id_field=config["curate"]["output_id_field"],
-        sequence_field=config["curate"]["output_sequence_field"],
-    log:
-        "ncbi/logs/{segment}/split_curated_ndjson_by_segment.txt",
-    benchmark:
-        "ncbi/benchmarks/{segment}/split_curated_ndjson_by_segment.txt"
+        common_strain_fields = config["grouping"]["common_strain_fields"],
+        segments = config["segments"],
+        accession = config["grouping"]["accession"],
     shell:
+        r"""
+        python3 scripts/group_metadata.py \
+            --metadata {input.ndjson} \
+            --common-strain-fields {params.common_strain_fields} \
+            --segments {params.segments} \
+            --accession {params.accession} \
+            --output-metadata {output.ndjson}
         """
-        (cat {input.curated_ndjson} \
-            | ./build-configs/ncbi/bin/filter-ndjson-by-segment \
-                --segment {wildcards.segment} \
-            | ./build-configs/ncbi/bin/dedup-by-strain \
-            | augur curate passthru \
-                --output-metadata {output.metadata} \
-                --output-fasta {output.sequences} \
-                --output-id-field {params.id_field} \
-                --output-seq-field {params.sequence_field} ) 2>> {log}
+
+rule write_sequences_from_ndjson:
+    input:
+        ndjson="ncbi/data/curated_by_strain.ndjson",
+    output:
+        sequences=expand("ncbi/results/sequences_{segment}.fasta", segment=config["segments"])
+    params:
+        sequences=[f"{segment}=ncbi/results/sequences_{segment}.fasta" for segment in config["segments"]]
+    shell:
+        r"""
+        python3 scripts/write_sequences_from_ndjson.py \
+            --input {input.ndjson} \
+            --output {params.sequences}
         """
+
+# rule split_curated_ndjson_by_segment:
+#     """
+#     Split out the full curate NDJSON by segment, then we can deduplicate
+#     records by strain name within each segment
+#     """
+#     input:
+#         curated_ndjson="ncbi/data/curated.ndjson",
+#     output:
+#         metadata="ncbi/data/all_metadata_{segment}.tsv",
+#         sequences="ncbi/results/sequences_{segment}.fasta",
+#     params:
+#         id_field=config["curate"]["output_id_field"],
+#         sequence_field=config["curate"]["output_sequence_field"],
+#     log:
+#         "ncbi/logs/{segment}/split_curated_ndjson_by_segment.txt",
+#     benchmark:
+#         "ncbi/benchmarks/{segment}/split_curated_ndjson_by_segment.txt"
+#     shell:
+#         """
+#         (cat {input.curated_ndjson} \
+#             | ./build-configs/ncbi/bin/filter-ndjson-by-segment \
+#                 --segment {wildcards.segment} \
+#             | ./build-configs/ncbi/bin/dedup-by-strain \
+#             | augur curate passthru \
+#                 --output-metadata {output.metadata} \
+#                 --output-fasta {output.sequences} \
+#                 --output-id-field {params.id_field} \
+#                 --output-seq-field {params.sequence_field} ) 2>> {log}
+#         """
 
 
 rule subset_metadata:
     input:
-        metadata="ncbi/data/all_metadata_{segment}.tsv",
+        metadata="ncbi/data/curated_by_strain.ndjson",
     output:
-        subset_metadata="ncbi/data/metadata_{segment}.tsv",
+        subset_metadata = "ncbi/results/metadata.tsv",
     params:
         metadata_fields=",".join(config["curate"]["metadata_columns"]),
     shell:
-        """
-        tsv-select -H -f {params.metadata_fields} \
-            {input.metadata} > {output.subset_metadata}
+        r"""
+        cat {input.metadata} \
+            | augur curate passthru --output-metadata - \
+            | tsv-select -H -f {params.metadata_fields} \
+            > {output.subset_metadata}
         """

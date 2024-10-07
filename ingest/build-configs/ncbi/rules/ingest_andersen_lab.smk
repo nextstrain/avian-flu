@@ -155,7 +155,7 @@ rule match_metadata_and_segment_fasta:
         metadata = "andersen-lab/data/metadata.tsv",
         fasta = "andersen-lab/data/{segment}.fasta"
     output:
-        metadata = "andersen-lab/data/matched_metadata_{segment}.tsv",
+        presence_absence = "andersen-lab/results/presence_absence_{segment}.tsv",
         fasta = "andersen-lab/results/sequences_{segment}.fasta",
     params:
         input_id_field="isolate_id",
@@ -172,30 +172,58 @@ rule match_metadata_and_segment_fasta:
             --seq-field {params.sequence_field} \
             --unmatched-reporting warn \
             --duplicate-reporting warn \
-            --output-metadata {output.metadata} \
+            --output-metadata - \
             --output-fasta {output.fasta} \
             --output-id-field {params.output_id_field} \
             --output-seq-field {params.sequence_field} \
+            | python scripts/segment_presence_absence.py \
+                --segment {wildcards.segment} \
+            1> {output.presence_absence}
             2> {log}
         """
 
-
-rule reorder_metadata_columns:
-    """
-    Using tsv-select to reorder the columns of the Andersen lab metadata to
-    exactly match the NCBI metadata columns. Ensures that we don't accidently
-    append the wrong columns in joining steps.
-
-    tsv-select will exit with error if the column does not exist.
-    """
+rule add_segments_to_metadata:
     input:
-        metadata = "andersen-lab/data/matched_metadata_{segment}.tsv",
+        metadata = "andersen-lab/data/metadata.tsv",
+        segments = expand("andersen-lab/results/presence_absence_{segment}.tsv", segment=config["segments"])
     output:
-        reordered_metadata = "andersen-lab/data/metadata_{segment}.tsv"
+        metadata_partial = temp("andersen-lab/data/metadata_with_segments.tsv"), # augur merge doesn't allow writing to stdout :(
+        metadata = "andersen-lab/results/metadata.tsv",
     params:
-        metadata_fields=",".join(config["curate"]["metadata_columns"]),
+        # augur merge requires NAME=FILEPATH argments, so we transform the inputs here:
+        metadata = lambda w,input: " ".join([f"main={input.metadata}", *[f"s_{idx}={s}" for idx,s in enumerate(input.segments)]]),
+        segments = config["segments"]
     shell:
+        r"""
+        augur merge \
+            --metadata {params.metadata} \
+            --metadata-id-columns strain \
+            --no-source-columns \
+            --output-metadata {output.metadata_partial} \
+        && cat {output.metadata_partial} \
+            | python scripts/add_n_segments_columns.py \
+                --segments {params.segments} \
+            > {output.metadata}
         """
-        tsv-select -H -f {params.metadata_fields} \
-            {input.metadata} > {output.reordered_metadata}
-        """
+
+
+# THIS RULE WAS UNUSED XXX
+# rule reorder_metadata_columns:
+#     """
+#     Using tsv-select to reorder the columns of the Andersen lab metadata to
+#     exactly match the NCBI metadata columns. Ensures that we don't accidently
+#     append the wrong columns in joining steps.
+
+#     tsv-select will exit with error if the column does not exist.
+#     """
+#     input:
+#         metadata = "andersen-lab/data/matched_metadata_{segment}.tsv",
+#     output:
+#         reordered_metadata = "andersen-lab/data/metadata_{segment}.tsv"
+#     params:
+#         metadata_fields=",".join(config["curate"]["metadata_columns"]),
+#     shell:
+#         """
+#         tsv-select -H -f {params.metadata_fields} \
+#             {input.metadata} > {output.reordered_metadata}
+#         """

@@ -26,41 +26,12 @@ rule select_missing_metadata:
         """
 
 
-rule select_missing_strain_names:
-    input:
-        missing_metadata = "joined-ncbi/data/missing_metadata.tsv",
-    output:
-        missing_sequence_ids = "joined-ncbi/data/missing_sequence_ids.txt",
-    params:
-        sequence_id_column = config["curate"]["output_id_field"],
-    shell:
-        """
-        tsv-select -H -f {params.sequence_id_column} \
-            {input.missing_metadata} \
-            > {output.missing_sequence_ids}
-        """
-
-
-rule select_missing_sequences:
-    input:
-        missing_sequence_ids = "joined-ncbi/data/missing_sequence_ids.txt",
-        andersen_sequences = "andersen-lab/results/sequences_{segment}.fasta",
-    output:
-        missing_sequences = "joined-ncbi/data/missing_sequences_{segment}.fasta",
-    shell:
-        """
-        seqkit grep -f {input.missing_sequence_ids} \
-            {input.andersen_sequences} \
-            > {output.missing_sequences}
-        """
-
-
 rule append_missing_metadata_to_ncbi:
     input:
         ncbi_metadata = "ncbi/results/metadata.tsv",
         missing_metadata = "joined-ncbi/data/missing_metadata.tsv",
     output:
-        joined_metadata = "joined-ncbi/results/metadata.tsv",
+        joined_metadata = "joined-ncbi/data/all_metadata.tsv",
     params:
         source_column_name = config["join_ncbi_andersen"]["source_column_name"],
         ncbi_source = config["join_ncbi_andersen"]["ncbi_source"],
@@ -77,15 +48,51 @@ rule append_missing_metadata_to_ncbi:
         """
 
 
-rule append_missing_sequences_to_ncbi:
+rule dedup_metadata_by_sample_id:
     input:
+        all_joined_metadata="joined-ncbi/data/all_metadata.tsv",
+    output:
+        joined_metadata="joined-ncbi/results/metadata.tsv",
+    params:
+        id_field=config["curate"]["output_id_field"],
+    log:
+        "logs/joined-ncbi/dedup_metadata_by_sample_id.txt",
+    shell:
+        r"""
+        (augur curate passthru \
+            --id-column {params.id_field:q} \
+            --metadata {input.all_joined_metadata:q} \
+            | ./build-configs/ncbi/bin/dedup-by-sample-id \
+            | augur curate passthru \
+                --output-metadata {output.joined_metadata}) 2>> {log}
+        """
+
+
+rule select_final_strain_names:
+    input:
+        joined_metadata="joined-ncbi/results/metadata.tsv",
+    output:
+        strain_names = "joined-ncbi/data/final_strain_names.txt",
+    params:
+        sequence_id_column = config["curate"]["output_id_field"],
+    shell:
+        r"""
+        tsv-select -H -f {params.sequence_id_column} \
+            {input.joined_metadata} \
+            > {output.strain_names}
+        """
+
+
+rule select_final_sequences:
+    input:
+        strain_names = "joined-ncbi/data/final_strain_names.txt",
         ncbi_sequences = "ncbi/results/sequences_{segment}.fasta",
-        missing_sequences = "joined-ncbi/data/missing_sequences_{segment}.fasta",
+        andersen_sequences = "andersen-lab/results/sequences_{segment}.fasta",
     output:
         joined_sequences = "joined-ncbi/results/sequences_{segment}.fasta",
     shell:
-        """
-        cat {input.ncbi_sequences} {input.missing_sequences} \
-            | seqkit rmdup \
-            > {output.joined_sequences}
+        r"""
+        cat {input.ncbi_sequences} {input.andersen_sequences} \
+            | seqkit grep -f {input.strain_names} \
+                > {output.joined_sequences}
         """

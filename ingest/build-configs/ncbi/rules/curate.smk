@@ -123,11 +123,12 @@ rule split_curated_ndjson_by_segment:
     benchmark:
         "ncbi/benchmarks/{segment}/split_curated_ndjson_by_segment.txt"
     shell:
-        """
+        r"""
         (cat {input.curated_ndjson} \
             | ./build-configs/ncbi/bin/filter-ndjson-by-segment \
                 --segment {wildcards.segment} \
             | ./build-configs/ncbi/bin/dedup-by-strain \
+            | ./build-configs/ncbi/bin/dedup-by-sample-id \
             | augur curate passthru \
                 --output-metadata {output.metadata} \
                 --output-fasta {output.sequences} \

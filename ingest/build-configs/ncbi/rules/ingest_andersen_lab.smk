@@ -127,11 +127,12 @@ rule curate_metadata:
         expected_date_formats=['%Y-%m-%d', '%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%SZ'],
         annotations_id=config["curate"]["annotations_id"],
     shell:
-        """
-        augur curate normalize-strings \
+        r"""
+        (augur curate normalize-strings \
             --metadata {input.metadata} \
             | ./build-configs/ncbi/bin/curate-andersen-lab-data \
             | ./build-configs/ncbi/bin/dedup-by-strain \
+            | ./build-configs/ncbi/bin/dedup-by-sample-id \
             | augur curate format-dates \
                 --date-fields {params.date_fields:q} \
                 --expected-date-formats {params.expected_date_formats:q} \
@@ -143,7 +144,7 @@ rule curate_metadata:
                 --annotations {input.annotations} \
                 --id-field {params.annotations_id} \
             | augur curate passthru \
-                --output-metadata {output.metadata} 2>> {log}
+                --output-metadata {output.metadata}) 2>> {log}
         """
 
 rule match_metadata_and_segment_fasta:

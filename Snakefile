@@ -518,6 +518,28 @@ def additional_export_config(wildcards):
 
     return args
 
+rule auspice_config:
+    """
+    Depending on the build we may make wildcard-dependent modifications to the auspice config JSON.
+    If we implement config overlays in augur this rule will become unnecessary.
+    """
+    input:
+        auspice_config = files.auspice_config,
+    output:
+        auspice_config = "results/{subtype}/{segment}/{time}/auspice-config.json",
+    run:
+        import json
+        with open(input.auspice_config) as fh:
+            config = json.load(fh)
+        if wildcards.subtype == "h5n1-cattle-outbreak":
+            if wildcards.segment == "genome":
+                config['display_defaults']['distance_measure'] = "num_date"
+            else:
+                config['display_defaults']['distance_measure'] = "div"
+        with open(output.auspice_config, 'w') as fh:
+            json.dump(config, fh, indent=2)
+
+
 rule export:
     """
     Export the files into results/ and then use a subsequent rule to move these to the
@@ -529,7 +551,7 @@ rule export:
         node_data = export_node_data_files,
         colors = files.colors,
         lat_longs = files.lat_longs,
-        auspice_config = files.auspice_config,
+        auspice_config = rules.auspice_config.output.auspice_config,
         description = files.description
     output:
         auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"

@@ -124,7 +124,7 @@
     "map_triplicate": false,
     "color_by": "host",
     "geo_resolution": "division",
-    "distance_measure": "div"
+    "distance_measure": "__VALUE_OVERWRITTEN_BY_SNAKEMAKE_PIPELINE__"
   },
   "filters": [
     "host",

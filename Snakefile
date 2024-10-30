@@ -161,8 +161,14 @@ def metadata_by_wildcards(wildcards):
     # H5 builds have extra clade-level metadata added to the metadata TSV.
     # We may move this to a node-data JSON which would simplify the snakemake logic
     # a bit -- see <https://github.com/nextstrain/avian-flu/issues/25>
-    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
+    if wildcards.subtype in ("h5n1", "h5nx"):
         return "results/{subtype}/metadata-with-clade.tsv"
+    # cattle-flu.smk will make its own modifications as needed
+    elif wildcards.subtype=="h5n1-cattle-outbreak":
+        if wildcards.segment=="genome":
+            return "results/{subtype}/{segment}/default/metadata-with-clade-and-non-inferred-values.tsv"
+        else:
+            return "results/{subtype}/metadata-with-clade.tsv"
     else:
         return "results/{subtype}/metadata.tsv",
 
@@ -530,14 +536,22 @@ rule auspice_config:
     run:
         import json
         with open(input.auspice_config) as fh:
-            config = json.load(fh)
+            auspice_config = json.load(fh)
         if wildcards.subtype == "h5n1-cattle-outbreak":
             if wildcards.segment == "genome":
-                config['display_defaults']['distance_measure'] = "num_date"
+                auspice_config['display_defaults']['distance_measure'] = "num_date"
+                division_idx = next((i for i,c in enumerate(auspice_config['colorings']) if c['key']=='division'), None)
+                assert division_idx!=None, "Auspice config did not have a division coloring!"
+                auspice_config['colorings'].insert(division_idx+1, {
+                    "key": "division_metadata",
+                    "title": auspice_config['colorings'][division_idx]["title"] + " (metadata)",
+                    "type": "categorical",
+                })
+                auspice_config['colorings'][division_idx]["title"] += " (inferred)"
             else:
-                config['display_defaults']['distance_measure'] = "div"
+                auspice_config['display_defaults']['distance_measure'] = "div"
         with open(output.auspice_config, 'w') as fh:
-            json.dump(config, fh, indent=2)
+            json.dump(auspice_config, fh, indent=2)
 
 
 rule export:

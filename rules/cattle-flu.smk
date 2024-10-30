@@ -96,3 +96,37 @@ rule prune_tree:
             --output-tree {output.tree} \
             --output-metadata {output.node_data}
         """
+
+def assert_expected_config(w):
+    try:
+        # TODO: once we refactor things we should use `get_config()` here
+        # see <https://github.com/nextstrain/avian-flu/pull/100#discussion_r1823047047>
+        # but currently this snakefile doesn't have access to that function.
+        assert len(config['traits']['genome_columns'])==1 and config['traits']['genome_columns']['FALLBACK']=="division"
+    except Exception as err:
+        raise Exception("Rule add_metadata_columns_to_show_non_inferred_values expected a certain format for config['traits'] that has since changed") from err
+
+rule add_metadata_columns_to_show_non_inferred_values:
+    """
+    Genome builds run `augur traits` for "division" (we assert this below) so we want to add a metadata
+    column `division_metadata` which is a duplicate of `division`.
+
+    NOTE: long-term we should be consulting `traits_params()` to work out the columns to duplicate, but
+    that function's not visible to this .smk file so would require deeper refactoring.
+    """
+    input:
+        metadata = "results/{subtype}/metadata-with-clade.tsv",
+    output:
+        metadata = "results/{subtype}/{segment}/{time}/metadata-with-clade-and-non-inferred-values.tsv",
+    wildcard_constraints:
+        subtype="h5n1-cattle-outbreak",
+        segment="genome",
+        time="default",
+    params:
+        old_column = "division",
+        new_column = "division_metadata",
+        assert_traits = assert_expected_config,
+    shell:
+        """
+        cat {input.metadata} | csvtk mutate -t -f {params.old_column} -n {params.new_column} > {output.metadata}
+        """

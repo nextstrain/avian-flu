@@ -1,8 +1,8 @@
 # constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
 wildcard_constraints:
-    subtype = "[^_]+",
-    segment = "[^_]+",
-    time = "[^_]+",
+    subtype = "[^_/]+",
+    segment = "[^_/]+",
+    time = "[^_/]+",
 
 # defined before extra rules `include`d as they reference this constant
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
@@ -281,6 +281,7 @@ rule filter:
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered.fasta",
         strains = "results/{subtype}/{segment}/{time}/filtered.txt",
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
     params:
         args = _filter_params,
     shell:
@@ -291,6 +292,7 @@ rule filter:
             --exclude {input.exclude} \
             --output-sequences {output.sequences} \
             --output-strains {output.strains} \
+            --output-metadata {output.metadata} \
             {params.args}
         """
 
@@ -359,7 +361,7 @@ rule refine:
     input:
         tree = rules.tree.output.tree,
         alignment = rules.align.output,
-        metadata = metadata_by_wildcards,
+        metadata = rules.filter.output.metadata,
     output:
         tree = "results/{subtype}/{segment}/{time}/tree.nwk",
         node_data = "results/{subtype}/{segment}/{time}/branch-lengths.json"
@@ -463,7 +465,7 @@ def traits_params(wildcards):
 rule traits:
     input:
         tree = refined_tree,
-        metadata = metadata_by_wildcards,
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
     output:
         node_data = "results/{subtype}/{segment}/{time}/traits.json",
     params:
@@ -561,7 +563,7 @@ rule export:
     """
     input:
         tree = refined_tree,
-        metadata = metadata_by_wildcards,
+        metadata = rules.filter.output.metadata,
         node_data = export_node_data_files,
         colors = files.colors,
         lat_longs = files.lat_longs,

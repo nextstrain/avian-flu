@@ -9,7 +9,7 @@ rule filter_segments_for_genome:
     # distinguish it when reading the code. 
     input:
         sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
-        metadata = "results/{subtype}/metadata-with-clade.tsv",
+        metadata = "results/{subtype}/metadata-with-clade.tsv", # TODO: use a function here instead of hardcoding
         include = config['include_strains'],
         exclude = config['dropped_strains'],
     output:
@@ -77,6 +77,26 @@ rule join_segments:
             --segments {input.alignment} \
             --output {output.alignment}
         """
+
+rule genome_metadata:
+    input:
+        sequences = "results/{subtype}/{segment}/{time}/aligned.fasta",
+        metadata = "results/{subtype}/{segment}/{time}/metadata-with-clade-and-non-inferred-values.tsv",
+    output:
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv"
+    wildcard_constraints:
+        subtype = 'h5n1-cattle-outbreak',
+        segment = 'genome',
+        time = 'default',
+    shell:
+        """
+        augur filter --metadata {input.metadata} --sequences {input.sequences} --output-metadata {output.metadata}
+        """
+
+ruleorder: genome_metadata > filter
+# Note: I tried to avoid the above ruleorder and instead add a wildcard constraint on the `filter` rule (as it can also produce
+# rules.genome_metadata.output.metadata) telling it to use any segment that's _not_ "genome" however I couldn't get this
+# working. I thought `segment = "^(?!genome)[^_/]+"` should work but it doesn't.
 
 rule prune_tree:
     input:

@@ -154,7 +154,7 @@ rule colors_genome:
     # define the concept of whether this rule should run so this isn't trivial and is
     # thus left as a to-do
     input:
-        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
+        metadata = "results/{subtype}/genome/{time}/metadata.tsv", # Always use the genome metadata, even for segment builds
         ordering = "config/h5n1-cattle-outbreak/color_ordering.tsv",
         schemes = "config/h5n1-cattle-outbreak/color_schemes.tsv",
         colors = files.colors,
@@ -164,7 +164,6 @@ rule colors_genome:
         duplications = "division=division_metadata",
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
-        segment="genome",
         time="default",
     shell:
         """

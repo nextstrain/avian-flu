@@ -7,10 +7,6 @@ wildcard_constraints:
 # defined before extra rules `include`d as they reference this constant
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 
-
-for rule_file in config.get('custom_rules', []):
-    include: rule_file
-
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
 # (1) Filter the HA segment as normal plus filter to those strains with 8 segments
@@ -629,3 +625,7 @@ rule clean:
         "auspice"
     shell:
         "rm -rfv {params}"
+
+
+for rule_file in config.get('custom_rules', []):
+    include: rule_file

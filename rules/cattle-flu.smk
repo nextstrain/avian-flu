@@ -81,7 +81,7 @@ rule join_segments:
 rule genome_metadata:
     input:
         sequences = "results/{subtype}/{segment}/{time}/aligned.fasta",
-        metadata = "results/{subtype}/{segment}/{time}/metadata-with-clade-and-non-inferred-values.tsv",
+        metadata = metadata_by_wildcards,
     output:
         metadata = temp("results/{subtype}/{segment}/{time}/metadata_intermediate.tsv")
     wildcard_constraints:
@@ -148,3 +148,33 @@ rule prune_tree:
             --output-tree {output.tree} \
             --output-metadata {output.node_data}
         """
+
+rule colors_genome:
+    # TODO: add these input files / params to the config YAML. The config YAML must also
+    # define the concept of whether this rule should run so this isn't trivial and is
+    # thus left as a to-do
+    input:
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
+        ordering = "config/h5n1-cattle-outbreak/color_ordering.tsv",
+        schemes = "config/h5n1-cattle-outbreak/color_schemes.tsv",
+        colors = files.colors,
+    output:
+        colors = "results/{subtype}/{segment}/{time}/colors.tsv",
+    params:
+        duplications = "division=division_metadata",
+    wildcard_constraints:
+        subtype="h5n1-cattle-outbreak",
+        segment="genome",
+        time="default",
+    shell:
+        """
+        cp {input.colors} {output.colors} && \
+        python3 scripts/assign-colors.py \
+            --metadata {input.metadata} \
+            --ordering {input.ordering} \
+            --color-schemes {input.schemes} \
+            --duplications {params.duplications} \
+        >> {output.colors}        
+        """
+
+ruleorder: colors_genome > colors

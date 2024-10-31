@@ -274,6 +274,9 @@ rule filter:
         metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
     params:
         args = _filter_params,
+    wildcard_constraints:
+        # The genome build has a different approach to filtering (see cattle-flu.smk)
+        segment="(?!genome)[^_/]+"
     shell:
         """
         augur filter \
@@ -545,6 +548,15 @@ rule auspice_config:
         with open(output.auspice_config, 'w') as fh:
             json.dump(auspice_config, fh, indent=2)
 
+rule colors:
+    input:
+        colors = files.colors,
+    output:
+        colors = "results/{subtype}/{segment}/{time}/colors.tsv",
+    shell:
+        """
+        cp {input.colors} {output.colors}
+        """
 
 rule export:
     """
@@ -555,7 +567,7 @@ rule export:
         tree = refined_tree,
         metadata = rules.filter.output.metadata,
         node_data = export_node_data_files,
-        colors = files.colors,
+        colors = "results/{subtype}/{segment}/{time}/colors.tsv",
         lat_longs = files.lat_longs,
         auspice_config = rules.auspice_config.output.auspice_config,
         description = files.description

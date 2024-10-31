@@ -83,7 +83,7 @@ rule genome_metadata:
         sequences = "results/{subtype}/{segment}/{time}/aligned.fasta",
         metadata = "results/{subtype}/{segment}/{time}/metadata-with-clade-and-non-inferred-values.tsv",
     output:
-        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv"
+        metadata = temp("results/{subtype}/{segment}/{time}/metadata_intermediate.tsv")
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak',
         segment = 'genome',
@@ -93,29 +93,6 @@ rule genome_metadata:
         augur filter --metadata {input.metadata} --sequences {input.sequences} --output-metadata {output.metadata}
         """
 
-ruleorder: genome_metadata > filter
-# Note: I tried to avoid the above ruleorder and instead add a wildcard constraint on the `filter` rule (as it can also produce
-# rules.genome_metadata.output.metadata) telling it to use any segment that's _not_ "genome" however I couldn't get this
-# working. I thought `segment = "^(?!genome)[^_/]+"` should work but it doesn't.
-
-rule prune_tree:
-    input:
-        tree = "results/{subtype}/{segment}/{time}/tree.nwk",
-        strains = "auspice/avian-flu_h5n1-cattle-outbreak_genome.json",
-    output:
-        tree = "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk",
-        node_data = "results/{subtype}/{segment}/{time}/outbreak-clade-strains-in-genome-tree.json",
-    wildcard_constraints:
-        subtype="h5n1-cattle-outbreak",
-        time="default",
-    shell:
-        """
-        python3 scripts/restrict-via-common-ancestor.py \
-            --tree {input.tree} \
-            --strains {input.strains} \
-            --output-tree {output.tree} \
-            --output-metadata {output.node_data}
-        """
 
 def assert_expected_config(w):
     try:
@@ -135,9 +112,9 @@ rule add_metadata_columns_to_show_non_inferred_values:
     that function's not visible to this .smk file so would require deeper refactoring.
     """
     input:
-        metadata = "results/{subtype}/metadata-with-clade.tsv",
+        metadata = "results/{subtype}/{segment}/{time}/metadata_intermediate.tsv"
     output:
-        metadata = "results/{subtype}/{segment}/{time}/metadata-with-clade-and-non-inferred-values.tsv",
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv"
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
         segment="genome",
@@ -149,4 +126,25 @@ rule add_metadata_columns_to_show_non_inferred_values:
     shell:
         """
         cat {input.metadata} | csvtk mutate -t -f {params.old_column} -n {params.new_column} > {output.metadata}
+        """
+
+ruleorder: add_metadata_columns_to_show_non_inferred_values > filter
+
+rule prune_tree:
+    input:
+        tree = "results/{subtype}/{segment}/{time}/tree.nwk",
+        strains = "auspice/avian-flu_h5n1-cattle-outbreak_genome.json",
+    output:
+        tree = "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk",
+        node_data = "results/{subtype}/{segment}/{time}/outbreak-clade-strains-in-genome-tree.json",
+    wildcard_constraints:
+        subtype="h5n1-cattle-outbreak",
+        time="default",
+    shell:
+        """
+        python3 scripts/restrict-via-common-ancestor.py \
+            --tree {input.tree} \
+            --strains {input.strains} \
+            --output-tree {output.tree} \
+            --output-metadata {output.node_data}
         """

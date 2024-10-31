@@ -161,14 +161,8 @@ def metadata_by_wildcards(wildcards):
     # H5 builds have extra clade-level metadata added to the metadata TSV.
     # We may move this to a node-data JSON which would simplify the snakemake logic
     # a bit -- see <https://github.com/nextstrain/avian-flu/issues/25>
-    if wildcards.subtype in ("h5n1", "h5nx"):
+    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
         return "results/{subtype}/metadata-with-clade.tsv"
-    # cattle-flu.smk will make its own modifications as needed
-    elif wildcards.subtype=="h5n1-cattle-outbreak":
-        if wildcards.segment=="genome":
-            return "results/{subtype}/{segment}/default/metadata-with-clade-and-non-inferred-values.tsv"
-        else:
-            return "results/{subtype}/metadata-with-clade.tsv"
     else:
         return "results/{subtype}/metadata.tsv",
 

@@ -1,0 +1,64 @@
+# Ordering taken from <https://github.com/nextstrain/ncov/blob/80c06c15f0669c5990e0cc03628deeeedca7b720/defaults/color_ordering.tsv>
+division	American Samoa
+division	Hawaii
+division	Alaska
+division	Oregon
+division	Washington
+division	California
+division	Nevada
+division	Idaho
+division	Utah
+division	Arizona
+division	Montana
+division	Wyoming
+division	New Mexico
+division	Colorado
+division	North Dakota
+division	South Dakota
+division	Nebraska
+division	Texas
+division	USA
+division	Kansas
+division	North America
+division	Oklahoma
+division	Minnesota
+division	Iowa
+division	Louisiana
+division	Arkansas
+division	Missouri
+division	Mississippi
+division	Wisconsin
+division	Illinois
+division	Alabama
+division	Tennessee
+division	Indiana
+division	Kentucky
+division	Michigan
+division	Georgia
+division	Ohio
+division	Florida
+division	South Carolina
+division	West Virginia
+division	North Carolina
+division	Virginia
+division	Pennsylvania
+division	Washington DC
+division	Maryland
+division	Delaware
+division	New Jersey
+division	New York
+division	Connecticut
+division	Vermont
+division	Massachusetts
+division	New Hampshire
+division	Rhode Island
+division	Maine
+division	Puerto Rico
+division	Virgin Islands
+division	Guam
+division	Northern Mariana Islands
+#
+#
+#
+data_source	genbank
+data_source	sra-via-andersen-lab

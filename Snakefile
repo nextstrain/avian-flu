@@ -1,15 +1,11 @@
 # constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
 wildcard_constraints:
-    subtype = "[^_]+",
-    segment = "[^_]+",
-    time = "[^_]+",
+    subtype = "[^_/]+",
+    segment = "[^_/]+",
+    time = "[^_/]+",
 
 # defined before extra rules `include`d as they reference this constant
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
-
-
-for rule_file in config.get('custom_rules', []):
-    include: rule_file
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
@@ -161,14 +157,8 @@ def metadata_by_wildcards(wildcards):
     # H5 builds have extra clade-level metadata added to the metadata TSV.
     # We may move this to a node-data JSON which would simplify the snakemake logic
     # a bit -- see <https://github.com/nextstrain/avian-flu/issues/25>
-    if wildcards.subtype in ("h5n1", "h5nx"):
+    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
         return "results/{subtype}/metadata-with-clade.tsv"
-    # cattle-flu.smk will make its own modifications as needed
-    elif wildcards.subtype=="h5n1-cattle-outbreak":
-        if wildcards.segment=="genome":
-            return "results/{subtype}/{segment}/default/metadata-with-clade-and-non-inferred-values.tsv"
-        else:
-            return "results/{subtype}/metadata-with-clade.tsv"
     else:
         return "results/{subtype}/metadata.tsv",
 
@@ -281,8 +271,12 @@ rule filter:
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered.fasta",
         strains = "results/{subtype}/{segment}/{time}/filtered.txt",
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
     params:
         args = _filter_params,
+    wildcard_constraints:
+        # The genome build has a different approach to filtering (see cattle-flu.smk)
+        segment="(?!genome)[^_/]+"
     shell:
         """
         augur filter \
@@ -291,6 +285,7 @@ rule filter:
             --exclude {input.exclude} \
             --output-sequences {output.sequences} \
             --output-strains {output.strains} \
+            --output-metadata {output.metadata} \
             {params.args}
         """
 
@@ -359,7 +354,7 @@ rule refine:
     input:
         tree = rules.tree.output.tree,
         alignment = rules.align.output,
-        metadata = metadata_by_wildcards,
+        metadata = rules.filter.output.metadata,
     output:
         tree = "results/{subtype}/{segment}/{time}/tree.nwk",
         node_data = "results/{subtype}/{segment}/{time}/branch-lengths.json"
@@ -463,7 +458,7 @@ def traits_params(wildcards):
 rule traits:
     input:
         tree = refined_tree,
-        metadata = metadata_by_wildcards,
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
     output:
         node_data = "results/{subtype}/{segment}/{time}/traits.json",
     params:
@@ -553,6 +548,15 @@ rule auspice_config:
         with open(output.auspice_config, 'w') as fh:
             json.dump(auspice_config, fh, indent=2)
 
+rule colors:
+    input:
+        colors = files.colors,
+    output:
+        colors = "results/{subtype}/{segment}/{time}/colors.tsv",
+    shell:
+        """
+        cp {input.colors} {output.colors}
+        """
 
 rule export:
     """
@@ -561,9 +565,9 @@ rule export:
     """
     input:
         tree = refined_tree,
-        metadata = metadata_by_wildcards,
+        metadata = rules.filter.output.metadata,
         node_data = export_node_data_files,
-        colors = files.colors,
+        colors = "results/{subtype}/{segment}/{time}/colors.tsv",
         lat_longs = files.lat_longs,
         auspice_config = rules.auspice_config.output.auspice_config,
         description = files.description
@@ -633,3 +637,7 @@ rule clean:
         "auspice"
     shell:
         "rm -rfv {params}"
+
+
+for rule_file in config.get('custom_rules', []):
+    include: rule_file

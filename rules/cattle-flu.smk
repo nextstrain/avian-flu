@@ -9,7 +9,7 @@ rule filter_segments_for_genome:
     # distinguish it when reading the code. 
     input:
         sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
-        metadata = "results/{subtype}/metadata-with-clade.tsv",
+        metadata = "results/{subtype}/metadata-with-clade.tsv", # TODO: use a function here instead of hardcoding
         include = config['include_strains'],
         exclude = config['dropped_strains'],
     output:
@@ -78,24 +78,21 @@ rule join_segments:
             --output {output.alignment}
         """
 
-rule prune_tree:
+rule genome_metadata:
     input:
-        tree = "results/{subtype}/{segment}/{time}/tree.nwk",
-        strains = "auspice/avian-flu_h5n1-cattle-outbreak_genome.json",
+        sequences = "results/{subtype}/{segment}/{time}/aligned.fasta",
+        metadata = metadata_by_wildcards,
     output:
-        tree = "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk",
-        node_data = "results/{subtype}/{segment}/{time}/outbreak-clade-strains-in-genome-tree.json",
+        metadata = temp("results/{subtype}/{segment}/{time}/metadata_intermediate.tsv")
     wildcard_constraints:
-        subtype="h5n1-cattle-outbreak",
-        time="default",
+        subtype = 'h5n1-cattle-outbreak',
+        segment = 'genome',
+        time = 'default',
     shell:
         """
-        python3 scripts/restrict-via-common-ancestor.py \
-            --tree {input.tree} \
-            --strains {input.strains} \
-            --output-tree {output.tree} \
-            --output-metadata {output.node_data}
+        augur filter --metadata {input.metadata} --sequences {input.sequences} --output-metadata {output.metadata}
         """
+
 
 def assert_expected_config(w):
     try:
@@ -115,9 +112,9 @@ rule add_metadata_columns_to_show_non_inferred_values:
     that function's not visible to this .smk file so would require deeper refactoring.
     """
     input:
-        metadata = "results/{subtype}/metadata-with-clade.tsv",
+        metadata = "results/{subtype}/{segment}/{time}/metadata_intermediate.tsv"
     output:
-        metadata = "results/{subtype}/{segment}/{time}/metadata-with-clade-and-non-inferred-values.tsv",
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv"
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
         segment="genome",
@@ -130,3 +127,53 @@ rule add_metadata_columns_to_show_non_inferred_values:
         """
         cat {input.metadata} | csvtk mutate -t -f {params.old_column} -n {params.new_column} > {output.metadata}
         """
+
+ruleorder: add_metadata_columns_to_show_non_inferred_values > filter
+
+rule prune_tree:
+    input:
+        tree = "results/{subtype}/{segment}/{time}/tree.nwk",
+        strains = "auspice/avian-flu_h5n1-cattle-outbreak_genome.json",
+    output:
+        tree = "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk",
+        node_data = "results/{subtype}/{segment}/{time}/outbreak-clade-strains-in-genome-tree.json",
+    wildcard_constraints:
+        subtype="h5n1-cattle-outbreak",
+        time="default",
+    shell:
+        """
+        python3 scripts/restrict-via-common-ancestor.py \
+            --tree {input.tree} \
+            --strains {input.strains} \
+            --output-tree {output.tree} \
+            --output-metadata {output.node_data}
+        """
+
+rule colors_genome:
+    # TODO: add these input files / params to the config YAML. The config YAML must also
+    # define the concept of whether this rule should run so this isn't trivial and is
+    # thus left as a to-do
+    input:
+        metadata = "results/{subtype}/genome/{time}/metadata.tsv", # Always use the genome metadata, even for segment builds
+        ordering = "config/h5n1-cattle-outbreak/color_ordering.tsv",
+        schemes = "config/h5n1-cattle-outbreak/color_schemes.tsv",
+        colors = files.colors,
+    output:
+        colors = "results/{subtype}/{segment}/{time}/colors.tsv",
+    params:
+        duplications = "division=division_metadata",
+    wildcard_constraints:
+        subtype="h5n1-cattle-outbreak",
+        time="default",
+    shell:
+        """
+        cp {input.colors} {output.colors} && \
+        python3 scripts/assign-colors.py \
+            --metadata {input.metadata} \
+            --ordering {input.ordering} \
+            --color-schemes {input.schemes} \
+            --duplications {params.duplications} \
+        >> {output.colors}        
+        """
+
+ruleorder: colors_genome > colors

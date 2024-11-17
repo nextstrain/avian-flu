@@ -15,6 +15,28 @@ A/domesticcat/Poland/H249/2023
 A/domesticcat/Poland/H253/2023
 A/domesticcat/Poland/H248/2023
 A/domesticcat/Poland/H247/2023
+A/Washington/240/2024
+A/Washington/239/2024
+A/Washington/247/2024
+A/California/150/2024
+A/CacklingGoose/BritishColumbia/AIVPHL2533/2024
+A/CacklingGoose/BritishColumbia/AIVPHL2534/2024
+A/CacklingGoose/BritishColumbia/AIVPHL2535/2024
+A/CacklingGoose/BritishColumbia/AIVPHL2540/2024
+A/CacklingGoose/BritishColumbia/AIVPHL2541/2024
+A/SnowGoose/BritishColumbia/AIVPHL2538/2024
+A/CanadaGoose/BritishColumbia/AIVPHL2531/2024
+A/CanadaGoose/BritishColumbia/AIVPHL2530/2024
+A/CanadaGoose/BritishColumbia/AIVPHL2528/2024
+A/GreenWingedTeal/BritishColumbia/AIVPHL2526/2024
+A/CanadaGoose/BritishColumbia/AIVPHL2524/2024
+A/RedTailedHawk/BritishColumbia/AIVPHL2513/2024
+A/British_Columbia/PHL-2032/2024
+A/Chicken/BC/FAV-0285-1/2024
+A/Chicken/BC/FAV-0268-1/2024
+A/Chicken/BC/FAV-0266-1/2024
+A/Turkey/BC/FAV-0267-1/2024
+
 
 # US dairy cattle outbreak
 # Cattle sequences
@@ -303,7 +325,6 @@ A/pigeon/Texas/24008765001/2024
 A/raccoon/NewMexico/24009496002/2024
 A/skunk/Montana/24007939001/2024
 A/skunk/NewMexico/24006483001/2024
-A/skunk/Utah/24008032004/2024
 A/skunk/Washington/24005959001/2024
 A/skunk/Washington/24005959002/2024
 A/skunk/Washington/24005959003/2024

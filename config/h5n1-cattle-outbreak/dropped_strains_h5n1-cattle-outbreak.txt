@@ -197,6 +197,8 @@ A/Turkey/USA/24-007379-002-original/2024
 A/turkeyvulture/California/24-007419-001/2024
 A/TurkeyVulture/USA/24-007419-001-original/2024
 A/Washington/240/2024
+A/Washington/239/2024
+A/Washington/255/2024
 A/Washington/UW32495/2024
 A/westerngull/California/24-004708-001/2024
 A/WesternGull/USA/24-004708-001-original/2024

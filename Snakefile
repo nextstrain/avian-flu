@@ -6,6 +6,7 @@ wildcard_constraints:
 
 # defined before extra rules `include`d as they reference this constant
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
+#SUBTYPES = ["h5n1", "h5nx", "h7n9", "h9n2"]
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
@@ -46,6 +47,9 @@ def collect_builds():
 rule all:
     input:
         auspice_json = collect_builds()
+        #sequences = expand("results/{subtype}/{segment}/sequences.fasta", segment=SEGMENTS, subtype=SUBTYPES),
+        #metadata = expand("results/{subtype}/metadata.tsv", segment=SEGMENTS, subtype=SUBTYPES)
+
 
 # This must be after the `all` rule above since it depends on its inputs
 include: "rules/deploy.smk"

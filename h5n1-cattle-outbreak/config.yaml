@@ -71,12 +71,12 @@ refine:
     "*/genome/*": 3
     "*/*/*": false
 
-  root: false
-
-  # For the genome only we use the closest outgroup as the root
-  # P.S. Make sure this strain is force included via augur filter --include
-  # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
-  genome_root: A/skunk/NewMexico/24-006483-001/2024
+  root:
+    # For the genome only we use the closest outgroup as the root
+    # P.S. Make sure this strain is force included via augur filter --include
+    # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
+    "*/genome/*": A/skunk/NewMexico/24-006483-001/2024
+    "*/*/*": false
 
   segment_lengths:
     "*/pb2/*": 2341

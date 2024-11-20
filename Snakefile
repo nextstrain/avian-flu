@@ -484,13 +484,6 @@ rule tree:
         """
 
 
-def refine_root(wildcards):
-    # TODO XXX - can we simplify this?
-    root = resolve_config_value(['refine', 'genome_root'], wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value(['refine', 'root'], wildcards)
-    return f"--root {root}" if root else ""
-
 rule refine:
     message:
         """
@@ -511,7 +504,7 @@ rule refine:
         date_inference = config['refine']['date_inference'],
         clock_rates = refine_clock_rates,
         clock_filter = refine_clock_filter,
-        root = refine_root,
+        root = lambda w: f"--root {resolve_config_value(['refine', 'root'], w)}" if resolve_config_value(['refine', 'root'], w) else ''
     shell:
         """
         augur refine \

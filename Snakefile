@@ -661,14 +661,12 @@ def export_node_data_files(wildcards):
 def additional_export_config(wildcards):
     args = ""
 
-    title_overrides = resolve_config_value(['export', 'genome_title'], wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value(['export', 'title'], wildcards)
-    if title_overrides:
-        args += ("--title '" +
-            title_overrides.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time) +
-            "'")
-
+    title = resolve_config_value(['export', 'title'], wildcards)
+    if title:
+        # Config defined title strings may include wildcards to be expanded
+        title = title.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time)
+        args += f"--title {title!r}"
+        
     return args
 
 rule auspice_config:

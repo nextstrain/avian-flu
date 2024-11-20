@@ -119,6 +119,7 @@ traits:
   # all builds - # TODO XXX
   confidence: true
 
-export: # TODO XXX
-  genome_title: Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
-  title: Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)
+export:
+  title:
+    "*/genome/*": Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+    "*/*/*": Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)

@@ -77,6 +77,64 @@ def resolve_config_path(path):
             f"\t3. {CURRENT_BASEDIR} (where the main avian-flu snakefile is)\n")
     return resolve
 
+def resolve_config_value(rule_parts, wildcards, sep="/"):
+    """
+    Resolve a config value defined by the *rule_parts of the config,
+    e.g. rule_parts = ['filter', 'min_length'] then we expect a scalar or
+    a dictionary to be present at config['filter']['min_length'].
+
+    If a scalar then that value is returned, i.e. it's always the same no matter
+    what the wildcards are.
+
+    If a dictionary we search it for the relevant value by finding the closest matching
+    key once wildcards have been considered. For instance in a three-tiered wildcard pipeline
+    such as this with subtype, segment and time we interpret these as ordered in specificity.
+    For instance, if only one wildcard value is specified in the config (the others are '*')
+    then matching subtype is more specific than segment. Given example 
+    wildcard values of {subtype=h5nx, segment=pb2, time=2y} then we have a search order of:
+    - 'h5nx/pb2/2y'   ─ all 3 wildcard values specified
+    - 'h5nx/pb2/*'    ┐
+    - 'h5nx/*/2y'     ├ 2/3 wildcard values specified
+    - '*/pb2/2y'      ┘
+    - 'h5nx/*/*'      ┐
+    - '*/pb2/*'       ├ 1/3 wildcard values specified
+    - '*/*/2y'        ┘
+    - '*/*/*'         ─ default / fall-back
+    and the first key present in the config is used.
+    """
+    try:
+        config_lookup = config
+        for i,rule_key in enumerate(rule_parts): # or use functools.reduce etc
+            config_lookup = config_lookup[rule_key]
+    except KeyError:
+        raise InvalidConfigError('Config missing entire entry for config'+''.join(['["'+rule_parts[j]+'""]' for j in range(0,i+1)]))
+
+    if any([isinstance(config_lookup, t) for t in [float, int, bool, str]]):
+        return config_lookup
+
+    if not isinstance(config_lookup, dict):
+        raise InvalidConfigError(f"ERROR: config under {'.'.join(rule_parts)} must be a scalar value or a dictionary")
+
+    wild_keys = ['subtype', 'segment', 'time'] # workflow specific
+    search_keys = [                            # workflow independent, as long as there are 3 or fewer wildcard categories
+        sep.join([wildcards[k] for k in wild_keys]),
+        *([sep.join(['*' if i==k else wildcards[key] for k,key in enumerate(wild_keys)])
+            for i in range(len(wild_keys)-1, -1, -1)] if len(wild_keys)>=2 else []),
+        *([sep.join(['*' if i!=k else wildcards[key] for k,key in enumerate(wild_keys)])
+            for i in range(0, len(wild_keys))] if len(wild_keys)==3 else []),
+        sep.join(['*']*len(wild_keys))
+    ]
+
+    for key in search_keys:
+        if key in config_lookup:
+            return config_lookup[key]
+    msg  =  'Config structure incorrect or incomplete for config'+''.join(['["'+rule_parts[j]+'"]' for j in range(0,i+1)])
+    msg += f'\n\tThe dictionary is missing a matching key for the current target of {search_keys[0]!r}, or a fuzzy match (i.e. using "*" placeholders)'
+    msg +=  '\n\tP.S. If you want to use a single value across all builds then set a scalar value (number, string, boolean)'
+    raise InvalidConfigError(msg)
+
+
+
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
 # (1) Filter the HA segment as normal plus filter to those strains with 8 segments
@@ -156,6 +214,7 @@ files = rules.files.params
 
 
 def subtypes_by_subtype_wildcard(wildcards):
+    # TODO - shift this to config
     db = {
         'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
         'h5n1': ['h5n1'],
@@ -246,46 +305,46 @@ def metadata_by_wildcards(wildcards):
     else:
         return "results/{subtype}/metadata.tsv",
 
-
-def get_config(rule_name, rule_key, wildcards, segment=None, fallback="FALLBACK"):
-    assert rule_name in config, f"Config missing top-level {rule_name} key"
-    assert rule_key in config[rule_name], f"Config missing entry for {rule_name}.{rule_key}"
-    try:
-        return config[rule_name][rule_key][wildcards.subtype][wildcards.time]
-    except KeyError:
-        assert fallback in config[rule_name][rule_key], f"config.{rule_name!r}.{rule_key!r} either needs " \
-            f"an entry for {wildcards.subtype!r}.{wildcards.time!r} added or a (default) {fallback!r} key."
-        return config[rule_name][rule_key][fallback]
-
 def refine_clock_rates(w):
-    info = get_config('refine', 'clock_rates', w)
 
     if w.segment == 'genome':
+        # TODO XXX - can this be part of cattle-flu.smk?
         # calculate the genome rate via a weighted average of the segment rates
-        assert 'genome' not in info, ("This snakemake pipeline is currently set up to calculate the genome clock rate "
-            "based on the segment rates, however you have provided a genome rate in the config.")
+
+        # Sanity check: check that the config hasn't (mistakenly?) set a genome rate
         try:
-            segment_lengths= get_config('refine', 'segment_lengths', w)
-        except AssertionError as e:
-            # py11 brings e.add_note() which is nicer
-            e.args = (*e.args, "NOTE: For segment=genome we require the segment_lengths to be defined as we use them to calculate the clock rate")
-            raise
-        mean = sum([info[seg][0]*length for seg,length in segment_lengths.items()])/sum(segment_lengths.values())
+            info = resolve_config_value(['refine', 'clock_rates'], w)
+        except InvalidConfigError as e:
+            pass # this is behaviour we expect - i.e. no clock rates should be provided for genome
+        else:
+            raise InvalidConfigError("config['refine']['clock_rates'] should not contain a key which can be used for 'genome' builds as this is calculated by the workflow")
+
+        segment_lengths = [
+            resolve_config_value(['refine', 'segment_lengths'], wildcards)
+            for wildcards in
+            [{"subtype": w.subtype, "time": w.time, "segment": segment} for segment in SEGMENTS]
+        ]
+        clock_rates = [
+            resolve_config_value(['refine', 'clock_rates'], wildcards)
+            for wildcards in
+            [{"subtype": w.subtype, "time": w.time, "segment": segment} for segment in SEGMENTS]
+        ]
+        for rates in clock_rates:
+            assert isinstance(rates, list) and len(rates)==2, "The clock rates for each segment must be a list of (rate, std-dev), not {rates!r}"
+
+        mean = sum([length*rate[0] for length,rate in zip(segment_lengths, clock_rates)]) / sum(segment_lengths)
         stdev = mean/2
         return f"--clock-rate {mean} --clock-std-dev {stdev}"
 
-    assert w.segment in info, 'config.refine.clock_rates: data must be provided for each segment. Use "" for inference.'
-    if info[w.segment] == "":
+    info = resolve_config_value(['refine', 'clock_rates'], w)
+    if info == "":
         return ""
 
-    assert isinstance(info[w.segment], list), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    assert len(info[w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"
+    assert isinstance(info, list) and len(info)==2, "The clock rates for {w.subtype!r}/{w.time!r}/{w.segment!r} must be a list of (rate, std-dev), not {info!r}"
+    return f"--clock-rate {info[0]} --clock-std-dev {info[1]}"
 
 def refine_clock_filter(w):
-    filter = get_config('refine', 'genome_clock_filter_iqd', w) \
-        if w.segment=='genome' \
-        else get_config('refine', 'clock_filter_iqd', w)
+    filter = resolve_config_value(['refine', 'clock_filter_iqd'], w)
     return f"--clock-filter-iqd {filter}" if filter else ""
 
 
@@ -328,7 +387,7 @@ def _filter_params(wildcards, input, output, threads, resources):
             raise Exception("A strains input should only be present for SAME_STRAINS + HA!")
         return f"--exclude-all --include {input.strains} {input.include}"
 
-    exclude_where = get_config('filter', 'exclude_where', wildcards)
+    exclude_where = resolve_config_value(['filter', 'exclude_where'], wildcards)
     # If SAME_STRAINS (and due to the above conditional we have the HA segment at this point)
     # then we want to restrict to strains present in all 8 segments. Note that force-included
     # strains may not have all segments, but that's preferable to filtering them out.
@@ -338,14 +397,14 @@ def _filter_params(wildcards, input, output, threads, resources):
 
     cmd = ""
 
-    group_by_value = get_config('filter', 'group_by', wildcards)
+    group_by_value = resolve_config_value(['filter', 'group_by'], wildcards)
     cmd += f" --group-by {group_by_value}" if group_by_value else ""
 
     cmd += f" --subsample-max-sequences {config['target_sequences_per_tree']}"
-    cmd += f" --min-date {get_config('filter', 'min_date', wildcards)}"
+    cmd += f" --min-date {resolve_config_value(['filter', 'min_date'], wildcards)}"
     cmd += f" --include {input.include}"
     cmd += f" --exclude-where {exclude_where}"
-    cmd += f" --min-length {get_config('filter', 'min_length', wildcards)[wildcards.segment]}"
+    cmd += f" --min-length {resolve_config_value(['filter', 'min_length'], wildcards)}"
     cmd += f" --non-nucleotide"
     return cmd
 
@@ -426,9 +485,10 @@ rule tree:
 
 
 def refine_root(wildcards):
-    root = get_config('refine', 'genome_root', wildcards) \
+    # TODO XXX - can we simplify this?
+    root = resolve_config_value(['refine', 'genome_root'], wildcards) \
         if wildcards.segment=='genome' \
-        else get_config('refine', 'root', wildcards)
+        else resolve_config_value(['refine', 'root'], wildcards)
     return f"--root {root}" if root else ""
 
 rule refine:
@@ -481,9 +541,9 @@ def refined_tree(w):
     return "results/{subtype}/{segment}/{time}/tree.nwk",
 
 def ancestral_root_seq(wildcards):
-    root_seq = get_config('ancestral', 'genome_root_seq', wildcards) \
+    root_seq = resolve_config_value(['ancestral', 'genome_root_seq'], wildcards) \
         if wildcards.segment=='genome' \
-        else get_config('ancestral', 'root_seq', wildcards)
+        else resolve_config_value(['ancestral', 'root_seq'], wildcards)
     if not root_seq:
         return ""
     return f"--root-sequence {resolve_config_path(root_seq)(wildcards)}"
@@ -527,15 +587,15 @@ rule translate:
         """
 
 def traits_params(wildcards):
-    columns = get_config('traits', 'genome_columns', wildcards) \
+    columns = resolve_config_value(['traits', 'genome_columns'], wildcards) \
         if wildcards.segment=='genome' \
-        else get_config('traits', 'columns', wildcards)
+        else resolve_config_value(['traits', 'columns'], wildcards)
 
-    bias = get_config('traits', 'genome_sampling_bias_correction', wildcards) \
+    bias = resolve_config_value(['traits', 'genome_sampling_bias_correction'], wildcards) \
         if wildcards.segment=='genome' \
-        else get_config('traits', 'sampling_bias_correction', wildcards)
+        else resolve_config_value(['traits', 'sampling_bias_correction'], wildcards)
 
-    confidence = get_config('traits', 'confidence', wildcards)
+    confidence = resolve_config_value(['traits', 'confidence'], wildcards)
 
     args = f"--columns {columns}"
     if bias:
@@ -601,9 +661,9 @@ def export_node_data_files(wildcards):
 def additional_export_config(wildcards):
     args = ""
 
-    title_overrides = get_config('export', 'genome_title', wildcards) \
+    title_overrides = resolve_config_value(['export', 'genome_title'], wildcards) \
         if wildcards.segment=='genome' \
-        else get_config('export', 'title', wildcards)
+        else resolve_config_value(['export', 'title'], wildcards)
     if title_overrides:
         args += ("--title '" +
             title_overrides.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time) +
@@ -730,7 +790,8 @@ rule clean:
     shell:
         "rm -rfv {params}"
 
-
+# Add in additional rules at/towards the end of the Snakefile so that
+# they have access to functions and values declared above
 for rule_file in config.get('custom_rules', []):
     # Relative custom rule paths in the config are expected to be relative to the analysis (working) directory
     include: os.path.join(os.getcwd(), rule_file)

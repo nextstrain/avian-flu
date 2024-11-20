@@ -46,90 +46,79 @@ description: config/{subtype}/description_{subtype}.md
 #### Rule-specific parameters ####
 filter:
   min_length:
-    FALLBACK:
-      pb2: 2100
-      pb1: 2100
-      pa: 2000
-      ha: 1600
-      np: 1400
-      na: 1270
-      mp: 900
-      ns: 800
+    "*/pb2/*": 2100 # Note: could use "h5n1-cattle-outbreak/pb2/default: 2100" if desired
+    "*/pb1/*": 2100
+    "*/pa/*": 2000
+    "*/ha/*": 1600
+    "*/np/*": 1400
+    "*/na/*": 1270
+    "*/mp/*": 900
+    "*/ns/*": 800
 
-  min_date:
-    FALLBACK: 2024
+  min_date: 2024
 
-  group_by:
-    FALLBACK: false # no grouping during filter
+  group_by: false # no grouping during filter
 
   exclude_where:
-    FALLBACK: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
+    host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
 
 
 refine:
   coalescent: const
   date_inference: marginal
 
-  genome_clock_filter_iqd:
-    FALLBACK: 3
   clock_filter_iqd:
-    FALLBACK: false
+    "*/genome/*": 3
+    "*/*/*": false
 
-  root:
-    FALLBACK: false
+  root: false
 
   # For the genome only we use the closest outgroup as the root
   # P.S. Make sure this strain is force included via augur filter --include
   # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
-  genome_root:
-      FALLBACK: A/skunk/NewMexico/24-006483-001/2024
+  genome_root: A/skunk/NewMexico/24-006483-001/2024
 
   segment_lengths:
-    FALLBACK:
-      {'pb2': 2341, 'pb1': 2341, 'pa': 2233, 'ha': 1760, 'np': 1565, 'na': 1458, 'mp': 1027, 'ns': 865}
-
-  __clock_std_dev:  &clock_std_dev  0.00211 # YAML anchor so we can reference this value below
+    "*/pb2/*": 2341
+    "*/pb1/*": 2341
+    "*/pa/*": 2233
+    "*/ha/*": 1565
+    "*/np/*": 1400
+    "*/na/*": 1458
+    "*/mp/*": 1027
+    "*/ns/*": 865
 
   clock_rates:
-    FALLBACK:
-      # The rates for the 8 segments are taken from the GISAID H5N1/2y config
-      pb2: [0.00287, *clock_std_dev]
-      pb1: [0.00264, *clock_std_dev]
-      pa: [0.00248, *clock_std_dev]
-      ha: [0.00455, *clock_std_dev]
-      np: [0.00252, *clock_std_dev]
-      na: [0.00349, *clock_std_dev]
-      mp: [0.00191, *clock_std_dev]
-      ns: [0.00249, *clock_std_dev]
-      # the genome clock rate is calculated by a function in the snakemake pipeline
-      # using the segment rates weighted by their lengths
+    # The rates for the 8 segments are taken from the GISAID H5N1/2y config
+    "*/pb2/*": [0.00287, &clock_std_dev 0.00211]
+    "*/pb1/*": [0.00264, *clock_std_dev]
+    "*/pa/*": [0.00248, *clock_std_dev]
+    "*/ha/*": [0.00455, *clock_std_dev]
+    "*/np/*": [0.00252, *clock_std_dev]
+    "*/na/*": [0.00349, *clock_std_dev]
+    "*/mp/*": [0.00191, *clock_std_dev]
+    "*/ns/*": [0.00249, *clock_std_dev]
+    # NOTE:
+    # the genome clock rate is calculated by a function in the snakemake pipeline
+    # using the segment rates weighted by their lengths
 
 ancestral:
   inference: joint
-  root_seq:
-    FALLBACK: false
-  genome_root_seq:
-    FALLBACK: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
+  root_seq: false
+  genome_root_seq: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
 
 traits:
-  # genome build has different parameters...
-  genome_columns:
-    FALLBACK: division
-  genome_sampling_bias_correction:
-    FALLBACK: 5
+  # genome build has different parameters... - # TODO XXX
+  genome_columns: division
+  genome_sampling_bias_correction: 5
 
-  # segment builds:
-  columns:
-    FALLBACK: region country # same as GISAID H5N1 builds
-  sampling_bias_correction:
-    FALLBACK: false
+  # segment builds - # TODO XXX
+  columns: region country # same as GISAID H5N1 builds
+  sampling_bias_correction: false
 
-  # all builds
-  confidence: 
-    FALLBACK: true
+  # all builds - # TODO XXX
+  confidence: true
 
-export:
-  genome_title:
-    FALLBACK: Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
-  title:
-    FALLBACK: Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)
+export: # TODO XXX
+  genome_title: Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+  title: Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)

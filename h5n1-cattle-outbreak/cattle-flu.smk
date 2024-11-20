@@ -105,7 +105,7 @@ def assert_expected_config(w):
         # TODO: once we refactor things we should use `get_config()` here
         # see <https://github.com/nextstrain/avian-flu/pull/100#discussion_r1823047047>
         # but currently this snakefile doesn't have access to that function.
-        assert len(config['traits']['genome_columns'])==1 and config['traits']['genome_columns']['FALLBACK']=="division"
+        assert config['traits']['genome_columns']=='division'
     except Exception as err:
         raise Exception("Rule add_metadata_columns_to_show_non_inferred_values expected a certain format for config['traits'] that has since changed") from err
 
@@ -160,12 +160,12 @@ rule prune_tree:
 rule colors_genome:
     # TODO: add these input files / params to the config YAML. The config YAML must also
     # define the concept of whether this rule should run so this isn't trivial and is
-    # thus left as a to-do
+    # thus left as a to-do. Once they are in the YAML we should switch to `resolve_config_path`
     input:
         metadata = "results/{subtype}/genome/{time}/metadata.tsv", # Always use the genome metadata, even for segment builds
-        ordering = "config/h5n1-cattle-outbreak/color_ordering.tsv",
-        schemes = "config/h5n1-cattle-outbreak/color_schemes.tsv",
-        colors = files.colors,
+        ordering = lambda w: resolve_config_path("config/h5n1-cattle-outbreak/color_ordering.tsv", w),
+        schemes = lambda w: resolve_config_path("config/h5n1-cattle-outbreak/color_schemes.tsv", w),
+        colors = lambda w: resolve_config_path(files.colors, w)
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
@@ -177,7 +177,7 @@ rule colors_genome:
     shell:
         r"""
         cp {input.colors} {output.colors} && \
-        python3 {params.script} \ \
+        python3 {params.script} \
             --metadata {input.metadata} \
             --ordering {input.ordering} \
             --color-schemes {input.schemes} \

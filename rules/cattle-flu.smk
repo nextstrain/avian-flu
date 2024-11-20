@@ -10,8 +10,8 @@ rule filter_segments_for_genome:
     input:
         sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
         metadata = "results/{subtype}/metadata-with-clade.tsv", # TODO: use a function here instead of hardcoding
-        include = config['include_strains'],
-        exclude = config['dropped_strains'],
+        include = lambda w: resolve_config_path(config['include_strains'], w),
+        exclude = lambda w: resolve_config_path(config['dropped_strains'], w),
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta"
     params:
@@ -39,7 +39,11 @@ rule align_segments_for_genome:
     input:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
         # Use the H5N1 reference sequences for alignment
-        reference = lambda w: expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
+        reference = lambda w: [
+            resolve_config_path(expanded, w)
+            for expanded in
+            expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
+        ]
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:
@@ -71,9 +75,11 @@ rule join_segments:
         subtype = 'h5n1-cattle-outbreak',
         segment = 'genome',
         time = 'default',
+    params:
+        script = os.path.join(workflow.basedir, "scripts/join-segments.py")
     shell:
         """
-        python scripts/join-segments.py \
+        python {params.script} \
             --segments {input.alignment} \
             --output {output.alignment}
         """
@@ -140,9 +146,11 @@ rule prune_tree:
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
         time="default",
+    params:
+        script = os.path.join(workflow.basedir, "scripts/restrict-via-common-ancestor.py")
     shell:
-        """
-        python3 scripts/restrict-via-common-ancestor.py \
+        r"""
+        python3 {params.script} \
             --tree {input.tree} \
             --strains {input.strains} \
             --output-tree {output.tree} \
@@ -162,13 +170,14 @@ rule colors_genome:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
         duplications = "division=division_metadata",
+        script = os.path.join(workflow.basedir, "scripts/assign-colors.py")
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
         time="default",
     shell:
-        """
+        r"""
         cp {input.colors} {output.colors} && \
-        python3 scripts/assign-colors.py \
+        python3 {params.script} \ \
             --metadata {input.metadata} \
             --ordering {input.ordering} \
             --color-schemes {input.schemes} \

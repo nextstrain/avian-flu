@@ -99,15 +99,11 @@ rule genome_metadata:
         augur filter --metadata {input.metadata} --sequences {input.sequences} --output-metadata {output.metadata}
         """
 
-
-def assert_expected_config(w):
-    try:
-        # TODO: once we refactor things we should use `get_config()` here
-        # see <https://github.com/nextstrain/avian-flu/pull/100#discussion_r1823047047>
-        # but currently this snakefile doesn't have access to that function.
-        assert config['traits']['genome_columns']=='division'
-    except Exception as err:
-        raise Exception("Rule add_metadata_columns_to_show_non_inferred_values expected a certain format for config['traits'] that has since changed") from err
+def metadata_columns_to_duplicate(wildcards):
+    column = resolve_config_value(['traits', 'columns'], wildcards)
+    assert isinstance(column, str) and ' ' not in column, \
+        "cattle-flu.smk::metadata_columns_to_duplicate: Genome workflow only expects there to be a single column to run `augur traits` on."
+    return [column, column+"_metadata"]
 
 rule add_metadata_columns_to_show_non_inferred_values:
     """
@@ -126,12 +122,10 @@ rule add_metadata_columns_to_show_non_inferred_values:
         segment="genome",
         time="default",
     params:
-        old_column = "division",
-        new_column = "division_metadata",
-        assert_traits = assert_expected_config,
+        columns = lambda w: metadata_columns_to_duplicate(w),
     shell:
         """
-        cat {input.metadata} | csvtk mutate -t -f {params.old_column} -n {params.new_column} > {output.metadata}
+        cat {input.metadata} | csvtk mutate -t -f {params.columns[0]} -n {params.columns[1]} > {output.metadata}
         """
 
 ruleorder: add_metadata_columns_to_show_non_inferred_values > filter
@@ -169,7 +163,7 @@ rule colors_genome:
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
-        duplications = "division=division_metadata",
+        duplications = lambda w: "=".join(metadata_columns_to_duplicate({**w, 'segment': 'genome'})),
         script = os.path.join(workflow.current_basedir, "../scripts/assign-colors.py")
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",

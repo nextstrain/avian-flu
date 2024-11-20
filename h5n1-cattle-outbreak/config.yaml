@@ -108,15 +108,14 @@ ancestral:
   genome_root_seq: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
 
 traits:
-  # genome build has different parameters... - # TODO XXX
-  genome_columns: division
-  genome_sampling_bias_correction: 5
+  columns:
+    "*/genome/*": division
+    "*/*/*": region country  # segment builds are the same as GISAID H5N1 builds
 
-  # segment builds - # TODO XXX
-  columns: region country # same as GISAID H5N1 builds
-  sampling_bias_correction: false
+  sampling_bias_correction:
+    "*/genome/*": 5
+    "*/*/*": false
 
-  # all builds - # TODO XXX
   confidence: true
 
 export:

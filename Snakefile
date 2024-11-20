@@ -587,20 +587,10 @@ rule translate:
         """
 
 def traits_params(wildcards):
-    columns = resolve_config_value(['traits', 'genome_columns'], wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value(['traits', 'columns'], wildcards)
-
-    bias = resolve_config_value(['traits', 'genome_sampling_bias_correction'], wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value(['traits', 'sampling_bias_correction'], wildcards)
-
-    confidence = resolve_config_value(['traits', 'confidence'], wildcards)
-
-    args = f"--columns {columns}"
-    if bias:
+    args = f"--columns {resolve_config_value(['traits', 'columns'], wildcards)}"
+    if bias:=resolve_config_value(['traits', 'sampling_bias_correction'], wildcards):
         args += f" --sampling-bias-correction {bias}"
-    if confidence:
+    if confidence:=resolve_config_value(['traits', 'confidence'], wildcards):
         args += f" --confidence"
     return args
 
@@ -614,7 +604,7 @@ rule traits:
     params:
         info = traits_params,
     shell:
-        """
+        r"""
         augur traits \
             --tree {input.tree} \
             --metadata {input.metadata} \

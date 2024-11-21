@@ -6,7 +6,6 @@ wildcard_constraints:
 
 # defined before extra rules `include`d as they reference this constant
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
-#SUBTYPES = ["h5n1", "h5nx", "h7n9", "h9n2"]
 
 CURRENT_BASEDIR = workflow.current_basedir # TODO XXX store this value here - can't access within functions because workflow.included_stack is empty
 
@@ -170,12 +169,16 @@ sanity_check_config()
 def as_list(x):
     return x if isinstance(x, list) else [x]
 
-def collect_builds():
+def expand_target_patterns():
     """
     iteratively create workflow targets from config.builds for the `all` rule
     you can over-ride this by specifying targets (filenames) on the command line
     """
     targets = []
+
+    if not isinstance(config.get('target_patterns', None), list) and not isinstance(config.get('target_patterns', None), str):
+        raise InvalidConfigError('config["target_patterns"] must be defined (either as a list or a single string)')
+    target_patterns = as_list(config['target_patterns'])
 
     if 'builds' not in config:
         raise InvalidConfigError('config["builds"] is not defined!')
@@ -198,21 +201,18 @@ def collect_builds():
         for subtype in as_list(subconfig['subtype']):
             for segment in as_list(subconfig['segment']):
                 # Some builds (GISAID) have a time component, some (cattle-outbreak) don't
-                if 'time' in subconfig:
-                    for time in as_list(subconfig['time']):
-                        target = "auspice/avian-flu_{subtype}_{segment}_{time}.json".format(subtype=subtype, segment=segment, time=time)
-                else:
-                    target = "auspice/avian-flu_{subtype}_{segment}.json".format(subtype=subtype, segment=segment)
-                if target not in targets:
-                    targets.append(target)
+                for time in (as_list(subconfig['time']) if 'time' in subconfig else [None]):
+                    for target_pattern in target_patterns:
+                        if time is None and '{time}' in target_pattern:
+                            raise InvalidConfigError(f'target pattern {target_pattern!r} specifies time, but config["builds"][{i}] doesn\'t!')
+                        target = target_pattern.format(subtype=subtype, segment=segment, time=time)
+                        if target not in targets:
+                            targets.append(target)
 
     return targets
 
 rule all:
-    input:
-        auspice_json = collect_builds()
-        #sequences = expand("results/{subtype}/{segment}/sequences.fasta", segment=SEGMENTS, subtype=SUBTYPES),
-        #metadata = expand("results/{subtype}/metadata.tsv", segment=SEGMENTS, subtype=SUBTYPES)
+    input: expand_target_patterns()
 
 
 # This must be after the `all` rule above since it depends on its inputs

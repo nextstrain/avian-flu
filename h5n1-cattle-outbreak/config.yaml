@@ -14,6 +14,10 @@ builds:
       - mp
       - ns
 
+# The default target for this build is the Auspice JSON, however config overlays may wish to change this
+# (e.g. to target "intermediate" files instead)
+target_patterns:
+  - "auspice/avian-flu_{subtype}_{segment}.json"
 
 #### Parameters which define the input source ####
 s3_src:

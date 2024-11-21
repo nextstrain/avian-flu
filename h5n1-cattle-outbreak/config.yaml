@@ -1,17 +1,18 @@
-#### Parameters which define which builds to produce via this config ###
+#### Which builds to produce via this config? ###
+# These builds are a combination of two parts: subtype (h5n1-cattle-outbreak)
+# and segment (e.g. ha)
 builds:
-  h5n1-cattle-outbreak: ''
-
-segments:
-  - genome
-  - pb2
-  - pb1
-  - pa
-  - ha
-  - np
-  - na
-  - mp
-  - ns
+  - subtype: h5n1-cattle-outbreak
+    segment:
+      - genome
+      - pb2
+      - pb1
+      - pa
+      - ha
+      - np
+      - na
+      - mp
+      - ns
 
 
 #### Parameters which define the input source ####

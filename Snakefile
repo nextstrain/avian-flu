@@ -77,6 +77,9 @@ def resolve_config_path(path):
             f"\t3. {CURRENT_BASEDIR} (where the main avian-flu snakefile is)\n")
     return resolve
 
+def is_scalar(x):
+    return any([isinstance(x, t) for t in [float, int, bool, str]])
+
 def resolve_config_value(rule_parts, wildcards, sep="/"):
     """
     Resolve a config value defined by the *rule_parts of the config,
@@ -109,7 +112,7 @@ def resolve_config_value(rule_parts, wildcards, sep="/"):
     except KeyError:
         raise InvalidConfigError('Config missing entire entry for config'+''.join(['["'+rule_parts[j]+'""]' for j in range(0,i+1)]))
 
-    if any([isinstance(config_lookup, t) for t in [float, int, bool, str]]):
+    if is_scalar(config_lookup):
         return config_lookup
 
     if not isinstance(config_lookup, dict):
@@ -164,19 +167,45 @@ def sanity_check_config():
 
 sanity_check_config()
 
+def as_list(x):
+    return x if isinstance(x, list) else [x]
+
 def collect_builds():
     """
     iteratively create workflow targets from config.builds for the `all` rule
     you can over-ride this by specifying targets (filenames) on the command line
     """
     targets = []
-    for subtype,times in config.get('builds', {}).items():
-        for segment in config.get('segments', []):
-            if len(times):
-                for time in times:
-                    targets.append(f"auspice/avian-flu_{subtype}_{segment}_{time}.json")
-            else:
-                targets.append(f"auspice/avian-flu_{subtype}_{segment}.json")
+
+    if 'builds' not in config:
+        raise InvalidConfigError('config["builds"] is not defined!')
+    if not isinstance(config['builds'], list):
+        raise InvalidConfigError('config["builds"] must be a list')
+
+    if 'segments' in config:
+        raise InvalidConfigError('config["segments"] is no longer used. Please remove it and encode the target segments within config["builds"]')
+
+    for i,subconfig in enumerate(config['builds']):
+        required_keys = ['subtype', 'segment']
+        optional_keys = ['time']
+        if not isinstance(subconfig, dict):
+            raise InvalidConfigError(f'config["builds"][{i}] must be a dictionary!')
+        if not all([k in subconfig for k in required_keys]):
+            raise InvalidConfigError(f'config["builds"][{i}] must have {", ".join(required_keys)} keys')
+        if not all([isinstance(v, list) or is_scalar(v) for v in subconfig.values()]):
+            raise InvalidConfigError(f'config["builds"][{i}] values must all be scalars or lists')
+    
+        for subtype in as_list(subconfig['subtype']):
+            for segment in as_list(subconfig['segment']):
+                # Some builds (GISAID) have a time component, some (cattle-outbreak) don't
+                if 'time' in subconfig:
+                    for time in as_list(subconfig['time']):
+                        target = "auspice/avian-flu_{subtype}_{segment}_{time}.json".format(subtype=subtype, segment=segment, time=time)
+                else:
+                    target = "auspice/avian-flu_{subtype}_{segment}.json".format(subtype=subtype, segment=segment)
+                if target not in targets:
+                    targets.append(target)
+
     return targets
 
 rule all:

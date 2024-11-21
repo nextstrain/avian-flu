@@ -495,6 +495,105 @@ rule cleavage_site:
             --cleavage_site_sequence {output.cleavage_site_sequences}
         """
 
+rule get_strains_in_alignment:
+    input:
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
+    output:
+        alignment_strains = "results/{subtype}/{segment}/{time}/aligned_strains.txt",
+    shell:
+        """
+        seqkit fx2tab -n -i {input.alignment} | sort -k 1,1 > {output.alignment_strains}
+        """
+
+rule get_shared_strains_in_alignments:
+    input:
+        alignment_strains = expand("results/{{subtype}}/{segment}/{{time}}/aligned_strains.txt", segment=config["segments"]),
+    output:
+        shared_strains = "results/{subtype}/all/{time}/shared_strains_in_alignment.txt",
+    shell:
+        """
+        python3 scripts/intersect_items.py \
+            --items {input.alignment_strains:q} \
+            --output {output.shared_strains}
+        """
+
+rule select_shared_strains_from_alignment_and_sort:
+    input:
+        shared_strains = "results/{subtype}/all/{time}/shared_strains_in_alignment.txt",
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
+    output:
+        alignment = "results/{subtype}/{segment}/{time}/aligned.sorted.fasta",
+    shell:
+        """
+        seqkit grep -f {input.shared_strains} {input.alignment} \
+            | seqkit sort -n > {output.alignment}
+        """
+
+rule calculate_pairwise_distances:
+    input:
+        alignment = "results/{subtype}/{segment}/{time}/aligned.sorted.fasta",
+    output:
+        distances = "results/{subtype}/{segment}/{time}/distances.csv",
+    benchmark:
+        "benchmarks/calculate_pairwise_distances_{subtype}_{segment}_{time}.txt"
+    shell:
+        """
+        pathogen-distance \
+            --alignment {input.alignment} \
+            --output {output.distances}
+        """
+
+rule embed_with_tsne:
+    input:
+        alignments = expand("results/{{subtype}}/{segment}/{{time}}/aligned.sorted.fasta", segment=config["segments"]),
+        distances = expand("results/{{subtype}}/{segment}/{{time}}/distances.csv", segment=config["segments"]),
+    output:
+        embedding = "results/{subtype}/all/{time}/embed_tsne.csv",
+    params:
+        perplexity=config.get("embedding", {}).get("perplexity", 200),
+    benchmark:
+        "benchmarks/embed_with_tsne_{subtype}_{time}.txt"
+    shell:
+        """
+        pathogen-embed \
+            --alignment {input.alignments} \
+            --distance-matrix {input.distances} \
+            --output-dataframe {output.embedding} \
+            t-sne \
+                --perplexity {params.perplexity}
+        """
+
+rule cluster_tsne_embedding:
+    input:
+        embedding = "results/{subtype}/all/{time}/embed_tsne.csv",
+    output:
+        clusters = "results/{subtype}/all/{time}/cluster_embed_tsne.csv",
+    params:
+        label_attribute="tsne_cluster",
+        distance_threshold=1.0,
+    benchmark:
+        "benchmarks/cluster_tsne_embedding_{subtype}_{time}.txt"
+    shell:
+        """
+        pathogen-cluster \
+            --embedding {input.embedding} \
+            --label-attribute {params.label_attribute:q} \
+            --distance-threshold {params.distance_threshold} \
+            --output-dataframe {output.clusters}
+        """
+
+rule convert_embedding_clusters_to_node_data:
+    input:
+        clusters = "results/{subtype}/all/{time}/cluster_embed_tsne.csv",
+    output:
+        node_data = "results/{subtype}/all/{time}/cluster_embed_tsne.json",
+    shell:
+        """
+        python3 scripts/table_to_node_data.py \
+            --table {input.clusters} \
+            --output {output.node_data}
+        """
+
 def export_node_data_files(wildcards):
     nd = [
         rules.refine.output.node_data,
@@ -507,6 +606,10 @@ def export_node_data_files(wildcards):
 
     if wildcards.subtype=="h5n1-cattle-outbreak" and wildcards.segment!='genome':
         nd.append(rules.prune_tree.output.node_data)
+
+    if config.get("embedding"):
+        nd.append(rules.convert_embedding_clusters_to_node_data.output.node_data)
+
     return nd
 
 

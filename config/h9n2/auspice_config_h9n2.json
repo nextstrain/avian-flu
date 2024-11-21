@@ -54,6 +54,21 @@
       "key": "submitting_lab",
       "title": "Submitting Lab",
       "type": "categorical"
+    },
+    {
+      "key": "tsne_x",
+      "title": "t-SNE 1",
+      "type": "continuous"
+    },
+    {
+      "key": "tsne_y",
+      "title": "t-SNE 2",
+      "type": "continuous"
+    },
+    {
+      "key": "tsne_cluster",
+      "title": "t-SNE cluster",
+      "type": "categorical"
     }
   ],
   "geo_resolutions": [
@@ -69,6 +84,7 @@
     "region",
     "country",
     "originating_lab",
-    "submitting_lab"
+    "submitting_lab",
+    "tsne_cluster"
   ]
 }

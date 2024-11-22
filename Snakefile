@@ -416,7 +416,7 @@ def _filter_params(wildcards, input, output, threads, resources):
     group_by_value = resolve_config_value(['filter', 'group_by'], wildcards)
     cmd += f" --group-by {group_by_value}" if group_by_value else ""
 
-    cmd += f" --subsample-max-sequences {config['target_sequences_per_tree']}"
+    cmd += f" --subsample-max-sequences {resolve_config_value(['filter', 'target_sequences_per_tree'], wildcards)}"
     cmd += f" --min-date {resolve_config_value(['filter', 'min_date'], wildcards)}"
     cmd += f" --include {input.include}"
     cmd += f" --exclude-where {exclude_where}"

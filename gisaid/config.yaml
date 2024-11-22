@@ -46,7 +46,6 @@ subtype_lookup:
   h9n2: ['h9n2']
 
 #### Parameters which control large overarching aspects of the build
-target_sequences_per_tree: 3000
 same_strains_per_segment: false
 
 
@@ -68,6 +67,9 @@ description: config/description_gisaid.md
 # There's one exception: If a config value is constant for any and all builds then you
 # can just use a scalar value (number, string, boolean)
 filter: 
+  target_sequences_per_tree:
+    "*/*/*": 3000
+
   min_length:
     "*/pb2/*": 2100
     "*/pb1/*": 2100

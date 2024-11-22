@@ -32,12 +32,6 @@ local_ingest: false
 subtype_lookup:
   h5n1-cattle-outbreak: ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9']
 
-#### Parameters which control large overarching aspects of the build
-# Set a high target_sequences_per_tree to capture all circulating strains, as they will be pruned down
-# as part of the workflow
-target_sequences_per_tree: 10_000
-
-
 #### Config files ####
 
 reference: config/h5n1-cattle-outbreak/reference_{segment}.gb
@@ -53,6 +47,11 @@ description: config/{subtype}/description_{subtype}.md
 
 #### Rule-specific parameters ####
 filter:
+  # Set a high target_sequences_per_tree to capture all circulating strains, as they will be pruned down
+  # as part of the workflow
+  target_sequences_per_tree:
+    "*/*/*": 3000
+
   min_length:
     "*/pb2/*": 2100 # Note: could use "h5n1-cattle-outbreak/pb2/default: 2100" if desired
     "*/pb1/*": 2100

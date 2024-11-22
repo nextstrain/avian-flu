@@ -37,6 +37,13 @@ s3_src:
 local_ingest: false
 # P.S. To use local ingest files, comment out s3_src and change to local_ingest: fauna
 
+# For subtypes defined as build wildcards (e.g. "h5n1", "h5nx"), list out the subtype values
+# that we'll use to filter the starting metadata's 'subtype' column
+subtype_lookup:
+  h5nx: ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9']
+  h5n1: ['h5n1']
+  h7n9: ['h7n9']
+  h9n2: ['h9n2']
 
 #### Parameters which control large overarching aspects of the build
 target_sequences_per_tree: 3000

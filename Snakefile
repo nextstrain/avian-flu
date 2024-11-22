@@ -242,19 +242,6 @@ rule files:
 files = rules.files.params
 
 
-def subtypes_by_subtype_wildcard(wildcards):
-    # TODO - shift this to config
-    db = {
-        'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
-        'h5n1': ['h5n1'],
-        'h7n9': ['h7n9'],
-        'h9n2': ['h9n2'],
-    }
-    db['h5n1-cattle-outbreak'] = [*db['h5nx']]
-    assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
-        "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
-    return(db[wildcards.subtype])
-
 rule download_sequences:
     output:
         sequences = f"data/{S3_SRC.get('name', None)}/sequences_{{segment}}.fasta",
@@ -300,7 +287,7 @@ rule filter_sequences_by_subtype:
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes=lambda w: config['subtype_lookup'][w.subtype],
     shell:
         """
         augur filter \
@@ -316,7 +303,7 @@ rule filter_metadata_by_subtype:
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes=lambda w: config['subtype_lookup'][w.subtype],
     shell:
         """
         augur filter \

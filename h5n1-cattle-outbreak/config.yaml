@@ -27,6 +27,10 @@ s3_src:
 local_ingest: false
 # P.S. To use local ingest files, comment out s3_src and change to local_ingest: joined-ncbi (e.g.)
 
+# For subtypes defined as build wildcards (i.e. "h5n1-cattle-outbreak"), list out the subtype values
+# that we'll use to filter the starting metadata's 'subtype' column
+subtype_lookup:
+  h5n1-cattle-outbreak: ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9']
 
 #### Parameters which control large overarching aspects of the build
 # Set a high target_sequences_per_tree to capture all circulating strains, as they will be pruned down

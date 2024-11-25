@@ -1,0 +1,375 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+title: Avian-flu config schema
+description: >
+      This is the schema for the Nextstrain avian-flu phylogenetic workflow
+      <https://github.com/nextstrain/avian-flu>. The readme (viewable at that URL)
+      provides general information including how to run the workflow. This schema
+      presents the interface into the phylogenetic workflow(s).
+__aliases:
+  # We use YAML aliases to get the behaviour we want from $refs, namely we want the objects
+  # to be merged. This is not the case in draft-07 - any properties in an object with a '$ref'
+  # key are dropped.
+  generic_workflow_file: &generic_workflow_file
+    description: >
+      Relative path which is to be found in the analysis directory, the entry snakefile directory
+      (e.g. `avian-flu/gisaid`) or the workflow directory (`avian-flu`). First match is used.
+      File path which may include wildcards (see examples).
+    # NOTE: Some places where this is used provide their own description and thus this one isn't used.
+    type: string
+    # TODO: it's not clear whether spaces in filenames will work everywhere...
+  wildcard_param_property: &wildcard_param_property
+    # While the intention of the config is to distinguish between types (e.g. numbers, strings)
+    # In reality this doesn't matter _most_ of the time. We could create many such definitions to
+    # handle the combination of allowable types, but we can't pass in the type to this
+    # definition where it's used (e.g. via the $ref).
+    # Leaving this here as a potential TODO
+    oneOf:
+      - type: object
+        patternProperties:
+          "^[^_/]+/[^_/]+/[^_/]+$":
+            type: ['string', 'number', 'boolean', 'integer']
+        description: &wildcard_param_property_wildcard_description >
+          An object to link wildcard values to the parameter to use. The keys are a `/`-separated
+          string of three parts corresponding to the subtype, segment and time wildcards. You can use
+          a `*` character for any part in order to match any wildcard value. For a given build this
+          object is searched for matching wildcard combinations, and the highest specificity key
+          is chosen.  Given example wildcard values of {subtype=h5nx, segment=pb2, time=2y} then
+          we have a search order of:
+            - `h5nx/pb2/2y`   ─ all 3 wildcard values specified
+            - `h5nx/pb2/*`    ┐
+            - `h5nx/*/2y`     ├ 2/3 wildcard values specified
+            - `*/pb2/2y`      ┘
+            - `h5nx/*/*`      ┐
+            - `*/pb2/*`       ├ 1/3 wildcard values specified
+            - `*/*/2y`        ┘
+            - `*/*/*`         ─ default / fall-back
+          and the first key present in the config is used.
+
+          The expected value type is dependant on the specific config parameter.
+        # Note: either YAML doesn't preserve multiple spaces or the generated HTML doesn't
+        # render them correctly
+      - type: ['string', 'number', 'boolean', 'integer']
+        description: >
+          A scalar value which will be used for all builds, i.e. it does not change with
+          the wildcards. The type is dependant on the specific config parameter.
+additionalProperties: False
+required:
+  - builds
+  - target_patterns
+  - inputs
+  - subtype_lookup
+  - reference
+  - auspice_config
+  - colors
+  - lat_longs
+  - include_strains
+  - dropped_strains
+  - clades_file
+  - description
+  - filter
+  - refine
+  - ancestral
+  - traits
+  - export
+properties:
+  builds:
+    title: Target subtype/segment/time combinations
+    description: >
+      Each element defines one or more subtypes, segments and time resolutions
+      which are expanded to produce all combinations. You can supply multiple elements
+      here in order to define different combinations.
+
+      NOTE: H5N1 cattle-outbreak schemas should not define `time`.
+    examples:
+      - |
+        - subtype:
+            - h7n9
+            - h9n2
+          segment:
+            - ha
+            - na
+          time:
+            - all-time
+    type: array
+    items:
+      $ref: "#/$defs/build_element"
+  target_patterns:
+    default: "auspice/avian-flu_{subtype}_{segment}_{time}.json"
+    description: >
+      You can modify the target(s) the workflow will produce, using the `subtype`, `segment` and `time` wildcards which
+      will be filled in as per the builds the config defines.
+      Alternatively you can specify target filenames when you invoke the pipeline.
+    type: array
+    items:
+      type: string
+    minItems: 1
+  custom_rules:
+    title: Additional snakefiles to include
+    description: >
+      TODO XXX describe where these can be located
+    type: array
+    items:
+      type: string
+  inputs:
+    title: Starting inputs
+    description: >
+      Commonly used by the base configs to define starting metadata/sequences on S3.
+      Override this if you don't want to use these canonical starting points, e.g. if you want to use locally ingested data.
+    type: array
+    items:
+      $ref: "#/$defs/input_item"
+  additional_inputs:
+    title: Additional starting inputs
+    description: >
+      Additional inputs. These will be merged with any `inputs` (see above) with the additional inputs taking priority.
+      See README for more information.
+    type: array
+    items:
+      $ref: "#/$defs/input_item"
+  subtype_lookup:
+    title: Mapping between wildcard subtype and metadata subtypes
+    description: >
+      The elements in each list are used by `augur filter` to filter the entire data
+      to produce metadata/sequences for each of the associated builds.
+    patternProperties:
+      "^(/[^/]+)+$":
+        type: array
+        minItems: 1
+        items:
+          type: string
+  same_strains_per_segment:
+    description: >
+      When true we enforce each segment to use the same set of strains.
+      Not used for the h5n1-cattle-outbreak builds
+    type: boolean
+  reference:
+    title: Alignment reference (GenBank file)
+    description: >
+      align
+      FIX ME XXX
+    <<: *generic_workflow_file
+  auspice_config:
+    title: Auspice config JSON
+    <<: *generic_workflow_file
+  colors:
+    title: Colors TSV file
+    description: >
+      For GISAID builds this is used as augur export's `--colors` argument.
+      For h5n1-cattle-flu builds we additionally append colors which are not (yet)
+      config-definable.
+    <<: *generic_workflow_file
+  lat_longs:
+    title: Additional lat-longs
+    <<: *generic_workflow_file
+  include_strains:
+    title: TXT file listing strains which will be included
+    <<: *generic_workflow_file
+  dropped_strains:
+    title: TXT file listing strains which will be dropped
+    <<: *generic_workflow_file
+  clades_file:
+    title: H5 clades TSV file (H5 builds only)
+    <<: *generic_workflow_file
+  description:
+    title: Markdown file describing the footer shown in Auspice
+    <<: *generic_workflow_file
+  filter:
+    title: "Parameters for the filter step of the pipeline"
+    type: object
+    additionalProperties: False
+    required:
+      - target_sequences_per_tree
+      - min_length
+      - min_date
+      - group_by
+      - exclude_where
+    properties:
+      target_sequences_per_tree:
+        title: Target this many sequences per Auspice dataset
+        description: Augur filter `--subsample-max-sequences` value
+        <<: *wildcard_param_property
+      min_length:
+        title: Minimum length for sequences to be included
+        description: Augur filter `--min-length` value
+        <<: *wildcard_param_property
+      min_date:
+        title: Minimum date for sequences to be included
+        examples:
+          - "2y"
+          - 1996
+        <<: *wildcard_param_property
+      group_by:
+        description: Augur filter `--group-by` value
+        <<: *wildcard_param_property
+      exclude_where:
+        description: Augur filter `--exclude-where` value
+        <<: *wildcard_param_property
+  refine:
+    title: "Parameters for the augur refine step of the pipeline"
+    type: object
+    additionalProperties: False
+    required:
+      - coalescent
+      - date_inference
+      - clock_filter_iqd
+      - clock_rates
+      - root
+    properties:
+      coalescent:
+        title: Coalescent time scale
+        description: >
+          Value passed to `augur refine --coalescent`.
+        <<: *wildcard_param_property
+      date_inference:
+        title: Date inference method
+        description: >
+          Value passed to `augur refine --date-inference`.
+        <<: *wildcard_param_property
+      clock_filter_iqd:
+        title: Filter out sequences which fall outside the inferred clock
+        description: >
+          Value passed to `augur refine --clock-filter-iqd`. If you supply a falsey
+          value then this argument not be provided.
+        <<: *wildcard_param_property
+      clock_rates:
+        title: Clock rate and std dev
+        oneOf:
+          - type: object
+            description: *wildcard_param_property_wildcard_description
+            patternProperties:
+              "^[^_/]+/[^_/]+/[^_/]+$":
+                $ref: "#/$defs/clock_rate_element" 
+          -  $ref: "#/$defs/clock_rate_element" 
+             # Can't provide a description here as $ref will clobber it
+      root:
+        title: Root or rooting mechanism
+        description: >
+          Value passed to `augur refine --root`. If you supply a falsey
+          value then this argument not be provided.
+        <<: *wildcard_param_property
+      segment_lengths:
+        title: Sequence lengths for each segment
+        description: >
+          This option is only used for the `h5n1-cattle-outbreak` genome builds.
+          We use these values to calculate the clock-rate for the genome build from the suppied values
+          for each segment (via `clock_rates` config).
+          Values must be integers.
+        <<: *wildcard_param_property
+  ancestral:
+    title: "Parameters for the augur ancestral step of the pipeline"
+    type: object
+    additionalProperties: False
+    required:
+      - inference
+      - root_seq
+    properties:
+      inference:
+        title: Inference method
+        description: Passed to `augur ancestral --inference`
+        <<: *wildcard_param_property
+      root_seq:
+        title: Root sequence
+        description: >
+          Value passed to `augur ancestral --root-sequence`. If you supply a falsey
+          value then this argument not be provided.
+        <<: *wildcard_param_property
+  traits:
+    title: "Parameters for the augur traits step of the pipeline (DTA)"
+    type: object
+    additionalProperties: False
+    required:
+      - columns
+      - sampling_bias_correction
+      - confidence
+    properties:
+      columns:
+        title: DTA columns
+        description: >
+          Whitespace-separated columns on which to run `augur traits`
+        <<: *wildcard_param_property
+      sampling_bias_correction:
+        title: Sampling Bias Correction
+        description: >
+          Provide a falsey value to disable this correction, otherwise the provided value `X` is
+          passed as `augur traits --sampling-bias-correction X`
+        <<: *wildcard_param_property
+      confidence:
+        title: Infer confidence?
+        description: Value should be truthy or falsey
+        <<: *wildcard_param_property
+  export:
+    title: "Parameters for the augur export step of the pipeline"
+    description: "See also: `config.auspice_config`, above"
+    type: object
+    additionalProperties: False
+    required:
+      - title
+    properties:
+      title:
+        description: >
+          Use this property to override the auspice-config defined title.
+          Falsey values will use the auspice-config title.
+        <<: *wildcard_param_property
+$defs:
+  string_or_array_of_strings: &string_or_array_of_strings
+    oneOf:
+      - type: string
+      - type: array
+        minItems: 1
+        items:
+          type: string
+  build_element:
+    type: object
+    required: ['subtype', segment]
+    additionalProperties: False
+    properties:
+      subtype:
+        examples:
+          - H5N1
+          - ['H5N1', 'H7N9']
+        <<: *string_or_array_of_strings
+      segment:
+        examples:
+          - HA
+          - ['PB1', 'PB2']
+        <<: *string_or_array_of_strings
+      time:
+        description: |
+          Note that this is unused for the h5n1-cattle-flu outbreak workflows
+          For GISAID workflows this is required.
+        examples:
+          - 2y
+          - ['all-time', '2y']
+        <<: *string_or_array_of_strings
+  clock_rate_element:
+    description: The clock rate & std dev. Provide an empty string to infer this value instead.
+    oneOf:
+      - type: array
+        prefixItems:
+          - type: number
+            title: Clock rate (subs/site/year)
+          - type: number
+            title: Clock std dev
+      - enum: ['']
+  input_item:
+    type: object
+    required: ['name']
+    properties:
+      name:
+        type: string
+        title: Name of the input
+        description: >
+          May be used in intermediate filepaths and in merged metadata columns.
+          Please avoid spaces.
+      metadata:
+        type: string
+        title: Metadata TSV filepath or S3 URI
+      sequences:
+        title: Sequence FASTA, 1 per segment
+        oneOf:
+          - type: string
+            title: Filepath/address with {segment} wildcard
+          - type: object
+            title: Map of segment name to filepath/address
+

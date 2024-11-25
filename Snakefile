@@ -19,6 +19,18 @@ if os.path.exists("config.yaml"):
 
 from pprint import pp; pp(config, stream=sys.stderr) # TODO XXX remove
 
+# Before we validate the config against the schema, check to see if we've failed to provide one
+if not len(config.keys()):
+    print("-"*80 + "\nNo config loaded!", file=sys.stderr)
+    print("Avian-flu is indented to be run from the snakefile inside a subdir " 
+        "(e.g. gisaid/Snakefile) which will pick up the default configfile for that workflow. " 
+        "Alternatively you can pass in the config via `--configfile`", file=sys.stderr)
+    print("-"*80, file=sys.stderr)
+    raise InvalidConfigError("No config")
+
+from scripts.validate_utils import validate
+validate(config)
+
 class InvalidConfigError(Exception):
     pass
 

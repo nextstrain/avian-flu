@@ -76,7 +76,7 @@ rule join_segments:
         segment = 'genome',
         time = 'default',
     params:
-        script = os.path.join(workflow.basedir, "scripts/join-segments.py")
+        script = os.path.join(workflow.current_basedir, "../scripts/join-segments.py")
     shell:
         """
         python {params.script} \
@@ -147,7 +147,7 @@ rule prune_tree:
         subtype="h5n1-cattle-outbreak",
         time="default",
     params:
-        script = os.path.join(workflow.basedir, "scripts/restrict-via-common-ancestor.py")
+        script = os.path.join(workflow.current_basedir, "../scripts/restrict-via-common-ancestor.py")
     shell:
         r"""
         python3 {params.script} \
@@ -170,7 +170,7 @@ rule colors_genome:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
         duplications = "division=division_metadata",
-        script = os.path.join(workflow.basedir, "scripts/assign-colors.py")
+        script = os.path.join(workflow.current_basedir, "../scripts/assign-colors.py")
     wildcard_constraints:
         subtype="h5n1-cattle-outbreak",
         time="default",

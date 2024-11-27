@@ -8,59 +8,33 @@ wildcard_constraints:
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 #SUBTYPES = ["h5n1", "h5nx", "h7n9", "h9n2"]
 
-# ----------------------------------------------------------------------------
-# Allow this to work from a separate workdir by using a config in that workdir
-# which extends one of our base configs
-# ----------------------------------------------------------------------------
+CURRENT_BASEDIR = workflow.current_basedir # TODO XXX store this value here - can't access within functions because workflow.included_stack is empty
+
+# Load the base config.yaml relative to the entry snakefile (i.e. not this snakefile)
+if os.path.exists(os.path.join(workflow.basedir, 'config.yaml')):
+    configfile: os.path.join(workflow.basedir, 'config.yaml')
+
+# load a config.yaml file if it exists in the current working directory
 if os.path.exists("config.yaml"):
     configfile: "config.yaml"
-    # See commentary below
-    # print("This doesn't work as expected! See commentary in Snakefile", file=sys.stderr)
-    # exit(2)
-
-if config.get('extends', False):
-    extend_path = os.path.join(workflow.basedir, "config", config['extends'])
-    if not os.path.isfile(extend_path):
-        sys.exit(f"Your config tried to extend {config['extends']!r} but this doesn't exist. It must be relative to {os.path.join(workflow.basedir, 'config')}")
-    configfile: extend_path
-
-# NOTE:
-# In the situation where we're running outside of the repo, and we have a custom config YAML
-# such as `foo.yaml`:
-#        extends: h5n1-cattle-outbreak.yaml
-#        segments: ['pb2']
-# If we run with `--configfile foo.yaml` then the merging behaviour is strange (to me!)
-# We've clearly parsed the --configfile, as we have config['extends']="h5n1-cattle-outbreak.yaml",
-# and we do merge in all the config values of `h5n1-cattle-outbreak.yaml` (via the above code)
-# so I expected we'd therefore have config['segments']=['genome', 'pb2', 'pb1', ...]
-# as defined in 'h5n1-cattle-outbreak.yaml', however we end up with only config['segments']=['pb2'].
-# So it seems like the `--configfile` definitions are being re-applied a second time?!?
-#
-# This _is not the case_ when we use the `os.path.exists("config.yaml")` approach,
-# which is why it's not going to work without the following additional update_config
-# step (or something else?)
-
-if os.path.exists("config.yaml"):
-    # Following <https://github.com/snakemake/snakemake/blob/76d53290a003891c5ee41f81e8eb4821c406255d/snakemake/common/configfile.py#L7-L33>
-    import yte
-    with open("config.yaml", encoding='utf-8') as f:
-        overwrite_config = yte.process_yaml(f, require_use_yte=True)
-    snakemake.utils.update_config(config, overwrite_config)
 
 from pprint import pp; pp(config, stream=sys.stderr) # TODO XXX remove
 
+class InvalidConfigError(Exception):
+    pass
 
 def resolve_config_path(original_path, wildcards=None):
     """
-    Resolve a relative *path* given in a configuration value.
-    Resolves *path* as relative to the workflow's ``config/`` directory (i.e.
-    ``os.path.join(workflow.basedir, "config", path)``) if it doesn't exist
-    in the workflow's analysis directory (i.e. the current working
-    directory, or workdir, usually given by ``--directory`` (``-d``)).
-    This behaviour allows a default configuration value to point to a default
-    auxiliary file while also letting the file used be overridden either by
-    setting an alternate file path in the configuration or by creating a file
-    with the conventional name in the workflow's analysis directory.
+    Resolve a relative *path* given in a configuration value. Before resolving
+    any '{x}' substrings are replaced by their corresponding wildcards (if the
+    `wildcards` argument is provided).
+    
+    Search order (first match returned):
+    1. Relative to the analysis directory
+    2. Relative to the directory the entry snakefile was in. Typically this
+       is not the Snakefile you are looking at now but (e.g.) the one in
+       avian-flu/gisaid
+    3. Relative to where this Snakefile is (i.e. `avian-flu/`)
     """
     path = original_path.format(**wildcards) if wildcards else original_path
 
@@ -71,17 +45,30 @@ def resolve_config_path(original_path, wildcards=None):
             print(f"The call to `resolve_config_path({original_path!r})` includes unresolved wildcards - please include the wildcards as the second argument to `resolve_config_path`.", file=sys.stderr)
         exit(2)
 
-    if not os.path.exists(path):
-        # Check if the path exists relative to the basedir. This catches things like "config/…"
-        # as well as "clade-labeling/h5n1-clades.tsv"
-        basepath = os.path.join(workflow.basedir, path)
+    if os.path.exists(path): # isfile?
+        return path
+
+    # Check if the path exists relative to the subdir where the entry snakefile is
+    # (e.g. avian-flu/gisaid). If you want to use further subdirectories (e.g. avian-flu/gisaid/config/x.tsv)
+    # you're expected to supply the 'config/x.tsv' as the value in the config YAML
+    # NOTE: this means analysis directory overrides have to use that same 'config/x.tsv' structure, but
+    # given the different directories avian-flu uses that's acceptable. In other words, if we standardised
+    # avian-flu then we could add subdirectories to the search order here
+    basepath = os.path.join(workflow.basedir, path)
+    if os.path.exists(basepath):
+        return basepath
+
+    # Check if the path exists relative to where _this_ snakefile is, i.e. relative to `avian-flu/`.
+    if workflow.basedir != CURRENT_BASEDIR:
+        basepath = os.path.join(CURRENT_BASEDIR, path)
         if os.path.exists(basepath):
             return basepath
 
-        print(f"Unable to resolve the path {path!r} either within the working directory or within {workflow.basedir!r}", file=sys.stderr)
-        exit(2)
-
-    return path
+    raise InvalidConfigError(f"Unable to resolve the config-provided path {original_path!r}, expanded to {path!r} after filling in wildcards. "
+        f"The following directories were searched:\n"
+        f"\t1. {os.path.abspath(os.curdir)} (current working directory)\n"
+        f"\t2. {workflow.basedir} (where the entry snakefile is)\n"
+        f"\t3. {CURRENT_BASEDIR} (where the main avian-flu snakefile is)\n")
 
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
@@ -95,6 +82,14 @@ S3_SRC = config.get('s3_src', {})
 LOCAL_INGEST = config.get('local_ingest', None)
 
 def sanity_check_config():
+    if not len(config.keys()):
+        print("-"*80 + "\nNo config loaded!", file=sys.stderr)
+        print("Avian-flu is indented to be run from the snakefile inside a subdir " 
+            "(e.g. gisaid/Snakefile) which will pick up the default configfile for that workflow. " 
+            "Alternatively you can pass in the config via `--configfile`", file=sys.stderr)
+        print("-"*80, file=sys.stderr)
+        raise InvalidConfigError("No config")
+
     assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
     # NOTE: we could relax the following exclusivity of S3_SRC and LOCAL_INGEST
     # if we want to use `--config local_ingest=gisaid` overrides.
@@ -293,7 +288,7 @@ rule add_h5_clade:
     output:
         metadata= "results/{subtype}/metadata-with-clade.tsv"
     params:
-        script = os.path.join(workflow.basedir, "clade-labeling/add-clades.py")
+        script = os.path.join(workflow.current_basedir, "clade-labeling/add-clades.py")
     shell:
         r"""
         python {params.script} \
@@ -570,7 +565,7 @@ rule cleavage_site:
         cleavage_site_annotations = "results/{subtype}/ha/{time}/cleavage-site.json",
         cleavage_site_sequences = "results/{subtype}/ha/{time}/cleavage-site-sequences.json"
     params:
-        script = os.path.join(workflow.basedir, "scripts/annotate-ha-cleavage-site.py")
+        script = os.path.join(workflow.current_basedir, "scripts/annotate-ha-cleavage-site.py")
     shell:
         """
         python {params.script} \

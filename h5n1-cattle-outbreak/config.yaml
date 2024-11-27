@@ -36,6 +36,7 @@ target_sequences_per_tree: 10_000
 
 
 #### Config files ####
+
 reference: config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
 genome_reference: config/{subtype}/h5_cattle_genome_root.gb
 auspice_config: config/{subtype}/auspice_config_{subtype}.json

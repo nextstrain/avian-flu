@@ -1,0 +1,4 @@
+include: "../Snakefile"
+
+rule _all:
+    input: rules.all.input

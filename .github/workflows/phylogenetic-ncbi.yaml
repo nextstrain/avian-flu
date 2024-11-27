@@ -95,7 +95,7 @@ jobs:
           --memory 28800mib \
           . \
             deploy_all \
-            --configfile config/h5n1-cattle-outbreak.yaml \
+            --snakefile h5n1-cattle-outbreak/Snakefile \
             --config "${config[@]}"
 
       env: |

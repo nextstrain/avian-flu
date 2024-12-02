@@ -6,7 +6,6 @@ wildcard_constraints:
 
 # defined before extra rules `include`d as they reference this constant
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
-#SUBTYPES = ["h5n1", "h5nx", "h7n9", "h9n2"]
 
 CURRENT_BASEDIR = workflow.current_basedir # TODO XXX store this value here - can't access within functions because workflow.included_stack is empty
 
@@ -40,10 +39,9 @@ def resolve_config_path(original_path, wildcards=None):
 
     if re.search(r'\{.+\}', path):
         if wildcards:
-            print(f"The call to `resolve_config_path({original_path!r}, wildcards)` still includes wildcard-like placeholders afrer resolving: {path!r}.", file=sys.stderr)
+            raise InvalidConfigError(f"The call to `resolve_config_path({original_path!r}, wildcards)` still includes wildcard-like placeholders afrer resolving: {path!r}.")
         else:
-            print(f"The call to `resolve_config_path({original_path!r})` includes unresolved wildcards - please include the wildcards as the second argument to `resolve_config_path`.", file=sys.stderr)
-        exit(2)
+            raise InvalidConfigError(f"The call to `resolve_config_path({original_path!r})` includes unresolved wildcards - please include the wildcards as the second argument to `resolve_config_path`.")
 
     if os.path.exists(path): # isfile?
         return path
@@ -69,6 +67,66 @@ def resolve_config_path(original_path, wildcards=None):
         f"\t1. {os.path.abspath(os.curdir)} (current working directory)\n"
         f"\t2. {workflow.basedir} (where the entry snakefile is)\n"
         f"\t3. {CURRENT_BASEDIR} (where the main avian-flu snakefile is)\n")
+
+def is_scalar(x):
+    return any([isinstance(x, t) for t in [float, int, bool, str]])
+
+def resolve_config_value(rule_parts, wildcards, sep="/"):
+    """
+    Resolve a config value defined by the *rule_parts of the config,
+    e.g. rule_parts = ['filter', 'min_length'] then we expect a scalar or
+    a dictionary to be present at config['filter']['min_length'].
+
+    If a scalar then that value is returned, i.e. it's always the same no matter
+    what the wildcards are.
+
+    If a dictionary we search it for the relevant value by finding the closest matching
+    key once wildcards have been considered. For instance in a three-tiered wildcard pipeline
+    such as this with subtype, segment and time we interpret these as ordered in specificity.
+    For instance, if only one wildcard value is specified in the config (the others are '*')
+    then matching subtype is more specific than segment. Given example 
+    wildcard values of {subtype=h5nx, segment=pb2, time=2y} then we have a search order of:
+    - 'h5nx/pb2/2y'   ─ all 3 wildcard values specified
+    - 'h5nx/pb2/*'    ┐
+    - 'h5nx/*/2y'     ├ 2/3 wildcard values specified
+    - '*/pb2/2y'      ┘
+    - 'h5nx/*/*'      ┐
+    - '*/pb2/*'       ├ 1/3 wildcard values specified
+    - '*/*/2y'        ┘
+    - '*/*/*'         ─ default / fall-back
+    and the first key present in the config is used.
+    """
+    try:
+        config_lookup = config
+        for i,rule_key in enumerate(rule_parts): # or use functools.reduce etc
+            config_lookup = config_lookup[rule_key]
+    except KeyError:
+        raise InvalidConfigError('Config missing entire entry for config'+''.join(['["'+rule_parts[j]+'""]' for j in range(0,i+1)]))
+
+    if is_scalar(config_lookup):
+        return config_lookup
+
+    if not isinstance(config_lookup, dict):
+        raise InvalidConfigError(f"ERROR: config under {'.'.join(rule_parts)} must be a scalar value or a dictionary")
+
+    wild_keys = ['subtype', 'segment', 'time'] # workflow specific
+    search_keys = [                            # workflow independent, as long as there are 3 or fewer wildcard categories
+        sep.join([wildcards[k] for k in wild_keys]),
+        *([sep.join(['*' if i==k else wildcards[key] for k,key in enumerate(wild_keys)])
+            for i in range(len(wild_keys)-1, -1, -1)] if len(wild_keys)>=2 else []),
+        *([sep.join(['*' if i!=k else wildcards[key] for k,key in enumerate(wild_keys)])
+            for i in range(0, len(wild_keys))] if len(wild_keys)==3 else []),
+        sep.join(['*']*len(wild_keys))
+    ]
+
+    for key in search_keys:
+        if key in config_lookup:
+            return config_lookup[key]
+    msg  =  'Config structure incorrect or incomplete for config'+''.join(['["'+rule_parts[j]+'"]' for j in range(0,i+1)])
+    msg += f'\n\tThe dictionary is missing a matching key for the current target of {search_keys[0]!r}, or a fuzzy match (i.e. using "*" placeholders)'
+    msg +=  '\n\tP.S. If you want to use a single value across all builds then set a scalar value (number, string, boolean)'
+    raise InvalidConfigError(msg)
+
 
 
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
@@ -100,26 +158,53 @@ def sanity_check_config():
 
 sanity_check_config()
 
-def collect_builds():
+def as_list(x):
+    return x if isinstance(x, list) else [x]
+
+def expand_target_patterns():
     """
     iteratively create workflow targets from config.builds for the `all` rule
     you can over-ride this by specifying targets (filenames) on the command line
     """
     targets = []
-    for subtype,times in config.get('builds', {}).items():
-        for segment in config.get('segments', []):
-            if len(times):
-                for time in times:
-                    targets.append(f"auspice/avian-flu_{subtype}_{segment}_{time}.json")
-            else:
-                targets.append(f"auspice/avian-flu_{subtype}_{segment}.json")
+
+    if not isinstance(config.get('target_patterns', None), list) and not isinstance(config.get('target_patterns', None), str):
+        raise InvalidConfigError('config["target_patterns"] must be defined (either as a list or a single string)')
+    target_patterns = as_list(config['target_patterns'])
+
+    if 'builds' not in config:
+        raise InvalidConfigError('config["builds"] is not defined!')
+    if not isinstance(config['builds'], list):
+        raise InvalidConfigError('config["builds"] must be a list')
+
+    if 'segments' in config:
+        raise InvalidConfigError('config["segments"] is no longer used. Please remove it and encode the target segments within config["builds"]')
+
+    for i,subconfig in enumerate(config['builds']):
+        required_keys = ['subtype', 'segment']
+        optional_keys = ['time']
+        if not isinstance(subconfig, dict):
+            raise InvalidConfigError(f'config["builds"][{i}] must be a dictionary!')
+        if not all([k in subconfig for k in required_keys]):
+            raise InvalidConfigError(f'config["builds"][{i}] must have {", ".join(required_keys)} keys')
+        if not all([isinstance(v, list) or is_scalar(v) for v in subconfig.values()]):
+            raise InvalidConfigError(f'config["builds"][{i}] values must all be scalars or lists')
+    
+        for subtype in as_list(subconfig['subtype']):
+            for segment in as_list(subconfig['segment']):
+                # Some builds (GISAID) have a time component, some (cattle-outbreak) don't
+                for time in (as_list(subconfig['time']) if 'time' in subconfig else [None]):
+                    for target_pattern in target_patterns:
+                        if time is None and '{time}' in target_pattern:
+                            raise InvalidConfigError(f'target pattern {target_pattern!r} specifies time, but config["builds"][{i}] doesn\'t!')
+                        target = target_pattern.format(subtype=subtype, segment=segment, time=time)
+                        if target not in targets:
+                            targets.append(target)
+
     return targets
 
 rule all:
-    input:
-        auspice_json = collect_builds()
-        #sequences = expand("results/{subtype}/{segment}/sequences.fasta", segment=SEGMENTS, subtype=SUBTYPES),
-        #metadata = expand("results/{subtype}/metadata.tsv", segment=SEGMENTS, subtype=SUBTYPES)
+    input: expand_target_patterns()
 
 
 # This must be after the `all` rule above since it depends on its inputs
@@ -147,18 +232,6 @@ rule files:
 
 files = rules.files.params
 
-
-def subtypes_by_subtype_wildcard(wildcards):
-    db = {
-        'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
-        'h5n1': ['h5n1'],
-        'h7n9': ['h7n9'],
-        'h9n2': ['h9n2'],
-    }
-    db['h5n1-cattle-outbreak'] = [*db['h5nx']]
-    assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
-        "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
-    return(db[wildcards.subtype])
 
 rule download_sequences:
     output:
@@ -205,7 +278,7 @@ rule filter_sequences_by_subtype:
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes=lambda w: config['subtype_lookup'][w.subtype],
     shell:
         """
         augur filter \
@@ -221,7 +294,7 @@ rule filter_metadata_by_subtype:
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes=lambda w: config['subtype_lookup'][w.subtype],
     shell:
         """
         augur filter \
@@ -239,44 +312,46 @@ def metadata_by_wildcards(wildcards):
     else:
         return "results/{subtype}/metadata.tsv",
 
-
-def get_config(rule_name, rule_key, wildcards, segment=None, fallback="FALLBACK"):
-    assert rule_name in config, f"Config missing top-level {rule_name} key"
-    assert rule_key in config[rule_name], f"Config missing entry for {rule_name}.{rule_key}"
-    try:
-        return config[rule_name][rule_key][wildcards.subtype][wildcards.time]
-    except KeyError:
-        assert fallback in config[rule_name][rule_key], f"config.{rule_name!r}.{rule_key!r} either needs " \
-            f"an entry for {wildcards.subtype!r}.{wildcards.time!r} added or a (default) {fallback!r} key."
-        return config[rule_name][rule_key][fallback]
-
 def refine_clock_rates(w):
-    info = get_config('refine', 'clock_rates', w)
 
     if w.segment == 'genome':
+        # TODO XXX - can this be part of cattle-flu.smk?
         # calculate the genome rate via a weighted average of the segment rates
-        assert 'genome' not in info, ("This snakemake pipeline is currently set up to calculate the genome clock rate "
-            "based on the segment rates, however you have provided a genome rate in the config.")
+
+        # Sanity check: check that the config hasn't (mistakenly?) set a genome rate
         try:
-            segment_lengths= get_config('refine', 'segment_lengths', w)
-        except AssertionError as e:
-            # py11 brings e.add_note() which is nicer
-            e.args = (*e.args, "NOTE: For segment=genome we require the segment_lengths to be defined as we use them to calculate the clock rate")
-            raise
-        mean = sum([info[seg][0]*length for seg,length in segment_lengths.items()])/sum(segment_lengths.values())
+            info = resolve_config_value(['refine', 'clock_rates'], w)
+        except InvalidConfigError as e:
+            pass # this is behaviour we expect - i.e. no clock rates should be provided for genome
+        else:
+            raise InvalidConfigError("config['refine']['clock_rates'] should not contain a key which can be used for 'genome' builds as this is calculated by the workflow")
+
+        segment_lengths = [
+            resolve_config_value(['refine', 'segment_lengths'], wildcards)
+            for wildcards in
+            [{"subtype": w.subtype, "time": w.time, "segment": segment} for segment in SEGMENTS]
+        ]
+        clock_rates = [
+            resolve_config_value(['refine', 'clock_rates'], wildcards)
+            for wildcards in
+            [{"subtype": w.subtype, "time": w.time, "segment": segment} for segment in SEGMENTS]
+        ]
+        for rates in clock_rates:
+            assert isinstance(rates, list) and len(rates)==2, "The clock rates for each segment must be a list of (rate, std-dev), not {rates!r}"
+
+        mean = sum([length*rate[0] for length,rate in zip(segment_lengths, clock_rates)]) / sum(segment_lengths)
         stdev = mean/2
         return f"--clock-rate {mean} --clock-std-dev {stdev}"
 
-    assert w.segment in info, 'config.refine.clock_rates: data must be provided for each segment. Use "" for inference.'
-    if info[w.segment] == "":
+    info = resolve_config_value(['refine', 'clock_rates'], w)
+    if info == "":
         return ""
 
-    assert isinstance(info[w.segment], list), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    assert len(info[w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"
+    assert isinstance(info, list) and len(info)==2, "The clock rates for {w.subtype!r}/{w.time!r}/{w.segment!r} must be a list of (rate, std-dev), not {info!r}"
+    return f"--clock-rate {info[0]} --clock-std-dev {info[1]}"
 
 def refine_clock_filter(w):
-    filter = get_config('refine', 'clock_filter_iqd', w)
+    filter = resolve_config_value(['refine', 'clock_filter_iqd'], w)
     return f"--clock-filter-iqd {filter}" if filter else ""
 
 
@@ -319,7 +394,7 @@ def _filter_params(wildcards, input, output, threads, resources):
             raise Exception("A strains input should only be present for SAME_STRAINS + HA!")
         return f"--exclude-all --include {input.strains} {input.include}"
 
-    exclude_where = get_config('filter', 'exclude_where', wildcards)
+    exclude_where = resolve_config_value(['filter', 'exclude_where'], wildcards)
     # If SAME_STRAINS (and due to the above conditional we have the HA segment at this point)
     # then we want to restrict to strains present in all 8 segments. Note that force-included
     # strains may not have all segments, but that's preferable to filtering them out.
@@ -329,14 +404,14 @@ def _filter_params(wildcards, input, output, threads, resources):
 
     cmd = ""
 
-    group_by_value = get_config('filter', 'group_by', wildcards)
+    group_by_value = resolve_config_value(['filter', 'group_by'], wildcards)
     cmd += f" --group-by {group_by_value}" if group_by_value else ""
 
-    cmd += f" --subsample-max-sequences {config['target_sequences_per_tree']}"
-    cmd += f" --min-date {get_config('filter', 'min_date', wildcards)}"
+    cmd += f" --subsample-max-sequences {resolve_config_value(['filter', 'target_sequences_per_tree'], wildcards)}"
+    cmd += f" --min-date {resolve_config_value(['filter', 'min_date'], wildcards)}"
     cmd += f" --include {input.include}"
     cmd += f" --exclude-where {exclude_where}"
-    cmd += f" --min-length {get_config('filter', 'min_length', wildcards)[wildcards.segment]}"
+    cmd += f" --min-length {resolve_config_value(['filter', 'min_length'], wildcards)}"
     cmd += f" --non-nucleotide"
     return cmd
 
@@ -416,12 +491,6 @@ rule tree:
         """
 
 
-def refine_root(wildcards):
-    root = get_config('refine', 'genome_root', wildcards) \
-        if wildcards.segment=='genome' \
-        else get_config('refine', 'root', wildcards)
-    return f"--root {root}" if root else ""
-
 rule refine:
     message:
         """
@@ -442,7 +511,7 @@ rule refine:
         date_inference = config['refine']['date_inference'],
         clock_rates = refine_clock_rates,
         clock_filter = refine_clock_filter,
-        root = refine_root,
+        root = lambda w: f"--root {resolve_config_value(['refine', 'root'], w)}" if resolve_config_value(['refine', 'root'], w) else ''
     shell:
         """
         augur refine \
@@ -472,12 +541,10 @@ def refined_tree(w):
     return "results/{subtype}/{segment}/{time}/tree.nwk",
 
 def ancestral_root_seq(wildcards):
-    root_seq = get_config('ancestral', 'genome_root_seq', wildcards) \
-        if wildcards.segment=='genome' \
-        else get_config('ancestral', 'root_seq', wildcards)
-    if not root_seq:
+    config_value = resolve_config_value(['ancestral', 'root_seq'], wildcards)
+    if not config_value: # falsey values skip the --root-sequence argument
         return ""
-    return f"--root-sequence {resolve_config_path(root_seq, wildcards)}"
+    return f"--root-sequence {resolve_config_path(config_value, wildcards)}"
 
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
@@ -505,7 +572,7 @@ rule translate:
     input:
         tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = lambda w: resolve_config_path(config['genome_reference'] if w.segment=='genome' else files.reference, w)
+        reference = lambda w: resolve_config_path(files.reference, w)
     output:
         node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:
@@ -518,20 +585,10 @@ rule translate:
         """
 
 def traits_params(wildcards):
-    columns = get_config('traits', 'genome_columns', wildcards) \
-        if wildcards.segment=='genome' \
-        else get_config('traits', 'columns', wildcards)
-
-    bias = get_config('traits', 'genome_sampling_bias_correction', wildcards) \
-        if wildcards.segment=='genome' \
-        else get_config('traits', 'sampling_bias_correction', wildcards)
-
-    confidence = get_config('traits', 'confidence', wildcards)
-
-    args = f"--columns {columns}"
-    if bias:
+    args = f"--columns {resolve_config_value(['traits', 'columns'], wildcards)}"
+    if bias:=resolve_config_value(['traits', 'sampling_bias_correction'], wildcards):
         args += f" --sampling-bias-correction {bias}"
-    if confidence:
+    if confidence:=resolve_config_value(['traits', 'confidence'], wildcards):
         args += f" --confidence"
     return args
 
@@ -545,7 +602,7 @@ rule traits:
     params:
         info = traits_params,
     shell:
-        """
+        r"""
         augur traits \
             --tree {input.tree} \
             --metadata {input.metadata} \
@@ -592,14 +649,12 @@ def export_node_data_files(wildcards):
 def additional_export_config(wildcards):
     args = ""
 
-    title_overrides = get_config('export', 'genome_title', wildcards) \
-        if wildcards.segment=='genome' \
-        else get_config('export', 'title', wildcards)
-    if title_overrides:
-        args += ("--title '" +
-            title_overrides.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time) +
-            "'")
-
+    title = resolve_config_value(['export', 'title'], wildcards)
+    if title:
+        # Config defined title strings may include wildcards to be expanded
+        title = title.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time)
+        args += f"--title {title!r}"
+        
     return args
 
 rule auspice_config:
@@ -721,6 +776,7 @@ rule clean:
     shell:
         "rm -rfv {params}"
 
-
+# Add in additional rules at/towards the end of the Snakefile so that
+# they have access to functions and values declared above
 for rule_file in config.get('custom_rules', []):
     include: rule_file

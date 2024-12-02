@@ -1,0 +1,61 @@
+inputs:
+  - name: gisaid
+    metadata: ingest/fauna/results/metadata.tsv
+    sequences: ingest/fauna/results/sequences_{segment}.fasta
+
+builds:
+  - subtype: h7n6
+    segment:
+      - pb2
+      - pb1
+      - pa
+      - ha
+      - np
+      - na
+      - mp
+      - ns
+    time: all-time
+
+subtype_lookup:
+  h7n6: ['h7n6']
+
+
+
+#### Config files ####
+reference: config/{subtype}/reference_{subtype}_{segment}.gb
+auspice_config: config/{subtype}/auspice_config_{subtype}.json
+colors: config/{subtype}/colors_{subtype}.tsv
+lat_longs: config/{subtype}/lat_longs_{subtype}.tsv
+include_strains: config/{subtype}/include_strains_{subtype}_{time}.txt
+dropped_strains: config/{subtype}/dropped_strains_{subtype}.txt
+description: config/description_gisaid.md
+
+
+filter: 
+  target_sequences_per_tree:
+    "*/*/*": 3000
+
+  min_length:
+    "*/pb2/*": 2100
+    "*/pb1/*": 2100
+    "*/pa/*": 2000
+    "*/ha/*": 1600
+    "*/np/*": 1400
+    "*/na/*": 1270
+    "*/mp/*": 900
+    "*/ns/*": 800
+
+  min_date:
+    "h7n6/*/all-time": 1900
+  group_by:
+    "h7n6/*/*": subtype
+  exclude_where:
+    host=laboratoryderived # can't use an empty string...
+
+ancestral:
+  inference: joint
+  root_seq: false
+
+traits:
+  columns:
+    "h7n6/*/*": region

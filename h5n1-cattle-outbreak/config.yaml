@@ -19,13 +19,11 @@ builds:
 target_patterns:
   - "auspice/avian-flu_{subtype}_{segment}.json"
 
-#### Parameters which define the input source ####
-s3_src:
-  name: ncbi
-  metadata: s3://nextstrain-data/files/workflows/avian-flu/h5n1/metadata.tsv.zst
-  sequences: s3://nextstrain-data/files/workflows/avian-flu/h5n1/{segment}/sequences.fasta.zst
-local_ingest: false
-# P.S. To use local ingest files, comment out s3_src and change to local_ingest: joined-ncbi (e.g.)
+# Input source(s)
+inputs:
+  - name: ncbi
+    metadata: s3://nextstrain-data/files/workflows/avian-flu/h5n1/metadata.tsv.zst
+    sequences: s3://nextstrain-data/files/workflows/avian-flu/h5n1/{segment}/sequences.fasta.zst
 
 # For subtypes defined as build wildcards (i.e. "h5n1-cattle-outbreak"), list out the subtype values
 # that we'll use to filter the starting metadata's 'subtype' column

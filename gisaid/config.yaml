@@ -29,13 +29,11 @@ builds:
 target_patterns:
   - "auspice/avian-flu_{subtype}_{segment}_{time}.json"
 
-#### Parameters which define the input source ####
-s3_src:
-  name: gisaid
-  metadata: s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst
-  sequences: s3://nextstrain-data-private/files/workflows/avian-flu/{segment}/sequences.fasta.zst
-local_ingest: false
-# P.S. To use local ingest files, comment out s3_src and change to local_ingest: fauna
+# Input source(s)
+inputs:
+  - name: gisaid
+    metadata: s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst
+    sequences: s3://nextstrain-data-private/files/workflows/avian-flu/{segment}/sequences.fasta.zst
 
 # For subtypes defined as build wildcards (e.g. "h5n1", "h5nx"), list out the subtype values
 # that we'll use to filter the starting metadata's 'subtype' column

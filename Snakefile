@@ -156,14 +156,6 @@ def sanity_check_config():
         print("-"*80, file=sys.stderr)
         raise InvalidConfigError("No config")
 
-    assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
-    # NOTE: we could relax the following exclusivity of S3_SRC and LOCAL_INGEST
-    # if we want to use `--config local_ingest=gisaid` overrides.
-    assert not (S3_SRC and LOCAL_INGEST), "The config defined both 'local_ingest' and 's3_src', which are mutually exclusive"
-    if S3_SRC:
-        assert isinstance(S3_SRC, dict) and all([k in S3_SRC for k in ("name", "sequences", "metadata")]), \
-            "Config 's3_src' must be a dict with 'name', 'sequences' and 'metadata' keys"
-
 sanity_check_config()
 
 def as_list(x):
@@ -242,48 +234,115 @@ rule files:
 files = rules.files.params
 
 
-rule download_sequences:
+rule download_s3_sequences:
     output:
-        sequences = f"data/{S3_SRC.get('name', None)}/sequences_{{segment}}.fasta",
+        metadata = "data/{input_name}/sequences_{segment}.fasta",
     params:
-        address=lambda w: S3_SRC.get('sequences', None).format(segment=w.segment),
-        no_sign_request=lambda w: "--no-sign-request" if S3_SRC.get('sequences', "").startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
-    shell:
-        """
-        aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.sequences}
-        """
-
-rule download_metadata:
-    output:
-        metadata = f"data/{S3_SRC.get('name', None)}/metadata.tsv",
-    params:
-        address=S3_SRC.get('metadata', None),
-        no_sign_request=lambda w: "--no-sign-request" if S3_SRC.get('metadata', "").startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
+        address=lambda w: input_by_name(w.input_name, segment=w.segment).format(segment=w.segment),
+        no_sign_request=lambda w: "--no-sign-request" if input_by_name(w.input_name, segment=w.segment).startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
     shell:
         """
         aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.metadata}
         """
 
+rule download_s3_metadata:
+    output:
+        metadata = "data/{input_name}/metadata.tsv",
+    params:
+        address=lambda w: input_by_name(w.input_name, metadata=True),
+        no_sign_request=lambda w: "--no-sign-request" if input_by_name(w.input_name, metadata=True).startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
+    shell:
+        """
+        aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.metadata}
+        """
 
-def input_metadata(wildcards):
-    if S3_SRC:
-        return f"data/{S3_SRC['name']}/metadata.tsv",
-    elif LOCAL_INGEST:
-        return f"ingest/{LOCAL_INGEST}/results/metadata.tsv",
-    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+def _segment_input(info, segment):
+    address = info.get('sequences', None)
+    if address is None:
+        return address
+    elif isinstance(address, str):
+        return address
+    elif isinstance(address, dict):
+        return address.get(segment, None)
+    raise InvalidConfigError(f"Invalid structure for one or more provided (additional) input sequences")
 
-def input_sequences(wildcards):
-    if S3_SRC:
-        return f"data/{S3_SRC['name']}/sequences_{wildcards.segment}.fasta",
-    elif LOCAL_INGEST:
-        return f"ingest/{LOCAL_INGEST}/results/sequences_{wildcards.segment}.fasta"
-    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+def input_by_name(name, metadata=False, segment=False):
+    assert (metadata and not segment) or (segment and not metadata), "Workflow bug"
+    info = next((c for c in [*config['inputs'], *config.get('additional_inputs', [])] if c['name']==name))
+    return info.get('metadata', None) if metadata else _segment_input(info, segment)
 
+def collect_inputs(metadata=None, segment=None, augur_merge=False):
+    """
+    This function is pure - subsequent calls will return the same results.
+    """
+    assert (metadata and not segment) or (segment and not metadata), "Workflow bug"
+
+    inputs = []
+    for source in [*config['inputs'], *config.get('additional_inputs', [])]:
+        name = source['name']
+
+        address = source.get('metadata', None) if metadata else _segment_input(source, segment)
+        if address is None:
+            continue # inputs can define (e.g.) only metadata, or only sequences for some segments etc
+
+        # addresses may be a remote filepath or a local file
+        if address.startswith('s3://'):
+            download_path = f"data/{source['name']}/metadata.tsv" \
+                if metadata \
+                else f"data/{source['name']}/sequences_{segment}.fasta"
+            inputs.append((name, download_path))
+            continue
+        elif address.startswith(r'http[s]:\/\/'):
+            raise InvalidConfigError("Workflow cannot yet handle HTTP[S] inputs")
+        inputs.append((name, resolve_config_path(address, {'segment':segment})))
+
+    if not inputs:
+        raise InvalidConfigError("No inputs provided with defined metadata")
+
+    if augur_merge:
+        return " ".join([f"{x[0]}={x[1]}" for x in inputs])
+    return [x[1] for x in inputs]
+
+rule merge_metadata:
+    """
+    This rule should only be invoked if there are multiple defined metadata inputs
+    (config.inputs + config.additional_inputs)
+    """
+    input:
+        metadata = collect_inputs(metadata=True)
+    params:
+        metadata = collect_inputs(metadata=True, augur_merge=True)
+    output:
+        metadata = "results/metadata_merged.tsv"
+    shell:
+        r"""
+        augur merge \
+            --metadata {params.metadata} \
+            --source-columns 'input_{{NAME}}' \
+            --output-metadata {output.metadata}
+        """
+
+rule merge_sequences:
+    """
+    Placeholder rule while we want for `augur merge` to support sequences
+    """
+    input:
+        metadata = lambda w: collect_inputs(segment=w.segment)
+    output:
+        metadata = "results/sequences_merged_{segment}.fasta"
+    shell:
+        r"""
+        cat {input.metadata} > {output.metadata}
+        """
 
 rule filter_sequences_by_subtype:
     input:
-        sequences = input_sequences,
-        metadata = input_metadata,
+        sequences = lambda w: collect_inputs(segment=w.segment)[0]
+            if len(collect_inputs(segment=w.segment))==1
+            else f"results/sequences_merged_{w.segment}.fasta",
+        metadata = collect_inputs(metadata=True)[0]
+            if len(collect_inputs(metadata=True))==1
+            else "results/metadata_merged.tsv"
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
@@ -299,7 +358,9 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata = input_metadata,
+        metadata = collect_inputs(metadata=True)[0]
+            if len(collect_inputs(metadata=True))==1
+            else "results/metadata_merged.tsv"
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:

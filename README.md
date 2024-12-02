@@ -12,6 +12,7 @@ The Snakemake pipeline is parameterised by two config files, one for the A/H5N1,
 * [Running H5N1 Cattle Outbreak (2024) builds](#running-h5n1-cattle-outbreak-2024-builds)
 * [Creating a custom build via config overlays](#creating-a-custom-build-via-config-overlays)
 * [Running builds in a separate working directory](#running-builds-in-a-separate-working-directory)
+* [Adding private data](#adding-private-data)
 * [Cleavage Site Annotations](#cleavage-side-annotations)
 * [H5 Clade Labeling](#h5-clade-labeling)
 * [Other build customisations](#other-build-customisations)
@@ -181,6 +182,37 @@ Depending on how you run builds this can be very liberating; for instance if you
 
 > You don't have to name it `config.yaml`, but if you use a different filename you'll have to specify it via `--configfile <filename>`.
 
+## Adding private data
+
+Private metadata and/or sequences can be supplied by defining `additional_inputs` in a config overlay YAML.
+
+```yaml
+additional_inputs:
+  - name: secret
+    metadata: secret.tsv
+    sequences: 
+      ha: secret_ha.fasta
+```
+
+The filenames here can be S3 URIs (ensure you have credentials set in your environment) or local files.
+In this case local files should be specified relative to the analysis directory (typically where you run the command from).
+
+If you have data for all segments you can use a slightly different and more concise syntax:
+```yaml
+additional_inputs:
+  - name: secret
+    metadata: secret.tsv
+    sequencs: secret_{segment}.fasta
+```
+
+> These added data will be subject to the same filtering rules as the starting data.
+  At a minimum, you'll want to ensure new sequences have metadata which defines their subtype and date, as filter steps will prune out those without valid values here.
+
+> Metadata merging is via `augur merge` and we add one-hot columns for each input source with the column name `input_{NAME}`, for instance the above example would have a `input_secret` column with values of `1` for metadata rows which were included in `secret.tsv` and `0` otherwise.
+  You can use this for additional filtering commands as needed.
+
+By default each workflow config defines a single metadata input and one FASTA per segment.
+
 
 ## Cleavage Site Annotations
 
@@ -224,8 +256,29 @@ Note that you may need to remove any existing data in `results/` in order for sn
 
 ### Using locally ingested data (instead of downloading from S3)
 
-Run the pipeline with `--config 'local_ingest=True'` to use the locally available files produced by the ingest pipeline (see `./ingest/README.md` for details on how to run).
-Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/results/sequences_{SEGMENT}.fasta`.
+Each workflow defines an input via `config['inputs']`, e.g. the GISAID build uses:
+```yaml
+inputs:
+  - name: gisaid
+    metadata: s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst
+    sequences: s3://nextstrain-data-private/files/workflows/avian-flu/{segment}/sequences.fasta.zst
+```
+
+You can use an approach analogous to the [addition of private data](#adding-private-data) above to replace this array in your config overlay to point to local files instead.
+If you have run the default ingest pipeline a config overlay of
+
+```yaml
+inputs:
+  - name: ingest
+    metadata: ingest/fauna/results/metadata.tsv
+    sequences: ingest/fauna/results/sequences_{segment}.fasta
+```
+
+Will result in the default inputs being replaced by paths to these local ingest files.
+The search order for local files is:
+  1. Relative to the analysis directory
+  2. Relative to the entry snakefile
+  3. Relative to the `avian-flu` directory
 
 
 ### To modify this build to work with your own data

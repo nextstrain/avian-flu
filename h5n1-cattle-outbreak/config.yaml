@@ -31,8 +31,7 @@ target_sequences_per_tree: 10_000
 
 #### Config files ####
 
-reference: config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
-genome_reference: config/{subtype}/h5_cattle_genome_root.gb
+reference: config/h5n1-cattle-outbreak/reference_{segment}.gb
 auspice_config: config/{subtype}/auspice_config_{subtype}.json
 colors: config/h5n1/colors_h5n1.tsv # use H5N1 colors
 lat_longs: config/h5n1/lat_longs_h5n1.tsv # use H5N1 lat-longs
@@ -105,7 +104,7 @@ refine:
 ancestral:
   inference: joint
   root_seq: 
-    "*/genome/*": config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
+    "*/genome/*": config/h5n1-cattle-outbreak/reference_genome.gb
     "*/*/*": false
 
 traits:

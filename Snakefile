@@ -565,7 +565,7 @@ rule translate:
     input:
         tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = lambda w: resolve_config_path(config['genome_reference'] if w.segment=='genome' else files.reference)(w)
+        reference = lambda w: resolve_config_path(files.reference)(w)
     output:
         node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:

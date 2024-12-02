@@ -38,12 +38,7 @@ rule filter_segments_for_genome:
 rule align_segments_for_genome:
     input:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
-        # Use the H5N1 reference sequences for alignment
-        reference = lambda w: [
-            resolve_config_path(expanded)(w)
-            for expanded in
-            expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
-        ]
+        reference = lambda w: resolve_config_path(files.reference)({'subtype': 'h5n1-cattle-outbreak', 'segment': w.genome_seg, 'time': 'default'})
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:

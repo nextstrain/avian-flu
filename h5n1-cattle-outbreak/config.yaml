@@ -104,8 +104,9 @@ refine:
 
 ancestral:
   inference: joint
-  root_seq: false
-  genome_root_seq: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
+  root_seq: 
+    "*/genome/*": config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
+    "*/*/*": false
 
 traits:
   columns:

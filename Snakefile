@@ -534,12 +534,10 @@ def refined_tree(w):
     return "results/{subtype}/{segment}/{time}/tree.nwk",
 
 def ancestral_root_seq(wildcards):
-    root_seq = resolve_config_value(['ancestral', 'genome_root_seq'], wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value(['ancestral', 'root_seq'], wildcards)
-    if not root_seq:
+    config_value = resolve_config_value(['ancestral', 'root_seq'], wildcards)
+    if not config_value: # falsey values skip the --root-sequence argument
         return ""
-    return f"--root-sequence {resolve_config_path(root_seq)(wildcards)}"
+    return f"--root-sequence {resolve_config_path(config_value)(wildcards)}"
 
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"

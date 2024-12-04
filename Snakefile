@@ -591,6 +591,7 @@ rule refine:
     params:
         coalescent = config['refine']['coalescent'],
         date_inference = config['refine']['date_inference'],
+        timetree = lambda w: "--timetree" if resolve_config_value(['refine', 'timetree'], w) else "",
         clock_rates = refine_clock_rates,
         clock_filter = refine_clock_filter,
         root = lambda w: f"--root {resolve_config_value(['refine', 'root'], w)}" if resolve_config_value(['refine', 'root'], w) else ''
@@ -602,7 +603,7 @@ rule refine:
             --metadata {input.metadata} \
             --output-tree {output.tree} \
             --output-node-data {output.node_data} \
-            --timetree \
+            {params.timetree} \
             {params.root} \
             --coalescent {params.coalescent} \
             --date-confidence \

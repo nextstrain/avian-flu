@@ -1,0 +1,97 @@
+{
+  "title": "Real-time tracking of influenza A/HxN6 evolution",
+  "maintainers": [
+    {"name": "James Hadfield"},
+    {"name": "Nextstrain"}
+  ],
+  "build_url": "https://github.com/nextstrain/avian-flu",
+  "data_provenance": [
+    {
+      "name": "GISAID"
+    }
+  ],
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Genotype",
+      "type": "categorical"
+    },
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
+    },
+    {
+      "key": "date",
+      "title": "Date",
+      "type": "temporal"
+    },
+    {
+      "key": "pathogenicity",
+      "title": "Pathogenicity",
+      "type": "categorical"
+    },
+    {
+      "key": "subtype",
+      "title": "subtype",
+      "type": "categorical"
+    },
+    {
+      "key": "region",
+      "title": "Region",
+      "type": "categorical"
+    },
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
+    },
+    {
+      "key": "division",
+      "title": "Admin Division",
+      "type": "categorical"
+    },
+    {
+      "key": "host",
+      "title": "Host",
+      "type": "categorical"
+    },
+    {
+      "key": "furin_cleavage_motif",
+      "title": "Furin Cleavage Motif",
+      "type": "categorical"
+    },
+    {
+      "key": "cleavage_site_sequence",
+      "title": "Cleavage Site Sequence",
+      "type": "categorical"
+    },
+    {
+      "key": "originating_lab",
+      "title": "Originating Lab",
+      "type": "categorical"
+    },
+    {
+      "key": "submitting_lab",
+      "title": "Submitting Lab",
+      "type": "categorical"
+    }
+  ],
+  "geo_resolutions": [
+    "region",
+    "country",
+    "division"
+  ],
+  "display_defaults": {
+    "map_triplicate": true,
+    "color_by": "pathogenicity",
+    "geo_resolution": "region"
+  },
+  "filters": [
+    "host",
+    "country",
+    "division",
+    "originating_lab",
+    "submitting_lab"
+  ]
+}

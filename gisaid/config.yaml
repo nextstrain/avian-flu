@@ -96,6 +96,8 @@ filter:
     host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
 
 refine:
+  timetree:
+    "*/*/*": true
   coalescent: const
   date_inference: marginal
 

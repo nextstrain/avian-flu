@@ -215,7 +215,11 @@ properties:
       - clock_filter_iqd
       - clock_rates
       - root
+      - timetree
     properties:
+      timetree:
+        title: Infer timetree?
+        <<: *wildcard_param_property
       coalescent:
         title: Coalescent time scale
         description: >

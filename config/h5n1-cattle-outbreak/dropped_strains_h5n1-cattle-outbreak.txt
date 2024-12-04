@@ -63,6 +63,8 @@ A/chicken/Minnesota/24-007263-002/2024
 A/chicken/Minnesota/24-007263-003/2024
 A/chicken/Ohio/24-005334-001/2024
 A/chicken/Ohio/24-005334-002/2024
+A/chicken/OR/24-030904-001-original/2024
+A/chicken/OR/24-030904-002-original/2024
 A/chicken/Oregon/24-007557-001/2024
 A/Chicken/USA/24-005334-001-original/2024
 A/Chicken/USA/24-005334-002-original/2024
@@ -75,6 +77,11 @@ A/Chicken/USA/24-005907-001-original/2024
 A/Chicken/USA/24-007263-002-original/2024
 A/Chicken/USA/24-007263-003-original/2024
 A/Chicken/USA/24-007557-001-original/2024
+A/chicken/WA/24-030039-001/2024
+A/chicken/WA/24-030039-002/2024
+A/chicken/WA/24-031352-001-original/2024
+A/chicken/WA/24-031352-002-original/2024
+A/chicken/WA/24-031352-003-original/2024
 A/commonraven/California/24-007417-001/2024
 A/CommonRaven/USA/24-007417-001-original/2024
 A/crow/Illinois/24-004479-001/2024
@@ -118,6 +125,8 @@ A/GOAT/USA/24-007234-059/2024
 A/goose/OR/24-031478-002-original/2024
 A/greathornedowl/Oregon/24-006223-001/2024
 A/GreatHornedOwl/USA/24-006223-001-original/2024
+A/Guineafowl/WA/24-030328-001-original/2024
+A/Guineafowl/WA/24-030328-002-original/2024
 A/harris-hawk/Utah/24-004080-001/2024
 A/HarrisHawk/USA/24-004080-001-original-repeat2/2024
 A/hoodedmerganser/SouthCarolina/W24-028/2024
@@ -196,8 +205,8 @@ A/Turkey/USA/24-007379-001-original/2024
 A/Turkey/USA/24-007379-002-original/2024
 A/turkeyvulture/California/24-007419-001/2024
 A/TurkeyVulture/USA/24-007419-001-original/2024
-A/Washington/240/2024
 A/Washington/239/2024
+A/Washington/240/2024
 A/Washington/255/2024
 A/Washington/UW32495/2024
 A/westerngull/California/24-004708-001/2024

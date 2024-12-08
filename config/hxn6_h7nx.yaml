@@ -1,0 +1,64 @@
+inputs:
+  - name: gisaid
+    metadata: ingest/fauna/results/metadata.tsv
+    sequences: ingest/fauna/results/sequences_{segment}.fasta
+
+builds:
+  - subtype:
+      - h7nx
+      - hxn6
+    segment:
+      # - pb2
+      # - pb1
+      # - pa
+      # - ha
+      # - np
+      # - na
+      # - mp
+      - ns
+    time: all-time
+
+## HACK! FIXME XXX
+auspice_config: config/{subtype}/auspice_config.json
+reference: config/h7n9/reference_h7n9_{segment}.gb
+colors: config/h7n6/colors_h7n6.tsv
+lat_longs: config/h7n9/lat_longs_h7n9.tsv
+include_strains: config/{subtype}/include_strains.txt
+dropped_strains: config/{subtype}/dropped_strains.txt
+clades_file: clade-labeling/{subtype}-clades.tsv # TODO XXX -- should drop this! But I think it's required. BUG.
+description: config/description_gisaid.md
+
+### TODO
+# fix the clock?
+
+subtype_lookup:
+  h7nx: ['h7n1', 'h7n2', 'h7n3', 'h7n4', 'h7n5', 'h7n6', 'h7n7', 'h7n8', 'h7n9', 'h7n10', 'h7n11']
+  hxn6: ['h1n6', 'h2n6', 'h3n6', 'h4n6', 'h5n6', 'h6n6', 'h7n6', 'h8n6', 'h9n6', 'h10n6', 'h11n6', 'h12n6', 'h13n6', 'h14n6', 'h15n6', 'h16n6', 'h17n6', 'h18n6']
+
+filter: 
+  target_sequences_per_tree: 10_000 # FIXME XXX - there's circa 7k sequences so we can build em all
+  min_date:
+    "h7nx/*/all-time": 1900
+    "hxn6/*/all-time": 1900
+  min_length:
+    "hxn6/ns/*": 600 # NZ sequence is short here...
+    "h7nx/ns/*": 600 # NZ sequence is short here...
+  group_by:
+    "h7nx/*/*": subtype
+    "hxn6/*/*": subtype
+  exclude_where:
+    host=laboratoryderived # can't use an empty string...
+
+refine:
+  timetree:
+    "h7nx/*/*": false
+    "hxn6/*/*": false
+  root:
+    "h7nx/*/*": mid_point
+    "hxn6/*/*": mid_point
+  # clock_filter_iqd:
+  #   "h7nx/*/*": ""
+traits:
+  columns:
+    "h7nx/*/*": region
+    "hxn6/*/*": region

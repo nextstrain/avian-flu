@@ -1,0 +1,27 @@
+inputs:
+  - name: gisaid
+    metadata: ingest/fauna/results/metadata.tsv
+    sequences: ingest/fauna/results/sequences_{segment}.fasta
+
+builds:
+  - subtype: h7n6
+    segment: ['pb2', 'pb1', 'pa', 'ha', 'np', 'na', 'mp', 'ns']
+    time: all-time
+
+subtype_lookup:
+  h7n6: ['h7n6']
+
+filter: 
+  min_date:
+    "h7n6/*/all-time": 1900
+  group_by:
+    "h7n6/*/*": subtype
+  exclude_where:
+    host=laboratoryderived # can't use an empty string...
+
+refine:
+  clock_filter_iqd:
+    "h7n6/*/*": ""
+traits:
+  columns:
+    "h7n6/*/*": region

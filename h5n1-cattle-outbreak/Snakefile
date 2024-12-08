@@ -1,4 +1,6 @@
 include: "../Snakefile"
 
+include: "cattle-flu.smk"
+
 rule _all:
     input: rules.all.input

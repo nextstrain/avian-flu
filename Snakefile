@@ -732,4 +732,5 @@ rule clean:
 
 
 for rule_file in config.get('custom_rules', []):
-    include: rule_file
+    # Relative custom rule paths in the config are expected to be relative to the analysis (working) directory
+    include: os.path.join(os.getcwd(), rule_file)

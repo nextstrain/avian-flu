@@ -1,12 +1,3 @@
-# NOTE: The h5n1-cattle-outbreak builds use a specific rule-file (specified within this config)
-# and that rule file may have some config-like parameters within it.
-# If you are extending this workflow via a --configfile overlay you and you want to add
-# your own custom rule you will need to include "rules/cattle-flu.smk" as an element in the
-# list in your overlay, as lists are not merged when configs are combined.
-custom_rules:
-  - "rules/cattle-flu.smk"
-
-
 #### Parameters which define which builds to produce via this config ###
 builds:
   h5n1-cattle-outbreak: ''

@@ -8,6 +8,75 @@ wildcard_constraints:
 SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 #SUBTYPES = ["h5n1", "h5nx", "h7n9", "h9n2"]
 
+CURRENT_BASEDIR = workflow.current_basedir # TODO XXX store this value here - can't access within functions because workflow.included_stack is empty
+
+# Load the base config.yaml relative to the entry snakefile (i.e. not this snakefile)
+if os.path.exists(os.path.join(workflow.basedir, 'config.yaml')):
+    configfile: os.path.join(workflow.basedir, 'config.yaml')
+
+# load a config.yaml file if it exists in the current working directory
+if os.path.exists("config.yaml"):
+    configfile: "config.yaml"
+
+from pprint import pp; pp(config, stream=sys.stderr) # TODO XXX remove
+
+class InvalidConfigError(Exception):
+    pass
+
+def resolve_config_path(path):
+    """
+    Resolve a relative *path* given in a configuration value. Returns a
+    function which takes a single argument *wildcards* and returns the resolved
+    path with any '{x}' substrings are replaced by their corresponding wildcards
+    filled in
+
+    Search order (first match returned):
+    1. Relative to the analysis directory
+    2. Relative to the directory the entry snakefile was in. Typically this is
+       not the Snakefile you are looking at now but (e.g.) the one in
+       avian-flu/gisaid
+    3. Relative to where this Snakefile is (i.e. `avian-flu/`)
+    """
+    if not isinstance(path, str):
+        raise InvalidConfigError(f"Config path provided to resolve_config_path must be a string. Provided value: {str(path)}")
+
+    def resolve(wildcards):
+        try:
+            path_expanded = expand(path, **wildcards)[0]
+        except snakemake.exceptions.WildcardError as e:
+            # str(e) looks like "No values given for wildcard 'subtypes'."
+            raise InvalidConfigError(f"resolve_config_path called with path {path!r} however {str(e)}")
+
+        # check if the path exists relative to the working directory
+        if os.path.exists(path_expanded):
+            # return an absolute path so that we can use it in different contexts within snakemake
+            # e.g. snakemake interprets paths in rules as relative to the working directory but
+            # the "include" directive treats them as relative to the calling snakefile
+            return os.path.join(os.getcwd(), path_expanded)
+
+        # Check if the path exists relative to the subdir where the entry snakefile is
+        # (e.g. avian-flu/gisaid). If you want to use further subdirectories (e.g. avian-flu/gisaid/config/x.tsv)
+        # you're expected to supply the 'config/x.tsv' as the value in the config YAML
+        # NOTE: this means analysis directory overrides have to use that same 'config/x.tsv' structure, but
+        # given the different directories avian-flu uses that's acceptable. In other words, if we standardised
+        # avian-flu then we could add subdirectories to the search order here
+        basepath = os.path.join(workflow.basedir, path_expanded)
+        if os.path.exists(basepath):
+            return basepath
+
+        # Check if the path exists relative to where _this_ snakefile is, i.e. relative to `avian-flu/`.
+        if workflow.basedir != CURRENT_BASEDIR:
+            basepath = os.path.join(CURRENT_BASEDIR, path_expanded)
+            if os.path.exists(basepath):
+                return basepath
+
+        raise InvalidConfigError(f"Unable to resolve the config-provided path {path!r}, expanded to {path_expanded!r} after filling in wildcards. "
+            f"The following directories were searched:\n"
+            f"\t1. {os.path.abspath(os.curdir)} (current working directory)\n"
+            f"\t2. {workflow.basedir} (where the entry snakefile is)\n"
+            f"\t3. {CURRENT_BASEDIR} (where the main avian-flu snakefile is)\n")
+    return resolve
+
 # The config option `same_strains_per_segment=True'` (e.g. supplied to snakemake via --config command line argument)
 # will change the behaviour of the workflow to use the same strains for each segment. This is achieved via these steps:
 # (1) Filter the HA segment as normal plus filter to those strains with 8 segments
@@ -19,6 +88,14 @@ S3_SRC = config.get('s3_src', {})
 LOCAL_INGEST = config.get('local_ingest', None)
 
 def sanity_check_config():
+    if not len(config.keys()):
+        print("-"*80 + "\nNo config loaded!", file=sys.stderr)
+        print("Avian-flu is indented to be run from the snakefile inside a subdir " 
+            "(e.g. gisaid/Snakefile) which will pick up the default configfile for that workflow. " 
+            "Alternatively you can pass in the config via `--configfile`", file=sys.stderr)
+        print("-"*80, file=sys.stderr)
+        raise InvalidConfigError("No config")
+
     assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
     # NOTE: we could relax the following exclusivity of S3_SRC and LOCAL_INGEST
     # if we want to use `--config local_ingest=gisaid` overrides.
@@ -52,6 +129,7 @@ rule all:
 
 
 # This must be after the `all` rule above since it depends on its inputs
+# Note this is relative to the `workflow.current_basedir`
 include: "rules/deploy.smk"
 
 rule test_target:
@@ -60,6 +138,8 @@ rule test_target:
     """
     input: "auspice/avian-flu_h5n1_ha_all-time.json"
 
+# TODO - I find this indirection more confusing than helpful and I'd rather just
+# specify `config['colors']` in the rules which use it (e.g.)
 rule files:
     params:
         dropped_strains = config['dropped_strains'],
@@ -211,12 +291,14 @@ rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
         metadata = "results/{subtype}/metadata.tsv",
-        clades_file = files.clades_file
+        clades_file = resolve_config_path(files.clades_file)
     output:
         metadata= "results/{subtype}/metadata-with-clade.tsv"
+    params:
+        script = os.path.join(workflow.current_basedir, "clade-labeling/add-clades.py")
     shell:
-        """
-        python clade-labeling/add-clades.py \
+        r"""
+        python {params.script} \
             --metadata {input.metadata} \
             --output {output.metadata} \
             --clades {input.clades_file}
@@ -269,8 +351,8 @@ rule filter:
     input:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
         metadata = metadata_by_wildcards,
-        exclude = files.dropped_strains,
-        include = files.include_strains,
+        exclude = resolve_config_path(files.dropped_strains),
+        include = resolve_config_path(files.include_strains),
         strains = lambda w: f"results/{w.subtype}/ha/{w.time}/filtered.txt" if (SAME_STRAINS and w.segment!='ha') else [],
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered.fasta",
@@ -301,7 +383,7 @@ rule align:
         """
     input:
         sequences = rules.filter.output.sequences,
-        reference = files.reference
+        reference = resolve_config_path(files.reference)
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
     wildcard_constraints:
@@ -400,7 +482,9 @@ def ancestral_root_seq(wildcards):
     root_seq = get_config('ancestral', 'genome_root_seq', wildcards) \
         if wildcards.segment=='genome' \
         else get_config('ancestral', 'root_seq', wildcards)
-    return f"--root-sequence {root_seq}" if root_seq else ""
+    if not root_seq:
+        return ""
+    return f"--root-sequence {resolve_config_path(root_seq)(wildcards)}"
 
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
@@ -428,7 +512,7 @@ rule translate:
     input:
         tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = lambda w: config['genome_reference'] if w.segment=='genome' else files.reference
+        reference = lambda w: resolve_config_path(config['genome_reference'] if w.segment=='genome' else files.reference)(w)
     output:
         node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:
@@ -487,9 +571,11 @@ rule cleavage_site:
     output:
         cleavage_site_annotations = "results/{subtype}/ha/{time}/cleavage-site.json",
         cleavage_site_sequences = "results/{subtype}/ha/{time}/cleavage-site-sequences.json"
+    params:
+        script = os.path.join(workflow.current_basedir, "scripts/annotate-ha-cleavage-site.py")
     shell:
         """
-        python scripts/annotate-ha-cleavage-site.py \
+        python {params.script} \
             --alignment {input.alignment} \
             --furin_site_motif {output.cleavage_site_annotations} \
             --cleavage_site_sequence {output.cleavage_site_sequences}
@@ -529,7 +615,7 @@ rule auspice_config:
     If we implement config overlays in augur this rule will become unnecessary.
     """
     input:
-        auspice_config = files.auspice_config,
+        auspice_config = resolve_config_path(files.auspice_config),
     output:
         auspice_config = "results/{subtype}/{segment}/{time}/auspice-config.json",
     run:
@@ -554,7 +640,7 @@ rule auspice_config:
 
 rule colors:
     input:
-        colors = files.colors,
+        colors = resolve_config_path(files.colors),
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     shell:
@@ -572,9 +658,9 @@ rule export:
         metadata = rules.filter.output.metadata,
         node_data = export_node_data_files,
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
-        lat_longs = files.lat_longs,
+        lat_longs = resolve_config_path(files.lat_longs),
         auspice_config = rules.auspice_config.output.auspice_config,
-        description = files.description
+        description = resolve_config_path(files.description),
     output:
         auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"
     params:
@@ -644,4 +730,4 @@ rule clean:
 
 
 for rule_file in config.get('custom_rules', []):
-    include: rule_file
+    include: resolve_config_path(rule_file)({})

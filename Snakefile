@@ -203,7 +203,9 @@ def refine_clock_rates(w):
     return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"
 
 def refine_clock_filter(w):
-    filter = get_config('refine', 'clock_filter_iqd', w)
+    filter = get_config('refine', 'genome_clock_filter_iqd', w) \
+        if w.segment=='genome' \
+        else get_config('refine', 'clock_filter_iqd', w)
     return f"--clock-filter-iqd {filter}" if filter else ""
 
 

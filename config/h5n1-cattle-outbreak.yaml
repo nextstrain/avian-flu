@@ -75,6 +75,8 @@ refine:
   coalescent: const
   date_inference: marginal
 
+  genome_clock_filter_iqd:
+    FALLBACK: 3
   clock_filter_iqd:
     FALLBACK: false
 

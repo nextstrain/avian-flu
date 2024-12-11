@@ -64,7 +64,8 @@ rule join_segments:
     # allow snakemake to choose the correct rule to run. Note that `wildcards.segment="genome"`
     # here, and for that we need alignments for 8 individual segments, which we refer to as `wildcards.genome_seg`
     input:
-        alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
+        alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS),
+        metadata = metadata_by_wildcards,
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
         node_data = "results/{subtype}/{segment}/{time}/aligned.json",
@@ -77,7 +78,8 @@ rule join_segments:
         python scripts/join-segments.py \
             --segments {input.alignment} \
             --output {output.alignment} \
-            --output-node-data {output.node_data}
+            --output-node-data {output.node_data} \
+            --force-include $( cat {input.metadata} | csvtk filter2 -t -f '$host=="Human"' | csvtk cut -t -f strain | tail -n +2 | tr "\n" " " )
         """
 
 rule genome_metadata:

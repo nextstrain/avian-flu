@@ -8,6 +8,8 @@ import json
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--segments', type = str, required = True, nargs='+', help = "per-segment alignments")
+    parser.add_argument('--force-include', type=str, nargs="+", required=False,
+                        help="Force include these strains regardless of how many segments have been sequenced")
     parser.add_argument('--output', type = str, required = True, help = "output whole genome alignment")
     parser.add_argument('--output-node-data', type = str, required = False, help = "output metadata in node-data JSON format")
     args = parser.parse_args()
@@ -51,8 +53,11 @@ if __name__ == '__main__':
         print("writing genome to ", args.output)
         for name,count in strain_counts.items():
             if count<7:
-                print(f"Excluding {name} as it only appears in {count} segments")
-                continue
+                if name in args.force_include:
+                    print(f"Force including {name} which would otherwise be dropped as it only appears in {count} segments")
+                else:
+                    print(f"Excluding {name} as it only appears in {count} segments")
+                    continue
             genome = "".join([sequence(seg, name) for seg in args.segments])
             node_data['nodes'][name] = {
                 "ATGC_perc": int( len([nt for nt in genome if nt in atgc])/len(genome) * 100),

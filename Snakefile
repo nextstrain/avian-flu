@@ -507,8 +507,11 @@ def export_node_data_files(wildcards):
         rules.cleavage_site.output.cleavage_site_sequences,
     ]
 
-    if wildcards.subtype=="h5n1-cattle-outbreak" and wildcards.segment!='genome':
-        nd.append(rules.prune_tree.output.node_data)
+    if wildcards.subtype=="h5n1-cattle-outbreak":
+        if wildcards.segment!='genome':
+            nd.append(rules.prune_tree.output.node_data)
+        else:
+            nd.append(rules.join_segments.output.node_data)
     return nd
 
 

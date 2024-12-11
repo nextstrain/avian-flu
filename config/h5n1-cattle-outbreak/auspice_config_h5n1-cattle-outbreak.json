@@ -55,6 +55,16 @@
       "type": "continuous"
     },
     {
+      "key": "ATGC_perc",
+      "title": "genome ATGC%",
+      "type": "continuous"
+    },
+    {
+      "key": "num_segments",
+      "title": "Num segments sequenced",
+      "type": "ordinal"
+    },
+    {
       "key": "region",
       "title": "Region",
       "type": "categorical"

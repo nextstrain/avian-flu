@@ -66,7 +66,8 @@ rule join_segments:
     input:
         alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
     output:
-        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
+        node_data = "results/{subtype}/{segment}/{time}/aligned.json",
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak',
         segment = 'genome',
@@ -75,7 +76,8 @@ rule join_segments:
         """
         python scripts/join-segments.py \
             --segments {input.alignment} \
-            --output {output.alignment}
+            --output {output.alignment} \
+            --output-node-data {output.node_data}
         """
 
 rule genome_metadata:

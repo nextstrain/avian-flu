@@ -1,9 +1,3 @@
-# NOTE: The h5n1-cattle-outbreak builds use a specific rule-file (specified within this config)
-# and that rule file may have some config-like parameters within it.
-custom_rules:
-  - "rules/cattle-flu.smk"
-
-
 #### Parameters which define which builds to produce via this config ###
 builds:
   h5n1-cattle-outbreak: ''
@@ -36,6 +30,7 @@ target_sequences_per_tree: 10_000
 
 
 #### Config files ####
+
 reference: config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
 genome_reference: config/{subtype}/h5_cattle_genome_root.gb
 auspice_config: config/{subtype}/auspice_config_{subtype}.json

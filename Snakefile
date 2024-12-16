@@ -15,19 +15,6 @@ SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
 NEXTSTRAIN_PUBLIC_BUCKET = "s3://nextstrain-data/"
-S3_SRC = config.get('s3_src', {})
-LOCAL_INGEST = config.get('local_ingest', None)
-
-def sanity_check_config():
-    assert LOCAL_INGEST or S3_SRC, "The config must define either 's3_src' or 'local_ingest'"
-    # NOTE: we could relax the following exclusivity of S3_SRC and LOCAL_INGEST
-    # if we want to use `--config local_ingest=gisaid` overrides.
-    assert not (S3_SRC and LOCAL_INGEST), "The config defined both 'local_ingest' and 's3_src', which are mutually exclusive"
-    if S3_SRC:
-        assert isinstance(S3_SRC, dict) and all([k in S3_SRC for k in ("name", "sequences", "metadata")]), \
-            "Config 's3_src' must be a dict with 'name', 'sequences' and 'metadata' keys"
-
-sanity_check_config()
 
 def collect_builds():
     """
@@ -87,43 +74,156 @@ def subtypes_by_subtype_wildcard(wildcards):
         "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
     return(db[wildcards.subtype])
 
-rule download_sequences:
+class InvalidConfigError(Exception):
+    pass
+
+# ------------- helper functions to collect, merge & download input files ------------------- #
+
+def _input_info(name, address, is_metadata=False, segment=None):
+    assert (is_metadata and not segment) or (segment and not is_metadata), "Workflow bug"
+
+    # Address may include the '{segment}' wildcard
+    formatted_address = address.format(segment=segment) \
+        if (segment and '{segment}' in address) \
+        else address
+
+    # addresses may be a remote filepath or a local file
+    if address.startswith('s3://'):
+        # path defines the location of the downloaded file (i.e. produced by a download rule)
+        path = f"data/{name}/metadata.tsv" \
+            if is_metadata \
+            else f"data/{name}/sequences_{segment}.fasta"
+    elif address.lower().startswith(r'http[s]:\/\/'):
+        raise InvalidConfigError("Workflow cannot yet handle HTTP[S] inputs")
+    else:
+        path = formatted_address
+
+    return {
+        'name': name,
+        'path': path,
+        'merge_arg': f"{name}={path}",
+        'address': formatted_address
+    }
+
+def gather_inputs(is_metadata=False, segment=None):
+    """
+    Gather all available inputs for metadata or a given segment. Returns all applicable inputs as a list
+    of dictionaries. See `_input_info` for the dictionary structure.
+    """
+    assert (is_metadata and not segment) or (segment and not is_metadata), "Workflow bug"
+    inputs = [*config['inputs'], *config.get('additional_inputs', [])]
+
+    # Some of these checks can be removed once we have a schema and enforce it
+    if len(inputs)==0:
+        raise InvalidConfigError("Config must define at least one element in 'inputs' or 'additional_inputs' lists")
+    if not all([isinstance(el, dict) for el in inputs]):
+        raise InvalidConfigError("All of the elements in the config's 'inputs' or 'additional_inputs' lists must be dictionaries. "
+            "If you've used a command line '--config' double check your quoting.")
+    if not all(['name' in el for el in inputs]): # can be removed once schema validation is in place
+        raise InvalidConfigError("Config elements in 'inputs' or 'additional_inputs' lists must each specify a 'name'")
+    if len({el['name'] for el in inputs})!=len(inputs):
+        raise InvalidConfigError("Names of inputs ('inputs' and 'additional_inputs') must be unique")
+    if is_metadata and len([el for el in inputs if 'metadata' in el])==0:
+        raise InvalidConfigError("Config must define at least one element in 'inputs' or 'additional_inputs' lists with metadata")
+    if segment and len([el for el in inputs if 'sequences' in el])==0:
+        raise InvalidConfigError("Config must define at least one element in 'inputs' or 'additional_inputs' lists with sequences")
+        
+    if is_metadata:
+        return [
+            _input_info(el['name'], el['metadata'], is_metadata=True)
+            for el in inputs
+            if 'metadata' in el
+        ]
+
+    sequence_addresses = [
+        (el['name'], el['sequences'] if isinstance(el['sequences'], str) else el['sequences'].get(segment, None))
+        for el in inputs
+        if 'sequences' in el
+    ]
+    sequence_addresses = [pair for pair in sequence_addresses if pair[1] is not None]
+    if len(sequence_addresses)==0:
+        raise InvalidConfigError(f"Config must define at least one sequence for segment {segment!r} in inputs / additional_inputs.")
+    return [_input_info(*pair, segment=segment) for pair in sequence_addresses]
+
+def input_name_to_address(name, is_metadata=False, segment=None):
+    """
+    Helper function to return the address behind a particular input's 'name'
+    """
+    return [el for el in gather_inputs(is_metadata, segment) if el['name']==name][0]['address']
+
+def input_metadata(wildcards):
+    metadata = gather_inputs(is_metadata=True)
+    if len(metadata)==1:
+        return metadata[0]['path']
+    return "results/metadata_merged.tsv"
+
+
+def input_sequences(wildcards):
+    sequences = gather_inputs(segment=wildcards.segment)
+    if len(sequences)==1:
+        return sequences[0]['path']
+    return "results/sequences_merged_{segment}.fasta"
+
+rule download_s3_sequences:
     output:
-        sequences = f"data/{S3_SRC.get('name', None)}/sequences_{{segment}}.fasta",
+        sequences = "data/{input_name}/sequences_{segment}.fasta",
     params:
-        address=lambda w: S3_SRC.get('sequences', None).format(segment=w.segment),
-        no_sign_request=lambda w: "--no-sign-request" if S3_SRC.get('sequences', "").startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
+        address=lambda w: input_name_to_address(w.input_name, segment=w.segment),
+        no_sign_request=lambda w: "--no-sign-request" \
+            if input_name_to_address(w.input_name, segment=w.segment).startswith(NEXTSTRAIN_PUBLIC_BUCKET) \
+            else "",
     shell:
         """
         aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.sequences}
         """
 
-rule download_metadata:
+rule download_s3_metadata:
     output:
-        metadata = f"data/{S3_SRC.get('name', None)}/metadata.tsv",
+        metadata = "data/{input_name}/metadata.tsv",
     params:
-        address=S3_SRC.get('metadata', None),
-        no_sign_request=lambda w: "--no-sign-request" if S3_SRC.get('metadata', "").startswith(NEXTSTRAIN_PUBLIC_BUCKET) else ""
+        address=lambda w: input_name_to_address(w.input_name, is_metadata=True),
+        no_sign_request=lambda w: "--no-sign-request" \
+            if input_name_to_address(w.input_name, is_metadata=True).startswith(NEXTSTRAIN_PUBLIC_BUCKET) \
+            else "",
     shell:
         """
         aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.metadata}
         """
 
+rule merge_metadata: 
+    """
+    This rule should only be invoked if there are multiple defined metadata inputs
+    (config.inputs + config.additional_inputs)
+    """
+    input:
+        metadata = [el['path'] for el in gather_inputs(is_metadata=True)]
+    params:
+        metadata = " ".join([el['merge_arg'] for el in gather_inputs(is_metadata=True)])
+    output:
+        metadata = "results/metadata_merged.tsv"
+    shell:
+        r"""
+        augur merge \
+            --metadata {params.metadata} \
+            --source-columns 'input_{{NAME}}' \
+            --output-metadata {output.metadata}
+        """
 
-def input_metadata(wildcards):
-    if S3_SRC:
-        return f"data/{S3_SRC['name']}/metadata.tsv",
-    elif LOCAL_INGEST:
-        return f"ingest/{LOCAL_INGEST}/results/metadata.tsv",
-    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
+rule merge_sequences: 
+    """
+    This rule should only be invoked if there are multiple defined metadata inputs
+    (config.inputs + config.additional_inputs) for this particular segment
+    """
+    input:
+        sequences = lambda w: [el['path'] for el in gather_inputs(segment=w.segment)]
+    output:
+        sequences = "results/sequences_merged_{segment}.fasta"
+    shell:
+        r"""
+        seqkit rmdup {input.sequences} > {output.sequences}
+        """
 
-def input_sequences(wildcards):
-    if S3_SRC:
-        return f"data/{S3_SRC['name']}/sequences_{wildcards.segment}.fasta",
-    elif LOCAL_INGEST:
-        return f"ingest/{LOCAL_INGEST}/results/sequences_{wildcards.segment}.fasta"
-    raise Exception() # already caught by `sanity_check_config` above, this is just being cautious
-
+# -------------------------------------------------------------------------------------------- #
 
 rule filter_sequences_by_subtype:
     input:

@@ -108,32 +108,90 @@ Note that you may need to remove any existing data in `results/` in order for sn
 
 #### Using locally ingested data (instead of downloading from S3)
 
-Run the pipeline with `--config 'local_ingest=True'` to use the locally available files produced by the ingest pipeline (see `./ingest/README.md` for details on how to run).
-Specifically, the files needed are `ingest/results/metadata.tsv` and `ingest/results/sequences_{SEGMENT}.fasta`.
+If you have run the fauna ingest pipeline locally, you will have files such as
+```
+ingest/fauna/results/
+├── metadata.tsv
+├── sequences_ha.fasta
+├── sequences_mp.fasta
+├── sequences_na.fasta
+├── sequences_np.fasta
+├── sequences_ns.fasta
+├── sequences_pa.fasta
+├── sequences_pb1.fasta
+└── sequences_pb2.fasta
+```
+
+Running with `--config 'inputs=[{"name": "local-ingest", "metadata": "ingest/fauna/results/metadata.tsv", "sequences": "ingest/fauna/results/sequences_{segment}.fasta"}]'` will switch the default S3 source to the local paths listed above.
+Alternatively, you can use a config overlay YAML and supply it via `--configfile`:
+
+```yaml
+inputs:
+  - name: local-ingest
+    metadata: ingest/fauna/results/metadata.tsv
+    sequences: ingest/fauna/results/sequences_{segment}.fasta
+```
 
 
-### To modify this build to work with your own data
+For the **h5n1-cattle-outbreak** the approach is similar, but you'll want to replace "fauna" with "joined-ncbi", "ncbi" or "andersen-lab", as appropriate.
+
+## To modify this build to work with your own data
 Although the simplest way to generate a custom build is via the quickstart build, you are welcome to clone this repo and use it as a starting point for running your own, local builds if you'd like. The [Nextstrain docs](https://docs.nextstrain.org/en/latest/index.html) are a fantastic resource for getting started with the Nextstrain pipeline, and include some [great tutorials](https://docs.nextstrain.org/en/latest/install.html) to get you started. This build is slightly more complicated than other builds, and has a few custom functions in it to accommodate all the features on [nextstrain.org](https://nextstrain.org/avian-flu), and makes use of wildcards for both subtypes and gene segments. If you'd like to adapt this full, non-simplified pipeline here to your own data (which you may want to do if you also want to annotate clades), you would need to make a few changes and additions:
 
 
-#### 1. Data is stored on a private S3 bucket
+### Use additional metadata and/or sequences
 
-The phylogenetics pipeline starts by downloading data from a private S3 bucket.
-If you don't have credentials for this bucket you can run the build using the example data provided in this repository.
-Before running the build, copy the example sequences and metadata into the `data/` directory like so:
+Using a config YAML provided via `--configfile`, or the same data via `--config` you can supply additional inputs.
+For instance, this repo has a small set of example metadata + HA sequences.
+We could add these to the default inputs via:
 
-```bash
-mkdir -p data/
-cp -r -v example_data/* data/
+```yaml
+additional_inputs:
+  - name: example-data
+    metadata: example_data/gisaid/metadata.tsv
+    sequences:
+        ha: example_data/gisaid/sequences_ha.fasta
 ```
 
-Then run the build with the test target, a H5N1 HA "all time" tree:
+Which will merge `example_data/gisaid/metadata.tsv` with the default metadata, and add the sequences from `example_data/gisaid/sequences_ha.fasta` to the default HA sequences (all other segments will just use the default sequences).
+
+If you had sequences for each segment you could use a wildcard for the segment like so:
+
+```yaml
+additional_inputs:
+  - name: example-data
+    metadata: example_data/gisaid/metadata.tsv
+    sequences: example_data/gisaid/sequences_{segment}.fasta
+```
+
+
+> NOTE: These added data will be subject to the same filtering rules as the starting data.
+  At a minimum, you'll want to ensure new sequences have metadata which defines their subtype and date, as filter steps will prune out those without valid values here.
+
+> NOTE: Metadata merging is via `augur merge` and we add a column per input source to indicate the origin of data.
+  For instance the above example would have a `input_example-data` column with values of `1` for metadata rows which were included in `example_data/gisaid/metadata.tsv` and `0` otherwise.
+  You can use this for additional filtering commands as needed.
+
+
+### Replace the starting metadata and sequences
+
+Using the same approach as above but replacing `additional_inputs` with `inputs` will replace the default inputs.
+See "Using locally ingested data (instead of downloading from S3)" (above) for an example of this.
+
+
+### Run a single H5N1 HA all-time analysis
+
+There is a `test_target` rule which will produce a single H5N1 HA "all-time" tree.
+You can combine this with the example data (see above) to run a single build using a small number of sequences:
+
 
 ``` bash
-snakemake test_target
+snakemake --cores 2 \
+    --configfile config/gisaid.yaml \
+    --config 'inputs=[{"name": "example", "metadata": "example_data/gisaid/metadata.tsv", "sequences": "example_data/gisaid/sequences_{segment}.fasta"}]' \
+    -pf test_target
 ```
 
-If you'd like to consistently run your own data, then you can place your fasta file in `data`. Alternatively, you can alter the `Snakefile` to remove references to S3 and add paths to your own files (see rules `download_sequences` and `download_metadata`).
+### clade labeling
 
-#### 2. clade labeling
 If you'd like to run clade labeling, you will need to install [LABEL](https://wonder.cdc.gov/amd/flu/label/) yourself. This pipeline assumes that LABEL is located in `avian-flu/flu-amd/`, and should work if you install it into the `avian-flu` directory. If you do not need to label clades, then you can delete `rule add_h5_clade`, the function `metadata_by_wildcards`. You will need to make sure that all references to `metadata` in the pipeline are referencing `metadata_subtype_segment`, not `metadata-with-clade_subtype_segment`, which is generated by `rule add_h5_clade` and adds a new column to the metadata file with clade information.

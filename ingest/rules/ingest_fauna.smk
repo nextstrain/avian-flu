@@ -34,7 +34,7 @@ rule parse_segment:
         sequences = "fauna/results/sequences_{segment}.fasta",
         metadata = "fauna/data/metadata_{segment}.tsv",
     params:
-        fasta_fields =  "strain virus isolate_id date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade",
+        fasta_fields =  "strain virus isolate_id date region country division location host domestic_status subtype originating_lab submitting_lab authors PMID gisaid_clade h5_clade pathogenicity",
         prettify_fields = "region country division location host originating_lab submitting_lab authors PMID"
     shell:
         """

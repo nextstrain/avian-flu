@@ -37,7 +37,10 @@ Cygnus olor	Avian
 Dairy cattle	Cattle
 domestic cat	Nonhuman Mammal
 domestic-cat	Nonhuman Mammal
+Dromaius novaehollandiae	Avian
 duck	Avian
+EMU	Avian
+Emu	Avian
 environment	Environment
 EURASIAN COLLARED DOVE	Avian
 Falco peregrinus	Avian
@@ -78,9 +81,11 @@ Quiscalus quiscula	Avian
 raccoon	Nonhuman Mammal
 red fox	Nonhuman Mammal
 red tailed hawk	Avian
+Rock Pigeon	Avian
 skunk	Nonhuman Mammal
 snow goose	Avian
 Streptopelia decaocto	Avian
+tiger	Nonhuman Mammal
 Turdus merula	Avian
 turkey	Avian
 turkey vulture	Avian
@@ -89,9 +94,5 @@ Vulpes vulpes	Nonhuman Mammal
 western gull	Avian
 western kingbird	Avian
 western sandpiper	Avian
-Wild-Bird	Avian
-EMU	Avian
-Emu	Avian
-Dromaius novaehollandiae	Avian
 White-winged Dove	Avian
-Rock Pigeon	Avian
+Wild-Bird	Avian

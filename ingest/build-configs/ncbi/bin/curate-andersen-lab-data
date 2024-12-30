@@ -7,9 +7,11 @@ Parses NDJSON record from stdin and outputs new record to stdout.
 """
 import copy
 import json
+import re
 from datetime import datetime
 from enum import Enum
 from sys import stdin, stdout, stderr
+from augur.curate.parse_genbank_location import parse_location
 
 
 NEXTSTRAIN_RECORD = {
@@ -45,8 +47,13 @@ def create_new_record(anderson_record: dict) -> dict:
     new_record['sra_accessions'] = anderson_record['Run']
     new_record['region'] = anderson_record['geo_loc_name_country_continent']
     new_record['country'] = anderson_record['geo_loc_name_country']
-    new_record['division'] = anderson_record.get('US State', '')
-    new_record['location'] = anderson_record.get('US State', '')
+    # Parse the geolocation as the GenBank format `country:division,location`
+    new_record = parse_location(new_record, 'country')
+    # Try to fill `US State` if division and location were not parsed
+    if new_record['division'] == '':
+        new_record['division'] = anderson_record.get('US State', '')
+    if new_record['location'] == '':
+        new_record['location'] = anderson_record.get('US State', '')
     new_record['host'] = anderson_record['Host']
     new_record['date_released'] = anderson_record['ReleaseDate']
 
@@ -85,12 +92,18 @@ def construct_strain_name(record: dict, sample_id: str) -> str:
     to include host, country, and year.
 
     Removes all spaces in the constructed strain name because they are not
-    allowed in the downstream phylogenetic workflow.
+    allowed in the downstream phylogenetic workflow. Also replaces invalid
+    characters with `_` to match iqtree¹ so augur tree will not modify strain
+    names and cause a mismatch between the tree and the alignment FASTA.²
+
+    ¹ <https://github.com/iqtree/iqtree2/blob/74da454bbd98d6ecb8cb955975a50de59785fbde/utils/tools.cpp#L607>
+    ² <https://github.com/nextstrain/avian-flu/issues/113>
     """
     host = record['host']
     country = record['country']
     year = parse_year(record['date'])
-    return f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
+    strain = f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
+    return re.sub(r'[^\w\_\-\.\|\/]', '_', strain)
 
 
 def parse_year(date_string: str) -> str:

@@ -7,6 +7,7 @@ Parses NDJSON record from stdin and outputs new record to stdout.
 """
 import copy
 import json
+import re
 from datetime import datetime
 from enum import Enum
 from sys import stdin, stdout, stderr
@@ -85,12 +86,18 @@ def construct_strain_name(record: dict, sample_id: str) -> str:
     to include host, country, and year.
 
     Removes all spaces in the constructed strain name because they are not
-    allowed in the downstream phylogenetic workflow.
+    allowed in the downstream phylogenetic workflow. Also replaces invalid
+    characters with `_` to match iqtree¹ so augur tree will not modify strain
+    names and cause a mismatch between the tree and the alignment FASTA.²
+
+    ¹ <https://github.com/iqtree/iqtree2/blob/74da454bbd98d6ecb8cb955975a50de59785fbde/utils/tools.cpp#L607>
+    ² <https://github.com/nextstrain/avian-flu/issues/113>
     """
     host = record['host']
     country = record['country']
     year = parse_year(record['date'])
-    return f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
+    strain = f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
+    return re.sub(r'[^\w\_\-\.\|\/]', '_', strain)
 
 
 def parse_year(date_string: str) -> str:

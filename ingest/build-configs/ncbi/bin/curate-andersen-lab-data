@@ -11,6 +11,7 @@ import re
 from datetime import datetime
 from enum import Enum
 from sys import stdin, stdout, stderr
+from augur.curate.parse_genbank_location import parse_location
 
 
 NEXTSTRAIN_RECORD = {
@@ -46,8 +47,13 @@ def create_new_record(anderson_record: dict) -> dict:
     new_record['sra_accessions'] = anderson_record['Run']
     new_record['region'] = anderson_record['geo_loc_name_country_continent']
     new_record['country'] = anderson_record['geo_loc_name_country']
-    new_record['division'] = anderson_record.get('US State', '')
-    new_record['location'] = anderson_record.get('US State', '')
+    # Parse the geolocation as the GenBank format `country:division,location`
+    new_record = parse_location(new_record, 'country')
+    # Try to fill `US State` if division and location were not parsed
+    if new_record['division'] == '':
+        new_record['division'] = anderson_record.get('US State', '')
+    if new_record['location'] == '':
+        new_record['location'] = anderson_record.get('US State', '')
     new_record['host'] = anderson_record['Host']
     new_record['date_released'] = anderson_record['ReleaseDate']
 

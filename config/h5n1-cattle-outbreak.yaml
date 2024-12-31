@@ -76,7 +76,7 @@ refine:
   date_inference: marginal
 
   genome_clock_filter_iqd:
-    FALLBACK: 3
+    FALLBACK: 6
   clock_filter_iqd:
     FALLBACK: false
 
@@ -130,7 +130,7 @@ traits:
     FALLBACK: false
 
   # all builds
-  confidence: 
+  confidence:
     FALLBACK: true
 
 export:

@@ -14,6 +14,7 @@ Aythya americana	Avian
 bald eagle	Avian
 black billed magpie	Avian
 blackbird	Avian
+BOBCAT	Nonhuman Mammal
 Bos taurus	Cattle
 Branta canadensis	Avian
 Bubo virginianus	Avian
@@ -49,6 +50,7 @@ feline	Nonhuman Mammal
 Felis catus	Nonhuman Mammal
 Gallus gallus	Avian
 ganada goose	Avian
+GEOFFROY'S CAT	Nonhuman Mammal
 goat	Nonhuman Mammal
 goose	Avian
 grackle	Avian
@@ -64,6 +66,7 @@ House-Mouse	Nonhuman Mammal
 Icteridae	Avian
 Larus occidentalis	Avian
 Lophodytes cucullatus	Avian
+LYNX	Nonhuman Mammal
 mallard	Avian
 Meleagris gallopavo	Avian
 Mephitidae	Nonhuman Mammal
@@ -71,20 +74,27 @@ mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
 Mus musculus	Nonhuman Mammal
 mute swan	Avian
+Numididae sp.	Avian
 Panthera leo	Nonhuman Mammal
+Panthera tigris	Nonhuman Mammal
 Passer domesticus	Avian
+Pavo	Avian
 pefa	Avian
 Pelecanus erythrorhynchos	Avian
 pigeon	Avian
+Podiceps auritus	Avian
 Procyon lotor	Nonhuman Mammal
 Quiscalus quiscula	Avian
 raccoon	Nonhuman Mammal
 red fox	Nonhuman Mammal
 red tailed hawk	Avian
 Rock Pigeon	Avian
+SAVANNAH CAT	Nonhuman Mammal
+SERVAL	Nonhuman Mammal
 skunk	Nonhuman Mammal
 snow goose	Avian
 Streptopelia decaocto	Avian
+Sus scrofa	Nonhuman Mammal
 tiger	Nonhuman Mammal
 Turdus merula	Avian
 turkey	Avian

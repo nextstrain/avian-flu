@@ -29,6 +29,7 @@ cattle	Cattle
 CATTLE MILK PRODUCT	Cattle
 Chenonetta jubata	Avian
 chicken	Avian
+Columba livia	Avian
 Columbidae	Avian
 common raven	Avian
 comon-grackle	Avian
@@ -77,6 +78,7 @@ mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
 Mus musculus	Nonhuman Mammal
 mute swan	Avian
+Numididae	Avian
 Numididae sp.	Avian
 Panthera leo	Nonhuman Mammal
 Panthera tigris	Nonhuman Mammal
@@ -85,8 +87,10 @@ Pavo	Avian
 pefa	Avian
 Pelecanus erythrorhynchos	Avian
 pigeon	Avian
+Phasianinae	Avian
 Podiceps auritus	Avian
 Procyon lotor	Nonhuman Mammal
+Puma concolor	Nonhuman Mammal
 Quiscalus quiscula	Avian
 raccoon	Nonhuman Mammal
 red fox	Nonhuman Mammal
@@ -109,3 +113,4 @@ western kingbird	Avian
 western sandpiper	Avian
 White-winged Dove	Avian
 Wild-Bird	Avian
+Zenaida asiatica	Avian

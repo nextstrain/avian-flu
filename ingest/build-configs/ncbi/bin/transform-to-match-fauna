@@ -4,6 +4,7 @@ Transforms to specific fields in the NDJSON record to match the output
 metdata from fauna for easier downstream use in the phylogenetic workflow
 """
 import json
+import re
 from sys import stdin, stdout
 
 
@@ -31,7 +32,12 @@ if __name__ == "__main__":
         # Keep a copy of the original strain name since we are editing it below
         record["original_strain"] = record["strain"]
         # Remove spaces from strain names since they are not allowed in our phylo workflow.
-        record["strain"] = record["original_strain"].replace(" ", "")
+        # Replace invalid characters with `_` to match iqtree so augur tree will not modify strain
+        # <https://github.com/iqtree/iqtree2/blob/74da454bbd98d6ecb8cb955975a50de59785fbde/utils/tools.cpp#L607>
+        # Similar to the changes made for the curate-andersen-lab-data script in
+        # <https://github.com/nextstrain/avian-flu/commit/b6f9b561afc4e73e8f3a14c4925aa874325f04d9>.
+        strain = record["original_strain"].replace(" ", "")
+        record["strain"] = re.sub(r'[^\w\_\-\.\|\/]', '_', strain)
 
         json.dump(record, stdout, allow_nan=False, indent=None, separators=',:')
         print()

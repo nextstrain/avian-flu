@@ -39,6 +39,7 @@ A/Chicken/BC/FAV-0266-1/2024
 A/Turkey/BC/FAV-0267-1/2024
 A/Wisconsin/179/2024
 A/Iowa/124/2024
+A/England/480160/2025
 
 # cat outbreak 
 A/tiger/USA/038158001/2024

@@ -38,6 +38,8 @@ A/Chicken/BC/FAV-0268-1/2024
 A/Chicken/BC/FAV-0266-1/2024
 A/Louisiana/12/2024
 A/Turkey/BC/FAV-0267-1/2024
+A/England/480160/2025
+
 
 
 # US dairy cattle outbreak
@@ -384,3 +386,8 @@ A/cat/USA/037985008/2024
 A/cat/USA/037986004/2024
 A/cat/USA/037986006/2024
 A/cat/California/038279001/2024
+
+# important low paths 
+A/Ruddy Turnstone/Delaware/549/2024
+A/Ruddy Turnstone/Delaware/550/2024
+A/Laughing Gull/Delaware/554/2024

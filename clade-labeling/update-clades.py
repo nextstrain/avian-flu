@@ -27,23 +27,31 @@ clades_file = args.clades_file
 sequences = args.sequences
 subtype = args.subtype
 
-def find_new_strains(clades_file, new_strains):
-    old_strains = pd.read_csv(clades_file, sep="\t")['name']
-    new_strains = pd.read_csv(new_strains, sep="\t")['strain']
-        
-    # union of the series -> combination of values present in either set 1 or set 2; so, sum of all elements
-    union = pd.Series(np.union1d(new_strains, old_strains))
-    
-    # intersection of the series -> elements that are shared between the 2
-    intersect = pd.Series(np.intersect1d(new_strains, old_strains))
-  
-    # uncommon elements in both the series; union - all elements of union that are in intersect
-    notcommonseries = union[~union.isin(intersect)]
-  
-    new_strains = notcommonseries.tolist()
-    
-    return(new_strains)
+def find_new_strains(clades_file, metadata):
+    old_strains = pd.read_csv(clades_file, sep="\t")['name'].tolist()
+    all_strains = pd.read_csv(metadata, sep="\t")['strain'].tolist()
+    new_strains = []
 
+    # if metadata strain not in old strains, return as new strain 
+    for a in all_strains: 
+        if a not in old_strains: 
+            new_strains.append(a)
+
+
+    # union of the series -> combination of values present in either set 1 or set 2; so, sum of all elements
+#     union = pd.Series(np.union1d(all_strains, old_strains))
+#     
+#     # intersection of the series -> elements that are shared between the 2
+#     intersect = pd.Series(np.intersect1d(all_strains, old_strains))
+#   
+#     # uncommon elements in both the series; union - all elements of union that are in intersect
+#     notcommonseries = union[~union.isin(intersect)]
+#   
+    #new_strains = notcommonseries.tolist()
+    print(len(new_strains))
+    #print(new_strains)
+    return(new_strains)
+    
 
 
 def separate_new_strains(new_strains_list, input_fasta, output_fasta):
@@ -51,10 +59,10 @@ def separate_new_strains(new_strains_list, input_fasta, output_fasta):
         outfile.write("")
     
     for seq in SeqIO.parse(input_fasta, "fasta"):
-        strain = seq.description.split("|")[0]
+        strain = seq.description.split("|")[0].strip()
         full_sequence_header = seq.description
         
-        if strain in new_strains_list:             
+        if strain in new_strains_list: 
             with open(output_fasta, "a") as outfile:
                 outfile.write(">" + full_sequence_header + "\n" + str(seq.seq) + "\n")
 
@@ -82,8 +90,8 @@ new_strains = find_new_strains(clades_file, metadata_file)
 separate_new_strains(new_strains, sequences, new_strains_fasta)
 
 
-"""run label and reformat the output"""
-print("\nrunning LABEL to assign clades to", len(new_strains), "new strains of", subtype)
+# """run label and reformat the output"""
+# print("\nrunning LABEL to assign clades to", len(new_strains), "new strains of", subtype)
 os.system('flu-amd-label-2023-05-05/./LABEL -D {new_strains_fasta} {label_output} H5v2023'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
 os.system('python clade-labeling/check-LABEL-annotations.py --label_output {label_output}_final.txt --output {new_clades_file}'.format(new_clades_file=new_clades_file, label_output=label_output))
 

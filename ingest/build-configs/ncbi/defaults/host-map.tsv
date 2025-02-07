@@ -68,12 +68,16 @@ HOUSE SPARROW	Avian
 House-Mouse	Nonhuman Mammal
 Icteridae	Avian
 Larus occidentalis	Avian
+Leopardus geoffroyi	Nonhuman Mammal
+Leptailurus serval	Nonhuman Mammal
 LION	Nonhuman Mammal
 Lophodytes cucullatus	Avian
 LYNX	Nonhuman Mammal
+Lynx rufus	Nonhuman Mammal
 mallard	Avian
 Meleagris gallopavo	Avian
 Mephitidae	Nonhuman Mammal
+Mephitis mephitis	Avian
 mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
 Mus musculus	Nonhuman Mammal
@@ -85,6 +89,7 @@ Panthera tigris	Nonhuman Mammal
 Passer domesticus	Avian
 Pavo	Avian
 pefa	Avian
+Pelecanidae	Avian
 Pelecanus erythrorhynchos	Avian
 pigeon	Avian
 Phasianinae	Avian
@@ -111,6 +116,7 @@ Vulpes vulpes	Nonhuman Mammal
 western gull	Avian
 western kingbird	Avian
 western sandpiper	Avian
+WHITE-FACED IBIS	Avian
 White-winged Dove	Avian
 Wild-Bird	Avian
 Zenaida asiatica	Avian

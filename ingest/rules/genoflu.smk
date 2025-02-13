@@ -5,37 +5,23 @@ We are using a vendored version of <https://github.com/moncla-lab/GenoFLU-multi>
 which is built on top of USDA's GenoFLU <https://github.com/USDA-VS/GenoFLU>.
 """
 
-def genoflu_filter_args(wildcards):
-    # NOTE: it's crucial to get the quoting right here, of the following three strings on the command line
-    # "gisaid_clade=='2.3.4.4b'" gisaid_clade=='2.3.4.4b' and 'gisaid_clade==2.3.4.4b'
-    # only the first works.
-    # NOTE 2: This filtering may not be correct - see <https://github.com/nextstrain/avian-flu/pull/127#issuecomment-2669102995>
-    if wildcards.data_source=='fauna':
-        return "--query \"gisaid_clade=='2.3.4.4b'\""
-    return ""
-
-
 rule provision_genoflu_sequences:
     """
     GenoFLU will consume all the FASTA files in the provided directory, so we set up a
-    new directory with (filtered) FASTA files we want to call. Note that we use the
-    final/results sequences as _inputs_ here, because GenoFLU isn't going to modify
-    those in any way, and as such they are marked as temporary.
+    new directory with FASTA files we want to call. (We use the final ("results") sequences
+    here because the sequences themselves aren't modified by GenoFLU.)
+
+    The current implementation is a simple file copy however we may wish to use `augur filter`
+    in the future to restrict the samples we process.
     """
     input:
         sequences = "{data_source}/results/sequences_{segment}.fasta",
-        metadata = "{data_source}/data/metadata_combined.tsv",
     output:
         sequences = temp("{data_source}/data/genoflu/sequences_{segment}.fasta"),
     threads: 1
-    params:
-        query = genoflu_filter_args
     shell:
         """
-        augur filter \
-            {params.query} \
-            --metadata {input.metadata} --sequences {input.sequences} \
-            --output-sequences {output.sequences}
+        cp {input.sequences} {output.sequences}
         """
 
 rule run_genoflu:

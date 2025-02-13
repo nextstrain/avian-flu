@@ -1,0 +1,151 @@
+{
+  "title": "Full genome analysis of the ongoing influenza A/H5N1 D1.1 outbreak in North America",
+  "maintainers": [
+    {"name": "Moncla lab", "url": "https://lmoncla.github.io/monclalab/"},
+    {"name": "the Nextstrain team", "url": "https://nextstrain.org/team"}
+  ],
+  "build_url": "https://github.com/nextstrain/avian-flu",
+  "data_provenance": [
+    {
+      "name": "USDA",
+      "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1102327"
+    },
+    {
+      "name": "Andersen Lab",
+      "url": "https://github.com/andersen-lab/avian-influenza/"
+    },
+    {
+      "name": "GenBank",
+      "url": "https://www.ncbi.nlm.nih.gov/genbank/"
+    }
+  ],
+  "extensions": {
+    "nextclade": {
+      "pathogen": {
+        "schemaVersion":"3.0.0",
+        "defaultCds": "HA",
+        "cdsOrderPreference":[
+          "PB2",
+          "PB1",
+          "PA",
+          "HA",
+          "NP",
+          "NA",
+          "M1",
+          "M2",
+          "NS1",
+          "NS2"
+      ],
+      "attributes": {
+        "name": "H5N1 D1.1 Genome analysis",
+        "reference name": "concatenated ancestral sequences",
+        "reference accession": "none"
+        }
+      }
+    }
+  },
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Genotype",
+      "type": "categorical"
+    },
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
+    },
+    {
+      "key": "region",
+      "title": "Region",
+      "type": "categorical"
+    },
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
+    },
+    {
+      "key": "division",
+      "title": "Admin Division",
+      "type": "categorical"
+    },
+    {
+      "key": "host",
+      "title": "Host",
+      "type": "categorical"
+    },
+    {
+      "key": "subtype",
+      "title": "Subtype",
+      "type": "categorical"
+    },
+    {
+      "key": "genoflu",
+      "title": "GenoFLU",
+      "type": "categorical"
+    },
+    {
+      "key": "h5_label_clade",
+      "title": "Provisional LABEL Clade",
+      "type": "categorical"
+    },
+    {
+      "key": "furin_cleavage_motif",
+      "title": "Furin Cleavage Motif",
+      "type": "categorical"
+    },
+    {
+      "key": "cleavage_site_sequence",
+      "title": "Cleavage Site Sequence",
+      "type": "categorical"
+    },
+    {
+      "key": "author",
+      "title": "Authors",
+      "type": "categorical"
+    },
+    {
+      "key": "originating_lab",
+      "title": "Originating Lab",
+      "type": "categorical"
+    },
+    {
+      "key": "submitting_lab",
+      "title": "Submitting Lab",
+      "type": "categorical"
+    },
+    {
+      "key": "data_source",
+      "title": "Data Source",
+      "type": "categorical"
+    }
+  ],
+  "geo_resolutions": [
+    "region",
+    "country",
+    "division"
+  ],
+  "display_defaults": {
+    "map_triplicate": false,
+    "color_by": "host",
+    "geo_resolution": "division",
+    "distance_measure": "div",
+    "panels": ["tree", "entropy"]
+  },
+  "filters": [
+    "host",
+    "region",
+    "country",
+    "division",
+    "subtype",
+    "author",
+    "originating_lab",
+    "submitting_lab",
+    "data_source"
+  ],
+  "metadata_columns": [
+    "genbank_accession",
+    "sra_accessions"
+  ]
+}

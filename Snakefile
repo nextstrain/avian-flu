@@ -63,6 +63,12 @@ files = rules.files.params
 
 
 def subtypes_by_subtype_wildcard(wildcards):
+
+    # TODO XXX - move to configs (started in https://github.com/nextstrain/avian-flu/pull/104 but
+    # We should make the entire query config-definable)
+    if wildcards.subtype == 'h5n1-d1.1':
+        return "genoflu in 'D1.1'"
+
     db = {
         'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
         'h5n1': ['h5n1'],
@@ -72,7 +78,7 @@ def subtypes_by_subtype_wildcard(wildcards):
     db['h5n1-cattle-outbreak'] = [*db['h5nx']]
     assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
         "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
-    return(db[wildcards.subtype])
+    return(f"subtype in [{', '.join([repr(s) for s in db[wildcards.subtype]])}]")
 
 class InvalidConfigError(Exception):
     pass
@@ -233,7 +239,7 @@ rule filter_sequences_by_subtype:
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
-            --query "subtype in {params.subtypes!r}" \
+            --query {params.subtypes!r} \
             --output-sequences {output.sequences}
         """
 
@@ -248,7 +254,7 @@ rule filter_metadata_by_subtype:
         """
         augur filter \
             --metadata {input.metadata} \
-            --query "subtype in {params.subtypes!r}" \
+            --query {params.subtypes!r} \
             --output-metadata {output.metadata}
         """
 
@@ -633,9 +639,9 @@ rule auspice_config:
         import json
         with open(input.auspice_config) as fh:
             auspice_config = json.load(fh)
-        if wildcards.subtype == "h5n1-cattle-outbreak":
+        if wildcards.subtype in ["h5n1-cattle-outbreak", "h5n1-d1.1"]:
             if wildcards.segment == "genome":
-                auspice_config['display_defaults']['distance_measure'] = "num_date"
+                auspice_config['display_defaults']['distance_measure'] = "num_date" if wildcards.subtype == "h5n1-cattle-outbreak" else "div"
                 division_idx = next((i for i,c in enumerate(auspice_config['colorings']) if c['key']=='division'), None)
                 assert division_idx!=None, "Auspice config did not have a division coloring!"
                 auspice_config['colorings'].insert(division_idx+1, {
@@ -709,7 +715,8 @@ def auspice_name_to_wildcard_name(wildcards):
         return f"results/{subtype}/{segment}/{time}/auspice-dataset.json"
     if len(parts)==2:
         [subtype, segment] = parts
-        assert subtype=='h5n1-cattle-outbreak', "Only h5n1 builds produce an Auspice dataset without a time component in the filename"
+        assert subtype=='h5n1-cattle-outbreak' or subtype=='h5n1-d1.1', \
+            "Only h5n1 builds produce an Auspice dataset without a time component in the filename"
         return f"results/{subtype}/{segment}/default/auspice-dataset.json"
     raise Exception("Auspice JSON filename requested with an unexpected number of (underscore-separated) parts")
 

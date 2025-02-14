@@ -61,6 +61,8 @@ filter:
   exclude_where:
     FALLBACK: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
 
+mask:
+  min_support: 50 # This masks any position where <50% of sequences have a base
 
 refine:
   coalescent: const

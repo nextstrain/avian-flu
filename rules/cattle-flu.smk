@@ -66,7 +66,7 @@ rule join_segments:
     input:
         alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
     output:
-        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned_unmasked.fasta"
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
@@ -75,6 +75,25 @@ rule join_segments:
         """
         python scripts/join-segments.py \
             --segments {input.alignment} \
+            --output {output.alignment}
+        """
+
+rule mask_genome:
+    input:
+        alignment = "results/{subtype}/{segment}/{time}/aligned_unmasked.fasta"
+    output:
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
+    params:
+        percentage = config['mask']['min_support']
+    wildcard_constraints:
+        subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
+        segment = 'genome',
+        time = 'default',
+    shell:
+        r"""
+        python scripts/mask.py \
+            --alignment {input.alignment} \
+            --percentage {params.percentage} \
             --output {output.alignment}
         """
 

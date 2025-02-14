@@ -61,3 +61,8 @@ A/Chicken/BC/FAV-0266-1/2024
 A/Turkey/BC/FAV-0267-1/2024
 A/England/480160/2025
 
+# D1.1 dairy cattle outbreak 
+A/cattle/Nevada/25-002645-003-original/2025
+A/cattle/Nevada/25-002645-004-original/2025
+A/cattle/Nevada/25-002645-006-original/2025
+A/cattle/Nevada/25-002645-005-original/2025

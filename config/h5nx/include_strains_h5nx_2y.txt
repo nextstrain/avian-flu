@@ -391,3 +391,9 @@ A/cat/California/038279001/2024
 A/Ruddy Turnstone/Delaware/549/2024
 A/Ruddy Turnstone/Delaware/550/2024
 A/Laughing Gull/Delaware/554/2024
+
+# D1.1 dairy cattle outbreak 
+A/cattle/Nevada/25-002645-003-original/2025
+A/cattle/Nevada/25-002645-004-original/2025
+A/cattle/Nevada/25-002645-006-original/2025
+A/cattle/Nevada/25-002645-005-original/2025

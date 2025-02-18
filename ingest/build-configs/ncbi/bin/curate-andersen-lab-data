@@ -108,8 +108,9 @@ def parse_center_name(center_name: str) -> str:
 
 def construct_strain_name(record: dict, sample_id: str) -> str:
     """
-    Construct a strain name for the *sample_id* using metadata from the *record*
-    to include host, country, and year.
+    Check if the *sample_id* is follows a strain name pattern, otherwise
+    construct a strain name for the *sample_id* using metadata from the
+    *record* to include host, country, and year.
 
     Removes all spaces in the constructed strain name because they are not
     allowed in the downstream phylogenetic workflow. Also replaces invalid
@@ -119,10 +120,16 @@ def construct_strain_name(record: dict, sample_id: str) -> str:
     ¹ <https://github.com/iqtree/iqtree2/blob/74da454bbd98d6ecb8cb955975a50de59785fbde/utils/tools.cpp#L607>
     ² <https://github.com/nextstrain/avian-flu/issues/113>
     """
-    host = record['host']
-    country = record['country']
-    year = str(parse_date(record['date']).year)
-    strain = f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
+    # A/<host>/<location>/<sample_id>/<year>
+    strain_pattern = r"(A\/.+\/.+\/.+\/[\d]{4})"
+    matches = re.search(strain_pattern, sample_id)
+    if matches:
+        strain = matches.group(1)
+    else:
+        host = record['host']
+        country = record['country']
+        year = str(parse_date(record['date']).year)
+        strain = f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
     return re.sub(r'[^\w\_\-\.\|\/]', '_', strain)
 
 

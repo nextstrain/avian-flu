@@ -68,7 +68,10 @@ def create_new_record(anderson_record: dict) -> dict:
 
 def use_date_when_available(andersen_record: dict) -> str:
     """
-    Give the old date field `Date` precedence since they are more specific
+    Give the old date field `Date` precedence since they are more specific.
+
+    If using the new date field `Collection_Date`, then verify that it's a
+    valid date.
     """
     old_date_field = andersen_record.get("Date", "")
     old_date_uncertain = "NA" in old_date_field or "?" in old_date_field
@@ -76,7 +79,24 @@ def use_date_when_available(andersen_record: dict) -> str:
     if old_date_field and not old_date_uncertain:
         return old_date_field
 
-    return andersen_record["Collection_Date"]
+    new_date = andersen_record["Collection_Date"]
+    if new_date.lower() == "missing":
+        new_date = "XXXX-XX-XX"
+
+    # Certain dates are date ranges, e.g. "2022-04-22/2022-04-24"
+    # Only keep the first date for our metadata
+    date_range_pattern = r"([\d]{4}-[\d]{2}-[\d]{2})\/[\d]{4}-[\d]{2}-[\d]{2}"
+    matches = re.match(date_range_pattern, new_date)
+    if matches:
+        new_date = matches.group(1)
+
+    try:
+        parse_date(new_date)
+    except ValueError as err:
+        print(f"WARNING: {err}", file=stderr)
+        new_date = "XXXX-XX-XX"
+
+    return new_date
 
 
 def parse_center_name(center_name: str) -> str:
@@ -88,8 +108,9 @@ def parse_center_name(center_name: str) -> str:
 
 def construct_strain_name(record: dict, sample_id: str) -> str:
     """
-    Construct a strain name for the *sample_id* using metadata from the *record*
-    to include host, country, and year.
+    Check if the *sample_id* is follows a strain name pattern, otherwise
+    construct a strain name for the *sample_id* using metadata from the
+    *record* to include host, country, and year.
 
     Removes all spaces in the constructed strain name because they are not
     allowed in the downstream phylogenetic workflow. Also replaces invalid
@@ -99,26 +120,32 @@ def construct_strain_name(record: dict, sample_id: str) -> str:
     ¹ <https://github.com/iqtree/iqtree2/blob/74da454bbd98d6ecb8cb955975a50de59785fbde/utils/tools.cpp#L607>
     ² <https://github.com/nextstrain/avian-flu/issues/113>
     """
-    host = record['host']
-    country = record['country']
-    year = parse_year(record['date'])
-    strain = f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
+    # A/<host>/<location>/<sample_id>/<year>
+    strain_pattern = r"(A\/.+\/.+\/.+\/[\d]{4})"
+    matches = re.search(strain_pattern, sample_id)
+    if matches:
+        strain = matches.group(1)
+    else:
+        host = record['host']
+        country = record['country']
+        year = str(parse_date(record['date']).year)
+        strain = f"A/{host}/{country}/{sample_id}/{year}".replace(" ", "")
     return re.sub(r'[^\w\_\-\.\|\/]', '_', strain)
 
 
-def parse_year(date_string: str) -> str:
+def parse_date(date_string: str) -> datetime:
     """
-    Parse the year from the provided `date_string`
+    Parse the provided `date_string` as a datetime object.
     """
-    date_formats = ['%Y-%m-%d', '%Y']
+    date_formats = ['%Y-%m-%d', '%Y', 'XXXX-XX-XX']
     for date_format in date_formats:
         try:
             parsed_date = datetime.strptime(date_string, date_format)
-            return str(parsed_date.year)
+            return parsed_date
         except ValueError:
             continue
 
-    raise ValueError(f"Could not parse year from date string {date_string!r}")
+    raise ValueError(f"Could not parse date from date string {date_string!r}")
 
 
 if __name__ == '__main__':

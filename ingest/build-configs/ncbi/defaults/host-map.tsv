@@ -1,98 +1,170 @@
 # Check for bird codes in https://www.carolinabirdclub.org/bandcodes.html
 # Note that the first column in this TSV is case insensitive
+Accipiter cooperii	Avian
+Accipiter striatus	Avian
 Accipitridae	Avian
+Accipitridae sp.	Avian
+Aix sponsa	Avian
 alpaca	Nonhuman Mammal
 american crow	Avian
 AMERICAN ROBIN	Avian
-Turdus migratorius	Avian
 american wigeon	Avian
+Anas acuta	Avian
+Anas crecca	Avian
+Anas rubripes	Avian
 Anas platyrhynchos	Avian
+Anas sp.	Avian
 Anatidae	Avian
+Anser albifrons	Avian
+Anser anser	Avian
 Anser caerulescens	Avian
+Anser rossii	Avian
+Anser sp.	Avian
+Antigone canadensis	Avian
+Ardea herodias	Avian
 Arenaria interpres	Avian
+Arinae sp.	Avian
+Aves sp.	Avian
+Aythya affinis	Avian
+Aythya collaris	Avian
 Aythya americana	Avian
 bald eagle	Avian
 black billed magpie	Avian
 blackbird	Avian
+black scoter	Avian
+Black vulture	Avian
+BLUE-WINGED TEAL	Avian
 BOBCAT	Nonhuman Mammal
 Bos taurus	Cattle
+BOTTLENOSE DOLPHIN	Nonhuman Mammal
+brandt goose	Avian
 Branta canadensis	Avian
+Bubo scandiacus	Avian
 Bubo virginianus	Avian
+Bucephala clangula	Avian
 Buteo jamaicensis	Avian
+Buteo lineatus	Avian
+CACKLING GOOSE	Avian
 cago	Avian
+Cairina moschata	Avian
 Calidris alba	Avian
+Callipepla sp.	Avian
 canada goose	Avian
 Capra hircus	Nonhuman Mammal
 cat	Nonhuman Mammal
 Cathartes aura	Avian
+Cathartidae sp.	Avian
 cattle	Cattle
 CATTLE MILK PRODUCT	Cattle
+CHEETAH	Nonhuman Mammal
 Chenonetta jubata	Avian
 chicken	Avian
 Columba livia	Avian
 Columbidae	Avian
+Common Eider	Avian
+common loon	Avian
 common raven	Avian
 comon-grackle	Avian
+Coragyps atratus	Avian
+Corvidae sp.	Avian
 Corvus	Avian
 Corvus brachyrhynchos	Avian
 Corvus corax	Avian
+Corvus ossifragus	Avian
+Corvus sp.	Avian
+CRANE	Avian
+CRESTED CARACARA	Avian
+Cygnus atratus	Avian
+Cygnus buccinator	Avian
+Cygnus columbianus	Avian
 Cygnus olor	Avian
+Cygnus sp.	Avian
 Dairy cattle	Cattle
 domestic cat	Nonhuman Mammal
 domestic-cat	Nonhuman Mammal
+Dove	Avian
 Dromaius novaehollandiae	Avian
 duck	Avian
 EMU	Avian
 Emu	Avian
 environment	Environment
+ERMINE	Nonhuman Mammal
 EURASIAN COLLARED DOVE	Avian
 Falco peregrinus	Avian
 Feliformia	Nonhuman Mammal
 feline	Nonhuman Mammal
 Felis catus	Nonhuman Mammal
+FLAMINGO	Avian
 FOX	Nonhuman Mammal
+GADWALL	Avian
 Gallus gallus	Avian
 ganada goose	Avian
+Gavia immer	Avian
 GEOFFROY'S CAT	Nonhuman Mammal
 goat	Nonhuman Mammal
 goose	Avian
 grackle	Avian
+Great Black-Backed Gull	Avian
+Great Black-backed Gulll	Avian
 great horned owl	Avian
+GREEN-WINGED TEAL	Avian
+Guinea Fowl	Avian
+GUINEAFOWL	Avian
+gull	Avian
 Haliaeetus leucocephalus	Avian
 harris hawk	Avian
 harris-hawk	Avian
 hawk	Avian
+Herring Gull	Avian
 Homo sapiens	Human
 HOSP	Avian
 HOUSE SPARROW	Avian
 House-Mouse	Nonhuman Mammal
 Icteridae	Avian
+Laridae sp.	Avian
+Larus argentatus	Avian
+Larus delawarensis	Avian
 Larus occidentalis	Avian
 Leopardus geoffroyi	Nonhuman Mammal
 Leptailurus serval	Nonhuman Mammal
+lesser scaup	Avian
 LION	Nonhuman Mammal
 Lophodytes cucullatus	Avian
 LYNX	Nonhuman Mammal
 Lynx rufus	Nonhuman Mammal
 mallard	Avian
+Mareca americana	Avian
+Mareca strepera	Avian
 Meleagris gallopavo	Avian
+Melegris gallopavo	Avian
 Mephitidae	Nonhuman Mammal
 Mephitis mephitis	Avian
+Mergus merganser	Avian
 mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
 Mus musculus	Nonhuman Mammal
 mute swan	Avian
+NORTHERN SHOVELER	Avian
 Numididae	Avian
 Numididae sp.	Avian
 Panthera leo	Nonhuman Mammal
 Panthera tigris	Nonhuman Mammal
 Passer domesticus	Avian
 Pavo	Avian
+PEAFOWL	Avian
 pefa	Avian
 Pelecanidae	Avian
+Pelecanidae sp.	Avian
 Pelecanus erythrorhynchos	Avian
+Pelecanus occidentalis	Avian
+PELICAN	Avian
 pigeon	Avian
+Phalacrocoracidae sp.	Avian
+Phasianidae sp.	Avian
 Phasianinae	Avian
+Phasianus colchicus	Avian
+PHEASANT	Avian
+Pig	Nonhuman Mammal
 Podiceps auritus	Avian
 Procyon lotor	Nonhuman Mammal
 Puma concolor	Nonhuman Mammal
@@ -100,15 +172,30 @@ Quiscalus quiscula	Avian
 raccoon	Nonhuman Mammal
 red fox	Nonhuman Mammal
 red tailed hawk	Avian
+Red-Tailed Hawk	Avian
 Rock Pigeon	Avian
+Sanderling	Avian
 SAVANNAH CAT	Nonhuman Mammal
+Scoter	Avian
 SERVAL	Nonhuman Mammal
+Sibirionetta formosa	Avian
 skunk	Nonhuman Mammal
 snow goose	Avian
+SNOWY OWL	Avian
+Spatula clypeata	Avian
+Spatula discors	Avian
 Streptopelia decaocto	Avian
+Strigiformes sp.	Avian
+Strix varia	Avian
+surf scoter	Avian
 Sus scrofa	Nonhuman Mammal
+SWALLOW	Avian
+SWAN	Avian
 tiger	Nonhuman Mammal
+Thalasseus maximus	Avian
+TRUMPETER SWAN	Avian
 Turdus merula	Avian
+Turdus migratorius	Avian
 turkey	Avian
 turkey vulture	Avian
 Vicugna pacos	Nonhuman Mammal
@@ -118,5 +205,7 @@ western kingbird	Avian
 western sandpiper	Avian
 WHITE-FACED IBIS	Avian
 White-winged Dove	Avian
+White-winged Scoter	Avian
 Wild-Bird	Avian
+WOOD DUCK	Avian
 Zenaida asiatica	Avian

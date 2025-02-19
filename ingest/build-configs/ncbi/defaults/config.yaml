@@ -142,3 +142,7 @@ join_ncbi_andersen:
   ncbi_source: genbank
   andersen_source: sra-via-andersen-lab
   dedup_column: strain
+
+genoflu:
+  ncbi: true
+  andersen-lab: true

@@ -36,6 +36,7 @@ def run_genoflu(strain_records, core = None):
         # set up GenoFLU class
         genoflu = gf.GenoFLU(FASTA=temp_fasta, FASTA_dir=args.reference_dir,
                 cross_reference=args.cross_reference, sample_name=os.path.join(temp_dir, 'temp'), debug=False, blast_db=blast_db)
+
         # and run BLAST
         genoflu.blast_hpai_genomes()
         
@@ -79,7 +80,10 @@ def run_genoflu(strain_records, core = None):
                     f.write('\n'+'\t'.join(excel_stats.excel_dict.values()))
 
         # print out a message in terminal with the strain's genotype and segment classifications
-        print(f'\n{strain} Genotype --> {excel_stats.excel_dict["Genotype"]}: {excel_stats.excel_dict["Genotype List Used, >=98%"]}\n')
+        genotype_list_used = next((excel_stats.excel_dict[key] for key in excel_stats.excel_dict if key.startswith("Genotype List Used")), None)
+        print(f'\n{strain} Genotype --> {excel_stats.excel_dict["Genotype"]}: {genotype_list_used} at percent identity at {genoflu.pident_threshold}\n')
+
+        # print(f'\n{strain} Genotype --> {excel_stats.excel_dict["Genotype"]}: {excel_stats.excel_dict["Genotype List Used, >=98%"]}\n')
 
     if core:
         headers = '\t'.join(excel_stats.excel_dict.keys())

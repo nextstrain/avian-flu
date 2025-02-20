@@ -6,8 +6,76 @@ North America/USA/UNK/UNK	North America/USA/?/?
 North America/USA/CA/*	North America/USA/California/*
 North America/USA/CA/CA	North America/USA/California/California
 North America/USA/KS/KS	North America/USA/Kansas/Kansas
+North America/USA/MA/*	North America/USA/Massachusetts/*
+North America/USA/ME/*	North America/USA/Maine/*
 North America/USA/MI/MI	North America/USA/Michigan/Michigan
+North America/USA/NH/*	North America/USA/New Hampshire/*
 North America/USA/NM/NM	North America/USA/New Mexico/New Mexico
 North America/USA/OR/	North America/USA/Oregon/Oregon
+North America/USA/RI/*	North America/USA/Rhode Island/*
 North America/USA/TX/TX	North America/USA/Texas/Texas
+North America/USA/VA/*	North America/USA/Virginia/*
 North America/USA/WY/WY	North America/USA/Wyoming/Wyoming
+
+# Switch location and divisions
+North America/USA/Barnstable/MA	North America/USA/MA/Barnstable
+North America/USA/Barrington/RI	North America/USA/RI/Barrington
+North America/USA/Beverly/MA	North America/USA/MA/Beverly
+North America/USA/Boston/MA	North America/USA/MA/Boston
+North America/USA/Bourne/MA	North America/USA/MA/Bourne
+North America/USA/Brewster/MA	North America/USA/MA/Brewster
+North America/USA/Cambridge/MA	North America/USA/MA/Cambridge
+North America/USA/Centerville/MA	North America/USA/MA/Centerville
+North America/USA/Chatham/MA	North America/USA/MA/Chatham
+North America/USA/Chelsea/MA	North America/USA/MA/Chelsea
+North America/USA/Cohasset/MA	North America/USA/MA/Cohasset
+North America/USA/Cranston/RI	North America/USA/RI/Cranston
+North America/USA/Dennis/MA	North America/USA/MA/Dennis
+North America/USA/Dover/NH	North America/USA/NH/Dover
+North America/USA/Eastham/MA	North America/USA/MA/Eastham
+North America/USA/Easthampton/MA	North America/USA/MA/Easthampton
+North America/USA/Essex/MA	North America/USA/MA/Essex
+North America/USA/Falmouth/MA	North America/USA/MA/Falmouth
+North America/USA/Franklin/MA	North America/USA/MA/Franklin
+North America/USA/Hampton/MA	North America/USA/MA/Hampton
+North America/USA/Hampton/NH	North America/USA/NH/Hampton
+North America/USA/Harvard/MA	North America/USA/MA/Harvard
+North America/USA/Harwich/MA	North America/USA/MA/Harwich
+North America/USA/Hudson/MA	North America/USA/MA/Hudson
+North America/USA/Hull/MA	North America/USA/MA/Hull
+North America/USA/Ipswich/MA	North America/USA/MA/Ipswich
+North America/USA/Kennebunk/ME	North America/USA/ME/Kennebunk
+North America/USA/Kittery/ME	North America/USA/ME/Kittery
+North America/USA/Lynn/MA	North America/USA/MA/Lynn
+North America/USA/Lynnfield/MA	North America/USA/MA/Lynnfield
+North America/USA/Madbury/NH	North America/USA/NH/Madbury
+North America/USA/Manchester/MA	North America/USA/MA/Manchester
+North America/USA/Medford/MA	North America/USA/MA/Medford
+North America/USA/Nahant/MA	North America/USA/MA/Nahant
+North America/USA/Nantucket/MA	North America/USA/MA/Nantucket
+North America/USA/Newbury/MA	North America/USA/MA/Newbury
+North America/USA/Newburyport/MA	North America/USA/MA/Newburyport
+North America/USA/North Dartmouth/MA	North America/USA/MA/North Dartmouth
+North America/USA/North Grafton/MA	North America/USA/MA/North Grafton
+North America/USA/Northbridge/MA	North America/USA/MA/Northbridge
+North America/USA/Orleans/MA	North America/USA/MA/Orleans
+North America/USA/Pepperell/MA	North America/USA/MA/Pepperell
+North America/USA/Plum Island/MA	North America/USA/MA/Plum Island
+North America/USA/Plymouth/MA	North America/USA/MA/Plymouth
+North America/USA/Plympton/MA	North America/USA/MA/Plympton
+North America/USA/Provincetown/MA	North America/USA/MA/Provincetown
+North America/USA/Quantico/VA	North America/USA/VA/Quantico
+North America/USA/Quincy/MA	North America/USA/MA/Quincy
+North America/USA/Salisbury/MA	North America/USA/MA/Salisbury
+North America/USA/Scituate/MA	North America/USA/MA/Scituate
+North America/USA/Somerville/MA	North America/USA/MA/Somerville
+North America/USA/South Boston/MA	North America/USA/MA/South Boston
+North America/USA/South Orleans/MA	North America/USA/MA/South Orleans
+North America/USA/Stow/MA	North America/USA/MA/Stow
+North America/USA/Tiverton/RI	North America/USA/RI/Tiverton
+North America/USA/Unknown/VA	North America/USA/VA/Unknown
+North America/USA/Warwick/RI	North America/USA/RI/Warwick
+North America/USA/Wellfleet/MA	North America/USA/MA/Wellfleet
+North America/USA/Whitinsville/MA	North America/USA/MA/Whitinsville
+North America/USA/Winthrop/MA	North America/USA/MA/Winthrop
+North America/USA/Yarmouth/MA	North America/USA/MA/Yarmouth

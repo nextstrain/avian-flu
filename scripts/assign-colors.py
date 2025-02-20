@@ -67,6 +67,16 @@ if __name__ == '__main__':
         observations.sort(key=lambda x: index_of(ordering[category], x, len(ordering[category])))
         if (missing:=set(observations) - set(ordering[category])):
             print(f"WARNING: For trait {category} we encountered {len(missing)} value(s) not present in the ordering TSV: {missing}", file=stderr)
+            # -- temporory --
+            # reduce the values we provide colorings for to just those present in the orderings TSV
+            # (values pruned out here will still be shown in Auspice, but they'll be grey)
+            # This addresses bug <https://github.com/nextstrain/avian-flu/issues/131> where
+            # we had more division values than colors and thus the pipeline failed
+            # Hopefully the underlying cause will be fixed by improvements in how we ingest data, e.g.
+            # <https://github.com/nextstrain/augur/issues/1578>
+            # and we can remove this restriction.
+            observations = [obs for obs in observations if obs in ordering[category]]
+            print(f"These will not be assigned colors and thus will appear grey in Auspice", file=stderr)
         try:
             hexes = schemes[len(observations)]
         except KeyError:

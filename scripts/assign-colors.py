@@ -69,7 +69,7 @@ if __name__ == '__main__':
             print(f"WARNING: For trait {category} we encountered {len(missing)} value(s) not present in the ordering TSV: {missing}", file=stderr)
         try:
             hexes = schemes[len(observations)]
-        except IndexError:
+        except KeyError:
             raise Exception(f"Ordering '{category}' had {len(observations)} values but the color-schemes don't go this high!")
         for pair in zip(observations, hexes):
             tsv_writer.writerow([category, *pair])

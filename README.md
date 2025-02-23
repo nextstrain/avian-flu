@@ -63,6 +63,16 @@ This should allow any reassortments to be highlighted and will also include outb
 
 > Note that generating any segment-level build here will necessarily build the genome tree, as it's needed to identify the clade of interest in each segment.
 
+## H5N1 D1.1 Cattle outbreak (2025)
+
+> This build is a work in progress and relies on recent improvements to ingest which add GenoFLU constellations to the metadata TSV
+
+The H5N1-D1.1/genome build uses a similar approach to the H5N1 Cattle Outbreak above however samples all data to a GenoFLU constellation of D1.1.
+
+```bash
+snakemake --cores 1 -pf --configfile config/h5n1-d1.1.yaml
+```
+
 
 ## Creating a custom build
 The easiest way to generate your own, custom avian-flu build is to use the quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).

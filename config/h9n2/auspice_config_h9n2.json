@@ -36,6 +36,11 @@
       "type": "categorical"
     },
     {
+      "key": "genoflu",
+      "title": "GenoFLU constellation",
+      "type": "categorical"
+    },
+    {
       "key": "furin_cleavage_motif",
       "title": "Furin Cleavage Motif",
       "type": "categorical"

@@ -652,6 +652,15 @@ rule auspice_config:
                 auspice_config['colorings'][division_idx]["title"] += " (inferred)"
             else:
                 auspice_config['display_defaults']['distance_measure'] = "div"
+        
+        # If we have a coloring for 'genoflu' and we're not a genome build then export the genoflu call for the segment
+        genoflu_idx = next((i for i,c in enumerate(auspice_config['colorings']) if c['key']=='genoflu'), None)
+        if wildcards.segment!='genome' and genoflu_idx is not None:
+            auspice_config['colorings'].insert(genoflu_idx+1, {
+                    "key": f"genoflu_{wildcards.segment.upper()}",
+                    "title": f"GenoFLU ({wildcards.segment.upper()} segment)",
+                    "type": "categorical",
+                })
         with open(output.auspice_config, 'w') as fh:
             json.dump(auspice_config, fh, indent=2)
 

@@ -16,7 +16,7 @@ rule merge_segment_metadata:
         segments = expand("{{data_source}}/data/metadata_{segment}.tsv", segment=config["segments"]),
         metadata = "{data_source}/data/metadata_ha.tsv",
     output:
-        metadata = "{data_source}/results/metadata.tsv",
+        metadata = "{data_source}/data/metadata_combined.tsv",
     shell:
         """
         python scripts/add_segment_counts.py \

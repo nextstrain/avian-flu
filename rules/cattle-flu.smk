@@ -18,7 +18,7 @@ rule filter_segments_for_genome:
         min_date = "2024-01-01",
         query = 'region == "North America"'
     wildcard_constraints:
-        subtype = 'h5n1-cattle-outbreak',
+        subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
         time = 'default',
     log: "logs/{subtype}/{segment}/{time}/filtered_{genome_seg}.txt",
@@ -43,7 +43,7 @@ rule align_segments_for_genome:
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:
-        subtype = 'h5n1-cattle-outbreak',
+        subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
         time = 'default',
     threads:
@@ -66,15 +66,34 @@ rule join_segments:
     input:
         alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
     output:
-        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned_unmasked.fasta"
     wildcard_constraints:
-        subtype = 'h5n1-cattle-outbreak',
+        subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
         time = 'default',
     shell:
         """
         python scripts/join-segments.py \
             --segments {input.alignment} \
+            --output {output.alignment}
+        """
+
+rule mask_genome:
+    input:
+        alignment = "results/{subtype}/{segment}/{time}/aligned_unmasked.fasta"
+    output:
+        alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
+    params:
+        percentage = config['mask']['min_support']
+    wildcard_constraints:
+        subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
+        segment = 'genome',
+        time = 'default',
+    shell:
+        r"""
+        python scripts/mask.py \
+            --alignment {input.alignment} \
+            --percentage {params.percentage} \
             --output {output.alignment}
         """
 
@@ -85,7 +104,7 @@ rule genome_metadata:
     output:
         metadata = temp("results/{subtype}/{segment}/{time}/metadata_intermediate.tsv")
     wildcard_constraints:
-        subtype = 'h5n1-cattle-outbreak',
+        subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
         time = 'default',
     shell:
@@ -116,7 +135,7 @@ rule add_metadata_columns_to_show_non_inferred_values:
     output:
         metadata = "results/{subtype}/{segment}/{time}/metadata.tsv"
     wildcard_constraints:
-        subtype="h5n1-cattle-outbreak",
+        subtype='h5n1-cattle-outbreak|h5n1-d1.1',
         segment="genome",
         time="default",
     params:
@@ -138,7 +157,7 @@ rule prune_tree:
         tree = "results/{subtype}/{segment}/{time}/tree_outbreak-clade.nwk",
         node_data = "results/{subtype}/{segment}/{time}/outbreak-clade-strains-in-genome-tree.json",
     wildcard_constraints:
-        subtype="h5n1-cattle-outbreak",
+        subtype='h5n1-cattle-outbreak|h5n1-d1.1',
         time="default",
     shell:
         """
@@ -163,7 +182,7 @@ rule colors_genome:
     params:
         duplications = "division=division_metadata",
     wildcard_constraints:
-        subtype="h5n1-cattle-outbreak",
+        subtype='h5n1-cattle-outbreak|h5n1-d1.1',
         time="default",
     shell:
         """

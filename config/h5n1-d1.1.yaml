@@ -1,23 +1,17 @@
-# NOTE: The h5n1-cattle-outbreak builds use a specific rule-file (specified within this config)
-# and that rule file may have some config-like parameters within it.
+#
+# TKTK
+#
 custom_rules:
   - "rules/cattle-flu.smk"
 
 
 #### Parameters which define which builds to produce via this config ###
 builds:
-  h5n1-cattle-outbreak: ''
+  h5n1-d1.1: ''
 
 segments:
   - genome
-  - pb2
-  - pb1
-  - pa
-  - ha
-  - np
-  - na
-  - mp
-  - ns
+
 
 
 # Input source(s) - See README.md for how to use local files instead and/or add additional inputs
@@ -25,8 +19,6 @@ inputs:
   - name: ncbi
     metadata: s3://nextstrain-data/files/workflows/avian-flu/h5n1/metadata.tsv.zst
     sequences: s3://nextstrain-data/files/workflows/avian-flu/h5n1/{segment}/sequences.fasta.zst
-
-
 
 #### Parameters which control large overarching aspects of the build
 # Set a high target_sequences_per_tree to capture all circulating strains, as they will be pruned down
@@ -36,7 +28,7 @@ target_sequences_per_tree: 10_000
 
 #### Config files ####
 reference: config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
-genome_reference: config/{subtype}/h5_cattle_genome_root.gb
+genome_reference: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb # use cattle-flu genome reference TODO XXX
 auspice_config: config/{subtype}/auspice_config_{subtype}.json
 colors: config/h5n1/colors_h5n1.tsv # use H5N1 colors
 lat_longs: config/h5n1/lat_longs_h5n1.tsv # use H5N1 lat-longs
@@ -44,7 +36,7 @@ include_strains: config/{subtype}/include_strains_{subtype}.txt
 # use cattle-outbreak specific dropped strains for segment + genome trees
 dropped_strains: config/{subtype}/dropped_strains_{subtype}.txt
 clades_file: clade-labeling/h5n1-clades.tsv # use H5N1 clades
-description: config/{subtype}/description_{subtype}.md
+description: config/{subtype}/description.md
 
 
 #### Rule-specific parameters ####
@@ -70,8 +62,7 @@ filter:
     FALLBACK: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
 
 mask:
-  min_support: 0 # This lets all positions through regardless of how many sequences have a base
-
+  min_support: 50 # This masks any position where <50% of sequences have a base
 
 refine:
   coalescent: const
@@ -89,7 +80,7 @@ refine:
   # P.S. Make sure this strain is force included via augur filter --include
   # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
   genome_root:
-      FALLBACK: A/skunk/NewMexico/24-006483-001/2024
+      FALLBACK: best
 
   segment_lengths:
     FALLBACK:
@@ -137,6 +128,6 @@ traits:
 
 export:
   genome_title:
-    FALLBACK: Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+    FALLBACK: false
   title:
-    FALLBACK: Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)
+    FALLBACK: false

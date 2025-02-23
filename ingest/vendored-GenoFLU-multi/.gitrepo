@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/moncla-lab/GenoFLU-multi
+	branch = main
+	commit = 488426698ef3bce85868a5806199a0283b980f79
+	parent = b64d9bff16d54998d0149ea2b2597610b7d8fefc
+	method = merge
+	cmdver = 0.4.9

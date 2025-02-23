@@ -58,11 +58,8 @@ rule parse_genoflu:
         r"""
         cat {input.genoflu} | \
             csvtk cut -t -F -f Strain,Genotype,'Genotype List Used*' | \
-            csvtk grep -t -F -f 'Genotype List Used*' -r -p "^PA:.+HA:.+PB1:.+MP:.+NA:.+PB2:.+NP:.+NS:.+$" -N | \
-            csvtk sep -t -n genoflu_PA,genoflu_HA,genoflu_PB1,genoflu_MP,genoflu_NA,genoflu_PB2,genoflu_NP,genoflu_NS -f 3 -s ", "  | \
-            csvtk replace -t -f 4-11 -p "^(.+):" | \
-            csvtk cut -t -f 1,2,4-11 | \
-            csvtk rename -t -f Strain,Genotype -n strain,genoflu \
+            csvtk rename -t -F -f Strain,Genotype,'Genotype List Used*' -n strain,genoflu,details | \
+            python scripts/parse_genoflu.py \
             > {output.genotypes}
         """
 

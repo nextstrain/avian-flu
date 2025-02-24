@@ -61,6 +61,11 @@
       "type": "categorical"
     },
     {
+      "key": "genoflu",
+      "title": "GenoFLU constellation",
+      "type": "categorical"
+    },
+    {
       "key": "gisaid_clade",
       "title": "GISAID Clade",
       "type": "categorical"

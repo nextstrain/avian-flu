@@ -43,19 +43,24 @@ rule run_genoflu:
         """
 
 
-rule subset_genoflu:
+rule parse_genoflu:
+    """
+    Parses the genoflu TSV to produce a TSV with 10 columns:
+    * strain - ID used for matching
+    * genoflu - the "genotype" or "constellation"
+    * genoflu_<SEGMENT> - the individual segment genoflu calls
+    """
     input:
         genoflu="{data_source}/data/genoflu/results/results.tsv"
     output:
         genotypes="{data_source}/data/genoflu/genoflu_genotypes.tsv",
     shell:
-        """
-        csvtk cut -t \
-            -f Strain,Genotype \
-            {input.genoflu} \
-            | csvtk rename -t \
-                -f Strain,Genotype \
-                -n strain,genoflu > {output.genotypes}
+        r"""
+        cat {input.genoflu} | \
+            csvtk cut -t -F -f Strain,Genotype,'Genotype List Used*' | \
+            csvtk rename -t -F -f Strain,Genotype,'Genotype List Used*' -n strain,genoflu,details | \
+            python scripts/parse_genoflu.py \
+            > {output.genotypes}
         """
 
 

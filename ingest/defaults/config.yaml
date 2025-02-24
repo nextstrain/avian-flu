@@ -14,4 +14,4 @@ s3_dst:
 path_to_fauna: ../../fauna
 
 genoflu:
-  fauna: false
+  fauna: true

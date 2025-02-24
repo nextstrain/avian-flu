@@ -16,6 +16,10 @@ on:
         description: 'Specific container image to use for phylogenetic workflow (will override the default of "nextstrain build")'
         required: false
         type: string
+      config-yaml:
+        description: 'Config YAML name'
+        required: true
+        type: string
 
   workflow_dispatch:
     inputs:
@@ -30,6 +34,15 @@ on:
           If set, builds will be deployed to s3://nextstrain-staging/avian-flu_trials_<trial_name>_*
         required: false
         type: string
+      config-yaml:
+        description: |
+          Currently we have H5N1/D1.1 and H5N1/cattle-outbreak (B3.13) builds available.
+          The choices here correspond to the YAML of the same name in config/
+        required: true
+        type: choice
+        options:
+          - h5n1-cattle-outbreak
+          - h5n1-d1.1
 
 jobs:
   summary:
@@ -37,27 +50,35 @@ jobs:
     steps:
       - name: summary_step
         run: |
-          URL_A="avian-flu/h5n1-cattle-outbreak/genome"
-          URL_B="avian-flu/h5n1-cattle-outbreak/ha"
+          if [[ "$CONFIG_NAME" = "h5n1-d1.1" ]]; then
+            URL_A="avian-flu/h5n1-d1.1/genome"
+          else
+            URL_A="avian-flu/h5n1-cattle-outbreak/genome"
+            URL_B="avian-flu/h5n1-cattle-outbreak/ha"
+          fi;
           if [[ "$TRIAL_NAME" ]]; then
               echo "### Trial Build URLs" >> $GITHUB_STEP_SUMMARY
               URL_BASE="https://nextstrain.org/staging/avian-flu/trials"
               TRIAL_NAME_URL=$( echo "$TRIAL_NAME" | sed "s|_|/|g" )
               echo "" >> $GITHUB_STEP_SUMMARY
               echo "  * ${URL_BASE}/${TRIAL_NAME_URL}/${URL_A}" >> $GITHUB_STEP_SUMMARY
-              echo "  * ${URL_BASE}/${TRIAL_NAME_URL}/${URL_B}" >> $GITHUB_STEP_SUMMARY
-              echo "  * etc" >> $GITHUB_STEP_SUMMARY
+              if [[ -v URL_B ]]; then
+                echo "  * ${URL_BASE}/${TRIAL_NAME_URL}/${URL_B}" >> $GITHUB_STEP_SUMMARY
+                echo "  * etc" >> $GITHUB_STEP_SUMMARY
+              fi;
           else
               echo "### Canonical URLs will be updated by this run" >> $GITHUB_STEP_SUMMARY
               URL_BASE="https://nextstrain.org"
               echo "" >> $GITHUB_STEP_SUMMARY
               echo "  * ${URL_BASE}/${URL_A}" >> $GITHUB_STEP_SUMMARY
-              echo "  * ${URL_BASE}/${URL_B}" >> $GITHUB_STEP_SUMMARY
-              echo "  * etc" >> $GITHUB_STEP_SUMMARY
+              if [[ -v URL_B ]]; then
+                echo "  * ${URL_BASE}/${URL_B}" >> $GITHUB_STEP_SUMMARY
+                echo "  * etc" >> $GITHUB_STEP_SUMMARY
+              fi;
           fi;
           echo "" >> $GITHUB_STEP_SUMMARY
           NOTE="NOTE: These URL paths may be incorrect if you've changed the  "
-          NOTE+="snakemake targets in 'config/ncbi-cattle-outbreak.yaml' as part of this PR. "
+          NOTE+="snakemake targets in config/${CONFIG_NAME}.yaml as part of this PR. "
           NOTE+="Please update this GitHub Action if so!"
           echo "> $NOTE" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -71,7 +92,8 @@ jobs:
     env:
       NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
       TRIAL_NAME: ${{ inputs.trial-name }}
-      BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+      CONFIG_NAME: ${{ inputs.config-yaml }}
   phylogenetic:
     permissions:
       id-token: write
@@ -95,10 +117,11 @@ jobs:
           --memory 28800mib \
           . \
             deploy_all \
-            --configfile config/h5n1-cattle-outbreak.yaml \
+            --configfile config/${CONFIG_NAME}.yaml \
             --config "${config[@]}"
 
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
         TRIAL_NAME: ${{ inputs.trial-name }}
-      artifact-name: phylogenetic-full-genome-build-output
+        CONFIG_NAME: ${{ inputs.config-yaml }}
+      artifact-name: phylogenetic-${{ inputs.config-yaml }}-outputs

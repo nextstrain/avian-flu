@@ -9,6 +9,10 @@ A/Cattle/USA/24-009027-002-v/2024 # Duplicate of A/cattle/Michigan/24-009027-002
 A/PEFA/USA/24-005915-001-original/2024 # Duplicate of A/Peregrinefalcon/California/24-005915-001/2024
 A/Skunk/USA/24-006483-001-original/2024 # Duplicate of A/skunk/NewMexico/24-006483-001/2024
 
+# Many of the following exclude strains were added prior to filtering on GenoFLU
+# constellation B3.13 and thus may not be applicable any more. We can clean these up
+# in the future if desired.
+
 # Dropping these strains from include due to excess private mutations
 A/cattle/NorthCarolina/24-010327-002/2024
 A/cattle/Texas/24-009495-007/2024
@@ -246,30 +250,3 @@ A/westerngull/California/24-004708-001/2024
 A/WesternGull/USA/24-004708-001-original/2024
 A/WesternSandpiper/USA/24-004707-001-original/2024
 A/woodduck/NorthCarolina/W24-026/2024
-
-# D1.1 spillover 
-A/StripedSkunk/WA/W240530074-2-1/2024
-A/CATTLE/USA/25-002645-006/2025
-A/CATTLE/USA/25-002645-005/2025
-A/CATTLE/USA/25-002645-004/2025
-A/CATTLE/USA/25-002645-003/2025
-A/chicken/AR/24-037983-003-original/2024
-A/chicken/AR/24-037983-001-original/2024
-A/chicken/AR/24-037983-002-original/2024
-A/chicken/MN/24-038159-002-original/2024
-A/Duck/MN/24-038159-001-original/2024
-A/goose/MN/24-038159-004-original/2024
-A/Turkey/MN/24-035355-002-original/2024
-A/Turkey/MN/24-035355-001-original/2024
-A/Turkey/MN/24-035521-001-original/2024
-A/Turkey/MN/24-035524-003-original/2024
-A/Turkey/MN/24-035524-004-original/2024
-A/Turkey/MN/24-035524-001-original/2024
-A/Turkey/MN/24-035524-002-original/2024
-A/Turkey/MN/24-034932-001-original/2024
-A/Turkey/MN/24-034932-003-original/2024
-A/Turkey/MN/24-034932-002-original/2024
-A/Turkey/MN/24-035355-003-original/2024
-A/Turkey/MN/24-036792-002-original/2024
-A/Turkey/MN/24-036792-003-original/2024
-A/Turkey/MN/24-036792-001-original/2024

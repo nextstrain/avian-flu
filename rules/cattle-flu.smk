@@ -14,9 +14,6 @@ rule filter_segments_for_genome:
         exclude = config['dropped_strains'],
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta"
-    params:
-        min_date = "2024-01-01",
-        query = 'region == "North America"'
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
@@ -29,8 +26,6 @@ rule filter_segments_for_genome:
             --metadata {input.metadata} \
             --include {input.include} \
             --exclude {input.exclude} \
-            --min-date {params.min_date} \
-            --query {params.query:q} \
             --output-log {log} \
             --output-sequences {output.sequences}
         """

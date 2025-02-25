@@ -169,13 +169,13 @@ rule colors_genome:
     # thus left as a to-do
     input:
         metadata = "results/{subtype}/genome/{time}/metadata.tsv", # Always use the genome metadata, even for segment builds
-        ordering = "config/h5n1-cattle-outbreak/color_ordering.tsv",
-        schemes = "config/h5n1-cattle-outbreak/color_schemes.tsv",
-        colors = files.colors,
+        ordering = config['colors']['ordering'],
+        schemes = config['colors']['schemes'],
+        colors = config['colors']['hardcoded']
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
-        duplications = "division=division_metadata",
+        duplications = ["=".join(pair) for pair in config['colors'].get('duplications', [])]
     wildcard_constraints:
         subtype='h5n1-cattle-outbreak|h5n1-d1.1',
         time="default",

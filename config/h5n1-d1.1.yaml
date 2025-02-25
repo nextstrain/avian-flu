@@ -30,7 +30,6 @@ target_sequences_per_tree: 10_000
 reference: config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
 genome_reference: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb # use cattle-flu genome reference TODO XXX
 auspice_config: config/{subtype}/auspice_config_{subtype}.json
-colors: config/h5n1/colors_h5n1.tsv # use H5N1 colors
 lat_longs: config/h5n1/lat_longs_h5n1.tsv # use H5N1 lat-longs
 include_strains: config/{subtype}/include_strains_{subtype}.txt
 # use cattle-outbreak specific dropped strains for segment + genome trees
@@ -125,6 +124,14 @@ traits:
   # all builds
   confidence:
     FALLBACK: true
+
+colors:
+  hardcoded: config/h5n1/colors_h5n1.tsv # use H5N1 colors
+  ordering: "config/h5n1-cattle-outbreak/color_ordering.tsv" # for dynamic assignment
+  schemes: "config/shared/color_schemes.tsv"
+  duplications:
+    - ["division", "division_metadata"]
+
 
 export:
   genome_title:

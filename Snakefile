@@ -52,7 +52,6 @@ rule files:
         dropped_strains = config['dropped_strains'],
         include_strains = config['include_strains'],
         reference = config['reference'],
-        colors = config['colors'],
         # TODO - Augur 24.4.0 includes extensive lat-longs by default - can we drop the following avian-flu specific ones?
         lat_longs = config['lat_longs'],
         auspice_config = config['auspice_config'],
@@ -669,7 +668,7 @@ rule auspice_config:
 
 rule colors:
     input:
-        colors = files.colors,
+        colors = config['colors']['hardcoded'],
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     shell:

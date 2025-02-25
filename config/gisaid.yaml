@@ -157,7 +157,14 @@ traits:
     FALLBACK: true
 
 colors:
-  hardcoded: config/{subtype}/colors_{subtype}.tsv
+  hardcoded: 
+    FALLBACK: config/{subtype}/colors_{subtype}.tsv
+  ordering: 
+    FALLBACK: "config/shared/color_ordering_genoflu.tsv" # for dynamic assignment
+  schemes: 
+    FALLBACK: "config/shared/color_schemes.tsv"
+  duplications:
+    FALLBACK: []
 
 export:
   title:

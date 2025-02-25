@@ -668,12 +668,27 @@ rule auspice_config:
 
 rule colors:
     input:
-        colors = config['colors']['hardcoded'],
+        # TODO - revisit the metadata input future work. The TSV used here determines the colours used, so if we use the same metadata
+        # (and it's a superset) for a set of builds (e.g. genome + 8 segments) then the colours are consistent.
+        metadata = lambda w: "results/{subtype}/genome/{time}/metadata.tsv" \
+            if w.subtype in ['h5n1-cattle-outbreak', 'h5n1-d1.1'] \
+            else rules.filter.output.metadata,
+        colors = lambda w: get_config('colors', 'hardcoded', w),
+        ordering = lambda w: get_config('colors', 'ordering', w),
+        schemes = lambda w: get_config('colors', 'schemes', w),
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
+    params:
+        duplications = lambda w: ["=".join(pair) for pair in get_config('colors', 'duplications', w)],
     shell:
         """
-        cp {input.colors} {output.colors}
+        cp {input.colors} {output.colors} && \
+        python3 scripts/assign-colors.py \
+            --metadata {input.metadata} \
+            --ordering {input.ordering} \
+            --color-schemes {input.schemes} \
+            --duplications {params.duplications} \
+        >> {output.colors}        
         """
 
 rule export:

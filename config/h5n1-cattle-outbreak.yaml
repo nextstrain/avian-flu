@@ -136,11 +136,15 @@ traits:
     FALLBACK: true
 
 colors:
-  hardcoded: config/h5n1/colors_h5n1.tsv # use H5N1 colors
-  ordering: "config/h5n1-cattle-outbreak/color_ordering.tsv" # for dynamic assignment
-  schemes: "config/shared/color_schemes.tsv"
+  hardcoded: 
+    FALLBACK: config/h5n1/colors_h5n1.tsv # use H5N1 colors
+  ordering: 
+    FALLBACK: "config/h5n1-cattle-outbreak/color_ordering.tsv" # for dynamic assignment
+  schemes: 
+    FALLBACK: "config/shared/color_schemes.tsv"
   duplications:
-    - ["division", "division_metadata"]
+    FALLBACK:
+      - ["division", "division_metadata"]
 
 export:
   genome_title:

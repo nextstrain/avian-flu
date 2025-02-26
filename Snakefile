@@ -1,3 +1,7 @@
+# This Snakefile is not the entry point to the workflow (any more!) Please see
+# the README for updated instructions. We could/should move this file to (e.g.)
+# "rules/main.smk" in the future
+
 # constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
 wildcard_constraints:
     subtype = "[^_/]+",

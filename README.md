@@ -64,6 +64,25 @@ The pipeline starts by downloading data from a public S3 bucket before filtering
 The B3.13 datasets also include per-segment analyses, which are also limited to B3.13 strains.
 We're aiming to improve the diversity and significance of these datasets soon.
 
+## Running analyses in a separate working directory
+
+We can run the avian-flu worfklows from analysis directory/directories separate to this repo. Imagine the following directory structure:
+
+```
+├── avian-flu
+│   ├── README.md
+│   ├── segment-focused
+│   │   ├── Snakefile
+│   │   └── config.yaml
+│   └── ... (lots more files)
+└── analysis_dir
+```
+
+From within the `analysis_dir` we can run `snakemake --cores 1 -pf --snakefile ../avian-flu/segment-focused/Snakefile` and we'll automatically run the workflow and write all output files (`data/`, `logs/`, `results/`, `auspice/`) within the `analysis_dir`. This keeps the workflow outputs separate and isolated from the workflow itself.
+
+Depending on how you run builds this can be very liberating; for instance if you are running the workflow at different times you can separate the analyses for easy before/after comparisons. Similarly if you make changes to the workflow you can maintain independent sets of results, similar to git worktrees.
+
+> You can use Snakemake's `--directory` argument to define the analysis directory (working directory) if that's easier
 
 ## Creating a custom build
 The easiest way to generate your own, custom avian-flu build is to use the quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).

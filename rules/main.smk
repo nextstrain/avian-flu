@@ -316,12 +316,14 @@ rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
         metadata = "results/{subtype}/metadata.tsv",
-        clades_file = files.clades_file
+        clades_file = resolve_config_path(files.clades_file)
     output:
         metadata= "results/{subtype}/metadata-with-clade.tsv"
+    params:
+        script = script("clade-labeling/add-clades.py")
     shell:
-        """
-        python clade-labeling/add-clades.py \
+        r"""
+        python {params.script} \
             --metadata {input.metadata} \
             --output {output.metadata} \
             --clades {input.clades_file}
@@ -374,8 +376,8 @@ rule filter:
     input:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
         metadata = metadata_by_wildcards,
-        exclude = files.dropped_strains,
-        include = files.include_strains,
+        exclude = resolve_config_path(files.dropped_strains),
+        include = resolve_config_path(files.include_strains),
         strains = lambda w: f"results/{w.subtype}/ha/{w.time}/filtered.txt" if (SAME_STRAINS and w.segment!='ha') else [],
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered.fasta",
@@ -387,7 +389,7 @@ rule filter:
         # The genome build has a different approach to filtering (see genome.smk)
         segment="(?!genome)[^_/]+"
     shell:
-        """
+        r"""
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
@@ -406,7 +408,7 @@ rule align:
         """
     input:
         sequences = rules.filter.output.sequences,
-        reference = files.reference
+        reference = resolve_config_path(files.reference),
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
     wildcard_constraints:
@@ -415,7 +417,7 @@ rule align:
     threads:
         4
     shell:
-        """
+        r"""
         augur align \
             --sequences {input.sequences} \
             --reference-sequence {input.reference} \
@@ -447,6 +449,10 @@ rule tree:
 
 
 def refine_root(wildcards):
+    """
+    Returns the config-defined rooting parameter (for `augur refine`) together with the argument,
+    i.e. "--root <parameter>". If none is defined we return the empty string.
+    """
     root = get_config('refine', 'genome_root', wildcards) \
         if wildcards.segment=='genome' \
         else get_config('refine', 'root', wildcards)
@@ -505,7 +511,9 @@ def ancestral_root_seq(wildcards):
     root_seq = get_config('ancestral', 'genome_root_seq', wildcards) \
         if wildcards.segment=='genome' \
         else get_config('ancestral', 'root_seq', wildcards)
-    return f"--root-sequence {root_seq}" if root_seq else ""
+    if not root_seq:
+        return ""
+    return f"--root-sequence {resolve_config_path(root_seq)(wildcards)}"
 
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
@@ -533,7 +541,7 @@ rule translate:
     input:
         tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = lambda w: config['genome_reference'] if w.segment=='genome' else files.reference
+        reference = lambda w: resolve_config_path(config['genome_reference'] if w.segment=='genome' else files.reference)(w)
     output:
         node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:
@@ -592,9 +600,11 @@ rule cleavage_site:
     output:
         cleavage_site_annotations = "results/{subtype}/ha/{time}/cleavage-site.json",
         cleavage_site_sequences = "results/{subtype}/ha/{time}/cleavage-site-sequences.json"
+    params:
+        script = script("annotate-ha-cleavage-site.py")
     shell:
-        """
-        python scripts/annotate-ha-cleavage-site.py \
+        r"""
+        python {params.script} \
             --alignment {input.alignment} \
             --furin_site_motif {output.cleavage_site_annotations} \
             --cleavage_site_sequence {output.cleavage_site_sequences}
@@ -634,7 +644,7 @@ rule auspice_config:
     If we implement config overlays in augur this rule will become unnecessary.
     """
     input:
-        auspice_config = files.auspice_config,
+        auspice_config = resolve_config_path(files.auspice_config),
     output:
         auspice_config = "results/{subtype}/{segment}/{time}/auspice-config.json",
     run:
@@ -673,17 +683,18 @@ rule colors:
         metadata = lambda w: "results/{subtype}/genome/{time}/metadata.tsv" \
             if w.subtype in ['h5n1-cattle-outbreak', 'h5n1-d1.1'] \
             else rules.filter.output.metadata,
-        colors = lambda w: get_config('colors', 'hardcoded', w),
-        ordering = lambda w: get_config('colors', 'ordering', w),
-        schemes = lambda w: get_config('colors', 'schemes', w),
+        colors = lambda w: resolve_config_path(get_config('colors', 'hardcoded', w))(w),
+        ordering = lambda w: resolve_config_path(get_config('colors', 'ordering', w))(w),
+        schemes = lambda w: resolve_config_path(get_config('colors', 'schemes', w))(w),
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
         duplications = lambda w: ["=".join(pair) for pair in get_config('colors', 'duplications', w)],
+        script = script("assign-colors.py"),
     shell:
-        """
+        r"""
         cp {input.colors} {output.colors} && \
-        python3 scripts/assign-colors.py \
+        python3 {params.script} \
             --metadata {input.metadata} \
             --ordering {input.ordering} \
             --color-schemes {input.schemes} \
@@ -701,15 +712,15 @@ rule export:
         metadata = rules.filter.output.metadata,
         node_data = export_node_data_files,
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
-        lat_longs = files.lat_longs,
-        auspice_config = rules.auspice_config.output.auspice_config,
-        description = files.description
+        lat_longs = resolve_config_path(files.lat_longs),
+        auspice_config = resolve_config_path(rules.auspice_config.output.auspice_config),
+        description = resolve_config_path(files.description),
     output:
         auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"
     params:
         additional_config = additional_export_config
     shell:
-        """
+        r"""
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \

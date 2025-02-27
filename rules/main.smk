@@ -1,7 +1,3 @@
-# This Snakefile is not the entry point to the workflow (any more!) Please see
-# the README for updated instructions. We could/should move this file to (e.g.)
-# "rules/main.smk" in the future
-
 # constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
 wildcard_constraints:
     subtype = "[^_/]+",
@@ -43,7 +39,7 @@ rule all:
 
 
 # This must be after the `all` rule above since it depends on its inputs
-include: "rules/deploy.smk"
+include: "deploy.smk"
 
 rule test_target:
     """
@@ -388,7 +384,7 @@ rule filter:
     params:
         args = _filter_params,
     wildcard_constraints:
-        # The genome build has a different approach to filtering (see cattle-flu.smk)
+        # The genome build has a different approach to filtering (see genome.smk)
         segment="(?!genome)[^_/]+"
     shell:
         """
@@ -498,7 +494,7 @@ rule refine:
 def refined_tree(w):
     """
     Return the refined tree to be used for export, traits, ancestry reconstruction etc
-    The cattle-flu build introduces an additional step beyond `augur refine`, which is
+    The genome biulds introduces an additional step beyond `augur refine`, which is
     why this function exists.
     """
     if w.subtype=='h5n1-cattle-outbreak' and w.segment!='genome':

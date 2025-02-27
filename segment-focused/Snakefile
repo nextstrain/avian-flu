@@ -1,6 +1,6 @@
 include: "../rules/config.smk"
 
-include: "../Snakefile"
+include: "../rules/main.smk"
 
 rule _all:
     input: rules.all.input

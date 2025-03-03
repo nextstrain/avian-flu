@@ -9,6 +9,7 @@ alpaca	Nonhuman Mammal
 american crow	Avian
 AMERICAN ROBIN	Avian
 american wigeon	Avian
+AMERICAN WOODCOCK	Avian
 Anas acuta	Avian
 Anas crecca	Avian
 Anas rubripes	Avian
@@ -29,19 +30,23 @@ Aythya affinis	Avian
 Aythya collaris	Avian
 Aythya americana	Avian
 bald eagle	Avian
+BARN OWL	Avian
 black billed magpie	Avian
 blackbird	Avian
 black scoter	Avian
 Black vulture	Avian
+BLACK-CROWNED NIGHT-HERON	Avian
 BLUE-WINGED TEAL	Avian
 BOBCAT	Nonhuman Mammal
 Bos taurus	Cattle
 BOTTLENOSE DOLPHIN	Nonhuman Mammal
 brandt goose	Avian
 Branta canadensis	Avian
+BROWN PELICAN	Avian
 Bubo scandiacus	Avian
 Bubo virginianus	Avian
 Bucephala clangula	Avian
+BURROWING OWL	Avian
 Buteo jamaicensis	Avian
 Buteo lineatus	Avian
 CACKLING GOOSE	Avian
@@ -50,6 +55,7 @@ Cairina moschata	Avian
 Calidris alba	Avian
 Callipepla sp.	Avian
 canada goose	Avian
+Canidae	Nonhuman Mammal
 Capra hircus	Nonhuman Mammal
 cat	Nonhuman Mammal
 Cathartes aura	Avian
@@ -65,6 +71,7 @@ Common Eider	Avian
 common loon	Avian
 common raven	Avian
 comon-grackle	Avian
+COOPER'S HAWK	Avian
 Coragyps atratus	Avian
 Corvidae sp.	Avian
 Corvus	Avian
@@ -74,6 +81,7 @@ Corvus ossifragus	Avian
 Corvus sp.	Avian
 CRANE	Avian
 CRESTED CARACARA	Avian
+CROW	Avian
 Cygnus atratus	Avian
 Cygnus buccinator	Avian
 Cygnus columbianus	Avian
@@ -91,6 +99,7 @@ environment	Environment
 ERMINE	Nonhuman Mammal
 EURASIAN COLLARED DOVE	Avian
 Falco peregrinus	Avian
+FALCON	Avian
 Feliformia	Nonhuman Mammal
 feline	Nonhuman Mammal
 Felis catus	Nonhuman Mammal
@@ -106,6 +115,7 @@ goose	Avian
 grackle	Avian
 Great Black-Backed Gull	Avian
 Great Black-backed Gulll	Avian
+GREAT BLUE HERON	Avian
 great horned owl	Avian
 GREEN-WINGED TEAL	Avian
 Guinea Fowl	Avian
@@ -117,7 +127,9 @@ harris-hawk	Avian
 hawk	Avian
 Herring Gull	Avian
 Homo sapiens	Human
+HOODED MERGANSER	Avian
 HOSP	Avian
+HOUSE MOUSE	Nonhuman Mammal
 HOUSE SPARROW	Avian
 House-Mouse	Nonhuman Mammal
 Icteridae	Avian
@@ -139,16 +151,20 @@ Meleagris gallopavo	Avian
 Melegris gallopavo	Avian
 Mephitidae	Nonhuman Mammal
 Mephitis mephitis	Avian
+MERGANSER	Avian
 Mergus merganser	Avian
 mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
 Mus musculus	Nonhuman Mammal
+Mustela erminea	Nonhuman Mammal
 mute swan	Avian
 NORTHERN SHOVELER	Avian
 Numididae	Avian
 Numididae sp.	Avian
+OWL	Avian
 Panthera leo	Nonhuman Mammal
 Panthera tigris	Nonhuman Mammal
+Parabuteo unicinctus	Avian
 Passer domesticus	Avian
 Pavo	Avian
 PEAFOWL	Avian
@@ -165,13 +181,17 @@ Phasianinae	Avian
 Phasianus colchicus	Avian
 PHEASANT	Avian
 Pig	Nonhuman Mammal
+Plegadis chihi	Avian
 Podiceps auritus	Avian
 Procyon lotor	Nonhuman Mammal
 Puma concolor	Nonhuman Mammal
+QUAIL	Avian
 Quiscalus quiscula	Avian
 raccoon	Nonhuman Mammal
 red fox	Nonhuman Mammal
 red tailed hawk	Avian
+RED-BREASTED MERGANSER	Avian
+RED-SHOULDERED HAWK	Avian
 Red-Tailed Hawk	Avian
 Rock Pigeon	Avian
 Sanderling	Avian
@@ -196,10 +216,12 @@ Thalasseus maximus	Avian
 TRUMPETER SWAN	Avian
 Turdus merula	Avian
 Turdus migratorius	Avian
+Tursiops truncatus	Nonhuman Mammal
 turkey	Avian
 turkey vulture	Avian
 Vicugna pacos	Nonhuman Mammal
 Vulpes vulpes	Nonhuman Mammal
+VULTURE	Avian
 western gull	Avian
 western kingbird	Avian
 western sandpiper	Avian

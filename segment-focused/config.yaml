@@ -1,25 +1,35 @@
-#### Parameters which define which builds to produce via this config ###
+#### Which builds to produce via this config? ###
+# The GISAID builds are a combination of three parts: subtype (e.g. h5n1),
+# time (e.g. all-time) and segment (e.g. ha)
 builds:
-  h5nx: 
-    - all-time
-    - 2y
-  h5n1: 
-    - all-time
-    - 2y
-  h7n9: 
-    - all-time
-  h9n2: 
-    - all-time
+  - subtype:
+      - h5nx
+      - h5n1
+    segment: &segments
+      - pb2
+      - pb1
+      - pa
+      - ha
+      - np
+      - na
+      - mp
+      - ns
+    time:
+      - 2y
+      - all-time
+  - subtype:
+      - h7n9
+      - h9n2
+    segment: *segments
+    time:
+      - all-time
 
-segments:
-  - pb2
-  - pb1
-  - pa
-  - ha
-  - np
-  - na
-  - mp
-  - ns
+# The default target for this build is the Auspice JSON, however config overlays may wish to change this
+# (e.g. to target "intermediate" files instead). Note that you can sidestep these (config-defined) targets
+# entirely by providing snakemake with (a) target(s) on the command line.
+target_patterns:
+  - "auspice/avian-flu_{subtype}_{segment}_{time}.json"
+
 
 # Input source(s) - See README.md for how to use local files instead and/or add additional inputs
 inputs:
@@ -29,7 +39,6 @@ inputs:
 
 
 #### Parameters which control large overarching aspects of the build
-target_sequences_per_tree: 3000
 same_strains_per_segment: false
 
 
@@ -44,129 +53,93 @@ description: config/description_gisaid.md
 
 
 #### Rule-specific parameters ####
+# The formatting here represents the three-tiered nature of the avian-flu build which
+# comprises subtype / segment / time-resolution
+# You can use '*' as a catch-all for any of these tiers.
+# There's one exception: If a config value is constant for any and all builds then you
+# can just use a scalar value (number, string, boolean)
 filter:
-  # rule parameters are typically defined for each build - e.g.
-  # min_length.h5nx.2y = ... The "FALLBACK" key (e.g. min_length.FALLBACK)
-  # is used as a fallback value if nothing is specifically defined
-  # for the subtype/time combination.
-  # Some parameters have an extra hierarchy of segment, some don't
+  target_sequences_per_tree:
+    "*/*/*": 3000
+
   min_length:
-    FALLBACK:
-      pb2: 2100
-      pb1: 2100
-      pa: 2000
-      ha: 1600
-      np: 1400
-      na: 1270
-      mp: 900
-      ns: 800
+    "*/pb2/*": 2100
+    "*/pb1/*": 2100
+    "*/pa/*": 2000
+    "*/ha/*": 1600
+    "*/np/*": 1400
+    "*/na/*": 1270
+    "*/mp/*": 900
+    "*/ns/*": 800
 
   min_date:
-    h5nx:
-      all-time: 1996
-      2y: 2Y
-    h5n1:
-      all-time: 1996
-      2y: 2Y
-    h7n9:
-      all-time: 2013
-    h9n2:
-      all-time: 1966
+    "*/*/2y": 2Y
+    "h5nx/*/all-time": 1996
+    "h5n1/*/all-time": 1996
+    "h7n9/*/all-time": 2013
+    "h9n2/*/all-time": 1966
 
   group_by:
-    h5nx:
-      all-time: subtype country year
-      2y: subtype region month host
-    h5n1:
-      all-time: region country year
-      2y: subtype region month host
-    h7n9:
-      all-time: division year
-    h9n2:
-      all-time: country year
+    "*/*/2y": subtype region month host
+    "h5nx/*/all-time": subtype country year
+    "h5n1/*/all-time": region country year
+    "h7n9/*/all-time": division year
+    "h9n2/*/all-time": country year
 
   exclude_where:
-    FALLBACK: host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
+    host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
 
 refine:
   coalescent: const
   date_inference: marginal
 
-  clock_filter_iqd:
-    FALLBACK: 4
+  clock_filter_iqd: 4
 
-  root:
-    FALLBACK: false
-
-  __clock_std_dev:  &clock_std_dev  0.00211 # YAML anchor so we can reference this value
+  root: false
 
   clock_rates:
-    FALLBACK:            # anything not specified by a subtype/time combination
-        pb2: ''          # falls back to FALLBACK, and the empty string means no
-        pb1: ''          # supplied clock rate, i.e. infer the clock
-        pa: ''
-        ha: ''
-        np: ''
-        na: ''
-        mp: ''
-        ns: ''
-    h5nx:
-      2y:
-        pb2: [0.00287, *clock_std_dev]
-        pb1: [0.00267, *clock_std_dev]
-        pa: [0.00238, *clock_std_dev]
-        ha: [0.0048, *clock_std_dev]
-        np: [0.0022, *clock_std_dev]
-        na: [0.0028, *clock_std_dev]
-        mp: [0.0017, *clock_std_dev]
-        ns: [0.0017, *clock_std_dev]
-    h5n1:
-      2y:
-        pb2: [0.00287, *clock_std_dev]
-        pb1: [0.00264, *clock_std_dev]
-        pa: [0.00248, *clock_std_dev]
-        ha: [0.00455, *clock_std_dev]
-        np: [0.00252, *clock_std_dev]
-        na: [0.00349, *clock_std_dev]
-        mp: [0.00191, *clock_std_dev]
-        ns: [0.00249, *clock_std_dev]
+    # NOTE: an empty value means no supplied clock rate, i.e. infer the clock
+    # (This is the fallback value - */*/* - to be used if we don't provide a more specific value below)
+    "*/*/*": ''
+    # otherwise supply a list of [rate, std_dev]
+    "h5nx/pb2/2y": [0.00287, &clock_std_dev 0.00211]
+    "h5nx/pb1/2y": [0.00267, *clock_std_dev]
+    "h5nx/pa/2y": [0.00238, *clock_std_dev]
+    "h5nx/ha/2y": [0.0048, *clock_std_dev]
+    "h5nx/np/2y": [0.0022, *clock_std_dev]
+    "h5nx/na/2y": [0.0028, *clock_std_dev]
+    "h5nx/mp/2y": [0.0017, *clock_std_dev]
+    "h5nx/ns/2y": [0.0017, *clock_std_dev]
+    "h5n1/pb2/2y": [0.00287, *clock_std_dev]
+    "h5n1/pb1/2y": [0.00264, *clock_std_dev]
+    "h5n1/pa/2y": [0.00248, *clock_std_dev]
+    "h5n1/ha/2y": [0.00455, *clock_std_dev]
+    "h5n1/np/2y": [0.00252, *clock_std_dev]
+    "h5n1/na/2y": [0.00349, *clock_std_dev]
+    "h5n1/mp/2y": [0.00191, *clock_std_dev]
+    "h5n1/ns/2y": [0.00249, *clock_std_dev]
 
 
 ancestral:
   inference: joint
-  root_seq:
-    FALLBACK: false
+  root_seq: false
 
 traits:
   columns:
-    h5nx:
-      all-time: region
-      2y: region
-    h5n1:
-      all-time: region country
-      2y: region country
-    h7n9:
-      all-time: country division
-    h9n2:
-      all-time: region country
-
-  sampling_bias_correction:
-    FALLBACK: false
-
-  confidence:
-    FALLBACK: true
+    "h5nx/*/*": region
+    "h5n1/*/*": region country
+    "h7n9/*/*": country division
+    "h9n2/*/*": region country
+  sampling_bias_correction: false
+  confidence: true
 
 colors:
-  hardcoded: 
-    FALLBACK: config/{subtype}/colors_{subtype}.tsv
-  ordering: 
-    FALLBACK: "config/shared/color_ordering_genoflu.tsv" # for dynamic assignment
-  schemes: 
-    FALLBACK: "config/shared/color_schemes.tsv"
-  duplications:
-    FALLBACK: []
+  hardcoded: config/{subtype}/colors_{subtype}.tsv
+  ordering: "config/shared/color_ordering_genoflu.tsv" # for dynamic assignment
+  schemes: "config/shared/color_schemes.tsv"
+  duplications: 
+    "*/*/*": []
 
 export:
-  title:
-    FALLBACK: false # use the title in the auspice JSON
-    # TODO - if we parameterise this here we can use the subtype wildcard to customise the title
+  title: false # use the title in the auspice JSON
+  # TODO - if we parameterise this here we can use the subtype wildcard to customise the title

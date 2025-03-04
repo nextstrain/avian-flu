@@ -1,17 +1,26 @@
-#### Parameters which define which builds to produce via this config ###
+#### Which builds to produce via this config? ###
+# The GISAID builds are a combination of three parts: subtype (e.g. h5n1),
+# time (e.g. all-time) and segment (e.g. ha)
 builds:
-  h5n1-cattle-outbreak: ''
+  - subtype:
+      - h5n1-cattle-outbreak
+    segment:
+      - genome
+      - pb2
+      - pb1
+      - pa
+      - ha
+      - np
+      - na
+      - mp
+      - ns
 
-segments:
-  - genome
-  - pb2
-  - pb1
-  - pa
-  - ha
-  - np
-  - na
-  - mp
-  - ns
+
+# The default target for this build is the Auspice JSON, however config overlays may wish to change this
+# (e.g. to target "intermediate" files instead). Note that you can sidestep these (config-defined) targets
+# entirely by providing snakemake with (a) target(s) on the command line.
+target_patterns:
+  - "auspice/avian-flu_{subtype}_{segment}.json"
 
 
 # Input source(s) - See README.md for how to use local files instead and/or add additional inputs
@@ -21,16 +30,10 @@ inputs:
     sequences: s3://nextstrain-data/files/workflows/avian-flu/h5n1/{segment}/sequences.fasta.zst
 
 
-
-#### Parameters which control large overarching aspects of the build
-# Set a high target_sequences_per_tree to capture all circulating strains, as they will be pruned down
-# as part of the workflow
-target_sequences_per_tree: 10_000
-
-
 #### Config files ####
-reference: config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
-genome_reference: config/{subtype}/h5_cattle_genome_root.gb
+reference: 
+  "*/genome/*": config/{subtype}/h5_cattle_genome_root.gb
+  "*/*/*": config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
 auspice_config: config/{subtype}/auspice_config_{subtype}.json
 # NOTE: colors is now a set of files, defined below 
 lat_longs: config/h5n1/lat_longs_h5n1.tsv # use H5N1 lat-longs
@@ -42,26 +45,30 @@ description: config/{subtype}/description_{subtype}.md
 
 
 #### Rule-specific parameters ####
+# The formatting here represents the three-tiered nature of the avian-flu build which
+# comprises subtype / segment / time-resolution
+# You can use '*' as a catch-all for any of these tiers.
+# There's one exception: If a config value is constant for any and all builds then you
+# can just use a scalar value (number, string, boolean)
 filter:
+  target_sequences_per_tree:
+    "*/*/*": 10_000 
+
   min_length:
-    FALLBACK:
-      pb2: 2100
-      pb1: 2100
-      pa: 2000
-      ha: 1600
-      np: 1400
-      na: 1270
-      mp: 900
-      ns: 800
+    "*/pb2/*": 2100
+    "*/pb1/*": 2100
+    "*/pa/*": 2000
+    "*/ha/*": 1600
+    "*/np/*": 1400
+    "*/na/*": 1270
+    "*/mp/*": 900
+    "*/ns/*": 800
 
-  min_date:
-    FALLBACK: 2024
+  min_date: 2024
 
-  group_by:
-    FALLBACK: false # no grouping during filter
+  group_by: false  # no grouping during filter
 
-  exclude_where:
-    FALLBACK: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
+  exclude_where: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
 
 mask:
   min_support: 0 # This lets all positions through regardless of how many sequences have a base
@@ -71,77 +78,68 @@ refine:
   coalescent: const
   date_inference: marginal
 
-  genome_clock_filter_iqd:
-    FALLBACK: 6
   clock_filter_iqd:
-    FALLBACK: false
+    "*/genome/*": 6
+    "*/*/*": false
 
   root:
-    FALLBACK: false
-
-  # For the genome only we use the closest outgroup as the root
-  # P.S. Make sure this strain is force included via augur filter --include
-  # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
-  genome_root:
-      FALLBACK: A/skunk/NewMexico/24-006483-001/2024
+    # For the genome only we use the closest outgroup as the root
+    # P.S. Make sure this strain is force included via augur filter --include
+    # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
+    "*/genome/*": A/skunk/NewMexico/24-006483-001/2024
+    "*/*/*": false
 
   segment_lengths:
-    FALLBACK:
-      {'pb2': 2341, 'pb1': 2341, 'pa': 2233, 'ha': 1760, 'np': 1565, 'na': 1458, 'mp': 1027, 'ns': 865}
+    "*/pb2/*": 2341
+    "*/pb1/*": 2341
+    "*/pa/*": 2233
+    "*/ha/*": 1565
+    "*/np/*": 1400
+    "*/na/*": 1458
+    "*/mp/*": 1027
+    "*/ns/*": 865
 
-  __clock_std_dev:  &clock_std_dev  0.00211 # YAML anchor so we can reference this value below
 
   clock_rates:
-    FALLBACK:
-      # The rates for the 8 segments are taken from the GISAID H5N1/2y config
-      pb2: [0.00287, *clock_std_dev]
-      pb1: [0.00264, *clock_std_dev]
-      pa: [0.00248, *clock_std_dev]
-      ha: [0.00455, *clock_std_dev]
-      np: [0.00252, *clock_std_dev]
-      na: [0.00349, *clock_std_dev]
-      mp: [0.00191, *clock_std_dev]
-      ns: [0.00249, *clock_std_dev]
-      # the genome clock rate is calculated by a function in the snakemake pipeline
-      # using the segment rates weighted by their lengths
+    # The rates for the 8 segments are taken from the GISAID H5N1/2y config
+    "*/pb2/*": [0.00287, &clock_std_dev 0.00211]
+    "*/pb1/*": [0.00264, *clock_std_dev]
+    "*/pa/*": [0.00248, *clock_std_dev]
+    "*/ha/*": [0.00455, *clock_std_dev]
+    "*/np/*": [0.00252, *clock_std_dev]
+    "*/na/*": [0.00349, *clock_std_dev]
+    "*/mp/*": [0.00191, *clock_std_dev]
+    "*/ns/*": [0.00249, *clock_std_dev]
+    # NOTE:
+    # the genome clock rate is calculated by a function in the snakemake pipeline
+    # using the segment rates weighted by their lengths.
+
 
 ancestral:
   inference: joint
-  root_seq:
-    FALLBACK: false
-  genome_root_seq:
-    FALLBACK: config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
+  root_seq: 
+    "*/genome/*": config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
+    "*/*/*": false
 
 traits:
-  # genome build has different parameters...
-  genome_columns:
-    FALLBACK: division
-  genome_sampling_bias_correction:
-    FALLBACK: 5
-
-  # segment builds:
   columns:
-    FALLBACK: region country # same as GISAID H5N1 builds
-  sampling_bias_correction:
-    FALLBACK: false
+    "*/genome/*": division
+    "*/*/*": region country  # segment builds are the same as GISAID H5N1 builds
 
-  # all builds
-  confidence:
-    FALLBACK: true
+  sampling_bias_correction:
+    "*/genome/*": 5
+    "*/*/*": false
+
+  confidence: true
 
 colors:
-  hardcoded: 
-    FALLBACK: config/h5n1/colors_h5n1.tsv # use H5N1 colors
-  ordering: 
-    FALLBACK: "config/h5n1-cattle-outbreak/color_ordering.tsv" # for dynamic assignment
-  schemes: 
-    FALLBACK: "config/shared/color_schemes.tsv"
+  hardcoded: config/h5n1/colors_h5n1.tsv # use H5N1 colors
+  ordering: "config/h5n1-cattle-outbreak/color_ordering.tsv" # for dynamic assignment
+  schemes: "config/shared/color_schemes.tsv"
   duplications:
-    FALLBACK:
-      - ["division", "division_metadata"]
+    "*/*/*": [["division", "division_metadata"]]
 
 export:
-  genome_title:
-    FALLBACK: Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
   title:
-    FALLBACK: Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)
+    "*/genome/*": Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+    "*/*/*": Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)

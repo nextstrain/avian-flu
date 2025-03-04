@@ -84,7 +84,91 @@ Depending on how you run builds this can be very liberating; for instance if you
 
 > You can use Snakemake's `--directory` argument to define the analysis directory (working directory) if that's easier
 
-## Creating a custom build
+## Creating a custom build via config overlays
+
+Each of the workflows described above is designed to be extended (customised) by overlaying your own YAML configurations.
+The aim is to allow easy customisation of the workflow outputs (e.g. which subtypes / segments / time-frames to run) and the stopping points (Auspice JSONs or particular intermediate files) via such overlays.
+Additionally, modification of parameters (e.g. clock rates, minimum lengths, subsampling criteria, DTA metadata) is possible through overlays without needing to modify the underlying base config or Snakemake pipeline itself.
+
+Config overlays allow you to essentially maintain one or more modifications of the workflow for your own purposes.
+For instance you may want a way to easily run only H5N1 HA+NA 2y builds, and a config overlay can achieve this.
+Using an overlay keeps this change separate from the config used for Nextstrain automation and also avoids `git` conflicts emerging over time.
+When combined with running in a separate working directory (explained below) this becomes even more powerful.
+
+For the following examples we presume you are running within a separate analysis directory as introduced in the previous section.
+
+We'll start by creating a config (overlay) YAML, `config.yaml` in our analysis directory, and use the segment-focused workflow described above, however the concepts are the similar for the genome-focused workflow.
+
+> You can choose a different name for the file, but if you do you'll have to supply it to the command via `--configfile <filename>` as only `config.yaml` will be automatically detected.
+
+### Restrict which builds we want to produce
+
+By default we produce 48 Auspice JSONs (4 subtypes * 8 segments * 1-2 time resolutions). We can restrict these by redefining the builds in our config overlay. For instance the following will produce only 2 datasets, `h5n1/ha/2y` and `h5n1/na/2y`:
+
+```yaml
+builds:
+  - subtype: h5n1
+    segment:
+      - ha
+      - na
+    time: 2y
+```
+
+Here `builds` is an array of sub-configs, each of which define a combination of subtype, segment and time parameters. Each subtype, segment and time can be a single string (as subtype and time are, above) or an array (as segment is, above).
+
+### Only produce certain intermediate files, not Auspice datasets
+
+By default the "target" for each build is the Auspice JSON (`auspice/avian-flu_h5n1_ha_2y.json` etc) however we can change this if we just want certain intermediate files. Adding the following to the config overlay will stop once we've filtered to the metadata & sequences we would use for each tree
+
+```yaml
+target_patterns:
+  - "results/{subtype}/{segment}/{time}/metadata.tsv"
+  - "results/{subtype}/{segment}/{time}/sequences.tsv"
+```
+
+(This works in combination with the custom `builds` definition, above).
+
+### Change the target number of sequences per build
+
+In the `segment-focused/config.yaml` this parameter is defined as
+
+```yaml
+filter: 
+  target_sequences_per_tree:
+    "*/*/*": 3000
+```
+
+Where the `"*/*/*"` syntax is slash-separated matchers for subtype, segment and time-resolution, and the `*` character means "match everything".
+So here we're saying "for every subtype, for every segment, for every time-resolution target 3000 sequences".
+
+If we want to change our h5n1 builds to instead have 5000 sequences (whilst keeping the rest at 3000) we could add the following to our config overlay:
+```yaml
+filter: 
+  target_sequences_per_tree:
+    "h5n1/*/*": 5000
+```
+And since `"h5n1/*/*"` is more specific than `"*/*/*"` it'll take precedence when `subtype="h5n1"`.
+(Internally, Snakemake merges these configs together resulting in `'target_sequences_per_tree': {'h5n1/*/*': 5000, '*/*/*': 3000}`. For each combination of subtype/segment/time values within the workflow we consult these dictionaries and pick the most specific match.)
+
+
+This syntax is concise but powerful, for instance we can parameterise the builds like so:
+```yaml
+filter: 
+  target_sequences_per_tree:
+    "*/*/all-time": 5000 # target 5k sequences for the all-time builds
+    "h5n1/*/all-time": 10000 # but for h5n1 all-time builds target 10k sequences (this is more specific as it only includes one '*' character)
+    "*/*/*": 1000 # target 1k sequences for any other builds (i.e. the 2y builds)
+```
+
+### Change other parameters
+
+The pattern introduced in the preceeding section generally applies for all parameters in the workflow.
+By reading through the relevant base config YAML (e.g. `segment-focused/config.yaml` or `genome-focused/config.yaml`) you should be able to learn the config structure and add then modify that within your overlay config as needed.
+
+If the parameter is not exposed via the config YAML and you find yourself modifying the underlying Snakefile consider exposing it via the config so that this customisation then becomes available to config overlays.
+
+
+## Creating a custom build via quickstart pipeline
 The easiest way to generate your own, custom avian-flu build is to use the quickstart-build as a starting template. Simply clone the quickstart-build, run with the example data, and edit the Snakefile to customize. This build includes example data and a simplified, heavily annotated Snakefile that goes over the structure of Snakefiles and annotates rules and inputs/outputs that can be modified. This build, with it's own readme, is available [here](https://github.com/nextstrain/avian-flu/tree/master/quickstart-build).
 
 ## Features unique to avian flu builds

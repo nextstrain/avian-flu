@@ -43,6 +43,11 @@ dropped_strains: config/{subtype}/dropped_strains_{subtype}.txt
 clades_file: clade-labeling/h5n1-clades.tsv # use H5N1 clades
 description: config/{subtype}/description_{subtype}.md
 
+## Subtype query - this structure is different from all other config parameters, requiring
+#  a key for each of the subtypes defined above in 'builds'. The string will be supplied to
+#  augur filter's --query argument.
+subtype_query:
+    "h5n1-cattle-outbreak": "genoflu in 'B3.13'"
 
 #### Rule-specific parameters ####
 # The formatting here represents the three-tiered nature of the avian-flu build which

@@ -30,27 +30,6 @@ rule test_target:
     """
     input: "auspice/avian-flu_h5n1_ha_all-time.json"
 
-def subtypes_by_subtype_wildcard(wildcards):
-
-    # TODO - this function does more than strictly subtype filtering as certain builds filter to
-    # GenoFLU constellation, and in the future this may be expanded. We should rename the function!
-    # TODO XXX - move to configs (started in https://github.com/nextstrain/avian-flu/pull/104 but
-    # We should make the entire query config-definable)
-    if wildcards.subtype == 'h5n1-d1.1':
-        return "genoflu in 'D1.1'"
-    elif wildcards.subtype == 'h5n1-cattle-outbreak':
-        return "genoflu in 'B3.13'"
-
-    db = {
-        'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
-        'h5n1': ['h5n1'],
-        'h7n9': ['h7n9'],
-        'h9n2': ['h9n2'],
-    }
-    assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
-        "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
-    return(f"subtype in [{', '.join([repr(s) for s in db[wildcards.subtype]])}]")
-
 class InvalidConfigError(Exception):
     pass
 
@@ -204,7 +183,7 @@ rule filter_sequences_by_subtype:
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes=lambda w: config['subtype_query'][w.subtype],
     shell:
         """
         augur filter \
@@ -220,7 +199,7 @@ rule filter_metadata_by_subtype:
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes= lambda w: config['subtype_query'][w.subtype],
     shell:
         """
         augur filter \

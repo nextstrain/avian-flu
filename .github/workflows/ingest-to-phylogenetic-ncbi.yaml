@@ -103,7 +103,7 @@ jobs:
           key: ingest-output-sha256sum-${{ hashFiles('ingest-ncbi-output-sha256sum') }}
           lookup-only: true
 
-  phylogenetic-cattle-flu:
+  phylogenetic:
     needs: [check-new-data]
     if: ${{ needs.check-new-data.outputs.cache-hit != 'true' }}
     permissions:
@@ -112,15 +112,3 @@ jobs:
     secrets: inherit
     with:
       image: ${{ inputs.phylogenetic_image }}
-      config-yaml: h5n1-cattle-outbreak
-
-  phylogenetic-d1-1:
-    needs: [check-new-data]
-    if: ${{ needs.check-new-data.outputs.cache-hit != 'true' }}
-    permissions:
-      id-token: write
-    uses: ./.github/workflows/phylogenetic-ncbi.yaml
-    secrets: inherit
-    with:
-      image: ${{ inputs.phylogenetic_image }}
-      config-yaml: h5n1-d1.1

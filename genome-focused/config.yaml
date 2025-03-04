@@ -1,6 +1,6 @@
 #### Which builds to produce via this config? ###
-# The GISAID builds are a combination of three parts: subtype (e.g. h5n1),
-# time (e.g. all-time) and segment (e.g. ha)
+# The genome-focused builds are a combination of two parts: subtype (e.g. h5n1-d1.1),
+# and segment (e.g. ha, genome)
 builds:
   - subtype:
       - h5n1-cattle-outbreak
@@ -14,7 +14,10 @@ builds:
       - na
       - mp
       - ns
-
+  - subtype:
+      - h5n1-d1.1
+    segment:
+      - genome
 
 # The default target for this build is the Auspice JSON, however config overlays may wish to change this
 # (e.g. to target "intermediate" files instead). Note that you can sidestep these (config-defined) targets
@@ -32,22 +35,22 @@ inputs:
 
 #### Config files ####
 reference: 
-  "*/genome/*": config/{subtype}/h5_cattle_genome_root.gb
+  "*/genome/*": config/h5n1-cattle-outbreak/h5_cattle_genome_root.gb
   "*/*/*": config/h5n1/reference_h5n1_{segment}.gb  # use H5N1 references
 auspice_config: config/{subtype}/auspice_config_{subtype}.json
-# NOTE: colors is now a set of files, defined below 
 lat_longs: config/h5n1/lat_longs_h5n1.tsv # use H5N1 lat-longs
 include_strains: config/{subtype}/include_strains_{subtype}.txt
 # use cattle-outbreak specific dropped strains for segment + genome trees
 dropped_strains: config/{subtype}/dropped_strains_{subtype}.txt
 clades_file: clade-labeling/h5n1-clades.tsv # use H5N1 clades
-description: config/{subtype}/description_{subtype}.md
+description: config/{subtype}/description.md
 
 ## Subtype query - this structure is different from all other config parameters, requiring
 #  a key for each of the subtypes defined above in 'builds'. The string will be supplied to
 #  augur filter's --query argument.
 subtype_query:
     "h5n1-cattle-outbreak": "genoflu in 'B3.13'"
+    "h5n1-d1.1": "genoflu in 'D1.1'"
 
 #### Rule-specific parameters ####
 # The formatting here represents the three-tiered nature of the avian-flu build which
@@ -76,7 +79,9 @@ filter:
   exclude_where: host=laboratoryderived host=ferret host=unknown host=other host=host gisaid_clade=3C.2
 
 mask:
-  min_support: 0 # This lets all positions through regardless of how many sequences have a base
+  min_support: 
+    "h5n1-cattle-outbreak/*/*": 0 # This lets all positions through regardless of how many sequences have a base
+    "h5n1-d1.1/*/*": 50 # This masks any position where <50% of sequences have a base
 
 
 refine:
@@ -88,10 +93,12 @@ refine:
     "*/*/*": false
 
   root:
-    # For the genome only we use the closest outgroup as the root
+    # For the cattle-outbreak genome we use the closest outgroup as the root
     # P.S. Make sure this strain is force included via augur filter --include
     # (This isn't needed for the segment builds as we include a large enough time span to root via the clock)
-    "*/genome/*": A/skunk/NewMexico/24-006483-001/2024
+    "h5n1-cattle-outbreak/genome/*": A/skunk/NewMexico/24-006483-001/2024
+    # For the D1.1 genome we temporally root
+    "h5n1-d1.1/genome/*": best
     "*/*/*": false
 
   segment_lengths:
@@ -146,5 +153,6 @@ colors:
 
 export:
   title:
-    "*/genome/*": Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+    "h5n1-cattle-outbreak/genome/*": Full genome analysis of the ongoing influenza A/H5N1 cattle outbreak in North America
+    "h5n1-d1.1/genome/*": false
     "*/*/*": Ongoing influenza A/H5N1 cattle outbreak in North America ({segment} segment)

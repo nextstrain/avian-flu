@@ -40,8 +40,6 @@ nextstrain build . --snakefile segment-focused/Snakefile -f deploy_all
 
 ## Genome focused NCBI builds
 
-> The current implementation uses two distinct workflows, one for the original B3.13 cattle-outbreak and one for the newer D1.1 analysis, however these will be merged once the  config syntax is improved in https://github.com/nextstrain/avian-flu/pull/104
-
 We produce whole-genome focused (and, sometimes, individual segment builds) for the ongoing H5N1 cattle-flu outbreak.
 These use NCBI data including consensus genomes and SRA data assembled via the Andersen lab's [avian-influenza repo](https://github.com/andersen-lab/avian-influenza) by default.
 
@@ -51,10 +49,7 @@ The `h5n1-d1.1` datasets are GenoFLU constellation D1.1 and represent the separa
 
 
 ```bash
-# B3.13 cattle-outbreak
 snakemake --cores 1 -pf --snakefile genome-focused/Snakefile
-# D1.1 analysis
-snakemake --cores 1 -pf --snakefile genome-focused-d1.1/Snakefile
 ```
 
 This uses the `genome-focused/config.yaml` config, but you can amend this with additional configs (see below).

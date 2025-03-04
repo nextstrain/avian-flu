@@ -589,14 +589,13 @@ def export_node_data_files(wildcards):
     return nd
 
 
-def additional_export_config(wildcards):
-    args = ""
+def additional_args_export(wildcards):
+    args = []
 
     if title:=resolve_config_value('export', 'title')(wildcards):
         # Config defined title strings may include wildcards to be expanded
         title = title.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time)
-        # TODO XXX improve (existing) quoting, see <https://github.com/nextstrain/avian-flu/pull/104/files#r1857406217>
-        args += "--title '" + title + "'"
+        args += ["--title", title]
 
     return args
 
@@ -680,7 +679,7 @@ rule export:
     output:
         auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"
     params:
-        additional_config = additional_export_config
+        additional_args = additional_args_export
     shell:
         r"""
         augur export v2 \
@@ -692,7 +691,7 @@ rule export:
             --auspice-config {input.auspice_config} \
             --description {input.description} \
             --include-root-sequence-inline \
-            {params.additional_config} \
+            {params.additional_args:q} \
             --output {output.auspice_json}
         """
 

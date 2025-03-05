@@ -37,7 +37,6 @@ on:
       config-yaml:
         description: |
           Currently we have H5N1/D1.1 and H5N1/cattle-outbreak (B3.13) builds available.
-          The choices here correspond to the YAML of the same name in config/
         required: true
         type: choice
         options:
@@ -110,6 +109,13 @@ jobs:
           )
         fi;
 
+        # Note: we will unify these snakefiles once the config syntax allows us to do so
+        if [[ "$CONFIG_NAME" = "h5n1-d1.1" ]]; then
+          SNAKEFILE="genome-focused-d1.1/Snakefile"
+        else
+          SNAKEFILE="genome-focused/Snakefile"
+        fi;
+
         nextstrain build \
           --detach \
           --no-download \
@@ -117,7 +123,7 @@ jobs:
           --memory 28800mib \
           . \
             deploy_all \
-            --configfile config/${CONFIG_NAME}.yaml \
+            --snakefile ${SNAKEFILE} \
             --config "${config[@]}"
 
       env: |

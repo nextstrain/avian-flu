@@ -1,10 +1,3 @@
-#
-# TKTK
-#
-custom_rules:
-  - "rules/cattle-flu.smk"
-
-
 #### Parameters which define which builds to produce via this config ###
 builds:
   h5n1-d1.1: ''

@@ -1,9 +1,3 @@
-# NOTE: The h5n1-cattle-outbreak builds use a specific rule-file (specified within this config)
-# and that rule file may have some config-like parameters within it.
-custom_rules:
-  - "rules/cattle-flu.smk"
-
-
 #### Parameters which define which builds to produce via this config ###
 builds:
   h5n1-cattle-outbreak: ''

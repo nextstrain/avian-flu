@@ -88,7 +88,7 @@ jobs:
           --memory 28800mib \
           . \
             deploy_all \
-            --configfile config/gisaid.yaml \
+            --snakefile segment-focused/Snakefile \
             --config "${config[@]}"
 
       env: |

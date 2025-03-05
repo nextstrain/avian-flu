@@ -11,4 +11,4 @@ jobs:
     # conform since this is a collaborative repo with an external group.
     uses: nextstrain/.github/.github/workflows/pathogen-repo-ci.yaml@v0
     with:
-      build-args: --configfile config/gisaid.yaml -pf test_target
+      build-args: --snakefile segment-focused/Snakefile -pf test_target

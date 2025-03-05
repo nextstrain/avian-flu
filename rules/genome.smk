@@ -10,8 +10,8 @@ rule filter_segments_for_genome:
     input:
         sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
         metadata = "results/{subtype}/metadata-with-clade.tsv", # TODO: use a function here instead of hardcoding
-        include = config['include_strains'],
-        exclude = config['dropped_strains'],
+        include = resolve_config_path('include_strains'),
+        exclude = resolve_config_path('dropped_strains'),
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta"
     wildcard_constraints:
@@ -20,7 +20,7 @@ rule filter_segments_for_genome:
         time = 'default',
     log: "logs/{subtype}/{segment}/{time}/filtered_{genome_seg}.txt",
     shell:
-        """
+        r"""
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
@@ -34,7 +34,11 @@ rule align_segments_for_genome:
     input:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
         # Use the H5N1 reference sequences for alignment
-        reference = lambda w: expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
+        reference = lambda w: [
+            resolve_path(expanded, w)
+            for expanded in
+            expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
+        ]
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:
@@ -44,7 +48,7 @@ rule align_segments_for_genome:
     threads:
         8
     shell:
-        """
+        r"""
         augur align \
             --sequences {input.sequences} \
             --reference-sequence {input.reference} \
@@ -66,9 +70,11 @@ rule join_segments:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
         time = 'default',
+    params:
+        script = script("join-segments.py"),
     shell:
-        """
-        python scripts/join-segments.py \
+        r"""
+        python {params.script} \
             --segments {input.alignment} \
             --output {output.alignment}
         """
@@ -79,14 +85,15 @@ rule mask_genome:
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
     params:
-        percentage = config['mask']['min_support']
+        percentage = config['mask']['min_support'],
+        script = script("mask.py"),
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
         time = 'default',
     shell:
         r"""
-        python scripts/mask.py \
+        python {params.script} \
             --alignment {input.alignment} \
             --percentage {params.percentage} \
             --output {output.alignment}
@@ -110,7 +117,7 @@ rule genome_metadata:
 
 def assert_expected_config(w):
     try:
-        # TODO: once we refactor things we should use `get_config()` here
+        # TODO: once we refactor things we should use `resolve_config_value()` here
         # see <https://github.com/nextstrain/avian-flu/pull/100#discussion_r1823047047>
         # but currently this snakefile doesn't have access to that function.
         assert len(config['traits']['genome_columns'])==1 and config['traits']['genome_columns']['FALLBACK']=="division"
@@ -154,9 +161,11 @@ rule prune_tree:
     wildcard_constraints:
         subtype='h5n1-cattle-outbreak|h5n1-d1.1',
         time="default",
+    params:
+        script = script("restrict-via-common-ancestor.py")
     shell:
         """
-        python3 scripts/restrict-via-common-ancestor.py \
+        python3 {params.script} \
             --tree {input.tree} \
             --strains {input.strains} \
             --output-tree {output.tree} \

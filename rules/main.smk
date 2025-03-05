@@ -16,26 +16,9 @@ SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
 NEXTSTRAIN_PUBLIC_BUCKET = "s3://nextstrain-data/"
 
-def collect_builds():
-    """
-    iteratively create workflow targets from config.builds for the `all` rule
-    you can over-ride this by specifying targets (filenames) on the command line
-    """
-    targets = []
-    for subtype,times in config.get('builds', {}).items():
-        for segment in config.get('segments', []):
-            if len(times):
-                for time in times:
-                    targets.append(f"auspice/avian-flu_{subtype}_{segment}_{time}.json")
-            else:
-                targets.append(f"auspice/avian-flu_{subtype}_{segment}.json")
-    return targets
-
 rule all:
     input:
-        auspice_json = collect_builds()
-        #sequences = expand("results/{subtype}/{segment}/sequences.fasta", segment=SEGMENTS, subtype=SUBTYPES),
-        #metadata = expand("results/{subtype}/metadata.tsv", segment=SEGMENTS, subtype=SUBTYPES)
+        auspice_json = expand_target_patterns()
 
 
 # This must be after the `all` rule above since it depends on its inputs
@@ -46,27 +29,6 @@ rule test_target:
     For testing purposes such as CI workflows.
     """
     input: "auspice/avian-flu_h5n1_ha_all-time.json"
-
-def subtypes_by_subtype_wildcard(wildcards):
-
-    # TODO - this function does more than strictly subtype filtering as certain builds filter to
-    # GenoFLU constellation, and in the future this may be expanded. We should rename the function!
-    # TODO XXX - move to configs (started in https://github.com/nextstrain/avian-flu/pull/104 but
-    # We should make the entire query config-definable)
-    if wildcards.subtype == 'h5n1-d1.1':
-        return "genoflu in 'D1.1'"
-    elif wildcards.subtype == 'h5n1-cattle-outbreak':
-        return "genoflu in 'B3.13'"
-
-    db = {
-        'h5nx': ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9'],
-        'h5n1': ['h5n1'],
-        'h7n9': ['h7n9'],
-        'h9n2': ['h9n2'],
-    }
-    assert wildcards.subtype in db, (f"Subtype {wildcards.subtype!r} is not defined in the snakemake function "
-        "`subtypes_by_subtype_wildcard` -- is there a typo in the subtype you are targetting?")
-    return(f"subtype in [{', '.join([repr(s) for s in db[wildcards.subtype]])}]")
 
 class InvalidConfigError(Exception):
     pass
@@ -221,7 +183,7 @@ rule filter_sequences_by_subtype:
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes=lambda w: config['subtype_query'][w.subtype],
     shell:
         """
         augur filter \
@@ -237,7 +199,7 @@ rule filter_metadata_by_subtype:
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:
-        subtypes=subtypes_by_subtype_wildcard,
+        subtypes= lambda w: config['subtype_query'][w.subtype],
     shell:
         """
         augur filter \
@@ -256,34 +218,45 @@ def metadata_by_wildcards(wildcards):
         return "results/{subtype}/metadata.tsv",
 
 def refine_clock_rates(w):
-    info = resolve_config_value('refine', 'clock_rates')(w)
-
     if w.segment == 'genome':
+        # TODO - can we shift this logic into `rules/genome.smk` ?
         # calculate the genome rate via a weighted average of the segment rates
-        assert 'genome' not in info, ("This snakemake pipeline is currently set up to calculate the genome clock rate "
-            "based on the segment rates, however you have provided a genome rate in the config.")
+
+        # Sanity check: check that the config hasn't (mistakenly?) set a genome rate
+        # Note: this relies on the genome builds not setting a catch-all "*/*/*" config
         try:
-            segment_lengths= resolve_config_value('refine', 'segment_lengths')(w)
-        except AssertionError as e:
-            # py11 brings e.add_note() which is nicer
-            e.args = (*e.args, "NOTE: For segment=genome we require the segment_lengths to be defined as we use them to calculate the clock rate")
-            raise
-        mean = sum([info[seg][0]*length for seg,length in segment_lengths.items()])/sum(segment_lengths.values())
+            info = resolve_config_value('refine', 'clock_rates')(w)
+        except InvalidConfigError as e:
+            pass # this is behaviour we expect - i.e. no clock rates should be provided for genome
+        else:
+            raise InvalidConfigError("config['refine']['clock_rates'] should not contain a key which can be used for 'genome' builds as this is calculated by the workflow")
+
+        segment_lengths = [
+            resolve_config_value('refine', 'segment_lengths')(custom_wildcards)
+            for custom_wildcards in
+            [{"subtype": w.subtype, "time": w.time, "segment": segment} for segment in SEGMENTS]
+        ]
+        clock_rates = [
+            resolve_config_value('refine', 'clock_rates')(custom_wildcards)
+            for custom_wildcards in
+            [{"subtype": w.subtype, "time": w.time, "segment": segment} for segment in SEGMENTS]
+        ]
+        for rates in clock_rates:
+            assert isinstance(rates, list) and len(rates)==2, "The clock rates for each segment must be a list of (rate, std-dev), not {rates!r}"
+
+        mean = sum([length*rate[0] for length,rate in zip(segment_lengths, clock_rates)]) / sum(segment_lengths)
         stdev = mean/2
         return f"--clock-rate {mean} --clock-std-dev {stdev}"
 
-    assert w.segment in info, 'config.refine.clock_rates: data must be provided for each segment. Use "" for inference.'
-    if info[w.segment] == "":
+    info = resolve_config_value('refine', 'clock_rates')(w)
+    if info == "":
         return ""
 
-    assert isinstance(info[w.segment], list), "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    assert len(info[w.segment])==2, "The clock rates for {w.subtype!r} {w.time!r} {w.segment!r} must be a list of (rate, std-dev)"
-    return f"--clock-rate {info[w.segment][0]} --clock-std-dev {info[w.segment][1]}"
+    assert isinstance(info, list) and len(info)==2, "The clock rates for {w.subtype!r}/{w.time!r}/{w.segment!r} must be a list of (rate, std-dev), not {info!r}"
+    return f"--clock-rate {info[0]} --clock-std-dev {info[1]}"
 
 def refine_clock_filter(w):
-    filter = resolve_config_value('refine', 'genome_clock_filter_iqd')(w) \
-        if w.segment=='genome' \
-        else resolve_config_value('refine', 'clock_filter_iqd')(w)
+    filter = resolve_config_value('refine', 'clock_filter_iqd')(w)
     return f"--clock-filter-iqd {filter}" if filter else ""
 
 
@@ -339,11 +312,11 @@ def _filter_params(wildcards, input, output, threads, resources):
     group_by_value = resolve_config_value('filter', 'group_by')(wildcards)
     cmd += f" --group-by {group_by_value}" if group_by_value else ""
 
-    cmd += f" --subsample-max-sequences {config['target_sequences_per_tree']}"
+    cmd += f" --subsample-max-sequences {resolve_config_value('filter', 'target_sequences_per_tree')(wildcards)}"
     cmd += f" --min-date {resolve_config_value('filter', 'min_date')(wildcards)}"
     cmd += f" --include {input.include}"
     cmd += f" --exclude-where {exclude_where}"
-    cmd += f" --min-length {resolve_config_value('filter', 'min_length')(wildcards)[wildcards.segment]}"
+    cmd += f" --min-length {resolve_config_value('filter', 'min_length')(wildcards)}"
     cmd += f" --non-nucleotide"
     return cmd
 
@@ -428,9 +401,7 @@ def refine_root(wildcards):
     Returns the config-defined rooting parameter (for `augur refine`) together with the argument,
     i.e. "--root <parameter>". If none is defined we return the empty string.
     """
-    root = resolve_config_value('refine', 'genome_root')(wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value('refine', 'root')(wildcards)
+    root = resolve_config_value('refine', 'root')(wildcards)
     return f"--root {root}" if root else ""
 
 rule refine:
@@ -449,8 +420,8 @@ rule refine:
         tree = "results/{subtype}/{segment}/{time}/tree.nwk",
         node_data = "results/{subtype}/{segment}/{time}/branch-lengths.json"
     params:
-        coalescent = config['refine']['coalescent'],
-        date_inference = config['refine']['date_inference'],
+        coalescent = resolve_config_value('refine', 'coalescent'),
+        date_inference = resolve_config_value('refine', 'date_inference'),
         clock_rates = refine_clock_rates,
         clock_filter = refine_clock_filter,
         root = refine_root,
@@ -483,12 +454,11 @@ def refined_tree(w):
     return "results/{subtype}/{segment}/{time}/tree.nwk",
 
 def ancestral_root_seq(wildcards):
-    root_seq = resolve_config_path('ancestral', 'genome_root_seq')(wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_path('ancestral', 'root_seq')(wildcards)
-    if not root_seq:
+    # The root-seq(uence) is a file, not a name
+    value = resolve_config_path('ancestral', 'root_seq')(wildcards)
+    if not value: # falsey values result in an empty string path, i.e. we skip the --root-sequence argument
         return ""
-    return f"--root-sequence {root_seq}"
+    return f"--root-sequence {value}"
 
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
@@ -498,7 +468,7 @@ rule ancestral:
     output:
         node_data = "results/{subtype}/{segment}/{time}/nt-muts.json"
     params:
-        inference = config['ancestral']['inference'],
+        inference = resolve_config_value('ancestral', 'inference'),
         root_seq = ancestral_root_seq,
     shell:
         """
@@ -516,9 +486,7 @@ rule translate:
     input:
         tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = lambda w: resolve_config_path('genome_reference')(w) \
-            if w.segment=='genome' \
-            else resolve_config_path('reference')(w)
+        reference = resolve_config_path('reference')
     output:
         node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:
@@ -531,21 +499,19 @@ rule translate:
         """
 
 def traits_params(wildcards):
-    columns = resolve_config_value('traits', 'genome_columns')(wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value('traits', 'columns')(wildcards)
+    args = ""
 
-    bias = resolve_config_value('traits', 'genome_sampling_bias_correction')(wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value('traits', 'sampling_bias_correction')(wildcards)
+    if columns:=resolve_config_value('traits', 'columns')(wildcards):
+        args += f"--columns {columns}"
+    else:
+        raise InvalidConfigError(f"You must define columns for 'augur traits' to run on via config['traits']['columns']")
 
-    confidence = resolve_config_value('traits', 'confidence')(wildcards)
-
-    args = f"--columns {columns}"
-    if bias:
+    if bias:=resolve_config_value('traits', 'sampling_bias_correction')(wildcards):
         args += f" --sampling-bias-correction {bias}"
-    if confidence:
+
+    if confidence:=resolve_config_value('traits', 'confidence')(wildcards):
         args += f" --confidence"
+
     return args
 
 
@@ -602,16 +568,13 @@ def export_node_data_files(wildcards):
     return nd
 
 
-def additional_export_config(wildcards):
-    args = ""
+def additional_args_export(wildcards):
+    args = []
 
-    title_overrides = resolve_config_value('export', 'genome_title')(wildcards) \
-        if wildcards.segment=='genome' \
-        else resolve_config_value('export', 'title')(wildcards)
-    if title_overrides:
-        args += ("--title '" +
-            title_overrides.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time) +
-            "'")
+    if title:=resolve_config_value('export', 'title')(wildcards):
+        # Config defined title strings may include wildcards to be expanded
+        title = title.format(segment=wildcards.segment.upper(), subtype=wildcards.subtype.upper(), time=wildcards.time)
+        args += ["--title", title]
 
     return args
 
@@ -676,7 +639,7 @@ rule colors:
             --ordering {input.ordering} \
             --color-schemes {input.schemes} \
             --duplications {params.duplications} \
-        >> {output.colors}        
+        >> {output.colors}
         """
 
 rule export:
@@ -695,7 +658,7 @@ rule export:
     output:
         auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"
     params:
-        additional_config = additional_export_config
+        additional_args = additional_args_export
     shell:
         r"""
         augur export v2 \
@@ -707,7 +670,7 @@ rule export:
             --auspice-config {input.auspice_config} \
             --description {input.description} \
             --include-root-sequence-inline \
-            {params.additional_config} \
+            {params.additional_args:q} \
             --output {output.auspice_json}
         """
 

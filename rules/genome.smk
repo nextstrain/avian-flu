@@ -34,11 +34,7 @@ rule align_segments_for_genome:
     input:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
         # Use the H5N1 reference sequences for alignment
-        reference = lambda w: [
-            resolve_path(expanded, w)
-            for expanded in
-            expand(config['reference'], subtype='h5n1', segment=w.genome_seg)
-        ]
+        reference = lambda w: resolve_config_path('reference')({'subtype': w.subtype, 'segment': w.genome_seg, 'time': 'default'})
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:
@@ -65,7 +61,7 @@ rule join_segments:
     input:
         alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
     output:
-        alignment = "results/{subtype}/{segment}/{time}/aligned_unmasked.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned-unmasked.fasta"
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
@@ -81,11 +77,11 @@ rule join_segments:
 
 rule mask_genome:
     input:
-        alignment = "results/{subtype}/{segment}/{time}/aligned_unmasked.fasta"
+        alignment = "results/{subtype}/{segment}/{time}/aligned-unmasked.fasta"
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
     params:
-        percentage = config['mask']['min_support'],
+        percentage = resolve_config_value('mask', 'min_support'),
         script = script("mask.py"),
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
@@ -114,15 +110,11 @@ rule genome_metadata:
         augur filter --metadata {input.metadata} --sequences {input.sequences} --output-metadata {output.metadata}
         """
 
-
-def assert_expected_config(w):
-    try:
-        # TODO: once we refactor things we should use `resolve_config_value()` here
-        # see <https://github.com/nextstrain/avian-flu/pull/100#discussion_r1823047047>
-        # but currently this snakefile doesn't have access to that function.
-        assert len(config['traits']['genome_columns'])==1 and config['traits']['genome_columns']['FALLBACK']=="division"
-    except Exception as err:
-        raise Exception("Rule add_metadata_columns_to_show_non_inferred_values expected a certain format for config['traits'] that has since changed") from err
+def _assert_traits_column(wildcards):
+    columns = resolve_config_value('traits', 'columns')(wildcards)
+    if columns != 'division':
+        raise InvalidConfigError("The genome-specific pipeline currently requires the (genome-specific) build to infer " \
+            f"'augur traits' for 'division' only, not {columns!r}.")
 
 rule add_metadata_columns_to_show_non_inferred_values:
     """
@@ -143,7 +135,7 @@ rule add_metadata_columns_to_show_non_inferred_values:
     params:
         old_column = "division",
         new_column = "division_metadata",
-        assert_traits = assert_expected_config,
+        assert_traits = _assert_traits_column,
     shell:
         """
         cat {input.metadata} | csvtk mutate -t -f {params.old_column} -n {params.new_column} > {output.metadata}

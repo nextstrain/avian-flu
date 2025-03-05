@@ -24,7 +24,12 @@ if __name__ == "__main__":
         if record['details']:
             for segment_name, lineage in (parts.split(':') for parts in record['details'].split(", ")):
                 record[f"genoflu_{segment_name}"] = lineage
-        # Collapse all "not assigned" calls into a single metadata value
-        if record['genoflu'].startswith("Not assigned:"):
+        # There are a variety of situations where a genotype is not assigned
+        # (1) segments have all been assigned, but there's no matching constellation
+        if record['genoflu'] == "Not assigned: No Matching Genotypes":
+            record['genoflu'] = "Unseen constellation"
+        # (2) Not all 8 segments have assignments (some segments were too divergent)
+        elif record['genoflu'].startswith("Not assigned: Only"):
             record['genoflu'] = "Not assigned (too divergent)"
+        # (3) TODO Ideally the results would also include samples with <8 segments sequenced
         tsv_writer.writerow(record)

@@ -69,35 +69,50 @@ def is_scalar(x):
 
 def resolve_config_value(*rule_parts, sep="/"):
     """
-    Resolve a config value defined by the *rule_parts* of the config, e.g.
-    rule_parts = ['filter', 'min_length'] then we expect a scalar or a
-    dictionary to be present at config['filter']['min_length']. If the config
-    value is to be used as a path please use the `resolve_config_path` function
-    instead.
+    A helper function intended to be used as directly as a Snakemake Input
+    function to resolve the appropriate config value.
 
-    If a scalar then that value is returned, i.e. it's always the same no matter
-    what the wildcards are. Note that this scalar may have wildcards in it which will
-    be filled in by Snakemake when the relevant rule is evaluated.
+    Given an array of config *rule_parts* (keys), we return a function with a
+    single argument *wildcards* which resolves to the appropriate config value.
+    For instance the config value(s) for `config['filter']['min_length']` would
+    be accessed via
 
-    If a dictionary we search it for the relevant value by finding the closest matching
-    key once wildcards have been considered. For instance in a three-tiered wildcard pipeline
-    such as this with subtype, segment and time we interpret these as ordered in specificity.
-    For instance, if only one wildcard value is specified in the config (the others are '*')
-    then matching subtype is more specific than segment. Given example 
-    wildcard values of {subtype=h5nx, segment=pb2, time=2y} then we have a search order of:
-    - 'h5nx/pb2/2y'   ─ all 3 wildcard values specified
-    - 'h5nx/pb2/*'    ┐
-    - 'h5nx/*/2y'     ├ 2/3 wildcard values specified
-    - '*/pb2/2y'      ┘
-    - 'h5nx/*/*'      ┐
-    - '*/pb2/*'       ├ 1/3 wildcard values specified
-    - '*/*/2y'        ┘
-    - '*/*/*'         ─ default / fall-back
-    and the first key present in the config is used.
-
-    Examples:
+        # within a Snakemake rule:
         params:
-            correction = resolve_config_value(['traits', 'sampling_bias_correction'])
+            min_length = resolve_config_value('filter', 'min_length')
+
+        # within a python function:
+        min_length = resolve_config_value('filter', 'min_length')(wildcards)
+
+    The underlying config value may be structured in two ways:
+
+    1. A scalar, e.g. `config['filter']['min_length'] = some_scalar`. In
+       this case the scalar value is simply returned, i.e. it's always the same no
+       matter what the wildcards are.
+
+    2. A dictionary, e.g. `config['filter']['min_length'] = {...}`), which
+       allows the resolved value to vary according to the wildcards. We search
+       the dictionary for the relevant value by finding the closest matching key
+       once wildcards have been considered. For instance in a three-tiered
+       wildcard pipeline such as this with subtype, segment and time we
+       interpret these as ordered in specificity. For instance, if only one
+       wildcard value is specified in the config (the others are '*') then
+       matching subtype is more specific than segment. Given example wildcard
+       values of {subtype=h5nx, segment=pb2, time=2y} then we have a search
+       order of:
+            - 'h5nx/pb2/2y'   ─ all 3 wildcard values specified
+            - 'h5nx/pb2/*'    ┐
+            - 'h5nx/*/2y'     ├ 2/3 wildcard values specified
+            - '*/pb2/2y'      ┘
+            - 'h5nx/*/*'      ┐
+            - '*/pb2/*'       ├ 1/3 wildcard values specified
+            - '*/*/2y'        ┘
+            - '*/*/*'         ─ default / fall-back
+       and the first key present in the config is used.
+
+    Note that in both cases, the resolved value may be a string with wildcard
+    placeholders in it which may (separately) be filled in by Snakemake or a
+    call to `format` or `expand`.
     """
     try:
         config_lookup = config
@@ -130,12 +145,13 @@ def resolve_config_value(*rule_parts, sep="/"):
         msg += f'\n\tThe dictionary is missing a matching key for the current target of {search_keys[0]!r}, or a fuzzy match (i.e. using "*" placeholders)'
         msg +=  '\n\tP.S. If you want to use a single value across all builds then set a scalar value (number, string, boolean)'
         raise InvalidConfigError(msg)
+
     return resolve
 
 def resolve_config_path(*fields):
     """
-    A helper function intended to be used as directly as a value within
-    snakemake input/params blocks.
+    A helper function intended to be used as directly as a Snakemake Input
+    function to resolve the appropriate config path.
 
     Given an array of config *fields* (keys), we return a function with a single
     argument *wildcards* which resolves to a appropriate local file path
@@ -144,9 +160,13 @@ def resolve_config_path(*fields):
     of those functions for more details.
 
     Examples:
+        # within a Snakemake rule
         input:
-            colors = resolve_config_path(['colors', 'hardcoded']),
-            lat_longs = resolve_config_path(["lat_longs"]),
+            colors = resolve_config_path('colors', 'hardcoded'),
+            lat_longs = resolve_config_path("lat_longs"),
+
+        # within a python function
+        colors = resolve_config_path('colors', 'hardcoded')(wildcards)
     """
     assert all([isinstance(f,str) for f in fields]), \
         "Arguments to `resolve_config_path` must be strings"
@@ -227,67 +247,3 @@ def expand_target_patterns():
                             targets.append(target)
 
     return targets
-
-
-# REMOVE BELOW LINE # ------------------------------------------------------------------------------------------------
-
-
-def old_resolve_config_value_old(*rule_parts, fallback="FALLBACK"):
-    """
-    Note that the underlying algorithm for finding the config value,
-    and the config syntax itself, is going to be significantly
-    modified in <https://github.com/nextstrain/avian-flu/pull/104>
-
-    Given an array of config *fields* (keys), we return a function with a single
-    argument *wildcards* which resolves to the config value (any type). If the
-    config value is to be used as a path please use the `resolve_config_path`
-    function instead.
-
-    Examples:
-        params:
-            correction = resolve_config_value(['traits', 'sampling_bias_correction'])
-    """
-    def resolve(wildcards):
-        rule_name = rule_parts[0]
-        assert rule_name in config, f"Config missing top-level {rule_name} key"
-        if len(rule_parts)==1:
-            # Ths form of config syntax cannot use the dictionary-based wildcard-dependent syntax
-            # As per the docstring, this will be redone in <https://github.com/nextstrain/avian-flu/pull/104>
-            assert isinstance(config[rule_name], str), f"Invalid config spec for config.{rule_name}"
-            return config[rule_name]
-        rule_key = rule_parts[1]
-        assert rule_key in config[rule_name], f"Config missing entry for {rule_name}.{rule_key}"
-        try:
-            return config[rule_name][rule_key][wildcards.subtype][wildcards.time]
-        except KeyError:
-            assert fallback in config[rule_name][rule_key], f"config.{rule_name!r}.{rule_key!r} either needs " \
-                f"an entry for {wildcards.subtype!r}.{wildcards.time!r} added or a (default) {fallback!r} key."
-            return config[rule_name][rule_key][fallback]
-    return resolve
-
-def old_resolve_config_path_old(*fields):
-    """
-    A helper function intended to be used as directly as a value within
-    snakemake input/params blocks.
-
-    Given an array of config *fields* (keys), we return a function with a single
-    argument *wildcards* which resolves to a appropriate local file path
-    (string). These are accomplished via calls to helper functions
-    `resolve_config_value` and `resolve_path`, respectively; see the docstrings
-    of those functions for more details.
-
-    Examples:
-        input:
-            colors = old_resolve_config_path_old(['colors', 'hardcoded']),
-            lat_longs = old_resolve_config_path_old(["lat_longs"]),
-    """
-    assert all([isinstance(f,str) for f in fields]), \
-        "Arguments to `resolve_config_path` must be strings"
-
-    def resolve(wildcards):
-        raw_value = old_resolve_config_value_old(*fields)(wildcards)
-        if not raw_value: # falsey -> don't resolve to a path!
-            return ""
-        return resolve_path(raw_value, wildcards)
-
-    return resolve

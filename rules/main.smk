@@ -183,7 +183,9 @@ rule filter_sequences_by_subtype:
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
-        subtypes=lambda w: config['subtype_query'][w.subtype],
+        # We don't have all wildcards set here (too early!) so we need to manually specify them for `resolve_config_value`
+        # (Note that we do have w.segment set, but we deliberately don't use it as the query must not vary by segment)
+        subtypes = lambda w: resolve_config_value('subtype_query')({'subtype': w.subtype, 'segment': '*', 'time': '*'})
     shell:
         """
         augur filter \
@@ -199,7 +201,8 @@ rule filter_metadata_by_subtype:
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:
-        subtypes= lambda w: config['subtype_query'][w.subtype],
+        # We don't have all wildcards set here (too early!) so we need to manually specify them for `resolve_config_value`
+        subtypes = lambda w: resolve_config_value('subtype_query')({'subtype': w.subtype, 'segment': '*', 'time': '*'})
     shell:
         """
         augur filter \

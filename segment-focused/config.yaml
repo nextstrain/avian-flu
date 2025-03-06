@@ -51,14 +51,16 @@ dropped_strains: config/{subtype}/dropped_strains_{subtype}.txt
 clades_file: clade-labeling/{subtype}-clades.tsv
 description: config/description_gisaid.md
 
-## Subtype query - this structure is different from all other config parameters, requiring
-#  a key for each of the subtypes defined above in 'builds'. The string will be supplied to
-#  augur filter's --query argument.
+## Subtype query - note that you cannot vary this based on segment/time wildcards
+#  as the filtering to subtype is independent (upstream) of those wildcards.
+#  Note also that you aren't limited to the "subtype" metadata field - any valid
+#  `augur filter --query` argument is ok.
 subtype_query:
-    "h5nx": "subtype in ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9']"
-    "h5n1": "subtype in ['h5n1']"
-    "h7n9": "subtype in ['h7n9']"
-    "h9n2": "subtype in ['h9n2']"
+    "h5nx/*/*": "subtype in ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9']"
+    "h5n1/*/*": "subtype in ['h5n1']"
+    "h7n9/*/*": "subtype in ['h7n9']"
+    "h9n2/*/*": "subtype in ['h9n2']"
+
 
 #### Rule-specific parameters ####
 # The formatting here represents the three-tiered nature of the avian-flu build which

@@ -3,15 +3,15 @@
 This is the Nextstrain build for avian influenza analyses.
 Currently there are two distinct workflows:
 
-**Segment-focused builds** produces segment-level analyses of subtypes A/H5N1, A/H5NX, A/H7N9, and A/H9N2 using GISAID data.
+**Segment-focused builds** produce segment-level analyses of subtypes A/H5N1, A/H5NX, A/H7N9, and A/H9N2 using GISAID data.
 
-**Genome-focused builds** produces genome-focused analyses of the (ongoing) 2024 A/H5N1 cattle-flu outbreak and the (ongoing) D1.1 outbreaks using NCBI data
+**Genome-focused builds** produce genome-focused analyses of the (ongoing) 2024 A/H5N1 cattle-flu outbreak and the (ongoing) D1.1 outbreaks using NCBI data
 
 The most up-to-date builds of avian influenza can be found [on nextstrain.org](https://nextstrain.org/avian-flu).
 Please see [nextstrain.org/docs](https://nextstrain.org/docs) for details about augur and pathogen builds.
 
 
-## Segment-level (GISAID builds)
+## Segment-focused builds (from GISAID data)
 
 **This pipeline starts by downloading data from a private S3 bucket and the appropriate credentials are required;** see below for how to use locally ingested files or NCBI inputs.
 
@@ -38,7 +38,7 @@ to nextstrain.org by running:
 nextstrain build . --snakefile segment-focused/Snakefile -f deploy_all
 ```
 
-## Genome focused NCBI builds
+## Genome-focused builds (from NCBI data)
 
 We produce whole-genome focused (and, sometimes, individual segment builds) for the ongoing H5N1 cattle-flu outbreak.
 These use NCBI data including consensus genomes and SRA data assembled via the Andersen lab's [avian-influenza repo](https://github.com/andersen-lab/avian-influenza) by default.

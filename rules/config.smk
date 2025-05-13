@@ -3,8 +3,7 @@ Functions and logic related to finding, parsing and interpreting configfiles
 and other config-related stuff.
 """
 
-class InvalidConfigError(Exception):
-    pass
+include: "../shared/vendored/snakemake/config.smk"
 
 AVIAN_FLU_DIR = os.path.normpath(os.path.join(workflow.current_basedir, ".."))
 # NOTE: `workflow.basedir` is the Snakemake entry point, i.e. the directory of the first encountered Snakefile
@@ -22,47 +21,6 @@ configfile: os.path.join(workflow.basedir, 'config.yaml')
 # Snakemake's --directory arg)
 if os.path.exists("config.yaml"):
     configfile: "config.yaml"
-
-def resolve_path(path, wildcards):
-    """
-    Resolves a relative *path* (string) by first expanding wildcards ('{x}'
-    substrings) using Snakemake's `expand` functionality and then returning
-    the appropriate path to the file by searching various locations.
-
-    Search order (first match returned):
-        1. Relative to the analysis directory
-        2. Relative to the `avian-flu` directory
-
-    Will raise an `InvalidConfigError` if a suitable file is not found
-
-    NOTE: Consider using the more ergonomic `resolve_config_path` instead of this
-    function
-    """
-    if not isinstance(path, str):
-        raise InvalidConfigError(f"Config path provided to resolve_path must be a string. Provided value: {str(path)}")
-
-    try:
-        path_expanded = expand(path, **wildcards)[0]
-    except snakemake.exceptions.WildcardError as e:
-        # str(e) looks like "No values given for wildcard 'subtypes'."
-        raise InvalidConfigError(f"resolve_path called with path {path!r} however {str(e)}")
-
-    # check if the path exists relative to the working analysis directory
-    if os.path.exists(path_expanded):
-        return path_expanded
-
-    # Note for developers: For some workflows it may be better to now search for
-    # the path within the workflow directory itself (`workflow.current_basedir`)
-    # (in addition to the AVIAN_FLU_DIR)
-
-    # Check if the path exists relative to the avian-flu directory
-    if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, path_expanded)):
-        return p
-
-    raise InvalidConfigError(f"Unable to resolve the config-provided path {path!r}, expanded to {path_expanded!r} after filling in wildcards. "
-        f"The following directories were searched:\n"
-    f"\t1. {os.path.abspath(os.curdir)} (current working directory)\n"
-    f"\t2. {AVIAN_FLU_DIR} (the avian-flu repo)\n")
 
 def is_scalar(x):
     return any([isinstance(x, t) for t in [float, int, bool, str]])
@@ -156,8 +114,8 @@ def resolve_config_fields_path(*fields):
     Given an array of config *fields* (keys), we return a function with a single
     argument *wildcards* which resolves to a appropriate local file path
     (string). These are accomplished via calls to helper functions
-    `resolve_config_value` and `resolve_path`, respectively; see the docstrings
-    of those functions for more details.
+    `resolve_config_value` and `resolve_config_path` (from `../shared/vendored/snakemake/config.smk`),
+    respectively; see the docstrings of those functions for more details.
 
     Examples:
         # within a Snakemake rule
@@ -175,7 +133,7 @@ def resolve_config_fields_path(*fields):
         raw_value = resolve_config_value(*fields)(wildcards)
         if not raw_value: # falsey -> don't resolve to a path!
             return ""
-        return resolve_path(raw_value, wildcards)
+        return resolve_config_path(raw_value, [AVIAN_FLU_DIR])(wildcards)
 
     return resolve
 

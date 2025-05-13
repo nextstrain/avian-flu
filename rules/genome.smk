@@ -10,8 +10,8 @@ rule filter_segments_for_genome:
     input:
         sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
         metadata = "results/{subtype}/metadata-with-clade.tsv", # TODO: use a function here instead of hardcoding
-        include = resolve_config_path('include_strains'),
-        exclude = resolve_config_path('dropped_strains'),
+        include = resolve_config_fields_path('include_strains'),
+        exclude = resolve_config_fields_path('dropped_strains'),
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta"
     wildcard_constraints:
@@ -34,7 +34,7 @@ rule align_segments_for_genome:
     input:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
         # Use the H5N1 reference sequences for alignment
-        reference = lambda w: resolve_config_path('reference')({'subtype': w.subtype, 'segment': w.genome_seg, 'time': 'default'})
+        reference = lambda w: resolve_config_fields_path('reference')({'subtype': w.subtype, 'segment': w.genome_seg, 'time': 'default'})
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:

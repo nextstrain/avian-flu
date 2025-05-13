@@ -148,7 +148,7 @@ def resolve_config_value(*rule_parts, sep="/"):
 
     return resolve
 
-def resolve_config_path(*fields):
+def resolve_config_fields_path(*fields):
     """
     A helper function intended to be used as directly as a Snakemake Input
     function to resolve the appropriate config path.
@@ -162,14 +162,14 @@ def resolve_config_path(*fields):
     Examples:
         # within a Snakemake rule
         input:
-            colors = resolve_config_path('colors', 'hardcoded'),
-            lat_longs = resolve_config_path("lat_longs"),
+            colors = resolve_config_fields_path('colors', 'hardcoded'),
+            lat_longs = resolve_config_fields_path("lat_longs"),
 
         # within a python function
-        colors = resolve_config_path('colors', 'hardcoded')(wildcards)
+        colors = resolve_config_fields_path('colors', 'hardcoded')(wildcards)
     """
     assert all([isinstance(f,str) for f in fields]), \
-        "Arguments to `resolve_config_path` must be strings"
+        "Arguments to `resolve_config_fields_path` must be strings"
 
     def resolve(wildcards):
         raw_value = resolve_config_value(*fields)(wildcards)

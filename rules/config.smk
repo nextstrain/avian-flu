@@ -182,7 +182,7 @@ def resolve_config_path(*fields):
 def script(path):
     """
     Resolve a provided script *path* (string)
-    
+
     Search order (first match returned):
         1. Relative to the 'scripts' directory in the avian-flu repo (`AVIAN_FLU_DIR`)
         2. Relative to the avian-flu repo (`AVIAN_FLU_DIR`)
@@ -192,7 +192,7 @@ def script(path):
 
     if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, "scripts", path)):
         return p
-    
+
     if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, path)):
         return p
 

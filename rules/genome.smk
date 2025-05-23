@@ -6,12 +6,12 @@ rule filter_segments_for_genome:
     # we are running a genome build (so {segment}=genome for most rules) and the
     # `join_segments` rule ultimately requests filtered sequences / alignments
     # for each constituent segment. We call this {genome_seg} just to
-    # distinguish it when reading the code. 
+    # distinguish it when reading the code.
     input:
         sequences = "results/{subtype}/{genome_seg}/sequences.fasta",
         metadata = "results/{subtype}/metadata-with-clade.tsv", # TODO: use a function here instead of hardcoding
-        include = resolve_config_path('include_strains'),
-        exclude = resolve_config_path('dropped_strains'),
+        include = resolve_config_fields_path('include_strains'),
+        exclude = resolve_config_fields_path('dropped_strains'),
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta"
     wildcard_constraints:
@@ -34,7 +34,7 @@ rule align_segments_for_genome:
     input:
         sequences = "results/{subtype}/{segment}/{time}/filtered_{genome_seg}.fasta",
         # Use the H5N1 reference sequences for alignment
-        reference = lambda w: resolve_config_path('reference')({'subtype': w.subtype, 'segment': w.genome_seg, 'time': 'default'})
+        reference = lambda w: resolve_config_fields_path('reference')({'subtype': w.subtype, 'segment': w.genome_seg, 'time': 'default'})
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned_{genome_seg}.fasta"
     wildcard_constraints:
@@ -59,7 +59,7 @@ rule join_segments:
     # allow snakemake to choose the correct rule to run. Note that `wildcards.segment="genome"`
     # here, and for that we need alignments for 8 individual segments, which we refer to as `wildcards.genome_seg`
     input:
-        alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS) 
+        alignment = expand("results/{{subtype}}/{{segment}}/{{time}}/aligned_{genome_seg}.fasta", genome_seg=SEGMENTS)
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned-unmasked.fasta"
     wildcard_constraints:

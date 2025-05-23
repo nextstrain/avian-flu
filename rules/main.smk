@@ -92,7 +92,7 @@ def _parse_config_input(input):
 
 def _gather_inputs():
     all_inputs = [*config['inputs'], *config.get('additional_inputs', [])]
-    
+
     if len(all_inputs)==0:
         raise InvalidConfigError("Config must define at least one element in config.inputs or config.additional_inputs lists")
     if not all([isinstance(i, dict) for i in all_inputs]):
@@ -114,7 +114,7 @@ def input_metadata(wildcards):
 def input_sequences(wildcards):
     inputs = list(filter(None, [info['sequences'](wildcards) for info in input_sources.values() if info.get('sequences', None)]))
     return inputs[0] if len(inputs)==1 else "results/sequences_merged_{segment}.fasta"
- 
+
 rule download_s3_sequences:
     output:
         sequences = "data/{input_name}/sequences_{segment}.fasta",
@@ -141,7 +141,7 @@ rule download_s3_metadata:
         aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.metadata}
         """
 
-rule merge_metadata: 
+rule merge_metadata:
     """
     This rule should only be invoked if there are multiple defined metadata inputs
     (config.inputs + config.additional_inputs)
@@ -160,7 +160,7 @@ rule merge_metadata:
             --output-metadata {output.metadata}
         """
 
-rule merge_sequences: 
+rule merge_sequences:
     """
     This rule should only be invoked if there are multiple defined metadata inputs
     (config.inputs + config.additional_inputs) for this particular segment
@@ -267,7 +267,7 @@ rule add_h5_clade:
     message: "Adding in a column for h5 clade numbering"
     input:
         metadata = "results/{subtype}/metadata.tsv",
-        clades_file = resolve_config_path('clades_file')
+        clades_file = resolve_config_fields_path('clades_file')
     output:
         metadata= "results/{subtype}/metadata-with-clade.tsv"
     params:
@@ -327,8 +327,8 @@ rule filter:
     input:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
         metadata = metadata_by_wildcards,
-        exclude = resolve_config_path('dropped_strains'),
-        include = resolve_config_path('include_strains'),
+        exclude = resolve_config_fields_path('dropped_strains'),
+        include = resolve_config_fields_path('include_strains'),
         strains = lambda w: f"results/{w.subtype}/ha/{w.time}/filtered.txt" if (SAME_STRAINS and w.segment!='ha') else [],
     output:
         sequences = "results/{subtype}/{segment}/{time}/filtered.fasta",
@@ -359,7 +359,7 @@ rule align:
         """
     input:
         sequences = rules.filter.output.sequences,
-        reference = resolve_config_path('reference'),
+        reference = resolve_config_fields_path('reference'),
     output:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta"
     wildcard_constraints:
@@ -458,7 +458,7 @@ def refined_tree(w):
 
 def ancestral_root_seq(wildcards):
     # The root-seq(uence) is a file, not a name
-    value = resolve_config_path('ancestral', 'root_seq')(wildcards)
+    value = resolve_config_fields_path('ancestral', 'root_seq')(wildcards)
     if not value: # falsey values result in an empty string path, i.e. we skip the --root-sequence argument
         return ""
     return f"--root-sequence {value}"
@@ -489,7 +489,7 @@ rule translate:
     input:
         tree = refined_tree,
         node_data = rules.ancestral.output.node_data,
-        reference = resolve_config_path('reference')
+        reference = resolve_config_fields_path('reference')
     output:
         node_data = "results/{subtype}/{segment}/{time}/aa-muts.json"
     shell:
@@ -587,7 +587,7 @@ rule auspice_config:
     If we implement config overlays in augur this rule will become unnecessary.
     """
     input:
-        auspice_config = resolve_config_path('auspice_config'),
+        auspice_config = resolve_config_fields_path('auspice_config'),
     output:
         auspice_config = "results/{subtype}/{segment}/{time}/auspice-config.json",
     run:
@@ -607,7 +607,7 @@ rule auspice_config:
                 auspice_config['colorings'][division_idx]["title"] += " (inferred)"
             else:
                 auspice_config['display_defaults']['distance_measure'] = "div"
-        
+
         # If we have a coloring for 'genoflu' and we're not a genome build then export the genoflu call for the segment
         genoflu_idx = next((i for i,c in enumerate(auspice_config['colorings']) if c['key']=='genoflu'), None)
         if wildcards.segment!='genome' and genoflu_idx is not None:
@@ -626,9 +626,9 @@ rule colors:
         metadata = lambda w: "results/{subtype}/genome/{time}/metadata.tsv" \
             if w.subtype in ['h5n1-cattle-outbreak', 'h5n1-d1.1'] \
             else rules.filter.output.metadata,
-        colors = resolve_config_path('colors', 'hardcoded'),
-        ordering = resolve_config_path('colors', 'ordering'),
-        schemes = resolve_config_path('colors', 'schemes'),
+        colors = resolve_config_fields_path('colors', 'hardcoded'),
+        ordering = resolve_config_fields_path('colors', 'ordering'),
+        schemes = resolve_config_fields_path('colors', 'schemes'),
     output:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
@@ -655,9 +655,9 @@ rule export:
         metadata = rules.filter.output.metadata,
         node_data = export_node_data_files,
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
-        lat_longs = resolve_config_path("lat_longs"),
+        lat_longs = resolve_config_fields_path("lat_longs"),
         auspice_config = rules.auspice_config.output.auspice_config,
-        description = resolve_config_path("description"),
+        description = resolve_config_fields_path("description"),
     output:
         auspice_json = "results/{subtype}/{segment}/{time}/auspice-dataset.json"
     params:

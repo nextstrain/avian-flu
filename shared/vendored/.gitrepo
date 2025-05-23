@@ -5,8 +5,8 @@
 ;
 [subrepo]
 	remote = https://github.com/nextstrain/shared
-	branch = main
-	commit = c32a7d31cedb58f87285043a5e69dd9a6c7c0605
-	parent = 71f005f94f4256e959c90a2830c646a660137a75
+	branch = resolve-config-path-updates
+	commit = 9d42795d3eb8a3fa5b34cce87c4ba04c7b59ba16
+	parent = 35d3b9ea29a90315af5ced81d2503b9bab24ab72
 	method = merge
 	cmdver = 0.4.6

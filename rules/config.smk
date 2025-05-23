@@ -133,7 +133,7 @@ def resolve_config_fields_path(*fields):
         raw_value = resolve_config_value(*fields)(wildcards)
         if not raw_value: # falsey -> don't resolve to a path!
             return ""
-        return resolve_config_path(raw_value, [AVIAN_FLU_DIR])(wildcards)
+        return resolve_config_path(raw_value, AVIAN_FLU_DIR)(wildcards)
 
     return resolve
 

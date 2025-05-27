@@ -664,6 +664,7 @@ rule export:
         additional_args = additional_args_export
     shell:
         r"""
+        export AUGUR_RECURSION_LIMIT=20000
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \

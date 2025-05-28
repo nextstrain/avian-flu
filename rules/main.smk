@@ -92,7 +92,7 @@ def _parse_config_input(input):
 
 def _gather_inputs():
     all_inputs = [*config['inputs'], *config.get('additional_inputs', [])]
-    
+
     if len(all_inputs)==0:
         raise InvalidConfigError("Config must define at least one element in config.inputs or config.additional_inputs lists")
     if not all([isinstance(i, dict) for i in all_inputs]):
@@ -114,7 +114,7 @@ def input_metadata(wildcards):
 def input_sequences(wildcards):
     inputs = list(filter(None, [info['sequences'](wildcards) for info in input_sources.values() if info.get('sequences', None)]))
     return inputs[0] if len(inputs)==1 else "results/sequences_merged_{segment}.fasta"
- 
+
 rule download_s3_sequences:
     output:
         sequences = "data/{input_name}/sequences_{segment}.fasta",
@@ -141,7 +141,7 @@ rule download_s3_metadata:
         aws s3 cp {params.no_sign_request:q} {params.address:q} - | zstd -d > {output.metadata}
         """
 
-rule merge_metadata: 
+rule merge_metadata:
     """
     This rule should only be invoked if there are multiple defined metadata inputs
     (config.inputs + config.additional_inputs)
@@ -160,7 +160,7 @@ rule merge_metadata:
             --output-metadata {output.metadata}
         """
 
-rule merge_sequences: 
+rule merge_sequences:
     """
     This rule should only be invoked if there are multiple defined metadata inputs
     (config.inputs + config.additional_inputs) for this particular segment
@@ -607,7 +607,7 @@ rule auspice_config:
                 auspice_config['colorings'][division_idx]["title"] += " (inferred)"
             else:
                 auspice_config['display_defaults']['distance_measure'] = "div"
-        
+
         # If we have a coloring for 'genoflu' and we're not a genome build then export the genoflu call for the segment
         genoflu_idx = next((i for i,c in enumerate(auspice_config['colorings']) if c['key']=='genoflu'), None)
         if wildcards.segment!='genome' and genoflu_idx is not None:
@@ -664,6 +664,7 @@ rule export:
         additional_args = additional_args_export
     shell:
         r"""
+        export AUGUR_RECURSION_LIMIT=20000
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \

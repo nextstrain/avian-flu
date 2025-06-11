@@ -35,6 +35,11 @@ A/cattle/Texas/24-009495-005/2024
 A/cattle/USA/24-009495-005-original/2024
 A/DomesticCat/USA/24-009116-001-original/2024
 
+# These strains were clearly mis-dated. They have dates of 2024-01-20 and 2024-01-20 but should be 2025
+# Their presence was causing substantial impact by messing up inference of dates on downstream SRA sequences
+A/cattle/CA/24-035207-001-original/2024
+A/cattle/CA/24-035207-002-original/2024
+
 # These strains represent diversity that's significantly outgrouped relative to cattle outbreak
 A/americancrow/Iowa/24-006634-001/2024
 A/AmericanCrow/USA/24-004479-001-original/2024

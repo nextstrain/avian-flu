@@ -31,6 +31,8 @@ rule fetch_from_ncbi_virus:
         ncbi_taxon_id=config["ncbi_taxon_id"],
         ncbi_collection_date_filter=_get_date_filter(),
         ncbi_virus_filters=" ".join(f"{filter!r}" for filter in config["ncbi_virus_filters"]),
+    # Allow retries in case of network errors
+    retries: 5
     shell:
         """
         ./build-configs/ncbi/bin/fetch-from-ncbi-virus \

@@ -7,6 +7,8 @@ from the Andersen Lab's avian-influenza repo
 rule fetch_andersen_lab_repo:
     output:
         andersen_lab_repo = temp("andersen-lab/data/avian-influenza.tar.gz")
+    # Allow retries in case of network errors
+    retries: 5
     shell:
         """
         curl -fsSL \

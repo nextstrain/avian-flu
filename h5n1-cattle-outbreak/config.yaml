@@ -1,6 +1,5 @@
-#### Which builds to produce via this config? ###
-# These builds are a combination of two parts: subtype (h5n1-cattle-outbreak)
-# and segment (e.g. ha)
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nextstrain/avian-flu/james/config-schema/config/schema.yaml
+
 builds:
   - subtype: h5n1-cattle-outbreak
     segment:

@@ -11,4 +11,7 @@ jobs:
     # conform since this is a collaborative repo with an external group.
     uses: nextstrain/.github/.github/workflows/pathogen-repo-ci.yaml@v0
     with:
-      build-args: --snakefile segment-focused/Snakefile -pf test_target
+      build-args: |
+        --snakefile segment-focused/Snakefile \
+        -pf test_target  \
+        --config 'inputs=[{"name": "example", "metadata": "example_data/gisaid/metadata.tsv", "sequences": "example_data/gisaid/sequences_{segment}.fasta"}]'

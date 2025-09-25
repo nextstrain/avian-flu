@@ -1,3 +1,8 @@
+from snakemake.utils import min_version
+
+# Minimum Snakemake version needed for the storage plugins used in remote_files.smk
+min_version("8.0.0")
+
 # constrain the wildcards to not include `_` which we use to separate "parts" of filenames (where a part may be a wildcard itself)
 wildcard_constraints:
     subtype = "[^_/]+",
@@ -14,7 +19,6 @@ SEGMENTS = ["pb2", "pb1", "pa", "ha","np", "na", "mp", "ns"]
 # (2) Filter the other segments by simply force-including the same strains as (1)
 SAME_STRAINS = bool(config.get('same_strains_per_segment', False))
 
-NEXTSTRAIN_PUBLIC_BUCKET = "s3://nextstrain-data/"
 
 rule all:
     input:
@@ -33,6 +37,7 @@ rule test_target:
 class InvalidConfigError(Exception):
     pass
 
+include: "../shared/vendored/snakemake/remote_files.smk"
 # This uses the `InvalidConfigError` defined above
 include: "merge_inputs.smk"
 

@@ -1,4 +1,49 @@
-# ------------- helper functions to collect, merge & download input files ------------------- #
+"""
+This part of the workflow merges inputs based on what is defined in the config.
+
+OUTPUTS:
+
+    metadata  = results/metadata.tsv
+    sequences = results/sequences_{segment}.fasta
+
+The config dict is expected to have a top-level `inputs` list that defines the
+separate inputs' name, metadata, and sequences. Optionally, the config can have
+a top-level `additional-inputs` list that is used to define additional data that
+are combined with the default inputs:
+
+```yaml
+inputs:
+    - name: default
+      metadata: <path-or-url>
+      sequences: <path-or-url>
+
+additional_inputs:
+    - name: private
+      metadata: <path-or-url>
+      sequences: <path-or-url>
+```
+
+Sequences can also be a defined a dict with keys for specific segments:
+
+```yaml
+inputs:
+    - name: default
+      metadata: <path-or-url>
+      sequences:
+        ha: <path-or-url>
+        na: <path-or-url>
+
+additional_inputs:
+    - name: private
+      metadata: <path-or-url>
+      sequences:
+        ha: <path-or-url>
+        na: <path-or-url>
+```
+
+Supports any of the compression formats that are supported by `augur read-file`,
+see <https://docs.nextstrain.org/projects/augur/page/usage/cli/read-file.html>
+"""
 
 def _parse_config_input(input):
     """
@@ -126,5 +171,3 @@ rule merge_sequences:
                 --output-sequences {output.sequences:q}
         fi
         """
-
-# -------------------------------------------------------------------------------------------- #

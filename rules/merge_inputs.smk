@@ -136,7 +136,9 @@ rule merge_sequences:
         sequences = "results/sequences_merged_{segment}.fasta"
     shell:
         r"""
-        seqkit rmdup {input:q} > {output.sequences:q}
+        augur merge \
+            --sequences {input:q} \
+            --output-sequences {output.sequences:q}
         """
 
 # -------------------------------------------------------------------------------------------- #

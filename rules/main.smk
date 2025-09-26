@@ -43,8 +43,8 @@ include: "merge_inputs.smk"
 
 rule filter_sequences_by_subtype:
     input:
-        sequences = input_sequences,
-        metadata = input_metadata,
+        sequences = "results/sequences_{segment}.fasta",
+        metadata = "results/metadata.tsv",
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
@@ -62,7 +62,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata = input_metadata,
+        metadata = "results/metadata.tsv",
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:

@@ -62,47 +62,69 @@ def _gather_inputs():
 
 input_sources = _gather_inputs()
 
-def input_metadata(wildcards):
-    inputs = [info['metadata'] for info in input_sources.values() if info.get('metadata', None)]
-    return inputs[0] if len(inputs)==1 else "results/metadata_merged.tsv"
-
-def input_sequences(wildcards):
-    inputs = list(filter(None, [info['sequences'](wildcards) for info in input_sources.values() if info.get('sequences', None)]))
-    return inputs[0] if len(inputs)==1 else "results/sequences_merged_{segment}.fasta"
 
 rule merge_metadata:
     """
-    This rule should only be invoked if there are multiple defined metadata inputs
-    (config.inputs + config.additional_inputs)
+    This rule will run different commands depending on the number of inputs:
+    - one input = augur read-file
+    - otherwise = augur merge
     """
     input:
         **{name: info['metadata'] for name,info in input_sources.items() if info.get('metadata', None)}
     params:
+        num_of_inputs = lambda w, input: len(input),
         metadata = lambda w, input: list(map("=".join, input.items()))
     output:
-        metadata = "results/metadata_merged.tsv"
+        metadata = "results/metadata.tsv"
+    log:
+        "logs/merge_metadata.txt",
+    benchmark:
+        "benchmarks/merge_metadata.txt"
     shell:
         r"""
-        augur merge \
-            --metadata {params.metadata:q} \
-            --source-columns 'input_{{NAME}}' \
-            --output-metadata {output.metadata}
+        exec &> >(tee {log:q})
+
+        if [[ {params.num_of_inputs:q} == 1 ]]; then
+            echo "[INFO] Reading single metadata input"
+            augur read-file {input:q} > {output.metadata:q}
+        else
+            echo "[INFO] Merging multiple metadata inputs"
+            augur merge \
+                --metadata {params.metadata:q} \
+                --source-columns 'input_{{NAME}}' \
+                --output-metadata {output.metadata}
+        fi
         """
 
 rule merge_sequences:
     """
-    This rule should only be invoked if there are multiple defined metadata inputs
-    (config.inputs + config.additional_inputs) for this particular segment
+    This rule will run different commands depending on the number of inputs.
+    - one input = augur read-file
+    - otherwise = augur merge
     """
     input:
-        lambda w: list(filter(None, [info['sequences'](w) for info in input_sources.values()]))
+        lambda w: list(filter(None, [info['sequences'](w) for info in input_sources.values() if info.get('sequences', None)]))
+    params:
+        num_of_inputs = lambda w, input: len(input),
     output:
-        sequences = "results/sequences_merged_{segment}.fasta"
+        sequences = "results/sequences_{segment}.fasta"
+    log:
+        "logs/{segment}/merge_sequences.txt",
+    benchmark:
+        "benchmarks/{segment}/merge_sequences.txt"
     shell:
         r"""
-        augur merge \
-            --sequences {input:q} \
-            --output-sequences {output.sequences:q}
+        exec &> >(tee {log:q})
+
+        if [[ {params.num_of_inputs:q} == 1 ]]; then
+            echo "[INFO] Reading single sequences input"
+            augur read-file {input:q} > {output.sequences:q}
+        else
+            echo "[INFO] Merging multiple sequences inputs"
+            augur merge \
+                --sequences {input:q} \
+                --output-sequences {output.sequences:q}
+        fi
         """
 
 # -------------------------------------------------------------------------------------------- #

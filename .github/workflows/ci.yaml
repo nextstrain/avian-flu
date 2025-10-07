@@ -13,5 +13,4 @@ jobs:
     with:
       build-args: |
         --snakefile segment-focused/Snakefile \
-        -pf test_target  \
-        --config 'inputs=[{"name": "example", "metadata": "example_data/gisaid/metadata.tsv", "sequences": "example_data/gisaid/sequences_{segment}.fasta"}]'
+        --configfile build-configs/ci/config.yaml

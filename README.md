@@ -297,15 +297,14 @@ additional_inputs:
 
 ### Run a single H5N1 HA all-time analysis
 
-There is a `test_target` rule which will produce a single H5N1 HA "all-time" tree.
-You can combine this with the example data (see above) to run a single build using a small number of sequences:
+There is an example build which will produce a single H5N1 HA "all-time" tree
+using the example data (see above):
 
 
 ``` bash
 snakemake --cores 2 \
     --snakefile segment-focused/Snakefile \
-    --config 'inputs=[{"name": "example", "metadata": "example_data/gisaid/metadata.tsv", "sequences": "example_data/gisaid/sequences_{segment}.fasta"}]' \
-    -pf test_target
+    --configfile build-configs/ci/config.yaml
 ```
 
 ### clade labeling

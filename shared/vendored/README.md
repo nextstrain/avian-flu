@@ -86,6 +86,7 @@ approach to "ingest" has been discussed in various internal places, including:
 
 Scripts for supporting workflow automation that don’t really belong in any of our existing tools.
 
+- [assign-colors](scripts/assign-colors) - Generate colors.tsv for augur export based on ordering, color schemes, and what exists in the metadata. Used in the phylogenetic or nextclade workflows.
 - [notify-on-diff](scripts/notify-on-diff) - Send Slack message with diff of a local file and an S3 object
 - [notify-on-job-fail](scripts/notify-on-job-fail) - Send Slack message with details about failed workflow job on GitHub Actions and/or AWS Batch
 - [notify-on-job-start](scripts/notify-on-job-start) - Send Slack message with details about workflow job on GitHub Actions and/or AWS Batch
@@ -96,6 +97,7 @@ Scripts for supporting workflow automation that don’t really belong in any of 
 - [trigger](scripts/trigger) - Triggers downstream GitHub Actions via the GitHub API using repository_dispatch events.
 - [trigger-on-new-data](scripts/trigger-on-new-data) - Triggers downstream GitHub Actions if the provided `upload-to-s3` outputs do not contain the `identical_file_message`
   A hacky way to ensure that we only trigger downstream phylogenetic builds if the S3 objects have been updated.
+
 
 NCBI interaction scripts that are useful for fetching public metadata and sequences.
 
@@ -122,6 +124,8 @@ Potential Nextstrain CLI scripts
 Snakemake workflow functions that are shared across many pathogen workflows that don’t really belong in any of our existing tools.
 
 - [config.smk](snakemake/config.smk) - Shared functions for parsing workflow configs.
+- [remote_files.smk](snakemake/remote_files.smk) - Exposes the `path_or_url` function which will use Snakemake's storage plugins to download/upload files to remote providers as needed.
+
 
 ## Software requirements
 

@@ -1,0 +1,16 @@
+# Produces single build: auspice/avian-flu_h5n1_ha_all-time.json
+builds:
+  - subtype:
+      - h5n1
+    segment:
+      - ha
+    time:
+      - all-time
+
+# Inputs relative to the top level directory so this will only work running
+# the workflow from the top level directory
+inputs:
+  - name: example-data
+    metadata: example_data/gisaid/metadata.tsv
+    sequences:
+        ha: example_data/gisaid/sequences_ha.fasta

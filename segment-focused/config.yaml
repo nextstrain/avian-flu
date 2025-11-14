@@ -132,7 +132,7 @@ refine:
 
 ancestral:
   inference: joint
-  root_seq: false
+  root_seq: config/{subtype}/reference_{subtype}_{segment}.gb
 
 traits:
   columns:

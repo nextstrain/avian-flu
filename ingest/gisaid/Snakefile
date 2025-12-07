@@ -1,0 +1,50 @@
+
+import os
+configfile: os.path.join(workflow.basedir, "config.yaml")
+
+include: "../../shared/vendored/snakemake/remote_files.smk"
+include: "../rules/genoflu.smk"
+include: "../rules/upload_to_s3.smk"
+
+
+# The Genoflu workflow will create "gisaid/results/metadata.tsv" with GenoFLU information
+# So make that the default workflow target. This will force provisioning of upstream
+# metadata & sequences
+rule all:
+    input:
+        metadata="gisaid/results/metadata.tsv",
+
+rule upload_all:
+    input:
+        metadata="gisaid/s3/metadata.done",
+        sequences=expand("gisaid/s3/sequences_{segment}.done", segment=config["segments"]),
+
+rule get_sequence:
+    """
+    Provisions the curated sequences (ultimately from the seasonal-flu ingest)
+    into the location where both the GenoFlu workflow and the upload rules can access them.
+    (Note: We could use a different location and skip `provision_genoflu_sequences` but
+    we want to upload the sequences at the end of the workflow in order to keep metadata
+    & sequences in-sync.)
+    """
+    input:
+        path_or_url(config['sequences'])
+    output:
+        "gisaid/results/sequences_{segment}.fasta"
+    shell:
+        r"""
+        augur read-file {input} > {output}
+        """
+
+rule get_metadata:
+    """
+    Provisions the metadata in the location the genoflu workflow expects it.
+    """
+    input:
+        path_or_url(config['metadata'])
+    output:
+        "gisaid/data/metadata_combined.tsv"
+    shell:
+        r"""
+        augur read-file  {input} {output}
+        """

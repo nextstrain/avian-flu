@@ -97,7 +97,7 @@ jobs:
 
       - name: Check cache
         id: check-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ingest-ncbi-output-sha256sum
           key: ingest-output-sha256sum-${{ hashFiles('ingest-ncbi-output-sha256sum') }}

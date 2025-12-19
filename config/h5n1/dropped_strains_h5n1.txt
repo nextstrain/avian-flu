@@ -20,7 +20,11 @@ A/duck/Bangladesh/59131/2023
 A/duck/Bangladesh/59013/2023
 RGA/BALDEAGLE/FLORIDA/W22134OP/2022XA/PR/8/2034
 
-
+# dairy cattle strains with incorrect dates 
+A/dairycow/California/24033172001/2022 # incorrect date, nothing in cattle until 2024
+A/dairycow/California/24033172002/2022 # incorrect date, nothing in cattle until 2024
+A/dairycow/California/24033172003/2022 # incorrect date, nothing in cattle until 2024
+A/dairycow/Idaho/014338001/2005 # incorrect date, nothing in cattle until 2024
 
 
 # Duplicated entries in GISAID

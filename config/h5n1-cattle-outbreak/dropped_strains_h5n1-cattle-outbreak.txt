@@ -34,6 +34,11 @@ A/cattle/Texas/24-009310-009/2024
 A/cattle/Texas/24-009495-005/2024
 A/cattle/USA/24-009495-005-original/2024
 A/DomesticCat/USA/24-009116-001-original/2024
+A/dairycow/California/24033172001/2022 
+A/dairycow/California/24033172002/2022 
+A/dairycow/California/24033172003/2022
+A/dairycow/Idaho/014338001/2005 
+
 
 # These strains were clearly mis-dated. They have dates of 2024-01-20 and 2024-01-20 but should be 2025
 # Their presence was causing substantial impact by messing up inference of dates on downstream SRA sequences

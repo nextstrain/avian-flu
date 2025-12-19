@@ -1,0 +1,18 @@
+
+# Download files from:
+# TODO XXX - change when we take the seasonal-flu outputs out of "trials" mode
+sequences: s3://nextstrain-data-private/files/workflows/seasonal-flu/trials/ingest/avian-flu/{segment}/sequences.fasta.xz
+metadata: s3://nextstrain-data-private/files/workflows/seasonal-flu/trials/ingest/avian-flu/metadata.tsv.xz
+# Note: replace the above with (e.g.) "../../seasonal-flu/ingest/results/avian-flu/{segment}.fasta" for local usage, as needed
+
+# Upload data to:
+s3_dst:
+  # NOTE: the intention is to overwrite this for testing purposes via the API call
+  # In case that doesn't work, I set a conservative trial prefix to ensure we don't overwrite canonical files
+  # TODO XXX - change to files/workflows/avian-flu
+  gisaid: s3://nextstrain-data-private/files/workflows/avian-flu/trial/genoflu-gisaid-should-not-be-used
+
+segments: ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
+
+genoflu:
+  gisaid: true

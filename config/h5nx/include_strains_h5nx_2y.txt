@@ -39,6 +39,7 @@ A/Chicken/BC/FAV-0266-1/2024
 A/Louisiana/12/2024
 A/Turkey/BC/FAV-0267-1/2024
 A/England/480160/2025
+A/Washington/2148/2025
 
 
 

@@ -33,20 +33,10 @@ A/GreenWingedTeal/BritishColumbia/AIVPHL-2526/2024
 A/CanadaGoose/BritishColumbia/AIVPHL-2524/2024
 A/RedTailedHawk/BritishColumbia/AIVPHL-2513/2024
 A/BritishColumbia/PHL-2032/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/BC/FAV-0285-1/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.800] A/Chicken/BritishColumbia/FAV-0285-1/2024
-A/Chicken/BC/FAV-0285-1/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/BC/FAV-0268-1/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.800] A/Chicken/BritishColumbia/FAV-0268-1/2024
-A/Chicken/BC/FAV-0268-1/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/BC/FAV-0266-1/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.800] A/Chicken/BritishColumbia/FAV-0266-1/2024
-A/Chicken/BC/FAV-0266-1/2024
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/Turkey/BC/FAV-0267-1/2024
+A/Chicken/BritishColumbia/FAV-0285-1/2024
+A/Chicken/BritishColumbia/FAV-0268-1/2024
+A/Chicken/BritishColumbia/FAV-0266-1/2024
+A/Turkey/BC/FAV-0267-1/2024 # NOTE 2026-01-27 this strain wasn't in fauna and also isn't in our newly curated data
 A/Wisconsin/179/2024
 A/Iowa/124/2024
 A/England/480160/2025
@@ -58,27 +48,11 @@ A/lynx/USA/037410-001/2024
 A/serval/USA/037410-002/2024
 A/serval/USA/037410-003/2024
 A/geoffroyscat/USA/037410-004/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/geoffroys cat/USA/037410004/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=1.000] A/geoffroyscat/USA/037410-004/2024
-A/geoffroys cat/USA/037410004/2024
 A/bobcat/Washington/037410-006/2024
 A/mountainlion/USA/037410-007/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/mountain lion/USA/037410007/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=1.000] A/mountainlion/USA/037410-007/2024
-A/mountain lion/USA/037410007/2024
 A/mountainlion/USA/037410-008/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/mountain lion/USA/037410008/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=1.000] A/mountainlion/USA/037410-008/2024
-A/mountain lion/USA/037410008/2024
 A/lynx/USA/037410-010/2024
 A/savannahcat/USA/037410-011/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/savannah cat/USA/037410011/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=1.000] A/savannahcat/USA/037410-011/2024
-A/savannah cat/USA/037410011/2024
 A/cat/California/037986-008/2024
 A/tiger/Colorado/038000-001/2024
 A/serval/USA/037410-012/2024
@@ -125,9 +99,7 @@ A/dairycow/Texas/24009028-008/2024
 A/dairycow/Texas/24-029328-01/2024
 A/dairycow/Texas/24009028-003/2024
 A/dairycow/NewMexico/24010512-001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/dairycattle/Texas/24008749007/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.899] A/dairycow/Texas/24-008749-007/2024
-A/dairycattle/Texas/24008749007/2024
+A/dairycow/Texas/24-008749-007/2024
 A/dairycow/Michigan/24010071-001/2024
 A/dairycow/Kansas/24009497-004/2024
 A/dairycow/Texas/24009367-002/2024
@@ -172,8 +144,7 @@ A/dairycow/Texas/24009110-014/2024
 A/dairycow/NorthCarolina/24010327-003/2024
 A/dairycow/Texas/24009109-005/2024
 A/dairycow/Texas/24009109-008/2024
-# [update-strains] No match for the following strain, which did exist in fauna:
-A/dairycattle/Texas/24008749004/2024
+A/dairycattle/Texas/24008749004/2024 # NOTE 2026-01-27 this strain isn't in our newly curated data
 A/dairycow/Texas/24009110-026/2024
 A/dairycow/Texas/24009776-004/2024
 A/dairycow/Texas/24009308-008/2024
@@ -217,9 +188,7 @@ A/dairycow/Texas/24009495-004/2024
 A/dairycow/NewMexico/24010330-003/2024
 A/dairycow/Texas/24010514-002/2024
 A/dairycow/Idaho/24009491-005/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/dairycattle/Texas/24008749005/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.899] A/dairycow/Texas/24-008749-005/2024
-A/dairycattle/Texas/24008749005/2024
+A/dairycow/Texas/24-008749-005/2024
 A/dairycow/Michigan/24010071-003/2024
 A/dairycow/Texas/24009110-012/2024
 A/dairycow/NewMexico/24010193-006/2024
@@ -233,9 +202,7 @@ A/dairycow/Texas/24009110-020/2024
 A/dairycow/Ohio/24009586-007/2024
 A/dairycow/Texas/24009367-011/2024
 A/dairycow/SouthDakota/24010354-002/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/dairycattle/Texas/24008749001/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.899] A/dairycow/Texas/24-008749-001/2024
-A/dairycattle/Texas/24008749001/2024
+A/dairycow/Texas/24-008749-001/2024
 A/dairycow/Texas/24009028-009/2024
 A/dairycow/Texas/24009110-016/2024
 A/dairycow/Texas/24008749-008/2024
@@ -267,9 +234,7 @@ A/dairycow/Kansas/24009497-005/2024
 A/dairycow/Texas/24009310-005/2024
 A/dairycow/Idaho/24009491-006/2024
 A/dairycow/Texas/24009088-002/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/dairycattle/Texas/24008749003/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.886] A/dairycow/Texas/24008749-003-R/2024
-A/dairycattle/Texas/24008749003/2024
+A/dairycow/Texas/24008749-003-R/2024
 A/dairycow/Texas/008749-004/2024
 A/dairycow/SouthDakota/24010354-020/2024
 A/dairycow/Michigan/24010071-009/2024
@@ -286,10 +251,7 @@ A/dairycow/Texas/24009367-016/2024
 A/dairycow/Texas/24009499-001/2024
 A/dairycow/Texas/24009108-004/2024
 A/dairycow/Texas/24009110-004/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/dairycattle/NewMexico/A240920343115/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.914] A/dairycow/NewMexico/A240920343-115/2024
-A/dairycattle/NewMexico/A240920343115/2024
+A/dairycow/NewMexico/A240920343-115/2024
 A/dairycow/Texas/008749-003/2024
 A/dairycow/Texas/24-008749-001/2024
 A/dairycow/Kansas/24009497-014/2024
@@ -308,13 +270,9 @@ A/Texas/37/2024
 A/americancrow/Iowa/24006634-001/2024
 A/baldeagle/Washington/24007953-001/2024
 A/blackbird/Texas/24-008354-001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/blackbird/Texas/24008354001/2024'. You must manually choose the correct match.
-# [update-strains] [score=1.000] A/blackbird/Texas/24-008354-001/2024
-A/blackbird/Texas/24008354001/2024
+A/blackbird/Texas/24-008354-001/2024
 A/blackbird/Texas/24-008357-001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/blackbird/Texas/24008357001/2024'. You must manually choose the correct match.
-# [update-strains] [score=1.000] A/blackbird/Texas/24-008357-001/2024
-A/blackbird/Texas/24008357001/2024
+A/blackbird/Texas/24-008357-001/20244
 A/canadagoose/Indiana/005146-001/2024
 A/canadagoose/Indiana/008719-001/2024
 A/canadagoose/Missouri/24006385-003/2024
@@ -356,44 +314,25 @@ A/commonraven/California/007417-001/2024
 A/crane/Austria/24004263-001/2024
 A/crow/Illinois/004479-001/2024
 A/crow/Illinois/004479-002/2024
-# [update-strains] No match for the following strain, which did exist in fauna:
-A/domesticcat/Montana/24009038001/2024
+A/domesticcat/Montana/24009038001/2024 # NOTE 2026-01-27 this strain isn't in our newly curated data
 A/domesticcat/NewMexico/24009116-001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/NewMexico/24009116002/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.827] A/feline/NewMexico/24-009116-002/2024
-A/domesticcat/NewMexico/24009116002/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/NewMexico/24009116004/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.827] A/feline/NewMexico/24-009116-004/2024
-A/domesticcat/NewMexico/24009116004/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/NewMexico/24009116005/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.827] A/feline/NewMexico/24-009116-005/2024
-A/domesticcat/NewMexico/24009116005/2024
+A/feline/NewMexico/24-009116-002/2024
+A/feline/NewMexico/24-009116-004/2024
+A/feline/NewMexico/24-009116-005/2024
 A/domesticcat/Oklahoma/24009118-002/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/Texas/24008764001/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.806] A/feline/Texas/24-008764-001/2024
-A/domesticcat/Texas/24008764001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/Texas/24008764002/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.806] A/feline/Texas/24-008764-002/2024
-A/domesticcat/Texas/24008764002/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/Texas/24008850001/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.806] A/feline/Texas/24-008850-001/2024
-A/domesticcat/Texas/24008850001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/Texas/24008850002/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.806] A/feline/Texas/24-008850-002/2024
-A/domesticcat/Texas/24008850002/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/domesticcat/Texas/24009311004/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.806] A/feline/Texas/24-009311-004/2024
-A/domesticcat/Texas/24009311004/2024
-# [update-strains] No match for the following strain, which did exist in fauna:
-A/domesticcat/UnitedStates/24009311006/2024
+A/feline/Texas/24-008764-001/2024
+A/feline/Texas/24-008764-002/2024
+A/feline/Texas/24-008850-001/2024
+A/feline/Texas/24-008850-002/2024
+A/feline/Texas/24-009311-004/2024
+A/domesticcat/UnitedStates/24009311006/2024 # NOTE 2026-01-27 this strain isn't in our newly curated data
 A/domesticgoose/California/24-000492-001/2024
 A/domesticgoose/Minnesota/24-000764-003/2024
 A/duck/Maine/24-004330-036/2024
 A/duck/Minnesota/005907-002/2024
 A/goat/Minnesota/007234-003/2024
 A/goat/Minnesota/007234-006/2024
-# [update-strains] No match for the following strain, which did exist in fauna:
-A/goat/Minnesota/24007234009/2024
+A/goat/Minnesota/24007234009/2024 # NOTE 2026-01-27 this strain isn't in our newly curated data
 A/goat/Minnesota/007234-029/2024
 A/goat/Minnesota/007234-030/2024
 A/goat/Minnesota/007234-032/2024
@@ -405,12 +344,8 @@ A/goat/Minnesota/007234-044/2024
 A/goat/Minnesota/007234-047/2024
 A/goat/Minnesota/007234-048/2024
 A/goat/Minnesota/007234-050/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/grackle/Texas/24008356001/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.914] A/commongrackle/Texas/24-008356-001/2024
-A/grackle/Texas/24008356001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/grackle/Texas/24008356003/2024'. You must manually choose the correct match.
-# [update-strains] [score=0.914] A/commongrackle/Texas/24-008356-003/2024
-A/grackle/Texas/24008356003/2024
+A/commongrackle/Texas/24-008356-001/2024
+A/commongrackle/Texas/24-008356-003/2024
 A/grackle/Texas/24008765-002/2024
 A/greathornedowl/Oregon/006223-001/2024
 A/mallard/Colorado/24-003181-003/2024
@@ -420,15 +355,12 @@ A/mallard/NewHampshire/24-004334-044/2024
 A/mountainlion/Montana/24005908-001/2024
 A/mountainlion/Montana/010315-001/2024
 A/muteswan/California/005918-001/2024
-# [update-strains] No match for the following strain, which did exist in fauna:
-A/Peregrinefalcon/California/24005915001/2024
+A/Peregrinefalcon/California/24005915001/2024 # NOTE 2026-01-27 this strain isn't in our newly curated data
 A/pigeon/Texas/24008765-001/2024
 A/raccoon/NewMexico/24009496-002/2024
 A/skunk/Montana/007939-001/2024
 A/skunk/NewMexico/24-006483-001/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/skunk/NewMexico/24006483001/2024'. You must manually choose the correct match.
-# [update-strains] [score=1.000] A/skunk/NewMexico/24-006483-001/2024
-A/skunk/NewMexico/24006483001/2024
+A/skunk/NewMexico/24-006483-001/2024
 A/skunk/Washington/005959-001/2024
 A/skunk/Washington/24005959-002/2024
 A/skunk/Washington/005959-003/2024
@@ -454,20 +386,3 @@ A/turkeyvulture/California/24007419-001/2024
 A/westerngull/California/004708-001/2024
 A/woodduck/Mississippi/24-004235-001/2024
 A/Missouri/121/2024
-
-# D1.1 dairy cattle outbreak 
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-003-original/2025
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-004-original/2025
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-006-original/2025
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-005-original/2025
-# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h5n1/include_strains_h5n1_2y.txt ===
-# [update-strains] Direct matches:           21 / 382 (5.5%)
-# [update-strains] Changed via lookup:       326 / 382 (85.3%)
-# [update-strains] Normalized matches:       7 / 382 (1.8%)
-# [update-strains] Fuzzy matches:            25 / 382 (6.5%)
-# [update-strains] Unmatched & not in fauna: 5 / 382 (1.3%)
-# [update-strains] No matches:               5 / 382 (1.3%)

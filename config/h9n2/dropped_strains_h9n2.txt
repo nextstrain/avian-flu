@@ -1,16 +1,7 @@
 A/Senegal/243/2019   # doesn't align well, has lots of Ns, has way too many mutations
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/chicken/Korea/162  # this has a lot of mutations in MP
 A/Bat/Egypt/381OP/2017  # this is annotated as an H9N2 on gisaid, but it is very divergent
 A/Chicken/Egypt/AR541/2018  # very divergent
 A/Chicken/Egypt/AR562/2018 # very divergent
 A/chicken/Hunan/1217YYGK0025-P/2014/Mixed
 A/environment/Wuxi/2505/2014
 A/swine/Yantai/16/2012
-# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h9n2/dropped_strains_h9n2.txt ===
-# [update-strains] Direct matches:           6 / 8 (75.0%)
-# [update-strains] Changed via lookup:       1 / 8 (12.5%)
-# [update-strains] Normalized matches:       0 / 8 (0.0%)
-# [update-strains] Fuzzy matches:            0 / 8 (0.0%)
-# [update-strains] Unmatched & not in fauna: 1 / 8 (12.5%)
-# [update-strains] No matches:               0 / 8 (0.0%)

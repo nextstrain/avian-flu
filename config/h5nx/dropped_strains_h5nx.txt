@@ -1,8 +1,4 @@
 A/Chicken/Scotland/1959
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/chicken/Scotland/1959'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=1.000] A/Chicken/Scotland/1959
-A/chicken/Scotland/1959
 A/mallard/Poland/141/2015 # overly divergent
 A/duck/Vietnam/1151/2014	# very divergent
 A/aquaticbird/Korea/w209/2007	# very divergent
@@ -39,7 +35,6 @@ A/duck/Bangladesh/59131/2023
 A/duck/Bangladesh/59013/2023
 A/BALDEAGLE/FLORIDA/W22-134-OP/2022XA/PR/8/2034
 
-
 # Duplicated entries in GISAID
 A/blackbird/Texas/24-008354-001/2024
 A/blackbird/Texas/24-008357-001/2024
@@ -60,11 +55,3 @@ A/feline/USA/24-009311-006/2024
 A/goat/Minnesota/007234-009/2024
 A/peregrinefalcon/California/005915-001/2024
 A/skunk/NewMexico/24-006483-001/2024
-
-# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h5nx/dropped_strains_h5nx.txt ===
-# [update-strains] Direct matches:           29 / 55 (52.7%)
-# [update-strains] Changed via lookup:       25 / 55 (45.5%)
-# [update-strains] Normalized matches:       1 / 55 (1.8%)
-# [update-strains] Fuzzy matches:            1 / 55 (1.8%)
-# [update-strains] Unmatched & not in fauna: 0 / 55 (0.0%)
-# [update-strains] No matches:               0 / 55 (0.0%)

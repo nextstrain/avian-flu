@@ -44,40 +44,8 @@ A/CanadaGoose/BritishColumbia/AIVPHL-2528/2024
 A/GreenWingedTeal/BritishColumbia/AIVPHL-2526/2024
 A/CanadaGoose/BritishColumbia/AIVPHL-2524/2024
 A/RedTailedHawk/BritishColumbia/AIVPHL-2513/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/British_Columbia/PHL-2032/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.984] A/BritishColumbia/PHL-2032/2024
-A/British_Columbia/PHL-2032/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/BC/FAV-0285-1/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.800] A/Chicken/BritishColumbia/FAV-0285-1/2024
-A/Chicken/BC/FAV-0285-1/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/BC/FAV-0268-1/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.800] A/Chicken/BritishColumbia/FAV-0268-1/2024
-A/Chicken/BC/FAV-0268-1/2024
-# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/BC/FAV-0266-1/2024'. You must manually choose the correct match.
-# [update-strains] P.S. Original strain wasn't in fauna!
-# [update-strains] [score=0.800] A/Chicken/BritishColumbia/FAV-0266-1/2024
-A/Chicken/BC/FAV-0266-1/2024
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/Turkey/BC/FAV-0267-1/2024
+A/BritishColumbia/PHL-2032/2024
+A/Chicken/BritishColumbia/FAV-0285-1/2024
+A/Chicken/BritishColumbia/FAV-0268-1/2024
+A/Chicken/BritishColumbia/FAV-0266-1/2024
 A/England/480160/2025
-
-# D1.1 dairy cattle outbreak 
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-003-original/2025
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-004-original/2025
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-006-original/2025
-# [update-strains] NOTE: Following strain unable to be matched, but it also wasn't in fauna to start with:
-A/cattle/Nevada/25-002645-005-original/2025
-
-# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h5nx/include_strains_h5nx_all-time.txt ===
-# [update-strains] Direct matches:           19 / 56 (33.9%)
-# [update-strains] Changed via lookup:       28 / 56 (50.0%)
-# [update-strains] Normalized matches:       0 / 56 (0.0%)
-# [update-strains] Fuzzy matches:            4 / 56 (7.1%)
-# [update-strains] Unmatched & not in fauna: 5 / 56 (8.9%)
-# [update-strains] No matches:               0 / 56 (0.0%)

@@ -1,12 +1,20 @@
 A/Americangreen-wingedteal/Idaho/AH0006121/2015 # not part of epi clade
 A/blue-wingedteal/Louisiana/UGAI15-1367/2015 # travel case. throws off map
 A/blue-wingedteal/Louisiana/UGAI15-1692/2015 # travel case. throws off map
+A/BritishColumbia/1/2015 # travel case. throws off map
+# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/British Columbia/1/2015'. You must manually choose the correct match.
+# [update-strains] P.S. Original strain wasn't in fauna!
+# [update-strains] [score=1.000] A/BritishColumbia/1/2015 # travel case. throws off map
 A/British Columbia/1/2015 # travel case. throws off map
 A/BritishColumbia/1/2015 # travel case. throws off map
 A/chicken/Alabama/17-008899-10/2017 # not part of epi clade
 A/chicken/Alabama/17-008899-11/2017 # not part of epi clade
 A/chicken/Alabama/17-008901-1/2017 # not part of epi clade
-A/Chicken/Netherlands/1600 # not part of epi clade
+A/chicken/Netherlands/16007311-037041/2016 # not part of epi clade
+A/chicken/Netherlands/16007311-037041/2016 # not part of epi clade
+# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/Chicken/Netherlands/16007311-037041/2016'. You must manually choose the correct match.
+# [update-strains] P.S. Original strain wasn't in fauna!
+# [update-strains] [score=1.000] A/chicken/Netherlands/16007311-037041/2016 # not part of epi clade
 A/Chicken/Netherlands/16007311-037041/2016 # not part of epi clade
 A/chicken/Tennessee/17-007147-1/2017 # not part of epi clade
 A/chicken/Tennessee/17-007147-3/2017 # not part of epi clade
@@ -22,9 +30,9 @@ A/chicken/Tennessee/17-008279-5/2017 # not part of epi clade
 A/chicken/Tennessee/17-008279-6/2017 # not part of epi clade
 A/cinnamonteal/California/AH0079011/2016 # not part of epi clade
 A/duck/Alabama/17-008643-2/2017 # not part of epi clade
-A/Duck/Bangladesh/2698 # not part of epi clade
-A/Duck/Bangladesh/2699 # not part of epi clade
-A/Duck/Bangladesh/2704 # clock is off
+A/duck/Bangladesh/26980/2015 # not part of epi clade
+A/duck/Bangladesh/26992/2015 # not part of epi clade
+A/duck/Bangladesh/27042/2015 # clock is off
 A/duck/Fujian/S4170/2014 # not part of epi clade
 A/duck/Guangxi/SDY129/2014 # not part of epi clade
 A/duck/Hunan/S11682/2015 # not part of epi clade
@@ -44,20 +52,32 @@ A/nothernshoveler/California/AH0079371/2016 # not part of epi clade
 A/Quail/Guangdong/KP14232/2014 # bad host data
 A/Fujian/33845/2017 # non-HA segments highly divergent
 A/Duck/Guangdong/GZ15567/2015 # non-HA segments highly divergent
-A/Environment/Fujian/4084 # non-HA segments highly divergent
-A/Environment/Fujian/4363 # non-HA segments highly divergent
-A/Environment/Fujian/4079 # non-HA segments highly divergent
+A/Environment/Fujian/40844/2017 # non-HA segments highly divergent
+A/Environment/Fujian/43639/2017 # non-HA segments highly divergent
+A/Environment/Fujian/40791/2017 # non-HA segments highly divergent
 A/teal/Egypt/MB-D-621C/2016 # not part of epi clade
 A/Shenzhen/1/2015   # very divergent
-A/Duck/Sichuan/408 # the M gene looks divergent, and on gisaid this is annotated as "mixed", which makes me think it is potentially a coinfection
-A/Duck/Jiangxi/216  #also divergent and marked as "mixed" on gisaid
+A/duck/Sichuan/0408CDLQ143-O/2015/Mixed # the M gene looks divergent, and on gisaid this is annotated as "mixed", which makes me think it is potentially a coinfection
+A/duck/Jiangxi/0216ShRSX002-O/2017/Mixed  #also divergent and marked as "mixed" on gisaid
+A/duck/Japan/AQ-HE29-52/2017	# very divergent
+# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/duck/Japan/AQHE2952/2017'. You must manually choose the correct match.
+# [update-strains] [score=1.000] A/duck/Japan/AQ-HE29-52/2017	# very divergent
 A/duck/Japan/AQHE2952/2017	# very divergent
+# [update-strains] No match for the following strain, which did exist in fauna:
 A/environment/Fujian/SD213/2017   # very divergent
 A/duck/Fujian/SD208/2017  # very divergent
 A/duck/Fujian/SD001/2018  # divergent
+# [update-strains] No match for the following strain, which did exist in fauna:
 A/environment/Fujian/S10058/2017   # divergent strain
-A/Environment/InnerMongolia/23278/2019
-A/environment/Kagoshima/KUH4/2018
-A/Environment/InnerMongolia/23285/2019  # divergent
+A/Environment/Neimenggu/23278/2019
+A/environment/Kagoshima/KU-H4/2018
+A/Environment/Neimenggu/23285/2019  # divergent
 A/Camel/Neimenggu/XL/2020	# divergent
 A/environment/Shenzhen/4/2013	# divergent
+# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h7n9/dropped_strains_h7n9.txt ===
+# [update-strains] Direct matches:           46 / 63 (73.0%)
+# [update-strains] Changed via lookup:       12 / 63 (19.0%)
+# [update-strains] Normalized matches:       3 / 63 (4.8%)
+# [update-strains] Fuzzy matches:            3 / 63 (4.8%)
+# [update-strains] Unmatched & not in fauna: 0 / 63 (0.0%)
+# [update-strains] No matches:               2 / 63 (3.2%)

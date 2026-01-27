@@ -1,3 +1,7 @@
+A/Chicken/Scotland/1959
+# [update-strains] BEST 1 FUZZY MATCHES and their scores. Original strain 'A/chicken/Scotland/1959'. You must manually choose the correct match.
+# [update-strains] P.S. Original strain wasn't in fauna!
+# [update-strains] [score=1.000] A/Chicken/Scotland/1959
 A/chicken/Scotland/1959
 A/mallard/Poland/141/2015 # overly divergent
 A/Chicken/Egypt/AR528/2017
@@ -6,44 +10,48 @@ A/chicken/Dakahlia/110/2007 # divergent
 A/chicken/Pessel/BPPVRII/2007 # divergent
 A/duck/China/E26/2012 # divergent
 A/Fox/Bayern/WS113/2022
-A/mallard/Denmark/091795/2022
+A/mallard/Denmark/09179-5/2022
 A/Mallard/Netherlands/8/2023
 A/kelpgull/Chile/C35523/2017
 A/egret/Korea/22WC603/2023
 A/chicken/Poland/003/2020
 A/chicken/Scotland/128320/2023
 A/Tuftedduck/Netherlands/1/2023
-A/teal/Nuble/2335162/2023
+A/Chileanteal/Nuble/233516-2/2023
 A/pheasant/England/121396/2023
 A/DomesticDuck/England/137313/2023
 A/duck/Bangladesh/59131/2023
 A/duck/Bangladesh/59013/2023
-RGA/BALDEAGLE/FLORIDA/W22134OP/2022XA/PR/8/2034
+A/BALDEAGLE/FLORIDA/W22-134-OP/2022XA/PR/8/2034
 
-# dairy cattle strains with incorrect dates 
-A/dairycow/California/24033172001/2022 # incorrect date, nothing in cattle until 2024
-A/dairycow/California/24033172002/2022 # incorrect date, nothing in cattle until 2024
-A/dairycow/California/24033172003/2022 # incorrect date, nothing in cattle until 2024
-A/dairycow/Idaho/014338001/2005 # incorrect date, nothing in cattle until 2024
+
 
 
 # Duplicated entries in GISAID
-A/blackbird/Texas/24008354001original/2024
-A/blackbird/Texas/24008357001original/2024
-A/commongrackle/Texas/24008356001original/2024
-A/commongrackle/Texas/24008356003original/2024
-A/feline/Montana/24009038001/2024
-A/feline/Texas/2402932901/2024
-A/feline/Texas/2402932902/2024
-A/feline/USA/24008764001original/2024
-A/feline/USA/24008764002original/2024
-A/feline/USA/24008850001original/2024
-A/feline/USA/24008850002original/2024
-A/feline/USA/24009116002original/2024
-A/feline/USA/24009116004original/2024
-A/feline/USA/24009116005original/2024
-A/feline/USA/24009311004original/2024
-A/feline/USA/24009311006original/2024
-A/goat/Minnesota/24007234009original/2024
-A/peregrinefalcon/California/24005915001original/2024
-A/skunk/NewMexico/24006483001original/2024
+A/blackbird/Texas/24-008354-001/2024
+A/blackbird/Texas/24-008357-001/2024
+A/commongrackle/Texas/24-008356-001/2024
+A/commongrackle/Texas/24-008356-003/2024
+A/cat/Montana/009038-001/2024
+A/feline/Texas/24-029329-01/2024
+A/feline/Texas/24-029329-02/2024
+A/feline/Texas/24-008764-001/2024
+A/feline/Texas/24-008764-002/2024
+A/feline/Texas/24-008850-001/2024
+A/feline/Texas/24-008850-002/2024
+A/feline/NewMexico/24-009116-002/2024
+A/feline/NewMexico/24-009116-004/2024
+A/feline/NewMexico/24-009116-005/2024
+A/feline/Texas/24-009311-004/2024
+A/feline/USA/24-009311-006/2024
+A/goat/Minnesota/007234-009/2024
+A/peregrinefalcon/California/005915-001/2024
+A/skunk/NewMexico/24-006483-001/2024
+
+# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h5n1/dropped_strains_h5n1.txt ===
+# [update-strains] Direct matches:           17 / 40 (42.5%)
+# [update-strains] Changed via lookup:       22 / 40 (55.0%)
+# [update-strains] Normalized matches:       1 / 40 (2.5%)
+# [update-strains] Fuzzy matches:            1 / 40 (2.5%)
+# [update-strains] Unmatched & not in fauna: 0 / 40 (0.0%)
+# [update-strains] No matches:               0 / 40 (0.0%)

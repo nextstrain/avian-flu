@@ -1,3 +1,10 @@
 
 A/chicken/USA/008558-002/2025
 A/chicken/USA/008558-003/2025
+# [update-strains] === Summary .snakemake/storage/http/raw.githubusercontent.com/nextstrain/avian-flu/refs/heads/master/config/h7n9/include_strains_h7n9_all-time.txt ===
+# [update-strains] Direct matches:           2 / 2 (100.0%)
+# [update-strains] Changed via lookup:       0 / 2 (0.0%)
+# [update-strains] Normalized matches:       0 / 2 (0.0%)
+# [update-strains] Fuzzy matches:            0 / 2 (0.0%)
+# [update-strains] Unmatched & not in fauna: 0 / 2 (0.0%)
+# [update-strains] No matches:               0 / 2 (0.0%)

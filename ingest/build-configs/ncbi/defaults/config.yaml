@@ -14,7 +14,7 @@ ncbi_virus_filters:
   - '{!tag=Region_s}Region_s:("North America")'
   - 'Serotype_s:("H5N1")'
 
-# Matching segment names used in fauna to the numeric segments returned by NCBI
+# Map numeric segments returned by NCBI to canonical names
 ncbi_segments:
   pb2: "1"
   pb1: "2"
@@ -57,7 +57,6 @@ curate:
     biosample-acc: biosample_accessions
     submitter-names: authors
     submitter-affiliation: submitting_lab
-    # These columns are added to match fauna outputs
     isolate_id: isolate_id
     virus: virus
     domestic_status: domestic_status
@@ -106,7 +105,6 @@ curate:
   # The field in the NDJSON record that contains the actual genomic sequence
   output_sequence_field: "sequence"
   # The list of metadata columns to keep in the final output of the curation pipeline.
-  # Explicitly matching the metadata columns output by fauna
   metadata_columns:
   - strain
   - virus

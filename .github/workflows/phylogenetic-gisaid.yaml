@@ -1,4 +1,4 @@
-name: Phylogenetic Fauna
+name: Phylogenetic GISAID
 
 defaults:
   run:
@@ -94,4 +94,4 @@ jobs:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: ${{ inputs.image }}
         TRIAL_NAME: ${{ inputs.trial-name }}
-      artifact-name: phylogenetic-fauna-build-output
+      artifact-name: phylogenetic-gisaid-build-output

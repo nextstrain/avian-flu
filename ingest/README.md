@@ -5,7 +5,6 @@ This is the ingest pipeline for avian virus sequences.
 ## Software requirements
 
 Follow the [standard installation instructions](https://docs.nextstrain.org/en/latest/install.html) for Nextstrain's suite of software tools.
-This workflow presumes that we are using the Nextstrain CLI's Docker runtime which includes [fauna](https://github.com/nextstrain/fauna) as a sibling directory of the workflow directory and includes the Python RethinkDB bindings required for downloading from fauna.
 
 
 ## Usage
@@ -67,40 +66,11 @@ The workflow compresses and uploads the local files to S3 to corresponding paths
 - ncbi = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/ncbi`
 - andersen-lab = `s3://nextstrain-data/files/workflows/avian-flu/h5n1/andersen-lab`.
 
-### Ingest and upload data from fauna to S3
+## GISAID data
 
-The ingest pipeline supports downloading all sequences and metadata from fauna and uploading those data to S3.
+We no longer have a fauna-based ingest workflow as we now use the [all-influenza curation pipeline from the seasonal-flu repo](https://github.com/nextstrain/seasonal-flu/tree/master/ingest).
 
-To download all data locally from fauna, run the ingest pipeline with the following command.
-
-```sh
-nextstrain build \
-    --docker \
-    --env RETHINK_HOST \
-    --env RETHINK_AUTH_KEY \
-    --env AWS_ACCESS_KEY_ID \
-    --env AWS_SECRET_ACCESS_KEY \
-    .
-```
-
-This command produces one metadata file, `fauna/results/metadata.tsv`, and one sequences file per gene segment like `fauna/results/sequences_ha.fasta`.
-Each file represents all available subtypes.
-
-> If you are running this outside of Docker we expect 'fauna' to be a sister directory to 'avian-flu'.
-  You can change this via `--config path_to_fauna=<path>` where the path is relative to the 'ingest' directory.
-
-Add the `upload_all` target to the command above to run the complete ingest pipeline _and_ upload results to AWS S3.
-The workflow compresses and uploads the local files to S3 to corresponding paths like `s3://nextstrain-data-private/files/workflows/avian-flu/metadata.tsv.zst` and `s3://nextstrain-data-private/files/workflows/avian-flu/ha/sequences.fasta.zst`.
-
-```sh
-nextstrain build \
-    --docker \
-    --env RETHINK_HOST \
-    --env RETHINK_AUTH_KEY \
-    --env AWS_ACCESS_KEY_ID \
-    --env AWS_SECRET_ACCESS_KEY \
-    . upload_all
-```
+There is one workflow related to this data, see `gisaid/README.md` for more details.
 
 
 ## Configuration
@@ -111,7 +81,5 @@ The complete ingest pipeline with AWS S3 uploads uses the following environment 
 
 #### Required
 
-- `RETHINK_HOST`
-- `RETHINK_AUTH_KEY`
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`

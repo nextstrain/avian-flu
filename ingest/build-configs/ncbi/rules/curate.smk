@@ -98,7 +98,7 @@ rule curate:
                 --segments {params.segments} \
             | ./build-configs/ncbi/bin/transform-host \
                 --host-map {params.host_map} \
-            | ./build-configs/ncbi/bin/transform-to-match-fauna \
+            | ./build-configs/ncbi/bin/transform-to-match-curated-data \
             | ./vendored/merge-user-metadata \
                 --annotations {input.annotations} \
                 --id-field {params.annotations_id} ) 2>> {log} > {output.curated_ndjson}

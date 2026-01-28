@@ -3,9 +3,22 @@ Functions and logic related to finding, parsing and interpreting configfiles
 and other config-related stuff.
 """
 
-include: "../shared/vendored/snakemake/config.smk"
-
 AVIAN_FLU_DIR = os.path.normpath(os.path.join(workflow.current_basedir, ".."))
+
+# Set search paths.
+search_paths = [
+    # User analysis directory
+    os.getcwd(),
+
+    # Workflow root
+    AVIAN_FLU_DIR,
+
+    # Workflow defaults folder
+    os.path.join(workflow.basedir, "defaults"),
+]
+os.environ['AUGUR_SEARCH_PATHS'] = ":".join(search_paths)
+
+include: "../shared/vendored/snakemake/config.smk"
 # NOTE: `workflow.basedir` is the Snakemake entry point, i.e. the directory of the first encountered Snakefile
 
 # load the default config which must exist.
@@ -133,7 +146,7 @@ def resolve_config_fields_path(*fields):
         raw_value = resolve_config_value(*fields)(wildcards)
         if not raw_value: # falsey -> don't resolve to a path!
             return ""
-        return resolve_config_path(raw_value, AVIAN_FLU_DIR)(wildcards)
+        return resolve_config_path(raw_value)(wildcards)
 
     return resolve
 

@@ -114,7 +114,7 @@ def resolve_config_fields_path(*fields):
     Given an array of config *fields* (keys), we return a function with a single
     argument *wildcards* which resolves to a appropriate local file path
     (string). These are accomplished via calls to helper functions
-    `resolve_config_value` and `resolve_config_path` (from `../shared/vendored/snakemake/config.smk`),
+    `resolve_config_value` and `resolve_filepath` (from `../shared/vendored/snakemake/config.smk`),
     respectively; see the docstrings of those functions for more details.
 
     Examples:
@@ -133,7 +133,7 @@ def resolve_config_fields_path(*fields):
         raw_value = resolve_config_value(*fields)(wildcards)
         if not raw_value: # falsey -> don't resolve to a path!
             return ""
-        return resolve_config_path(raw_value, AVIAN_FLU_DIR)(wildcards)
+        return resolve_filepath(raw_value)(wildcards)
 
     return resolve
 

@@ -27,6 +27,9 @@ else:
         # Workflow defaults folder
         Path(workflow.basedir) / "defaults",
 
+        # Workflow scripts folder
+        Path(workflow.basedir) / "scripts",
+
         # Workflow root (contains Snakefile)
         Path(workflow.basedir),
     ]
@@ -36,6 +39,9 @@ else:
         search_paths.extend([
             # Pathogen repo root
             repo_root,
+
+            # Pathogen repo scripts folder
+            repo_root / "scripts",
         ])
 
     search_paths = [path.resolve() for path in search_paths if path.is_dir()]

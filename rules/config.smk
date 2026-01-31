@@ -137,28 +137,6 @@ def resolve_config_fields_path(*fields):
 
     return resolve
 
-def script(path):
-    """
-    Resolve a provided script *path* (string)
-
-    Search order (first match returned):
-        1. Relative to the 'scripts' directory in the avian-flu repo (`AVIAN_FLU_DIR`)
-        2. Relative to the avian-flu repo (`AVIAN_FLU_DIR`)
-
-    An `InvalidConfigError` is raised if a match is not found
-    """
-
-    if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, "scripts", path)):
-        return p
-
-    if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, path)):
-        return p
-
-    raise InvalidConfigError(f"Unable to resolve the provided script {path!r}. "
-        f"The following directories were searched:\n"
-        f"\t1. {os.path.join(AVIAN_FLU_DIR, 'scripts')}\n"
-        f"\t2. {AVIAN_FLU_DIR}\n")
-
 
 def as_list(x):
     return x if isinstance(x, list) else [x]

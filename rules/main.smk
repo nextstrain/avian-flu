@@ -136,7 +136,7 @@ rule add_h5_clade:
     output:
         metadata= "results/{subtype}/metadata-with-clade.tsv"
     params:
-        script = script("clade-labeling/add-clades.py")
+        script = resolve_filepath("clade-labeling/add-clades.py")
     shell:
         r"""
         python {params.script} \
@@ -412,7 +412,7 @@ rule cleavage_site:
         cleavage_site_annotations = "results/{subtype}/ha/{time}/cleavage-site.json",
         cleavage_site_sequences = "results/{subtype}/ha/{time}/cleavage-site-sequences.json"
     params:
-        script = script("annotate-ha-cleavage-site.py")
+        script = resolve_filepath("annotate-ha-cleavage-site.py")
     shell:
         r"""
         python {params.script} \
@@ -498,7 +498,7 @@ rule colors:
         colors = "results/{subtype}/{segment}/{time}/colors.tsv",
     params:
         duplications = lambda w: ["=".join(pair) for pair in resolve_config_value('colors', 'duplications')(w)],
-        script = script("assign-colors.py"),
+        script = resolve_filepath("assign-colors.py"),
     shell:
         r"""
         cp {input.colors} {output.colors} && \

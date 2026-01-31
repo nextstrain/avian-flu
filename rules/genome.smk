@@ -67,7 +67,7 @@ rule join_segments:
         segment = 'genome',
         time = 'default',
     params:
-        script = script("join-segments.py"),
+        script = resolve_filepath("join-segments.py"),
     shell:
         r"""
         python {params.script} \
@@ -82,7 +82,7 @@ rule mask_genome:
         alignment = "results/{subtype}/{segment}/{time}/aligned.fasta",
     params:
         percentage = resolve_config_value('mask', 'min_support'),
-        script = script("mask.py"),
+        script = resolve_filepath("mask.py"),
     wildcard_constraints:
         subtype = 'h5n1-cattle-outbreak|h5n1-d1.1',
         segment = 'genome',
@@ -154,7 +154,7 @@ rule prune_tree:
         subtype='h5n1-cattle-outbreak|h5n1-d1.1',
         time="default",
     params:
-        script = script("restrict-via-common-ancestor.py")
+        script = resolve_filepath("restrict-via-common-ancestor.py")
     shell:
         """
         python3 {params.script} \

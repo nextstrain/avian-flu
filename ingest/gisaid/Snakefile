@@ -46,5 +46,5 @@ rule get_metadata:
         "gisaid/data/metadata_combined.tsv"
     shell:
         r"""
-        augur read-file  {input} {output}
+        augur read-file  {input} > {output}
         """

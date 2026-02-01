@@ -245,7 +245,7 @@ ingest
        └── sequences_pb2.fasta
 ```
 
-Where `<data-source-name>` may be "fauna", "joined-ncbi" etc. 
+Where `<data-source-name>` may be "joined-ncbi" etc. 
 
 Similar to before we can use a config-overlay to switch the starting inputs of the workflow, or append to the existing inputs, as desired.
 Create a config overlay YAML and supply it via `--configfile`:
@@ -253,16 +253,15 @@ Create a config overlay YAML and supply it via `--configfile`:
 ```yaml
 inputs:
   - name: local-ingest
-    metadata: ingest/fauna/results/metadata.tsv
-    sequences: ingest/fauna/results/sequences_{segment}.fasta
+    metadata: ingest/joined-ncbi/results/metadata.tsv
+    sequences: ingest/joined-ncbi/results/sequences_{segment}.fasta
 ```
 
-(replace "fauna" with "joined-ncbi" etc, as appropriate).
 
 
 #### Using your own input data
 
-If you have your own data you can use the same approach, but rather than the paths being `ingest/fauna/...` etc have them point to your sequences & metadata files.
+If you have your own data you can use the same approach, but rather than the paths being `ingest/joined-ncbi/...` etc have them point to your sequences & metadata files.
 
 If you instead want to merge / combine your data with the existing data, we can specify the `additional_inputs` config parameter.
 For instance, this repo has a small set of example metadata + HA sequences.

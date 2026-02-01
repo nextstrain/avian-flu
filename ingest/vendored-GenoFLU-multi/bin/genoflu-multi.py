@@ -7,6 +7,7 @@ import shutil
 import argparse
 import time
 import multiprocessing as mp
+from sys import stderr
 
 def split(l, n):
     k, m = divmod(len(l), min(n, len(l)))
@@ -22,7 +23,13 @@ def run_genoflu(strain_records, core = None):
     
     temp_fasta = os.path.join(temp_dir, 'temp.fasta')
     
+    progress_count = 0
+    num_records = len(strain_records)
+
     for strain, records in strain_records:
+        progress_count+=1
+        if progress_count%100==0:
+            print(f"CORE {core} || Running {progress_count:,}/{num_records:,} ({int(progress_count*100.0/num_records)}%)", file=stderr)
         i = 1
         # append sequential numbers to end of record ids to prevent duplicate key error
         for record in records:
@@ -191,7 +198,7 @@ if __name__ == '__main__':
     
         ## start multiprocessing pool
         mp.set_start_method('fork')
-        pool = mp.Pool()
+        pool = mp.Pool(cores)
     
         ## and run the simulations
         pool_data = pool.starmap(run_genoflu, zip(split_strain_records, range(1,cores+1)))

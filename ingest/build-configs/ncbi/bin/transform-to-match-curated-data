@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Transforms to specific fields in the NDJSON record to match the output
-metdata from fauna for easier downstream use in the phylogenetic workflow
+metdata from our all-influenza curation pipeline for easier downstream 
+use in the phylogenetic workflow
 """
 import json
 import re
@@ -23,7 +24,6 @@ if __name__ == "__main__":
     for record in stdin:
         record = json.loads(record).copy()
 
-        # Add hardcoded values to match fauna output
         record.update(NEXTSTRAIN_RECORD)
         # phylo workflow expects subtype to be in lower case
         record["subtype"] = record.get("subtype", "").lower()

@@ -1,0 +1,14 @@
+# METADATA HOTFIXES
+
+# Our all-influenza curation pipeline is located in the seasonal-flu repo,
+# which makes it cumbersome to apply curation changes when we notice something's amiss.
+# This file contains hotfixes for metadata fields so that we can quickly update data for
+# phylogenetic builds where needed. The fixes will be applied to the (merged) metadata
+# and if a fix was obsolete (i.e. the strain existed but the fix had been applied upstream)
+# then it'll be removed from this TSV file as the fixes are applied.
+# The intention is that fixes here are (manually) added to our (seasonal-flu) curation
+# pipeline, rather than accumulating here.
+
+# The data structure here is a 3-column TSV
+# <strain name>    <field name (e.g. country)>    <new value>
+

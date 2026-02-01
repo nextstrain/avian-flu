@@ -40,6 +40,7 @@ inputs:
 
 #### Parameters which control large overarching aspects of the build
 same_strains_per_segment: false
+metadata_hotfixes: segment-focused/hotfixes.tsv
 
 
 #### Config files ####

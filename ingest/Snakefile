@@ -1,25 +1,24 @@
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
-SUPPORTED_DATA_SOURCES = ["fauna", "ncbi", "andersen-lab", "joined-ncbi"]
+SUPPORTED_DATA_SOURCES = ["ncbi", "andersen-lab", "joined-ncbi"]
 
 wildcard_constraints:
     segment = "|".join(config["segments"]),
     data_source = "|".join(SUPPORTED_DATA_SOURCES)
 
 rule all:
-    # As of 2024-05-16 the default ingest only ingests data from fauna
+    # As of 2026-01-28 the default ingest is for joined-ncbi
     input:
-        sequences=expand("fauna/results/sequences_{segment}.fasta", segment=config["segments"]),
-        metadata="fauna/results/metadata.tsv",
+        sequences=expand("joined-ncbi/results/sequences_{segment}.fasta", segment=config["segments"]),
+        metadata="joined-ncbi/results/metadata.tsv",
 
 rule upload_all:
-    # As of 2024-05-16 the default upload only uploads data from fauna
+    # As of 2026-01-28 the default upload is for joined-ncbi
     input:
-        sequences=expand("fauna/s3/sequences_{segment}.done", segment=config["segments"]),
-        metadata="fauna/s3/metadata.done",
+        sequences=expand("joined-ncbi/s3/sequences_{segment}.done", segment=config["segments"]),
+        metadata="joined-ncbi/s3/metadata.done",
 
-include: "rules/ingest_fauna.smk"
 include: "rules/merge_segment_metadata.smk"
 include: "rules/genoflu.smk"
 include: "rules/upload_to_s3.smk"

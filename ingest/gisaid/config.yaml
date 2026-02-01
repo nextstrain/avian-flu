@@ -1,0 +1,14 @@
+
+# Download curated avian-flu data from our all-influenza ingest pipeline, which is part of the seasonal-flu
+# repo, and thus under a seasonal-flu namespace
+sequences: s3://nextstrain-data-private/files/workflows/seasonal-flu/avian-flu/{segment}/sequences.fasta.xz
+metadata: s3://nextstrain-data-private/files/workflows/seasonal-flu/avian-flu/metadata.tsv.xz
+
+# Upload data (metadata & sequences) to:
+s3_dst:
+  gisaid: s3://nextstrain-data-private/files/workflows/avian-flu
+
+segments: ["pb2", "pb1", "pa", "ha", "np", "na", "mp", "ns"]
+
+genoflu:
+  gisaid: true

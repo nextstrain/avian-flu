@@ -41,10 +41,41 @@ include: "../shared/vendored/snakemake/remote_files.smk"
 # This uses the `InvalidConfigError` defined above
 include: "merge_inputs.smk"
 
+# METADATA HOTFIXES Our all-influenza curation pipeline is located in the
+# seasonal-flu repo, which makes it cumbersome to apply curation changes when we
+# notice something's amiss. Our phylo pipelines thus allow metadata to be
+# patched via a config-defined hotfix file. Rather than letting hotfixes
+# accumulate over time, when we make curation fixes to the upstream
+# (seasonal-flu) workflow we can add these hotfixes. Any unnecessary hotfixes
+# will be removed from the TSV at the point it's applied, ensuring obsolete
+# fixes (i.e. which have been applied upstream) don't linger.
+
+if config.get('metadata_hotfixes', False):
+    STARTING_METADATA = "results/metadata-with-hotfixes.tsv"
+
+    rule apply_metadata_hotfixes:
+        input:
+            metadata = "results/metadata.tsv",
+            hotfixes = resolve_config_fields_path('metadata_hotfixes'),
+        output:
+            metadata = "results/metadata-with-hotfixes.tsv",
+        params:
+            script = script("apply-hotfixes.py")
+        shell:
+            r"""
+            python {params.script} \
+                --metadata {input.metadata} \
+                --hotfixes {input.hotfixes} \
+                --output {output.metadata}
+            """
+else:
+    STARTING_METADATA = "results/metadata.tsv"
+
+
 rule filter_sequences_by_subtype:
     input:
         sequences = "results/sequences_{segment}.fasta",
-        metadata = "results/metadata.tsv",
+        metadata = STARTING_METADATA,
     output:
         sequences = "results/{subtype}/{segment}/sequences.fasta",
     params:
@@ -62,7 +93,7 @@ rule filter_sequences_by_subtype:
 
 rule filter_metadata_by_subtype:
     input:
-        metadata = "results/metadata.tsv",
+        metadata = STARTING_METADATA,
     output:
         metadata = "results/{subtype}/metadata.tsv",
     params:

@@ -231,3 +231,240 @@ White-winged Scoter	Avian
 Wild-Bird	Avian
 WOOD DUCK	Avian
 Zenaida asiatica	Avian
+# Additional NCBI host values (USDA-style common names, scientific names, and variants)
+# Avian - scientific names
+Aegypius monachus	Avian
+Anas	Avian
+Anas carolinensis	Avian
+Anas fulvigula	Avian
+Anatinae	Avian
+Anser	Avian
+Ardea alba	Avian
+Ardeidae	Avian
+Asio otus	Avian
+Athene cunicularia	Avian
+Aves	Avian
+Aythya marila	Avian
+Branta hutchinsii	Avian
+Bucephala albeola	Avian
+Buteo lagopus	Avian
+Buteo regalis	Avian
+Buteo swainsoni	Avian
+Calidris alpina	Avian
+Catharus guttatus	Avian
+Chroicocephalus philadelphia	Avian
+Circus hudsonius	Avian
+Cyanocitta cristata	Avian
+Egretta thula	Avian
+Falco	Avian
+Fulmarus glacialis	Avian
+Galliformes	Avian
+Gruidae	Avian
+Grus americana	Avian
+Gyps fulvus	Avian
+Hydroprogne caspia	Avian
+Laridae	Avian
+Larus californicus	Avian
+Larus hyperboreus	Avian
+Larus marinus	Avian
+Melanitta fusca	Avian
+Nycticorax nycticorax	Avian
+Pandion haliaetus	Avian
+Passeridae	Avian
+Perdicinae	Avian
+Phalacrocorax auritus	Avian
+Phoenicopterus roseus	Avian
+Pica hudsonia	Avian
+Scolopax minor	Avian
+Somateria mollissima	Avian
+Spatula cyanoptera	Avian
+Sterna hirundo	Avian
+Strigidae	Avian
+Struthio camelus	Avian
+Sturnus vulgaris	Avian
+Tyto alba	Avian
+# Avian - common names and USDA-style labels
+AFRICAN GRAY PARROT	Avian
+Alectoris chukar	Avian
+AMERICAN BLACK DUCK	Avian
+AMERICAN BLUE-WINGED TEAL	Avian
+AMERICAN COOT	Avian
+American Goshawk	Avian
+AMERICAN GREEN-WINGED TEAL	Avian
+AMERICAN WHITE PELICAN	Avian
+AMERICAN WIDGEON	Avian
+BAFFLEHEAD	Avian
+BARRED OWL	Avian
+BARROW-GOLDENEYE	Avian
+BIRD	Avian
+BIRD, (NOT OTHERWISE SPECIFIED)	Avian
+BIRD, POOLED	Avian
+BLACK SKIMMER	Avian
+BLACK SWAN	Avian
+BLACK-BELLIED PLOVER	Avian
+BLACK-NECK SWAN	Avian
+BLACK-NECKED STILT	Avian
+BLUE JAY	Avian
+BRANT	Avian
+BUFFLEHEAD	Avian
+Bufflehead Duck	Avian
+CANVASBACK	Avian
+Canvasback Duck	Avian
+CASPIAN TERN	Avian
+CATTLE EGRET	Avian
+CHICKEN, DOMESTIC (NO BREED SPECIFIED)	Avian
+CHICKEN, DOMESTIC BROILER/MEAT-TYPE	Avian
+CHICKEN, DOMESTIC LAYER	Avian
+CHICKEN, DOMESTIC LBM/BYD	Avian
+CHICKEN, LEGHORN	Avian
+Comon Goldeneye	Avian
+COMMON GOLDENEYE	Avian
+COMMON GRACKLE	Avian
+COMMON MERGANSER	Avian
+COOPER S HAWK	Avian
+CROW, AMERICAN	Avian
+DARK-EYED JUNCO	Avian
+DOMESTIC BIRD	Avian
+DOMESTIC CHICKEN	Avian
+DOMESTIC GOOSE	Avian
+DOMESTIC TURKEY	Avian
+DOUBLE-CRESTED CORMORANT	Avian
+DUCK, AMERICAN BLACK	Avian
+DUCK, DOMESTIC (NOT OTHERWISE SPECIFIED)	Avian
+DUCK, MALLARD	Avian
+DUCK, MOTTLED	Avian
+DUCK, MUSCOVY	Avian
+DUCK, PEKIN	Avian
+DUCK, PINTAIL	Avian
+DUCK, RING-NECKED	Avian
+DUCK, WILD (NOT OTHERWISE SPECIFIED)	Avian
+DUCK, WOOD	Avian
+DUNLIN	Avian
+EAGLE, BALD	Avian
+Eared Grebe	Avian
+EMPEROR GOOSE	Avian
+EURASIAN WIGEON	Avian
+EUROPEAN STARLING	Avian
+FALCON, PEREGRINE	Avian
+FINCH	Avian
+FULVOUS WHISTLING-DUCK	Avian
+GADWALL DUCK	Avian
+GADWELL	Avian
+GANNET	Avian
+GLAUCOSE-WINGED GULL	Avian
+GLAUCOUS GULL	Avian
+GOLDEN EAGLE	Avian
+GOLDENEYE, COMMON	Avian
+GOOSE (NOT OTHERWISE SPECIFIED)	Avian
+GOOSE, CACKLING	Avian
+GOOSE, CANADA	Avian
+GOOSE, DOMESTIC	Avian
+GOOSE, EMBDEN	Avian
+GOOSE, GREATER WHITE-FRONTED	Avian
+GOOSE, ROSS'S	Avian
+GOOSE, SNOW	Avian
+GRACKLE, COMMON	Avian
+GREAT-TAILED GRACKLE	Avian
+GREATER SCAUP	Avian
+GREATER WHITE-FRONTED GOOSE	Avian
+Guinea	Avian
+GULL, BONAPARTE'S	Avian
+GULL, GLAUCOUS	Avian
+GULL, HERRING	Avian
+HARRIER, NORTHERN	Avian
+HAWK, RED-TAILED	Avian
+HERON	Avian
+HOODED MERGANSER DUCK	Avian
+HORNED GREBE	Avian
+KITTIWAKE, BLACK-LEGGED	Avian
+LAUGHING GULL	Avian
+LESSER SNOW GOOSE	Avian
+LESSER YELLOWLEG	Avian
+Loon, Common	Avian
+MAGPIE	Avian
+MALLARD DUCK	Avian
+Mallard X American Black Duck Hybrid	Avian
+MERGANSER, HOODED	Avian
+MERLIN	Avian
+MOTTLED DUCK	Avian
+MOURNING DOVE	Avian
+Nene Goose	Avian
+NORTHERN HARRIER	Avian
+Northern Herrier	Avian
+NORTHERN PINTAIL	Avian
+OSPREY	Avian
+OWL (NOT OTHERWISE SPECIFIED)	Avian
+OWL, BARN	Avian
+OWL, GREAT HORNED	Avian
+PARTRIDGE	Avian
+PARTRIDGE, CHUKAR	Avian
+PELICAN, AMERICAN WHITE	Avian
+PHEASANT (NOT OTHERWISE SPECIFIED)	Avian
+PHEASANT, RING-NECKED	Avian
+PIE-BILLED GREBE	Avian
+PINTAIL, NORTHERN	Avian
+QUAIL (NOT OTHERWISE SPECIFIED)	Avian
+RAPTOR	Avian
+Red-breasted Goose	Avian
+RED-NECKED GREBE	Avian
+REDHEAD	Avian
+Redhead Duck	Avian
+RING-BILLED GULL	Avian
+RING-NECKED DUCK	Avian
+ROCK DOVE	Avian
+Rock Goose	Avian
+ROSS'S GOOSE	Avian
+ROYAL TERN	Avian
+RUDDY DUCK	Avian
+RUDDY TURNSTONE	Avian
+RUNNER DUCK	Avian
+SAND CRANE	Avian
+SANDHILL CRANE	Avian
+SEAGULL	Avian
+SHARP-SHINNED HAWK	Avian
+SHOVELER, NORTHERN	Avian
+SNOWY PLOVER	Avian
+SONG SPARROW	Avian
+SWAINSON'S HAWK	Avian
+SWAN (NOT OTHERWISE SPECIFIED)	Avian
+SWAN, TRUMPETER	Avian
+Swanson's Hawk	Avian
+TEAL	Avian
+TEAL (NOT OTHERWISE SPECIFIED)	Avian
+TEAL, BLUE-WINGED	Avian
+TEAL, CINNAMON	Avian
+TEAL, GREEN-WINGED	Avian
+TUNDRA SWAN	Avian
+TURKEY, DOMESTIC (NOT OTHERWISE SPECIFIED)	Avian
+VULTURE, BLACK	Avian
+VULTURE, TURKEY	Avian
+WIGEON	Avian
+WIGEON, AMERICAN	Avian
+WILD BIRD	Avian
+WILD Duck	Avian
+WILD DUCK HYBRID	Avian
+WILD DuckL	Avian
+WILD GOOSE	Avian
+WILD TURKEY	Avian
+WILLET	Avian
+# Nonhuman Mammal
+BEAR	Nonhuman Mammal
+BLACK BEAR	Nonhuman Mammal
+BLACK RAT	Nonhuman Mammal
+CAT, DOMESTIC (NOT OTHERWISE SPECIFIED)	Nonhuman Mammal
+COUGAR	Nonhuman Mammal
+DEER MOUSE	Nonhuman Mammal
+Didelphis virginiana	Nonhuman Mammal
+EASTERN GRAY SQUIRREL	Nonhuman Mammal
+HARBOR SEAL	Nonhuman Mammal
+MINK	Nonhuman Mammal
+NORWAY RAT	Nonhuman Mammal
+OPOSSUM	Nonhuman Mammal
+Phoca vitulina	Nonhuman Mammal
+Platanistidae	Nonhuman Mammal
+Rattus norvegicus	Nonhuman Mammal
+STRIPED SKUNK	Nonhuman Mammal
+Weasel	Nonhuman Mammal
+# Cattle-derived products
+PET FOOD	Cattle
+Raw Pet Food	Cattle

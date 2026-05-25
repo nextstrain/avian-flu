@@ -262,7 +262,7 @@ rule align:
         # for genome builds we don't use this rule; see `rule join_segments`
         segment = "|".join(seg for seg in SEGMENTS)
     threads:
-        4
+        2
     shell:
         r"""
         augur align \
@@ -284,7 +284,7 @@ rule tree:
     params:
         method = "iqtree"
     threads:
-        4
+        2
     shell:
         """
         augur tree \

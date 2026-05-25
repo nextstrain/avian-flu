@@ -129,8 +129,8 @@ jobs:
         nextstrain build \
           --detach \
           --no-download \
-          --cpus 16 \
-          --memory 28800mib \
+          --cpus 8 \
+          --memory 14GiB \
           . \
             deploy_all \
             --snakefile genome-focused/Snakefile \

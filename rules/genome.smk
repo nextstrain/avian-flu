@@ -42,7 +42,7 @@ rule align_segments_for_genome:
         segment = 'genome',
         time = 'default',
     threads:
-        8
+        2
     shell:
         r"""
         augur align \

@@ -84,8 +84,8 @@ jobs:
         nextstrain build \
           --detach \
           --no-download \
-          --cpus 16 \
-          --memory 28800mib \
+          --cpus 32 \
+          --memory 60GiB \
           . \
             deploy_all \
             --snakefile segment-focused/Snakefile \

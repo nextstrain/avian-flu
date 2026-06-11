@@ -3,23 +3,24 @@
 # time (e.g. all-time) and segment (e.g. ha)
 builds:
   - subtype:
-      - h5nx
+      #- h5nx
       - h5n1
     segment: &segments
-      - pb2
-      - pb1
-      - pa
-      - ha
-      - np
-      - na
-      - mp
-      - ns
+#       - pb2
+#       - pb1
+#       - pa
+       - ha
+#       - np
+#       - na
+#       - mp
+#       - ns
     time:
       - 2y
-      - all-time
+     # - all-time
   - subtype:
-      - h7n9
-      - h9n2
+     # - h7n9
+      - h7nx
+     # - h9n2
     segment: *segments
     time:
       - all-time
@@ -60,6 +61,7 @@ description: config/description_gisaid.md
 subtype_query:
     "h5nx/*/*": "subtype in ['h5n1', 'h5n2', 'h5n3', 'h5n4', 'h5n5', 'h5n6', 'h5n7', 'h5n8', 'h5n9']"
     "h5n1/*/*": "subtype in ['h5n1']"
+    "h7nx/*/*": "subtype in ['h7n1', 'h7n2', 'h7n3', 'h7n4', 'h7n5', 'h7n6', 'h7n7', 'h7n8']"
     "h7n9/*/*": "subtype in ['h7n9']"
     "h9n2/*/*": "subtype in ['h9n2']"
 
@@ -88,11 +90,13 @@ filter:
     "*/*/2y": 2Y
     "h5nx/*/all-time": 1996
     "h5n1/*/all-time": 1996
+    "h7nx/*/all-time": 1966
     "h7n9/*/all-time": 2013
     "h9n2/*/all-time": 1966
 
   group_by:
     "h7n9/*/2y": subtype region month host
+    "h7nx/*/all-time": subtype country year
     "h9n2/*/2y": subtype region month host
     "h5nx/*/2y": subtype region month host h5_label_clade
     "h5n1/*/2y": region month host h5_label_clade
@@ -144,6 +148,7 @@ traits:
     "h5nx/*/*": region
     "h5n1/*/*": region country
     "h7n9/*/*": country division
+    "h7nx/*/*": region
     "h9n2/*/*": region country
   sampling_bias_correction: false
   confidence: true

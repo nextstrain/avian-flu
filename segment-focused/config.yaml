@@ -29,6 +29,7 @@ builds:
 # entirely by providing snakemake with (a) target(s) on the command line.
 target_patterns:
   - "auspice/avian-flu_{subtype}_{segment}_{time}.json"
+  - "auspice/avian-flu_{subtype}_{segment}_{time}_tip-frequencies.json"
 
 
 # Input source(s) - See README.md for how to use local files instead and/or add additional inputs
@@ -71,7 +72,7 @@ subtype_query:
 # can just use a scalar value (number, string, boolean)
 filter:
   target_sequences_per_tree:
-    "*/*/*": 3000
+    "*/*/*": 5000
 
   min_length:
     "*/pb2/*": 2100
@@ -91,7 +92,10 @@ filter:
     "h9n2/*/all-time": 1966
 
   group_by:
-    "*/*/2y": subtype region month host
+    "h7n9/*/2y": subtype region month host
+    "h9n2/*/2y": subtype region month host
+    "h5nx/*/2y": subtype region month host h5_label_clade
+    "h5n1/*/2y": region month host h5_label_clade
     "h5nx/*/all-time": subtype country year
     "h5n1/*/all-time": region country year
     "h7n9/*/all-time": division year

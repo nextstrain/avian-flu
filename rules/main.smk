@@ -25,6 +25,7 @@ rule all:
         auspice_json = expand_target_patterns()
 
 
+
 # This must be after the `all` rule above since it depends on its inputs
 include: "deploy.smk"
 
@@ -452,6 +453,29 @@ rule cleavage_site:
             --cleavage_site_sequence {output.cleavage_site_sequences}
         """
 
+rule frequencies:
+    message: "Calculating trait frequencies"
+    input:
+        tree = refined_tree,
+        metadata = "results/{subtype}/{segment}/{time}/metadata.tsv",
+    output:
+         frequencies = "auspice/avian-flu_{subtype}_{segment}_{time}_tip-frequencies.json"
+    params:
+        method = "kde",
+        interval = 1,
+        interval_units = "months" # this and the interval can be tweaked, but weekly is a good starting point
+    shell:
+        """
+        augur frequencies \
+            --metadata {input.metadata} \
+            --tree {input.tree} \
+            --method {params.method} \
+            --pivot-interval {params.interval} \
+            --pivot-interval-units {params.interval_units} \
+            --output {output.frequencies}
+        """
+
+
 def export_node_data_files(wildcards):
     nd = [
         rules.refine.output.node_data,
@@ -569,6 +593,7 @@ rule export:
             --lat-longs {input.lat_longs} \
             --auspice-config {input.auspice_config} \
             --description {input.description} \
+            --panels tree map entropy frequencies \
             --include-root-sequence-inline \
             {params.additional_args:q} \
             --output {output.auspice_json}

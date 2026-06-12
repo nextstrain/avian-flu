@@ -110,6 +110,4 @@ append_new_clades(new_clades_file, clades_file)
 
 """remove intermediate files. You must also remove the LABEL folder otherwise it will throw an error next time about the
 project being in use"""
-#os.system('rm {label_output}_final.txt {label_output}.zip {new_strains_fasta} {new_clades_file}'.format(new_strains_fasta=new_strains_fasta, label_output=label_output, new_clades_file=new_clades_file))
-#os.system('rm -r flu-amd/LABEL_RES/test_data/{label_output}'.format(label_output=label_output))
-#os.system('rm -r flu-amd-label-2023-05-05/LABEL_RES/test_data/{label_output}'.format(label_output=label_output))
+os.system('rm {label_output}_final.txt {label_output}.zip {new_strains_fasta} {new_clades_file}'.format(new_strains_fasta=new_strains_fasta, label_output=label_output, new_clades_file=new_clades_file))

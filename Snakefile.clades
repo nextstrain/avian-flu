@@ -14,4 +14,16 @@ rule update_clades:
             --sequences results/h5nx/ha/sequences.fasta \
             --clades_file clade-labeling/h5nx-clades.tsv \
             --subtype h5nx
+
+        python clade-labeling/update-clades.py \
+            --metadata results/h7nx/metadata.tsv \
+            --sequences results/h7nx/ha/sequences.fasta \
+            --clades_file clade-labeling/h7nx-clades.tsv \
+            --subtype h7nx \
+
+        python clade-labeling/update-clades.py \
+            --metadata results/h9n2/metadata.tsv \
+            --sequences results/h9n2/ha/sequences.fasta \
+            --clades_file clade-labeling/h9n2-clades.tsv \
+            --subtype h9n2 \
         """

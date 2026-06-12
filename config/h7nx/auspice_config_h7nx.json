@@ -1,5 +1,5 @@
 {
-  "title": "Real-time tracking of influenza A/H7N9 evolution",
+  "title": "Real-time tracking of influenza A/H7Nx evolution",
   "maintainers": [
     {"name": "Louise Moncla", "url": "https://lmoncla.github.io/monclalab/"}
   ],
@@ -21,18 +21,28 @@
       "type": "continuous"
     },
     {
+      "key": "region",
+      "title": "Region",
+      "type": "categorical"
+    },
+    {
       "key": "country",
       "title": "Country",
       "type": "categorical"
     },
     {
-      "key": "division",
-      "title": "Admin Division",
+      "key": "host",
+      "title": "Host",
       "type": "categorical"
     },
     {
-      "key": "host",
-      "title": "Host",
+      "key": "subtype",
+      "title": "Subtype",
+      "type": "categorical"
+    },
+    {
+      "key": "label_clade",
+      "title": "LABEL clade",
       "type": "categorical"
     },
     {
@@ -57,16 +67,19 @@
     }
   ],
   "geo_resolutions": [
+    "region",
     "country",
     "division"
   ],
   "display_defaults": {
     "map_triplicate": true,
-    "color_by": "division",
-    "geo_resolution": "division"
+    "color_by": "region",
+    "geo_resolution": "country"
   },
   "filters": [
     "host",
+    "subtype",
+    "region",
     "country",
     "division",
     "originating_lab",

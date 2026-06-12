@@ -56,8 +56,8 @@
       "type": "categorical"
     },
     {
-      "key": "h5_label_clade",
-      "title": "Provisional LABEL Clade",
+      "key": "label_clade",
+      "title": "LABEL Clade",
       "type": "categorical"
     },
     {

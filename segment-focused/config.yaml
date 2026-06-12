@@ -6,14 +6,14 @@ builds:
       #- h5nx
       - h5n1
     segment: &segments
-#       - pb2
-#       - pb1
-#       - pa
+       - pb2
+       - pb1
+       - pa
        - ha
-#       - np
-#       - na
-#       - mp
-#       - ns
+       - np
+       - na
+       - mp
+       - ns
     time:
       - 2y
      # - all-time
@@ -98,8 +98,8 @@ filter:
     "h7n9/*/2y": subtype region month host
     "h7nx/*/all-time": subtype country year
     "h9n2/*/2y": subtype region month host
-    "h5nx/*/2y": subtype region month host h5_label_clade
-    "h5n1/*/2y": region month host h5_label_clade
+    "h5nx/*/2y": subtype region month host label_clade
+    "h5n1/*/2y": region month host label_clade
     "h5nx/*/all-time": subtype country year
     "h5n1/*/all-time": region country year
     "h7n9/*/all-time": division year

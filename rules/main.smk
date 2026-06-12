@@ -112,7 +112,7 @@ def metadata_by_wildcards(wildcards):
     # H5 builds have extra clade-level metadata added to the metadata TSV.
     # We may move this to a node-data JSON which would simplify the snakemake logic
     # a bit -- see <https://github.com/nextstrain/avian-flu/issues/25>
-    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak"):
+    if wildcards.subtype in ("h5n1", "h5nx", "h5n1-cattle-outbreak","h7nx","h9n2"):
         return "results/{subtype}/metadata-with-clade.tsv"
     else:
         return "results/{subtype}/metadata.tsv",
@@ -161,7 +161,7 @@ def refine_clock_filter(w):
 
 
 rule add_h5_clade:
-    message: "Adding in a column for h5 clade numbering"
+    message: "Adding in a column for clade numbering with LABEL"
     input:
         metadata = "results/{subtype}/metadata.tsv",
         clades_file = resolve_config_fields_path('clades_file')

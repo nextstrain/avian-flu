@@ -3,7 +3,7 @@
 # time (e.g. all-time) and segment (e.g. ha)
 builds:
   - subtype:
-      #- h5nx
+      - h5nx
       - h5n1
     segment: &segments
        - pb2
@@ -16,11 +16,11 @@ builds:
        - ns
     time:
       - 2y
-     # - all-time
+      - all-time
   - subtype:
-     # - h7n9
+      - h7n9
       - h7nx
-     # - h9n2
+      - h9n2
     segment: *segments
     time:
       - all-time

@@ -113,6 +113,7 @@ if __name__ == '__main__':
                         help='Excel file to cross-reference BLAST findings and identification to genotyping results.  Default genoflu/dependencies.  9 column Excel file, first column Genotype, followed by 8 columns for each segment and what those calls are for that genotype.')
     parser.add_argument('-m', '--multiprocessing', action='store_true', dest='multiprocessing', required=False, help='Allow for multiprocessing with all available cores: recommneded for large datasets to speed up execution.')
     parser.add_argument('-n', '--mpcores', action='store', dest='mpcores', required=False, help='Allow for multiprocessing, but specify the number of cores to use')
+    parser.add_argument('-i', '--run_incomplete', action='store_true', dest='run_incomplete', required=False, help='Allow for annotation of strains without sequences for all 8 segments')
 
     args = parser.parse_args()
 
@@ -137,7 +138,28 @@ if __name__ == '__main__':
     # (i.e., can add new sequences to your fastas and annotate only those)
     if os.path.exists(results_tsv):
         try:
-            annotated_strains = list(pd.read_csv(results_tsv, sep='\t')['Strain'])
+            results_df = pd.read_csv(results_tsv, sep='\t')
+            key_df = pd.read_excel(args.cross_reference)
+            strains = list(results_df['Strain'])
+            genotypes = list(results_df['Genotype'])
+
+            current_genotypes = list(key_df['Genotype'])
+
+            annotated_strains = []
+            strains_to_reannotate = []
+
+            # need to remove strains if they were annotated as a now-removed genotype (i.e., if a minor genotype gets designated as a major genotype)
+            for s,g in zip(strains, genotypes):
+                # check for 'Not assigned: Only' to allow 'Not assigned: No Matching Genotypes' to be re-run in case a genotype has now been defined
+                if not g.startswith('Not assigned: Only') and g not in current_genotypes:
+                    strains_to_reannotate.append(f"{s} (previously {g})")
+                else:
+                    annotated_strains.append(s)
+            
+            if strains_to_reannotate:
+                print('Re-annotating the following strains as their genotypes have been redesignated or may now be annotated:')
+                print('\n'.join(strains_to_reannotate))
+
         except Exception as e:
             annotated_strains = []
     else:
@@ -160,7 +182,6 @@ if __name__ == '__main__':
     # and generate the blast database
     os.system(f'cat {args.reference_dir}/*.fasta | makeblastdb -dbtype nucl -out {blast_db} -title hpai_geno_db > /dev/null 2>&1')
 
-
     strain_records = {}
     for fasta in fastas:
         # need to iterate over all and make a dict with strain:[records]
@@ -170,59 +191,56 @@ if __name__ == '__main__':
         for record in SeqIO.parse(fasta, 'fasta'):
             strain = record.id
             if strain not in annotated_strains:
-                # if segment in segments:
-                #     record.id =  f'{record.id}_{segment}'
-                #     record.description = record.id
                 try:
                     strain_records[strain].append(record)
                 except KeyError:
                     strain_records[strain] = [record]
 
-    strain_records_to_annotate = [(s,r) for s,r in strain_records.items() if len(r)==8]
+    if args.run_incomplete:
+        strain_records_to_annotate = [(s,r) for s,r in strain_records.items()]
+    else:
+        strain_records_to_annotate = [(s,r) for s,r in strain_records.items() if len(r)==8]
 
-    if args.multiprocessing or args.mpcores:
-        # if multiprocessing is enabled, strains will be split into n lists
-        # where n is equal to the number of available CPU cores
-        # each list will be run through GenoFLU on an individual core simultaneously
-        try:
-            cores = int(args.mpcores)
-        except TypeError:
-            cores = mp.cpu_count()
-        print(f'Utilziing multiprocessing with {cores} cores')
+    if len(strain_records_to_annotate) != 0:
+        if args.multiprocessing or args.mpcores:
+            # if multiprocessing is enabled, strains will be split into n lists
+            # where n is equal to the number of available CPU cores
+            # each list will be run through GenoFLU on an individual core simultaneously
+            try:
+                cores = int(args.mpcores)
+            except TypeError:
+                cores = mp.cpu_count()
+            print(f'Utilziing multiprocessing with {cores} cores')
 
-        if len(strain_records_to_annotate) != 0:
             cores = min(cores, len(strain_records_to_annotate))
             split_strain_records = split(strain_records_to_annotate, cores)
+
+            ## start multiprocessing pool and run genoflu
+            mp.set_start_method('fork')
+            pool = mp.Pool(cores)
+            pool_data = pool.starmap(run_genoflu, zip(split_strain_records, range(1,cores+1)))
+            headers = pool_data[0][1]
+
+            pool.close()
+            pool.join()
+
+            if os.path.exists(results_tsv):
+                with open(results_tsv, 'a') as f:
+                    for data in pool_data:
+                        f.write(''.join(data[0]))
+            else:
+                with open(results_tsv, 'a') as f:
+                    f.write(headers)
+                    for data in pool_data:
+                        f.write(''.join(data[0]))
+
         else:
-            split_strain_records = [[]]
-    
-        ## start multiprocessing pool
-        mp.set_start_method('fork')
-        pool = mp.Pool(cores)
-    
-        ## and run the simulations
-        pool_data = pool.starmap(run_genoflu, zip(split_strain_records, range(1,cores+1)))
-        headers = pool_data[0][1]
-
-        pool.close()
-        pool.join()
-
-        if os.path.exists(results_tsv):
-            with open(results_tsv, 'a') as f:
-                for data in pool_data:
-                    f.write(''.join(data[0]))
-        else:
-            with open(results_tsv, 'a') as f:
-                f.write(headers)
-                for data in pool_data:
-                    f.write(''.join(data[0]))
-
-
+            run_genoflu(strain_records_to_annotate)
     else:
-        run_genoflu(strain_records_to_annotate)
+        print("No new sequences to annotate")
 
     # remove the temporary and blast directories
     shutil.rmtree(temporary_dir)
     shutil.rmtree(blast_dir)
 
-    print(round(time.time() - start_time, 2))
+    print(f'GenoFLU ran in {round(time.time() - start_time, 2)} seconds')

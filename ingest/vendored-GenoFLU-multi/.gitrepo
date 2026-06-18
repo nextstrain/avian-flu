@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/moncla-lab/GenoFLU-multi
 	branch = main
-	commit = 488426698ef3bce85868a5806199a0283b980f79
-	parent = b64d9bff16d54998d0149ea2b2597610b7d8fefc
+	commit = 9601c40243ac3d387b018adabdbfc89685409c08
+	parent = 3e43e4adb6ddab6de2fc668b3ed09f6d92ba4979
 	method = merge
 	cmdver = 0.4.9

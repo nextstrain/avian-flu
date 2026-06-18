@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = "1.06"
+__version__ = "1.07"
 
 import os
 import sys
@@ -147,7 +147,7 @@ class GenoFLU():
         self.pident_threshold = float(pident_threshold)
         self.FASTA_abs_path = FASTA
         FASTA_name = os.path.basename(self.FASTA_abs_path)
-        with open(FASTA, 'r') as f:
+        with open(self.FASTA_abs_path, 'r') as f:
             fastas_in_file = 0
             for line in f:
                 if line.startswith('>'):
@@ -329,8 +329,7 @@ class GenoFLU():
         excel_dict['Genotype Sample Title List'] = ', '.join(full_sample_title)
         excel_dict['Genotype Percent Match List'] = ', '.join(pident_list)
         excel_dict['Genotype Mismatch List'] = ', '.join(mismatch_list)
-        excel_dict['Genotype Average Depth of Coverage List'] = ', '.join(
-            coverage_list)
+        excel_dict['Genotype Average Depth of Coverage List'] = ', '.join(coverage_list)
 
         # genotype_list_used = next((excel_dict[key] for key in excel_dict if key.startswith("Genotype List Used")), None)
         # print(f'\n{self.sample_name} Genotype --> {excel_dict["Genotype"]}: {genotype_list_used} at percent identity at {self.pident_threshold}\n')

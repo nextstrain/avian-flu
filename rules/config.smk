@@ -2,6 +2,8 @@
 Functions and logic related to finding, parsing and interpreting configfiles
 and other config-related stuff.
 """
+import copy
+from typing import Any, Literal, TypedDict
 
 include: "../shared/vendored/snakemake/config.smk"
 
@@ -25,6 +27,8 @@ if os.path.exists("config.yaml"):
 def is_scalar(x):
     return any([isinstance(x, t) for t in [float, int, bool, str]])
 
+DATASET_LEVELS = ['subtype', 'segment', 'time']
+
 def resolve_config_value(*rule_parts, sep="/"):
     """
     A helper function intended to be used as directly as a Snakemake Input
@@ -42,67 +46,69 @@ def resolve_config_value(*rule_parts, sep="/"):
         # within a python function:
         min_length = resolve_config_value('filter', 'min_length')(wildcards)
 
-    The underlying config value may be structured in two ways:
+    The first *rule_part* names a top-level config section; any remaining parts
+    name keys within the resolved value. The section may be structured in three
+    ways:
 
-    1. A scalar, e.g. `config['filter']['min_length'] = some_scalar`. In
-       this case the scalar value is simply returned, i.e. it's always the same no
-       matter what the wildcards are.
+    1. A scalar, e.g. `config['reference'] = some_scalar`. The scalar is
+       returned as-is, i.e. it's always the same no matter what the wildcards
+       are.
 
-    2. A dictionary, e.g. `config['filter']['min_length'] = {...}`), which
-       allows the resolved value to vary according to the wildcards. We search
-       the dictionary for the relevant value by finding the closest matching key
-       once wildcards have been considered. For instance in a three-tiered
-       wildcard pipeline such as this with subtype, segment and time we
-       interpret these as ordered in specificity. For instance, if only one
-       wildcard value is specified in the config (the others are '*') then
-       matching subtype is more specific than segment. Given example wildcard
-       values of {subtype=h5nx, segment=pb2, time=2y} then we have a search
-       order of:
-            - 'h5nx/pb2/2y'   ─ all 3 wildcard values specified
-            - 'h5nx/pb2/*'    ┐
-            - 'h5nx/*/2y'     ├ 2/3 wildcard values specified
-            - '*/pb2/2y'      ┘
-            - 'h5nx/*/*'      ┐
-            - '*/pb2/*'       ├ 1/3 wildcard values specified
-            - '*/*/2y'        ┘
-            - '*/*/*'         ─ default / fall-back
-       and the first key present in the config is used.
+    2. A "dataset-first" mapping of patterns to config layers, e.g.
+       `config['filter'] = {'*/*/*': {...}, '*/pb2/*': {...}}`. Every pattern
+       matching the current dataset (built from the wildcards in the order of
+       `DATASET_LEVELS`) contributes a layer; the layers are deep-merged in the
+       order they appear in the config (later, more specific patterns win). The
+       remaining *rule_parts* then index into the merged mapping.
 
-    Note that in both cases, the resolved value may be a string with wildcard
+    3. A mapping of patterns directly to (non-dict) values, e.g.
+       `config['subtype_query'] = {'h5nx/*/*': '...', ...}`. The value from the
+       last matching pattern is returned.
+
+    Patterns are slash-delimited with one part per `DATASET_LEVELS` entry. Each
+    part may be a literal value, '*' (matches anything), or a whole-part
+    multivalue like '(h5nx|h5n1)'.
+
+    Note that in all cases, the resolved value may be a string with wildcard
     placeholders in it which may (separately) be filled in by Snakemake or a
     call to `format` or `expand`.
     """
+    section, *param_path = rule_parts
     try:
-        config_lookup = config
-        for i,rule_key in enumerate(rule_parts): # or use functools.reduce etc
-            config_lookup = config_lookup[rule_key]
+        section_config = config[section]
     except KeyError:
-        raise InvalidConfigError('Config missing entire entry for config'+''.join(['["'+rule_parts[j]+'"]' for j in range(0,i+1)]))
+        raise InvalidConfigError(f'Config missing entire entry for config["{section}"]')
 
     def resolve(wildcards):
-        if is_scalar(config_lookup):
-            return config_lookup
+        if is_scalar(section_config):
+            value = section_config
+        else:
+            if not isinstance(section_config, dict):
+                raise InvalidConfigError(f"config[{section!r}] must be a scalar value or a dictionary")
 
-        if not isinstance(config_lookup, dict):
-            raise InvalidConfigError(f"ERROR: config under {'.'.join(rule_parts)} must be a scalar value or a dictionary")
+            dataset = tuple(wildcards[k] for k in DATASET_LEVELS)
+            matches = matching_pattern_values(section_config, dataset)
+            if not matches:
+                raise InvalidConfigError(
+                    f'Config structure incorrect or incomplete for config[{section!r}]\n'
+                    f'\tThe dictionary is missing a matching pattern for the current '
+                    f'target of {sep.join(dataset)!r} (literal or "*" placeholders).')
 
-        wild_keys = ['subtype', 'segment', 'time'] # workflow specific
-        search_keys = [                            # workflow independent, as long as there are 3 or fewer wildcard categories
-            sep.join([wildcards[k] for k in wild_keys]),
-            *([sep.join(['*' if i==k else wildcards[key] for k,key in enumerate(wild_keys)])
-                for i in range(len(wild_keys)-1, -1, -1)] if len(wild_keys)>=2 else []),
-            *([sep.join(['*' if i!=k else wildcards[key] for k,key in enumerate(wild_keys)])
-                for i in range(0, len(wild_keys))] if len(wild_keys)==3 else []),
-            sep.join(['*']*len(wild_keys))
-        ]
+            # Dataset-first config layers are deep-merged; a plain pattern→value
+            # mapping resolves to the last (most specific) matching value.
+            if all(isinstance(m, dict) for m in matches):
+                value = merge_layers(matches)
+            else:
+                value = matches[-1]
 
-        for key in search_keys:
-            if key in config_lookup:
-                return config_lookup[key]
-        msg  =  'Config structure incorrect or incomplete for config'+''.join(['["'+rule_parts[j]+'"]' for j in range(0,i+1)])
-        msg += f'\n\tThe dictionary is missing a matching key for the current target of {search_keys[0]!r}, or a fuzzy match (i.e. using "*" placeholders)'
-        msg +=  '\n\tP.S. If you want to use a single value across all builds then set a scalar value (number, string, boolean)'
-        raise InvalidConfigError(msg)
+        for key in param_path:
+            try:
+                value = value[key]
+            except (KeyError, TypeError):
+                raise InvalidConfigError(
+                    f'Config missing entry {key!r} for config'
+                    + ''.join(f'[{p!r}]' for p in rule_parts))
+        return value
 
     return resolve
 
@@ -205,3 +211,232 @@ def expand_target_patterns():
                             targets.append(target)
 
     return targets
+
+# FIXME: everything below is independent of VALID_DATASET_LEVELS/DATASET_LEVELS_TO_RUN and can be moved to shared/vendored/config.smk or Augur
+
+ExactDataset = tuple[str, ...]
+"""Exact dataset values, ordered to match VALID_DATASET_LEVELS."""
+
+class DatasetPatternPart(TypedDict):
+    type: Literal["wildcard", "literal", "multivalue"]
+    matches: tuple[str, ...] | None
+
+
+class DatasetLevel(TypedDict):
+    name: str
+    values: list[str]
+
+
+def validate_rule_config(
+    rule_name: str,
+    rule_config: dict[str, Any],
+    dataset_levels: list[DatasetLevel],
+) -> None:
+    if not isinstance(rule_config, dict):
+        raise InvalidConfigError(f"'{rule_name}' must be a mapping of dataset patterns to config layers.")
+
+    for pattern, config_layer in rule_config.items():
+        if not isinstance(pattern, str):
+            raise InvalidConfigError(f"{rule_name} pattern {pattern!r} must be a string.")
+        _validate_dataset_pattern(pattern, dataset_levels, rule_name)
+
+        if not isinstance(config_layer, dict):
+            raise InvalidConfigError(f"{rule_name} config for pattern {pattern!r} must be a mapping.")
+
+
+def _validate_dataset_pattern(
+    pattern: str,
+    dataset_levels: list[DatasetLevel],
+    context: str,
+) -> None:
+    pattern_parts = parse_dataset_pattern(pattern)
+    if len(pattern_parts) != len(dataset_levels):
+        raise InvalidConfigError(dedent(f"""\
+            Invalid {context} dataset pattern {pattern!r}.
+            Expected {len(dataset_levels)} slash-separated parts matching:
+                {'/'.join(level['name'] for level in dataset_levels)}"""))
+
+    for pattern_part, level in zip(pattern_parts, dataset_levels):
+        if pattern_part["type"] == "wildcard":
+            continue
+
+        invalid_values = sorted(set(pattern_part["matches"]) - set(level["values"]))
+        if invalid_values:
+            raise InvalidConfigError(dedent(f"""\
+                Invalid {context} dataset value(s) {invalid_values!r} in pattern {pattern!r}.
+                Expected {level['name']} values from: {level['values']}"""))
+
+
+def get_datasets(levels: list[DatasetLevel]) -> list[ExactDataset]:
+    """
+    Return all datasets requested by config, in the given levels order.
+    """
+    return product(*(level["values"] for level in levels))
+
+
+def write_command_configs(
+    config: dict[str, Any],
+    rule_name: str,
+    datasets: list[ExactDataset],
+    output_dir: str,
+) -> None:
+    """
+    Write a per-dataset Augur command config, one file per dataset.
+    """
+    for dataset in datasets:
+        out = get_rule_config(config, rule_name, dataset)
+        path = dataset_config_path(output_dir, dataset, rule_name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            print(f"# {'/'.join(dataset)}", file=f)
+            yaml.dump(out, f, sort_keys=False, Dumper=NoAliasDumper)
+        print(f"Saved {rule_name} config to {path!r}.", file=sys.stderr)
+
+
+def dataset_config_path(output_dir: str, dataset: ExactDataset, rule_name: str) -> str:
+    """
+    Path of the augur config written for a dataset and rule.
+
+    The path is '<output_dir>/<dataset>/<rule_name>_config.yaml', where
+    '<dataset>' is the dataset's slash-joined values.
+    """
+    return f"{output_dir}/{'/'.join(dataset)}/{rule_name}_config.yaml"
+
+
+def matching_pattern_values(
+    patterned_config: dict[str, Any],
+    dataset: ExactDataset,
+) -> list[Any]:
+    """
+    Return the values from a {pattern: value} mapping whose pattern matches the
+    dataset, preserving insertion order.
+    """
+    return [
+        value
+        for pattern, value in patterned_config.items()
+        if pattern_matches_dataset(pattern, dataset)
+    ]
+
+
+def get_rule_config(
+    config: dict[str, Any],
+    rule_name: str,
+    dataset: ExactDataset,
+) -> dict[str, Any]:
+    """
+    Build the config for a rule and dataset.
+
+    A matching 'custom_<rule>' replaces '<rule>' entirely: if any matching layer
+    defines it, the '<rule>' layers are discarded and the config is built from
+    the 'custom_<rule>' layers alone (e.g. 'custom_subsample' replaces the
+    default 'subsample'). Otherwise the config is built from the '<rule>' layers.
+
+    Within either, layers are merged top-to-bottom with later values overriding
+    earlier ones.
+    """
+    if custom_layers := get_rule_layers(config, rule_override_name(rule_name), dataset):
+        return merge_layers(custom_layers)
+
+    return merge_layers(get_rule_layers(config, rule_name, dataset))
+
+
+def rule_override_name(rule_name: str) -> str:
+    return f"custom_{rule_name}"
+
+
+def get_rule_layers(
+    config: dict[str, Any],
+    rule_name: str,
+    dataset: ExactDataset,
+) -> list[dict[str, Any]]:
+    """
+    Config layers for a rule and dataset, lowest priority first.
+
+    The top-level '<rule>' key maps dataset patterns to config layers.
+    Matching '<rule>.<pattern>' configs apply in pattern order.
+    """
+    layers = []
+    if rule_name in config:
+        layers += matching_pattern_values(config[rule_name], dataset)
+    return layers
+
+
+def merge_layers(layers: list[dict[str, Any]]) -> dict[str, Any]:
+    """
+    Deep-merge config layers in order, with later layers winning.
+    """
+    merged: dict[str, Any] = {}
+    for layer in layers:
+        deep_merge(merged, layer)
+    return merged
+
+
+def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> None:
+    """
+    Recursively merge 'override' into 'base' (mutating 'base').
+
+    Mappings are merged recursively; scalars and lists overwrite. Dicts brought
+    in from 'override' are deep-copied so the source config is never mutated.
+    """
+    for key, value in override.items():
+        # FIXME: allow null-deletion?
+        if isinstance(value, dict) and isinstance(base.get(key), dict):
+            deep_merge(base[key], value)
+        elif isinstance(value, dict):
+            base[key] = copy.deepcopy(value)
+        else:
+            base[key] = value
+
+
+def pattern_matches_dataset(
+    pattern: str,
+    dataset: ExactDataset,
+) -> bool:
+    """
+    Return whether a dataset pattern matches an exact dataset.
+    """
+    pattern_parts = parse_dataset_pattern(pattern)
+    if len(pattern_parts) != len(dataset):
+        return False
+
+    for pattern_part, dataset_value in zip(pattern_parts, dataset):
+        if pattern_part["type"] == "wildcard":
+            continue
+
+        if dataset_value not in pattern_part["matches"]:
+            return False
+
+    return True
+
+
+def parse_dataset_pattern(pattern: str) -> tuple[DatasetPatternPart, ...]:
+    """
+    Parse a slash-delimited dataset pattern.
+    """
+    return tuple(parse_dataset_pattern_part(part) for part in pattern.split("/"))
+
+
+def parse_dataset_pattern_part(part: str) -> DatasetPatternPart:
+    """
+    Parse one part of a dataset pattern.
+
+    Supported syntax:
+    1. A literal value : 6y
+    2. Multiple values : (6y|3y)
+    3. All values      : *
+    """
+    if part == "*":
+        return {"type": "wildcard", "matches": None}
+
+    if part.startswith("(") and part.endswith(")"):
+        values = tuple(part[1:-1].split("|"))
+        if not values or any(not value for value in values):
+            raise InvalidConfigError(f"Invalid multivalue dataset part {part!r}.")
+        return {"type": "multivalue", "matches": values}
+
+    if any(char in part for char in "()|"):
+        raise InvalidConfigError(dedent(f"""\
+            Invalid subsample dataset part {part!r}.
+            Use '*', a literal value, or a whole-part multivalue like '(genome|N450)'."""))
+
+    return {"type": "literal", "matches": (part,)}

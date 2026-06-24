@@ -68,93 +68,120 @@ subtype_query:
 # The formatting here represents the three-tiered nature of the avian-flu build which
 # comprises subtype / segment / time-resolution
 # You can use '*' as a catch-all for any of these tiers.
-# There's one exception: If a config value is constant for any and all builds then you
-# can just use a scalar value (number, string, boolean)
 filter:
-  target_sequences_per_tree:
-    "*/*/*": 5000
-
-  min_length:
-    "*/pb2/*": 2100
-    "*/pb1/*": 2100
-    "*/pa/*": 2000
-    "*/ha/*": 1600
-    "*/np/*": 1400
-    "*/na/*": 1270
-    "*/mp/*": 900
-    "*/ns/*": 800
-
-  min_date:
-    "*/*/2y": 2Y
-    "h5nx/*/all-time": 1996
-    "h5n1/*/all-time": 1996
-    "h7n9/*/all-time": 2013
-    "h9n2/*/all-time": 1966
-
-  group_by:
-    "h7n9/*/2y": subtype region month host
-    "h9n2/*/2y": subtype region month host
-    "h5nx/*/2y": subtype region month host h5_label_clade
-    "h5n1/*/2y": region month host h5_label_clade
-    "h5nx/*/all-time": subtype country year
-    "h5n1/*/all-time": region country year
-    "h7n9/*/all-time": division year
-    "h9n2/*/all-time": country year
-
-  exclude_where:
-    host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
+  "*/*/*":
+    target_sequences_per_tree: 5000
+    exclude_where: host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
+  "*/pb2/*":
+    min_length: 2100
+  "*/pb1/*":
+    min_length: 2100
+  "*/pa/*":
+    min_length: 2000
+  "*/ha/*":
+    min_length: 1600
+  "*/np/*":
+    min_length: 1400
+  "*/na/*":
+    min_length: 1270
+  "*/mp/*":
+    min_length: 900
+  "*/ns/*":
+    min_length: 800
+  "*/*/2y":
+    min_date: 2Y
+  "h5nx/*/all-time":
+    min_date: 1996
+    group_by: subtype country year
+  "h5n1/*/all-time":
+    min_date: 1996
+    group_by: region country year
+  "h7n9/*/all-time":
+    min_date: 2013
+    group_by: division year
+  "h9n2/*/all-time":
+    min_date: 1966
+    group_by: country year
+  "h7n9/*/2y":
+    group_by: subtype region month host
+  "h9n2/*/2y":
+    group_by: subtype region month host
+  "h5nx/*/2y":
+    group_by: subtype region month host h5_label_clade
+  "h5n1/*/2y":
+    group_by: region month host h5_label_clade
 
 refine:
-  coalescent: const
-  date_inference: marginal
-
-  clock_filter_iqd: 4
-
-  root: false
-
-  clock_rates:
+  "*/*/*":
+    coalescent: const
+    date_inference: marginal
+    clock_filter_iqd: 4
+    root: false
     # NOTE: an empty value means no supplied clock rate, i.e. infer the clock
     # (This is the fallback value - */*/* - to be used if we don't provide a more specific value below)
-    "*/*/*": ''
-    # otherwise supply a list of [rate, std_dev]
-    "h5nx/pb2/2y": [0.00287, &clock_std_dev 0.00211]
-    "h5nx/pb1/2y": [0.00267, *clock_std_dev]
-    "h5nx/pa/2y": [0.00238, *clock_std_dev]
-    "h5nx/ha/2y": [0.0048, *clock_std_dev]
-    "h5nx/np/2y": [0.0022, *clock_std_dev]
-    "h5nx/na/2y": [0.0028, *clock_std_dev]
-    "h5nx/mp/2y": [0.0017, *clock_std_dev] 
-    "h5nx/ns/2y": [0.0017, *clock_std_dev]
-    "h5n1/pb2/2y": [0.00287, *clock_std_dev]
-    "h5n1/pb1/2y": [0.00264, *clock_std_dev]
-    "h5n1/pa/2y": [0.00248, *clock_std_dev]
-    "h5n1/ha/2y": [0.00455, *clock_std_dev]
-    "h5n1/np/2y": [0.00252, *clock_std_dev]
-    "h5n1/na/2y": [0.00349, *clock_std_dev]
-    "h5n1/mp/2y": [0.00191, *clock_std_dev]
-    "h5n1/ns/2y": [0.00249, *clock_std_dev]
+    clock_rates: ''
+
+  # otherwise supply a list of [rate, std_dev]
+  "h5nx/pb2/2y":
+    clock_rates: [0.00287, &clock_std_dev 0.00211]
+  "h5nx/pb1/2y":
+    clock_rates: [0.00267, *clock_std_dev]
+  "h5nx/pa/2y":
+    clock_rates: [0.00238, *clock_std_dev]
+  "h5nx/ha/2y":
+    clock_rates: [0.0048, *clock_std_dev]
+  "h5nx/np/2y":
+    clock_rates: [0.0022, *clock_std_dev]
+  "h5nx/na/2y":
+    clock_rates: [0.0028, *clock_std_dev]
+  "h5nx/mp/2y":
+    clock_rates: [0.0017, *clock_std_dev]
+  "h5nx/ns/2y":
+    clock_rates: [0.0017, *clock_std_dev]
+  "h5n1/pb2/2y":
+    clock_rates: [0.00287, *clock_std_dev]
+  "h5n1/pb1/2y":
+    clock_rates: [0.00264, *clock_std_dev]
+  "h5n1/pa/2y":
+    clock_rates: [0.00248, *clock_std_dev]
+  "h5n1/ha/2y":
+    clock_rates: [0.00455, *clock_std_dev]
+  "h5n1/np/2y":
+    clock_rates: [0.00252, *clock_std_dev]
+  "h5n1/na/2y":
+    clock_rates: [0.00349, *clock_std_dev]
+  "h5n1/mp/2y":
+    clock_rates: [0.00191, *clock_std_dev]
+  "h5n1/ns/2y":
+    clock_rates: [0.00249, *clock_std_dev]
 
 
 ancestral:
-  inference: joint
-  root_seq: false
+  "*/*/*":
+    inference: joint
+    root_seq: false
 
 traits:
-  columns:
-    "h5nx/*/*": region
-    "h5n1/*/*": region country
-    "h7n9/*/*": country division
-    "h9n2/*/*": region country
-  sampling_bias_correction: false
-  confidence: true
+  "*/*/*":
+    sampling_bias_correction: false
+    confidence: true
+  "h5nx/*/*":
+    columns: region
+  "h5n1/*/*":
+    columns: region country
+  "h7n9/*/*":
+    columns: country division
+  "h9n2/*/*":
+    columns: region country
 
 colors:
-  hardcoded: config/{subtype}/colors_{subtype}.tsv
-  ordering: "config/shared/color_ordering_genoflu.tsv" # for dynamic assignment
-  schemes: "config/shared/color_schemes.tsv"
-  duplications: 
-    "*/*/*": []
+  "*/*/*":
+    hardcoded: config/{subtype}/colors_{subtype}.tsv
+    ordering: "config/shared/color_ordering_genoflu.tsv" # for dynamic assignment
+    schemes: "config/shared/color_schemes.tsv"
+    duplications: []
 
 export:
-  title: false # use the title in the auspice JSON
-  # TODO - if we parameterise this here we can use the subtype wildcard to customise the title
+  "*/*/*":
+    title: false # use the title in the auspice JSON
+    # TODO - if we parameterise this here we can use the subtype wildcard to customise the title

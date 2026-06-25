@@ -1,0 +1,15 @@
+host	avian	#4066CF
+host	environment	#77B67F
+host	nonhuman mammal	#CEB541
+host	human	#DC2F24
+host	equine	#E68B35
+subtype	h7n1	#88BB6C
+subtype	h7n2	#4042C7
+subtype	h7n3	#E39B39
+subtype	h7n4	#E56C2F
+subtype	h7n5	#DC2F24
+subtype	h7n6	#ADBD51
+subtype	h7n7	#CEB541
+subtype	h7n8	#69B091
+subtype	h7n9	#4274CE
+

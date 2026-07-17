@@ -1,15 +1,10 @@
 {
-  "title": "Real-time tracking of influenza A/H5N1 virus evolution",
+  "title": "Real-time tracking of influenza A/H7Nx evolution",
   "maintainers": [
-    {"name": "Louise Moncla", "url": "https://lmoncla.github.io/monclalab/"},
-    {"name": "the Nextstrain team", "url": "https://nextstrain.org/team"}
+    {"name": "Louise Moncla", "url": "https://lmoncla.github.io/monclalab/"}
   ],
   "build_url": "https://github.com/nextstrain/avian-flu",
   "data_provenance": [
-    {
-      "name": "USDA",
-      "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1102327"
-    },
     {
       "name": "GISAID"
     }
@@ -36,18 +31,8 @@
       "type": "categorical"
     },
     {
-      "key": "division",
-      "title": "Admin Division",
-      "type": "categorical"
-    },    
-    {
       "key": "host",
       "title": "Host",
-      "type": "categorical"
-    },
-    {
-      "key": "domestic_status",
-      "title": "Domestic or Wild",
       "type": "categorical"
     },
     {
@@ -57,17 +42,7 @@
     },
     {
       "key": "label_clade",
-      "title": "LABEL Clade",
-      "type": "categorical"
-    },
-    {
-      "key": "genoflu",
-      "title": "GenoFLU constellation",
-      "type": "categorical"
-    },
-    {
-      "key": "gisaid_clade",
-      "title": "GISAID Clade",
+      "title": "LABEL clade",
       "type": "categorical"
     },
     {
@@ -78,11 +53,6 @@
     {
       "key": "cleavage_site_sequence",
       "title": "Cleavage Site Sequence",
-      "type": "categorical"
-    },
-    {
-      "key": "authors",
-      "title": "Authors",
       "type": "categorical"
     },
     {
@@ -103,18 +73,15 @@
   ],
   "display_defaults": {
     "map_triplicate": true,
-    "color_by": "region"
+    "color_by": "region",
+    "geo_resolution": "country"
   },
   "filters": [
     "host",
-    "domestic_status",
+    "subtype",
     "region",
     "country",
     "division",
-    "subtype",
-    "h5_label_clade",
-    "gisaid_clade",
-    "authors",
     "originating_lab",
     "submitting_lab"
   ]

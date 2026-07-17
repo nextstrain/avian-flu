@@ -48,7 +48,7 @@ def annotate_metadata_file(metadata_infile, metadata_outfile, clade_assignments)
 		for line in infile:
 			linecount += 1
 			if linecount == 1:
-				new_line = line.rstrip("\n") + "\th5_label_clade\n"
+				new_line = line.rstrip("\n") + "\tlabel_clade\n"
 			else:
 				strain_name = line.split("\t")[0]
 				if strain_name in clade_assignments:

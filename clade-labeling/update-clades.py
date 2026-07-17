@@ -79,10 +79,18 @@ def append_new_clades(new_clades, old_clades):
                     outfile.write(strain + "\t" + clade)
 
 
+def return_label_module_by_subtype(subtype):
+    label_mappings = {"h5nx": "H5v2023", "h5n1": "H5v2023", "h7nx": "H7v2013", "h9n2":"H9v2011"}
+    
+    label_mapping = label_mappings[subtype]
+    return(label_mapping)
+
+
 """generate names for new intermediary files"""
 new_strains_fasta = "clade-labeling/"+subtype+"-new.fasta"
 new_clades_file = "clade-labeling/"+subtype+"-clades-new.tsv"
 label_output = subtype+"-new"
+label_module = return_label_module_by_subtype(subtype)
 
 
 """find new strains and write those new sequences to a fasta file"""
@@ -92,7 +100,8 @@ separate_new_strains(new_strains, sequences, new_strains_fasta)
 
 # """run label and reformat the output"""
 # print("\nrunning LABEL to assign clades to", len(new_strains), "new strains of", subtype)
-os.system('flu-amd-label-2023-05-05/./LABEL -D {new_strains_fasta} {label_output} H5v2023'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
+os.system('flu-amd/LABEL -D {new_strains_fasta} {label_output} {label_module}'.format(new_strains_fasta=new_strains_fasta, label_output=label_output, label_module=label_module))
+#os.system('flu-amd-label-2023-05-05/./LABEL -D {new_strains_fasta} {label_output} H5v2023'.format(new_strains_fasta=new_strains_fasta, label_output=label_output))
 os.system('python clade-labeling/check-LABEL-annotations.py --label_output {label_output}_final.txt --output {new_clades_file}'.format(new_clades_file=new_clades_file, label_output=label_output))
 
 
@@ -102,4 +111,3 @@ append_new_clades(new_clades_file, clades_file)
 """remove intermediate files. You must also remove the LABEL folder otherwise it will throw an error next time about the
 project being in use"""
 os.system('rm {label_output}_final.txt {label_output}.zip {new_strains_fasta} {new_clades_file}'.format(new_strains_fasta=new_strains_fasta, label_output=label_output, new_clades_file=new_clades_file))
-os.system('rm -r flu-amd-label-2023-05-05/LABEL_RES/test_data/{label_output}'.format(label_output=label_output))

@@ -5,7 +5,6 @@ and other config-related stuff.
 
 include: "../shared/vendored/snakemake/config.smk"
 
-AVIAN_FLU_DIR = os.path.normpath(os.path.join(workflow.current_basedir, ".."))
 # NOTE: `workflow.basedir` is the Snakemake entry point, i.e. the directory of the first encountered Snakefile
 
 # load the default config which must exist.
@@ -133,7 +132,7 @@ def resolve_config_fields_path(*fields):
         raw_value = resolve_config_value(*fields)(wildcards)
         if not raw_value: # falsey -> don't resolve to a path!
             return ""
-        return resolve_config_path(raw_value, AVIAN_FLU_DIR)(wildcards)
+        return resolve_config_path(raw_value)(wildcards)
 
     return resolve
 
@@ -142,22 +141,23 @@ def script(path):
     Resolve a provided script *path* (string)
 
     Search order (first match returned):
-        1. Relative to the 'scripts' directory in the avian-flu repo (`AVIAN_FLU_DIR`)
-        2. Relative to the avian-flu repo (`AVIAN_FLU_DIR`)
+        1. Relative to the 'scripts' directory in the avian-flu repo
+        2. Relative to the avian-flu repo
 
     An `InvalidConfigError` is raised if a match is not found
     """
+    avian_flu_dir = os.path.normpath(os.path.join(workflow.current_basedir, ".."))
 
-    if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, "scripts", path)):
+    if os.path.exists(p:=os.path.join(avian_flu_dir, "scripts", path)):
         return p
 
-    if os.path.exists(p:=os.path.join(AVIAN_FLU_DIR, path)):
+    if os.path.exists(p:=os.path.join(avian_flu_dir, path)):
         return p
 
     raise InvalidConfigError(f"Unable to resolve the provided script {path!r}. "
         f"The following directories were searched:\n"
-        f"\t1. {os.path.join(AVIAN_FLU_DIR, 'scripts')}\n"
-        f"\t2. {AVIAN_FLU_DIR}\n")
+        f"\t1. {os.path.join(avian_flu_dir, 'scripts')}\n"
+        f"\t2. {avian_flu_dir}\n")
 
 
 def as_list(x):

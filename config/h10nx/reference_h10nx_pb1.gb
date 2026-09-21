@@ -1,0 +1,120 @@
+LOCUS       KP284875                2274 bp    cRNA    linear   VRL 26-JAN-2015
+DEFINITION  Influenza A virus (A/migratory duck/Jiangxi/30246/2013(H10N5))
+            segment 2 polymerase PB1 (PB1) and PB1-F2 protein (PB1-F2) genes,
+            complete cds.
+ACCESSION   KP284875
+VERSION     KP284875.1
+KEYWORDS    .
+SOURCE      Influenza A virus (A/migratory duck/Jiangxi/30246/2013(H10N5))
+  ORGANISM  Influenza A virus (A/migratory duck/Jiangxi/30246/2013(H10N5))
+            Viruses; Riboviria; Orthornavirae; Negarnaviricota;
+            Polyploviricotina; Insthoviricetes; Articulavirales;
+            Orthomyxoviridae; Alphainfluenzavirus; Alphainfluenzavirus
+            influenzae.
+REFERENCE   1  (bases 1 to 2274)
+  AUTHORS   Ma,C., Lam,T.T.Y., Chai,Y., Wang,J., Fan,X., Hong,W., Zhang,Y.,
+            Li,L., Liu,Y., Smith,D.K., Webby,R.J., Peiris,J.S.M., Zhu,H. and
+            Guan,Y.
+  TITLE     Emergence and evolution of H10 subtype influenza viruses in poultry
+            in China
+  JOURNAL   J. Virol. (2015) In press
+   PUBMED   25589662
+  REMARK    Publication Status: Available-Online prior to print
+REFERENCE   2  (bases 1 to 2274)
+  AUTHORS   Ma,C., Lam,T.T.Y., Chai,Y., Wang,J., Fan,X., Hong,W., Zhang,Y.,
+            Li,L., Liu,Y., Smith,D.K., Webby,R.J., Peiris,J.S.M., Zhu,H. and
+            Guan,Y.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (16-DEC-2014) Centre of Influenza Research, School of
+            Public Health, The University of Hong Kong, Laboratory Block, LKS
+            Faculty of Medicine Building, 21 Sassoon Road, Pokfulam, Hong Kong,
+            China
+COMMENT     ##Assembly-Data-START##
+            Assembly Method       :: Lasergene v. 9.0
+            Sequencing Technology :: Sanger dideoxy sequencing; 454
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..2274
+                     /organism="Influenza A virus (A/migratory
+                     duck/Jiangxi/30246/2013(H10N5))"
+                     /mol_type="viral cRNA"
+                     /strain="A/migratory duck/Jiangxi/30246/2013"
+                     /serotype="H10N5"
+                     /isolation_source="fecal"
+                     /host="migratory duck"
+                     /db_xref="taxon:1587889"
+                     /segment="2"
+                     /geo_loc_name="China: Jiangxi"
+                     /collection_date="30-Oct-2013"
+                     /note="passage details: E1"
+     gene            1..2274
+                     /gene="PB1"
+     CDS             1..2274
+                     /gene="PB1"
+                     /codon_start=1
+                     /product="polymerase PB1"
+                     /protein_id="AJD09827.1"
+                     /translation="MDVNPTLLFLKVPAQNAISTTFPYTGDPPYSHGTGTGYTMDTVN
+                     RTHQYSEKGKWTTNTETGAPQLNPIDGPLPEDNEPSGYAQTDCVLEAMAFLEESHPGI
+                     FENSCLETMEVVQQTRVDKLTQGRQTYDWTLNRNQPAATALANTIEVFRSNGLTANES
+                     GRLIDFLKDVMESMDKEEMEITTHFQRKRRVRDNMTKKMVTQRTIGKKKQRLNKRSYL
+                     IRALTLNTMTKDAERGKLKRRAIATPGMQIRGFVYFVETLARSICEKLEQSGLPVGGN
+                     EKKAKLANVVRKMMTNSQDTELSFTITGDNTKWNENQNPRMFLAMITYITRNQPEWFR
+                     NVLSIAPIMFSNKMARLGKGYMFESKSMKLRTQIPAEMLANIDLKYFNESTRKKIEKI
+                     RPLLIDGTASLSPGMMMGMFNMLSTVLGVSILNLGQKRYTKTTYWWDGLQSSDDFALI
+                     VNAPNHEGIQAGVDRFYRTCKLVGINMSKKKSYINRTGTFEFTSFFYRYGFVANFSME
+                     LPSFGVSGINESADMSIGVTVIKNNMINNDLGPATAQMALQLFIKDYRYTYRCHRGDT
+                     QIQTRRSFELRKLWEQTRSKAGLLVSDGGPNLYNIRNLHIPEVCLKWELMDEDYQGRL
+                     CNPLNPFVSHKEIESVNNAVVMPAHGPAKSMEYDAVATTHSWIPKRNRSILNTSQRGI
+                     LEDEQMYQKCCSLFEKFFPSSSYRRPVGISSMVEAMVSRARIDARIDFESGRIKKEEF
+                     AEIMKICXTIEELRRQK"
+     gene            95..367
+                     /gene="PB1-F2"
+     CDS             95..367
+                     /gene="PB1-F2"
+                     /codon_start=1
+                     /product="PB1-F2 protein"
+                     /protein_id="AJD09828.1"
+                     /translation="MEQEQDTLWTQSTEHINTQRRESGQQTQRPEHPSSTQLMDHYQR
+                     TTSQADMHKRIACWKQWLSLRNPTQGSLKTLVLKRWKSFSKQEWTN"
+ORIGIN      
+        1 atggatgtca atccgacttt acttttctta aaagtgccag cgcaaaatgc tataagtact
+       61 acattccctt acactggaga tcctccatac agccatggaa caggaacagg atacactatg
+      121 gacacagtca acagaacaca tcaatactca gagaagggaa agtggacaac aaacacagag
+      181 accggagcac cccagctcaa cccaattgat ggaccattac cagaggacaa cgagccaagc
+      241 ggatatgcac aaacggattg cgtgttggaa gcaatggctt tccttgagga atcccaccca
+      301 gggatctttg aaaactcttg tcttgaaacg atggaagtcg ttcagcaaac aagagtggac
+      361 aaactaaccc aaggtcgcca gacttatgac tggacactga acagaaacca accagctgca
+      421 actgctttgg ccaacactat agaggtgttc agatcgaacg gtctgacagc caatgagtcg
+      481 gggagactaa tagatttcct caaggatgtg atggaatcaa tggataaaga agaaatggaa
+      541 ataacaacac atttccagag aaagagaaga gtgagggata acatgaccaa gaagatggtc
+      601 acacaaagaa caataggaaa gaagaagcag aggctgaata aaaggagtta cttaataaga
+      661 gcgctgacat tgaacacaat gactaaagat gcagaaagag gtaaattgaa gagacgggca
+      721 attgcaacac ccgggatgca gattagagga ttcgtgtact ttgtcgaaac actagcgagg
+      781 agcatctgtg agaaacttga gcaatctgga ctccctgttg gagggaatga gaagaaggct
+      841 aaattggcaa atgtcgtgag gaaaatgatg actaactcac aagatacaga gctttccttt
+      901 acaattactg gagacaacac caaatggaat gagaatcaaa atccccggat gtttttggca
+      961 atgataacat acatcacaag aaaccaacct gaatggttta gaaatgtctt gagcattgcc
+     1021 cctataatgt tctcaaacaa aatggcgaga ttaggaaaag gatacatgtt tgaaagtaag
+     1081 agcatgaaac taagaacaca aataccggca gagatgcttg caaacattga tctgaaatat
+     1141 ttcaacgaat caacgagaaa gaaaatcgag aaaataagac ctctgctgat tgatggaaca
+     1201 gcctccttga gtcctggaat gatgatgggc atgttcaata tgctgagcac agtattaggg
+     1261 gtctcaatcc tgaatcttgg gcaaaagagg tacaccaaaa ccacatactg gtgggatgga
+     1321 ctccaatcct ctgatgattt cgctctcata gtgaatgcac cgaatcatga ggggatacaa
+     1381 gcaggggtgg ataggttcta taggacctgc aaactggttg ggatcaacat gagcaaaaag
+     1441 aagtcttaca taaaccgaac aggaacattt gagttcacaa gctttttcta ccgctatgga
+     1501 tttgtagcta acttcagtat ggagttgccc agttttggag tgtctggaat caatgaatcg
+     1561 gctgacatga gcattggagt tacagtgata aagaacaata tgataaacaa tgaccttgga
+     1621 ccagcaacag ctcaaatggc tctccagcta ttcatcaagg actataggta cacgtaccga
+     1681 tgccacaggg gtgacacaca aattcaaacg aggagatcat tcgagctgag gaaactgtgg
+     1741 gagcagaccc gttcaaaggc aggactgtta gtatcagatg gaggaccaaa cctatacaac
+     1801 attcgaaatc tccacatccc agaggtctgc ttaaagtggg aactgatgga tgaggactac
+     1861 caaggcaggc tgtgtaatcc tctgaatccg tttgtcagtc ataaggaaat tgagtccgta
+     1921 aacaatgctg tggtaatgcc agcccatggc ccagccaaga gcatggaata tgatgctgtt
+     1981 gcaactacac actcatggat tcctaagagg aaccgttcca ttctcaatac cagccagagg
+     2041 ggaattcttg aagatgagca aatgtaccag aagtgctgta gtctatttga gaaattcttc
+     2101 cccagcagtt catacaggag gccagttgga atttccagca tggtggaggc catggtgtct
+     2161 agggcccgaa ttgatgcacg cattgatttc gaatctggaa ggatyaagaa agaagagttt
+     2221 gctgagatca tgaagatctg tyccaccatt gaagagctca gacggcaaaa atag
+//
+

@@ -34,6 +34,9 @@ A/DomesticDuck/England/137313/2023
 A/duck/Bangladesh/59131/2023
 A/duck/Bangladesh/59013/2023
 A/BALDEAGLE/FLORIDA/W22-134-OP/2022XA/PR/8/2034
+A/ruddyturnstone/NewJersey/828212/2001
+A/Mallard/Sweden/SVA241211SZ0474/FB283898/Mixedinfection-V1/Ot/H/2024
+A/Mallard/Sweden/SVA241119SZ0387JM261119OtH/2024
 
 # Duplicated entries in GISAID
 A/blackbird/Texas/24-008354-001/2024

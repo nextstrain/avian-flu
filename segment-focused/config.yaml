@@ -25,7 +25,7 @@ builds:
     segment: *segments
     time:
       - all-time
-      
+
 
 # The default target for this build is the Auspice JSON, however config overlays may wish to change this
 # (e.g. to target "intermediate" files instead). Note that you can sidestep these (config-defined) targets

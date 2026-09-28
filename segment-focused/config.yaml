@@ -3,8 +3,8 @@
 # time (e.g. all-time) and segment (e.g. ha)
 builds:
   - subtype:
-      - h5nx
-      - h5n1
+       - h5nx
+       - h5n1
     segment: &segments
        - pb2
        - pb1
@@ -21,9 +21,11 @@ builds:
       - h7n9
       - h7nx
       - h9n2
+      - h10nx
     segment: *segments
     time:
       - all-time
+
 
 # The default target for this build is the Auspice JSON, however config overlays may wish to change this
 # (e.g. to target "intermediate" files instead). Note that you can sidestep these (config-defined) targets
@@ -64,6 +66,8 @@ subtype_query:
     "h7nx/*/*": "subtype in ['h7n1', 'h7n2', 'h7n3', 'h7n4', 'h7n5', 'h7n6', 'h7n7', 'h7n8','h7n9']"
     "h7n9/*/*": "subtype in ['h7n9']"
     "h9n2/*/*": "subtype in ['h9n2']"
+    "h10nx/*/*": "subtype in ['h10n1', 'h10n2', 'h10n3', 'h10n4', 'h10n5', 'h10n6', 'h10n7', 'h10n8','h10n9']"
+
 
 
 #### Rule-specific parameters ####
@@ -93,6 +97,7 @@ filter:
     "h7nx/*/all-time": 1966
     "h7n9/*/all-time": 2013
     "h9n2/*/all-time": 1966
+    "h10nx/*/all-time": 2000
 
   group_by:
     "h7n9/*/2y": subtype region month host
@@ -104,6 +109,7 @@ filter:
     "h5n1/*/all-time": region country year
     "h7n9/*/all-time": division year
     "h9n2/*/all-time": country year
+    "h10nx/*/all-time": subtype country year
 
   exclude_where:
     host=laboratoryderived host=ferret host=unknown host=other host=host country=? region=? gisaid_clade=3C.2
@@ -114,7 +120,7 @@ refine:
 
   clock_filter_iqd: 4
 
-  root: false
+  root: 'mid_point'
 
   clock_rates:
     # NOTE: an empty value means no supplied clock rate, i.e. infer the clock
@@ -149,6 +155,7 @@ traits:
     "h5n1/*/*": region country
     "h7n9/*/*": country division
     "h7nx/*/*": region
+    "h10nx/*/*": region
     "h9n2/*/*": region country
   sampling_bias_correction: false
   confidence: true

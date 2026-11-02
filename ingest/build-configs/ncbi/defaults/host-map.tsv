@@ -43,6 +43,7 @@ BOTTLENOSE DOLPHIN	Nonhuman Mammal
 brandt goose	Avian
 Branta canadensis	Avian
 BROWN PELICAN	Avian
+Bovidea	Cattle
 Bubo scandiacus	Avian
 Bubo virginianus	Avian
 Bucephala clangula	Avian
@@ -62,6 +63,7 @@ Cathartes aura	Avian
 Cathartidae sp.	Avian
 cattle	Cattle
 CATTLE MILK PRODUCT	Cattle
+CATTLE,DOMESTIC	CattlE
 CHEETAH	Nonhuman Mammal
 Chenonetta jubata	Avian
 chicken	Avian
@@ -157,6 +159,7 @@ mountain lion	Nonhuman Mammal
 mountain_lion	Nonhuman Mammal
 Mus musculus	Nonhuman Mammal
 Mustela erminea	Nonhuman Mammal
+Mustela lustreola	Nonhuman Mammal
 mute swan	Avian
 NORTHERN SHOVELER	Avian
 Numididae	Avian

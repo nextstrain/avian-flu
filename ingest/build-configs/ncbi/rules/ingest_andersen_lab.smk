@@ -126,6 +126,8 @@ rule curate_metadata:
     params:
         host_map=config["curate"]["host_map"],
         date_fields=['date', 'date_released'],
+        target_date_field='date',
+        target_date_field_max='date_released',
         expected_date_formats=['%Y-%m-%d', '%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%SZ'],
         annotations_id=config["curate"]["annotations_id"],
     shell:
@@ -138,6 +140,8 @@ rule curate_metadata:
             | augur curate format-dates \
                 --date-fields {params.date_fields:q} \
                 --expected-date-formats {params.expected_date_formats:q} \
+                --target-date-field {params.target_date_field:q} \
+                --target-date-field-max {params.target_date_field_max:q} \
             | ./build-configs/ncbi/bin/transform-host \
                 --host-map {params.host_map} \
             | ./vendored/apply-geolocation-rules \
